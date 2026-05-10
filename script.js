@@ -7,8 +7,9 @@ const lenis = new Lenis({
   smooth: true, mouseMultiplier: 0.7,
   smoothTouch: false, touchMultiplier: 2,
 });
-function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-requestAnimationFrame(raf);
+// Let GSAP Ticker handle Lenis for perfect sync and performance
+// function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+// requestAnimationFrame(raf);
 
 gsap.registerPlugin(ScrollTrigger);
 lenis.on('scroll', ScrollTrigger.update);
