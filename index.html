@@ -1,21 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SK Jalrakshak Innovations Pvt Ltd | Smart Water Intelligence</title>
   <meta name="description" content="SK Jalrakshak Innovations — smart water intelligence, edge telemetry, cloud dashboards & predictive analytics. CIN: U26517AP2025PTC119413">
-  <meta name="theme-color" content="#0a0a0a">
+  <meta name="theme-color" content="#f3ede1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Satoshi:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+  <!-- GSAP -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script defer src="webgl.js"></script>
   <script defer src="script.js"></script>
 </head>
 <body>
+
+  <!-- ═══ WEBGL CANVAS ═══ -->
+  <canvas id="webgl" aria-hidden="true"></canvas>
 
   <!-- ═══ PRELOADER ═══ -->
   <div id="preloader">
@@ -30,13 +37,9 @@
     </div>
   </div>
 
-  <!-- ═══ CURTAIN (THEME TRANSITION) ═══ -->
+  <!-- ═══ CURTAIN ═══ -->
   <div id="curtain" aria-hidden="true"></div>
-
-  <!-- ═══ GRAIN OVERLAY ═══ -->
   <div class="grain" aria-hidden="true"></div>
-
-  <!-- ═══ SCROLL PROGRESS ═══ -->
   <div id="scrollProgress" aria-hidden="true"></div>
 
   <!-- ═══ NAVBAR ═══ -->
@@ -95,22 +98,10 @@
           </div>
         </div>
         <div class="stats-row">
-          <div class="stat gs-reveal">
-            <span class="stat-val">1M+</span>
-            <span class="stat-desc">Data Points Processed</span>
-          </div>
-          <div class="stat gs-reveal">
-            <span class="stat-val">50+</span>
-            <span class="stat-desc">Global Deployments</span>
-          </div>
-          <div class="stat gs-reveal">
-            <span class="stat-val">24/7</span>
-            <span class="stat-desc">Real-time Telemetry</span>
-          </div>
-          <div class="stat gs-reveal">
-            <span class="stat-val">0.1s</span>
-            <span class="stat-desc">Edge Latency</span>
-          </div>
+          <div class="stat gs-reveal"><span class="stat-val" data-count="1000000">1M+</span><span class="stat-desc">Data Points Processed</span></div>
+          <div class="stat gs-reveal"><span class="stat-val">50+</span><span class="stat-desc">Global Deployments</span></div>
+          <div class="stat gs-reveal"><span class="stat-val">24/7</span><span class="stat-desc">Real-time Telemetry</span></div>
+          <div class="stat gs-reveal"><span class="stat-val">0.1s</span><span class="stat-desc">Edge Latency</span></div>
         </div>
       </div>
     </section>
@@ -121,30 +112,9 @@
         <div class="sec-eyebrow gs-reveal">(02) Systems</div>
         <h2 class="sec-title sec-title-lg gs-reveal">Built for Scale.</h2>
         <div class="systems-list">
-          <article class="sys-row gs-reveal">
-            <span class="sys-num">01</span>
-            <div class="sys-content">
-              <h3 class="sys-name">Edge Telemetry</h3>
-              <p class="sys-desc">Hardware modules engineered for the most brutal industrial environments. Our sensors capture precise fluid dynamics, pressure differentials, and chemical composition data in real-time — even in remote, off-grid locations.</p>
-            </div>
-            <span class="sys-badge">Hardware</span>
-          </article>
-          <article class="sys-row gs-reveal">
-            <span class="sys-num">02</span>
-            <div class="sys-content">
-              <h3 class="sys-name">Cloud Intelligence</h3>
-              <p class="sys-desc">Machine learning models that predict infrastructure anomalies before they occur. A unified cloud dashboard provides complete operational oversight across thousands of miles of pipeline, treatment plants, and distribution networks.</p>
-            </div>
-            <span class="sys-badge">Software</span>
-          </article>
-          <article class="sys-row gs-reveal">
-            <span class="sys-num">03</span>
-            <div class="sys-content">
-              <h3 class="sys-name">Predictive Analytics</h3>
-              <p class="sys-desc">Our forecasting engine leverages historical patterns, weather data, and real-time sensor feeds to prevent infrastructure failures. We don't just monitor water — we anticipate its behavior across entire networks.</p>
-            </div>
-            <span class="sys-badge">AI / ML</span>
-          </article>
+          <article class="sys-row gs-reveal"><span class="sys-num">01</span><div class="sys-content"><h3 class="sys-name">Edge Telemetry</h3><p class="sys-desc">Hardware modules engineered for the most brutal industrial environments. Our sensors capture precise fluid dynamics, pressure differentials, and chemical composition data in real-time — even in remote, off-grid locations.</p></div><span class="sys-badge">Hardware</span></article>
+          <article class="sys-row gs-reveal"><span class="sys-num">02</span><div class="sys-content"><h3 class="sys-name">Cloud Intelligence</h3><p class="sys-desc">Machine learning models that predict infrastructure anomalies before they occur. A unified cloud dashboard provides complete operational oversight across thousands of miles of pipeline, treatment plants, and distribution networks.</p></div><span class="sys-badge">Software</span></article>
+          <article class="sys-row gs-reveal"><span class="sys-num">03</span><div class="sys-content"><h3 class="sys-name">Predictive Analytics</h3><p class="sys-desc">Our forecasting engine leverages historical patterns, weather data, and real-time sensor feeds to prevent infrastructure failures. We don't just monitor water — we anticipate its behavior across entire networks.</p></div><span class="sys-badge">AI / ML</span></article>
         </div>
       </div>
     </section>
@@ -156,36 +126,30 @@
         <h2 class="sec-title sec-title-lg gs-reveal">What People Say.</h2>
       </div>
       <div class="marquee-wrap" id="marqueeWrap">
-        <div class="marquee-row marquee-left">
-          <div class="marquee-track">
-            <div class="tcard"><blockquote>"The telemetry platform completely transformed how we monitor our water treatment facilities. Real-time data has reduced our response time by 80%."</blockquote><cite><strong>Rajesh Kumar</strong><span>Operations Director</span></cite></div>
-            <div class="tcard"><blockquote>"SK Jalrakshak's edge sensors operate flawlessly even in our most remote installations. The reliability is exceptional."</blockquote><cite><strong>Priya Sharma</strong><span>Field Engineer</span></cite></div>
-            <div class="tcard"><blockquote>"Their predictive analytics caught a pipeline failure 72 hours before it would have happened. That single alert saved us ₹2 crore."</blockquote><cite><strong>Anand Verma</strong><span>Infrastructure Manager</span></cite></div>
-            <div class="tcard"><blockquote>"The cloud dashboard is intuitive and powerful. Our entire team adopted it within a week — no training needed."</blockquote><cite><strong>Meera Nair</strong><span>Technology Lead</span></cite></div>
-            <div class="tcard"><blockquote>"We've deployed their system across 12 facilities and the consistency of data quality is remarkable."</blockquote><cite><strong>Vikram Patel</strong><span>Plant Manager</span></cite></div>
-            <!-- duplicated for infinite scroll -->
-            <div class="tcard"><blockquote>"The telemetry platform completely transformed how we monitor our water treatment facilities. Real-time data has reduced our response time by 80%."</blockquote><cite><strong>Rajesh Kumar</strong><span>Operations Director</span></cite></div>
-            <div class="tcard"><blockquote>"SK Jalrakshak's edge sensors operate flawlessly even in our most remote installations. The reliability is exceptional."</blockquote><cite><strong>Priya Sharma</strong><span>Field Engineer</span></cite></div>
-            <div class="tcard"><blockquote>"Their predictive analytics caught a pipeline failure 72 hours before it would have happened. That single alert saved us ₹2 crore."</blockquote><cite><strong>Anand Verma</strong><span>Infrastructure Manager</span></cite></div>
-            <div class="tcard"><blockquote>"The cloud dashboard is intuitive and powerful. Our entire team adopted it within a week — no training needed."</blockquote><cite><strong>Meera Nair</strong><span>Technology Lead</span></cite></div>
-            <div class="tcard"><blockquote>"We've deployed their system across 12 facilities and the consistency of data quality is remarkable."</blockquote><cite><strong>Vikram Patel</strong><span>Plant Manager</span></cite></div>
-          </div>
-        </div>
-        <div class="marquee-row marquee-right">
-          <div class="marquee-track">
-            <div class="tcard"><blockquote>"The integration with our existing SCADA systems was seamless. SK Jalrakshak's team handled every challenge professionally."</blockquote><cite><strong>Deepak Reddy</strong><span>Systems Architect</span></cite></div>
-            <div class="tcard"><blockquote>"From rural water stations to industrial zones, their IoT grid adapts to any environment. Truly versatile technology."</blockquote><cite><strong>Sunita Devi</strong><span>Project Coordinator</span></cite></div>
-            <div class="tcard"><blockquote>"The reporting capabilities alone justify the investment. We now have compliance-ready data at our fingertips."</blockquote><cite><strong>Arjun Singh</strong><span>Compliance Officer</span></cite></div>
-            <div class="tcard"><blockquote>"Their solar-powered monitoring stations are a game-changer for our off-grid installations in Andhra Pradesh."</blockquote><cite><strong>Lakshmi Rao</strong><span>Sustainability Lead</span></cite></div>
-            <div class="tcard"><blockquote>"Working with SK Jalrakshak feels like having an extension of our own engineering team."</blockquote><cite><strong>Mohammed Faiz</strong><span>CTO</span></cite></div>
-            <!-- duplicated for infinite scroll -->
-            <div class="tcard"><blockquote>"The integration with our existing SCADA systems was seamless. SK Jalrakshak's team handled every challenge professionally."</blockquote><cite><strong>Deepak Reddy</strong><span>Systems Architect</span></cite></div>
-            <div class="tcard"><blockquote>"From rural water stations to industrial zones, their IoT grid adapts to any environment. Truly versatile technology."</blockquote><cite><strong>Sunita Devi</strong><span>Project Coordinator</span></cite></div>
-            <div class="tcard"><blockquote>"The reporting capabilities alone justify the investment. We now have compliance-ready data at our fingertips."</blockquote><cite><strong>Arjun Singh</strong><span>Compliance Officer</span></cite></div>
-            <div class="tcard"><blockquote>"Their solar-powered monitoring stations are a game-changer for our off-grid installations in Andhra Pradesh."</blockquote><cite><strong>Lakshmi Rao</strong><span>Sustainability Lead</span></cite></div>
-            <div class="tcard"><blockquote>"Working with SK Jalrakshak feels like having an extension of our own engineering team."</blockquote><cite><strong>Mohammed Faiz</strong><span>CTO</span></cite></div>
-          </div>
-        </div>
+        <div class="marquee-row marquee-left"><div class="marquee-track">
+          <div class="tcard"><blockquote>"The telemetry platform completely transformed how we monitor our water treatment facilities. Real-time data has reduced our response time by 80%."</blockquote><cite><strong>Rajesh Kumar</strong><span>Operations Director</span></cite></div>
+          <div class="tcard"><blockquote>"SK Jalrakshak's edge sensors operate flawlessly even in our most remote installations. The reliability is exceptional."</blockquote><cite><strong>Priya Sharma</strong><span>Field Engineer</span></cite></div>
+          <div class="tcard"><blockquote>"Their predictive analytics caught a pipeline failure 72 hours before it would have happened. That single alert saved us ₹2 crore."</blockquote><cite><strong>Anand Verma</strong><span>Infrastructure Manager</span></cite></div>
+          <div class="tcard"><blockquote>"The cloud dashboard is intuitive and powerful. Our entire team adopted it within a week — no training needed."</blockquote><cite><strong>Meera Nair</strong><span>Technology Lead</span></cite></div>
+          <div class="tcard"><blockquote>"We've deployed their system across 12 facilities and the consistency of data quality is remarkable."</blockquote><cite><strong>Vikram Patel</strong><span>Plant Manager</span></cite></div>
+          <div class="tcard"><blockquote>"The telemetry platform completely transformed how we monitor our water treatment facilities. Real-time data has reduced our response time by 80%."</blockquote><cite><strong>Rajesh Kumar</strong><span>Operations Director</span></cite></div>
+          <div class="tcard"><blockquote>"SK Jalrakshak's edge sensors operate flawlessly even in our most remote installations. The reliability is exceptional."</blockquote><cite><strong>Priya Sharma</strong><span>Field Engineer</span></cite></div>
+          <div class="tcard"><blockquote>"Their predictive analytics caught a pipeline failure 72 hours before it would have happened. That single alert saved us ₹2 crore."</blockquote><cite><strong>Anand Verma</strong><span>Infrastructure Manager</span></cite></div>
+          <div class="tcard"><blockquote>"The cloud dashboard is intuitive and powerful. Our entire team adopted it within a week — no training needed."</blockquote><cite><strong>Meera Nair</strong><span>Technology Lead</span></cite></div>
+          <div class="tcard"><blockquote>"We've deployed their system across 12 facilities and the consistency of data quality is remarkable."</blockquote><cite><strong>Vikram Patel</strong><span>Plant Manager</span></cite></div>
+        </div></div>
+        <div class="marquee-row marquee-right"><div class="marquee-track">
+          <div class="tcard"><blockquote>"The integration with our existing SCADA systems was seamless. SK Jalrakshak's team handled every challenge professionally."</blockquote><cite><strong>Deepak Reddy</strong><span>Systems Architect</span></cite></div>
+          <div class="tcard"><blockquote>"From rural water stations to industrial zones, their IoT grid adapts to any environment. Truly versatile technology."</blockquote><cite><strong>Sunita Devi</strong><span>Project Coordinator</span></cite></div>
+          <div class="tcard"><blockquote>"The reporting capabilities alone justify the investment. We now have compliance-ready data at our fingertips."</blockquote><cite><strong>Arjun Singh</strong><span>Compliance Officer</span></cite></div>
+          <div class="tcard"><blockquote>"Their solar-powered monitoring stations are a game-changer for our off-grid installations in Andhra Pradesh."</blockquote><cite><strong>Lakshmi Rao</strong><span>Sustainability Lead</span></cite></div>
+          <div class="tcard"><blockquote>"Working with SK Jalrakshak feels like having an extension of our own engineering team."</blockquote><cite><strong>Mohammed Faiz</strong><span>CTO</span></cite></div>
+          <div class="tcard"><blockquote>"The integration with our existing SCADA systems was seamless. SK Jalrakshak's team handled every challenge professionally."</blockquote><cite><strong>Deepak Reddy</strong><span>Systems Architect</span></cite></div>
+          <div class="tcard"><blockquote>"From rural water stations to industrial zones, their IoT grid adapts to any environment. Truly versatile technology."</blockquote><cite><strong>Sunita Devi</strong><span>Project Coordinator</span></cite></div>
+          <div class="tcard"><blockquote>"The reporting capabilities alone justify the investment. We now have compliance-ready data at our fingertips."</blockquote><cite><strong>Arjun Singh</strong><span>Compliance Officer</span></cite></div>
+          <div class="tcard"><blockquote>"Their solar-powered monitoring stations are a game-changer for our off-grid installations in Andhra Pradesh."</blockquote><cite><strong>Lakshmi Rao</strong><span>Sustainability Lead</span></cite></div>
+          <div class="tcard"><blockquote>"Working with SK Jalrakshak feels like having an extension of our own engineering team."</blockquote><cite><strong>Mohammed Faiz</strong><span>CTO</span></cite></div>
+        </div></div>
       </div>
     </section>
 
@@ -203,14 +167,8 @@
           <div class="corp-card gs-reveal"><span class="corp-key">Office</span><span class="corp-val">Visakhapatnam, AP 530048</span></div>
         </div>
         <div class="directors-row">
-          <div class="dir-card gs-reveal">
-            <div class="dir-icon">KS</div>
-            <div><strong>Kameswara Sarma Nagabhatla</strong><span class="dir-meta">Director · DIN 11111205</span></div>
-          </div>
-          <div class="dir-card gs-reveal">
-            <div class="dir-icon">SK</div>
-            <div><strong>Sirish Kumar Pagoti</strong><span class="dir-meta">Director · DIN 11111206</span></div>
-          </div>
+          <div class="dir-card gs-reveal"><div class="dir-icon">KS</div><div><strong>Kameswara Sarma Nagabhatla</strong><span class="dir-meta">Director · DIN 11111205</span></div></div>
+          <div class="dir-card gs-reveal"><div class="dir-icon">SK</div><div><strong>Sirish Kumar Pagoti</strong><span class="dir-meta">Director · DIN 11111206</span></div></div>
         </div>
       </div>
     </section>
@@ -251,9 +209,7 @@
     <div class="wrap">
       <div class="foot-top">
         <div class="foot-brand">SK Jalrakshak</div>
-        <div class="foot-nav">
-          <a href="#about">About</a><a href="#systems">Systems</a><a href="#testimonials">Testimonials</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
-        </div>
+        <div class="foot-nav"><a href="#about">About</a><a href="#systems">Systems</a><a href="#testimonials">Testimonials</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
       </div>
       <div class="foot-bottom">
         <span class="foot-copy">© 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.</span>
@@ -265,6 +221,5 @@
       </div>
     </div>
   </footer>
-
 </body>
 </html>

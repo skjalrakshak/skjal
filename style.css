@@ -101,10 +101,17 @@ html.lenis,html.lenis body{height:auto}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 
+/* ── WEBGL CANVAS ── */
+#webgl{
+  position:fixed;inset:0;z-index:0;
+  width:100%;height:100%;
+  pointer-events:none;
+}
+
 /* ── GRAIN ── */
 .grain{
   position:fixed;inset:0;z-index:9998;
-  pointer-events:none;opacity:0.03;
+  pointer-events:none;opacity:0.025;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -127,6 +134,7 @@ html.lenis,html.lenis body{height:auto}
 /* ── LAYOUT ── */
 .wrap{max-width:1240px;margin:0 auto;padding:0 32px}
 .wrap-sm{max-width:780px}
+main,#footer{position:relative;z-index:1}
 .sec{padding:140px 0;position:relative;transition:background var(--dur) ease}
 .sec-alt{background:var(--bg-alt)}
 
