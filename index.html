@@ -4,367 +4,250 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SK Jalrakshak Innovations Pvt Ltd | Smart Water Intelligence</title>
-  <meta name="description" content="SK Jalrakshak Innovations Private Limited — smart water intelligence systems, edge telemetry, cloud dashboards, and predictive analytics. CIN: U26517AP2025PTC119413">
+  <meta name="description" content="SK Jalrakshak Innovations — smart water intelligence, edge telemetry, cloud dashboards & predictive analytics. CIN: U26517AP2025PTC119413">
   <meta name="theme-color" content="#0a0a0a">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['"Inter Tight"', 'system-ui', 'sans-serif'],
-            body: ['"Inter"', 'system-ui', 'sans-serif'],
-          },
-          colors: {
-            brand: { DEFAULT: '#0ea5e9', dark: '#0369a1', light: '#7dd3fc', glow: '#38bdf8' },
-            surface: { DEFAULT: '#0a0a0a', card: '#111111', border: '#1a1a1a', hover: '#161616' }
-          },
-          borderRadius: { '2xl': '20px', '3xl': '28px', '4xl': '36px' },
-        }
-      }
-    }
-  </script>
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .glass-card {
-        @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.05)];
-      }
-      .text-gradient {
-        @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-light via-brand to-blue-400;
-      }
-    }
-  </style>
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script defer src="script.js"></script>
 </head>
-<body class="bg-surface text-white font-body antialiased overflow-x-hidden selection:bg-brand/30 selection:text-white">
+<body>
 
   <!-- ═══ PRELOADER ═══ -->
-  <div id="preloader" class="fixed inset-0 z-[200] bg-surface flex flex-col items-center justify-center">
-    <div class="overflow-hidden">
-      <h1 class="text-2xl sm:text-3xl font-display font-light tracking-[0.3em] uppercase preloader-text translate-y-full opacity-0">SK Jalrakshak</h1>
-    </div>
-    <div class="w-48 h-[1px] bg-white/10 mt-8 overflow-hidden">
-      <div class="h-full bg-brand preloader-bar w-0"></div>
+  <div id="preloader">
+    <div class="pre-inner">
+      <div class="pre-name">
+        <span class="pre-letter">S</span><span class="pre-letter">K</span>
+        <span class="pre-letter pre-dot">·</span>
+        <span class="pre-letter">J</span><span class="pre-letter">A</span><span class="pre-letter">L</span><span class="pre-letter">R</span><span class="pre-letter">A</span><span class="pre-letter">K</span><span class="pre-letter">S</span><span class="pre-letter">H</span><span class="pre-letter">A</span><span class="pre-letter">K</span>
+      </div>
+      <div class="pre-sub">Innovations Private Limited</div>
+      <div class="pre-bar-track"><div class="pre-bar-fill"></div></div>
     </div>
   </div>
 
+  <!-- ═══ GRAIN OVERLAY ═══ -->
+  <div class="grain" aria-hidden="true"></div>
+
   <!-- ═══ NAVBAR ═══ -->
-  <nav id="navbar" class="fixed top-0 left-0 w-full z-50 px-6 lg:px-10 py-5 flex justify-between items-center transition-all duration-700">
-    <a href="#" class="text-lg font-display tracking-tight font-semibold text-white/90 hover:text-white transition-colors">
-      SK<span class="text-brand">J</span>alrakshak
-    </a>
-    <div class="hidden md:flex items-center gap-1 bg-white/[0.04] backdrop-blur-lg border border-white/[0.06] rounded-full px-1.5 py-1.5">
-      <a href="#about" class="nav-pill px-5 py-2 text-[0.7rem] uppercase tracking-[0.15em] font-medium text-white/50 hover:text-white rounded-full transition-all duration-300 hover:bg-white/[0.06]">About</a>
-      <a href="#systems" class="nav-pill px-5 py-2 text-[0.7rem] uppercase tracking-[0.15em] font-medium text-white/50 hover:text-white rounded-full transition-all duration-300 hover:bg-white/[0.06]">Systems</a>
-      <a href="#faq" class="nav-pill px-5 py-2 text-[0.7rem] uppercase tracking-[0.15em] font-medium text-white/50 hover:text-white rounded-full transition-all duration-300 hover:bg-white/[0.06]">FAQ</a>
-      <a href="#contact" class="nav-pill px-5 py-2 text-[0.7rem] uppercase tracking-[0.15em] font-medium text-white/50 hover:text-white rounded-full transition-all duration-300 hover:bg-white/[0.06]">Contact</a>
+  <nav id="navbar">
+    <a href="#" class="nav-brand">SK Jalrakshak</a>
+    <div class="nav-center" id="navPills">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#systems" class="nav-link">Systems</a>
+      <a href="#testimonials" class="nav-link">Testimonials</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <div class="nav-cursor" id="navCursor"></div>
     </div>
-    <a href="mailto:info.skjipl@gmail.com" class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 text-xs font-medium uppercase tracking-widest border border-brand/30 text-brand-light rounded-full hover:bg-brand/10 hover:border-brand/50 transition-all duration-300">
-      Get in Touch
-    </a>
+    <a href="mailto:info.skjipl@gmail.com" class="nav-cta">Get in Touch<span class="cta-arrow">→</span></a>
   </nav>
 
   <main>
     <!-- ═══ HERO ═══ -->
-    <section id="hero" class="min-h-screen flex flex-col justify-center px-6 lg:px-10 pt-24 pb-16 relative overflow-hidden">
-      <!-- Ambient glow -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-brand/[0.04] rounded-full blur-[150px] pointer-events-none"></div>
-
-      <div class="relative z-10 max-w-7xl mx-auto w-full">
-        <div class="mb-8 overflow-hidden">
-          <span class="block text-xs uppercase tracking-[0.3em] text-brand/70 font-medium hero-line translate-y-full">Smart Water Intelligence Platform</span>
-        </div>
-        <h1 class="text-[clamp(2.8rem,8vw,7.5rem)] leading-[0.88] font-display font-bold tracking-tighter">
-          <div class="overflow-hidden"><span class="block hero-line translate-y-full">We Turn Water</span></div>
-          <div class="overflow-hidden"><span class="block hero-line translate-y-full text-gradient">Into Intelligence.</span></div>
+    <section id="hero" class="hero-section">
+      <div class="hero-container">
+        <p class="hero-tag gs-reveal">Smart Water Intelligence Platform</p>
+        <h1 class="hero-h1">
+          <span class="hero-line-wrap"><span class="hero-line">We Turn Water</span></span>
+          <span class="hero-line-wrap"><span class="hero-line">Into Intelligence.</span></span>
         </h1>
-        <div class="mt-10 max-w-lg">
-          <p class="text-white/40 text-base lg:text-lg font-light leading-relaxed hero-fade opacity-0">
-            Edge telemetry, predictive analytics, and real-time cloud dashboards for industrial water infrastructure worldwide.
-          </p>
-        </div>
-        <div class="mt-10 flex flex-wrap gap-4 hero-fade opacity-0">
-          <a href="#systems" class="px-7 py-3.5 bg-brand text-white text-sm font-semibold rounded-full hover:bg-brand-dark transition-all duration-300 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)]">
-            Explore Systems
-          </a>
-          <a href="#contact" class="px-7 py-3.5 border border-white/10 text-white/70 text-sm font-medium rounded-full hover:border-white/25 hover:text-white transition-all duration-300">
-            Contact Us
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ SHOWCASE IMAGE ═══ -->
-    <section class="px-4 lg:px-8 pb-20">
-      <div class="w-full h-[50vh] lg:h-[75vh] overflow-hidden rounded-3xl relative img-reveal">
-        <img src="img/aerial-water.png" alt="Smart Water Infrastructure" class="w-full h-full object-cover scale-[1.12] image-parallax">
-        <div class="absolute inset-0 bg-gradient-to-t from-surface/60 via-transparent to-transparent"></div>
-      </div>
-    </section>
-
-    <!-- ═══ STATS ═══ -->
-    <section id="about" class="py-20 lg:py-32 px-6 lg:px-10">
-      <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-          <div>
-            <span class="text-xs uppercase tracking-[0.3em] text-brand/60 font-medium gs-reveal">About the Company</span>
-            <h2 class="text-3xl lg:text-5xl font-display font-bold tracking-tight mt-4 leading-[1.1] gs-reveal">
-              Defining the operational DNA for industrial water networks.
-            </h2>
-            <p class="text-white/40 text-base lg:text-lg font-light leading-relaxed mt-6 max-w-lg gs-reveal">
-              SK Jalrakshak Innovations Private Limited (CIN: U26517AP2025PTC119413), incorporated on 16 May 2025 under RoC-Vijayawada, delivers next-generation water intelligence across edge, cloud, and predictive layers.
-            </p>
+        <div class="hero-bottom hero-fade">
+          <p class="hero-sub">Edge telemetry, predictive analytics, and real-time cloud dashboards powering industrial water infrastructure across the globe.</p>
+          <div class="hero-actions">
+            <a href="#systems" class="btn-main">Explore Systems</a>
+            <a href="#contact" class="btn-ghost">Contact Us</a>
           </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div class="glass-card rounded-2xl p-6 gs-reveal">
-              <div class="text-3xl lg:text-5xl font-display font-bold text-gradient mb-2">1M+</div>
-              <div class="text-white/40 text-xs uppercase tracking-widest">Data Points</div>
-            </div>
-            <div class="glass-card rounded-2xl p-6 gs-reveal">
-              <div class="text-3xl lg:text-5xl font-display font-bold text-gradient mb-2">50+</div>
-              <div class="text-white/40 text-xs uppercase tracking-widest">Deployments</div>
-            </div>
-            <div class="glass-card rounded-2xl p-6 gs-reveal">
-              <div class="text-3xl lg:text-5xl font-display font-bold text-gradient mb-2">24/7</div>
-              <div class="text-white/40 text-xs uppercase tracking-widest">Telemetry</div>
-            </div>
-            <div class="glass-card rounded-2xl p-6 gs-reveal">
-              <div class="text-3xl lg:text-5xl font-display font-bold text-gradient mb-2">0.1s</div>
-              <div class="text-white/40 text-xs uppercase tracking-widest">Edge Latency</div>
-            </div>
+        </div>
+      </div>
+      <div class="hero-scroll-hint hero-fade">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section id="about" class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-eyebrow gs-reveal">(01) About</div>
+        <div class="about-layout">
+          <div class="about-left gs-reveal">
+            <h2 class="sec-title">We define the operational DNA for industrial water networks across India and beyond.</h2>
+          </div>
+          <div class="about-right gs-reveal">
+            <p class="body-text">SK Jalrakshak Innovations Private Limited (CIN: U26517AP2025PTC119413), incorporated on 16 May 2025 under RoC-Vijayawada, delivers next-generation water intelligence — from edge sensors deployed in the harshest environments to cloud dashboards that predict failures before they happen.</p>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat gs-reveal">
+            <span class="stat-val">1M+</span>
+            <span class="stat-desc">Data Points Processed</span>
+          </div>
+          <div class="stat gs-reveal">
+            <span class="stat-val">50+</span>
+            <span class="stat-desc">Global Deployments</span>
+          </div>
+          <div class="stat gs-reveal">
+            <span class="stat-val">24/7</span>
+            <span class="stat-desc">Real-time Telemetry</span>
+          </div>
+          <div class="stat gs-reveal">
+            <span class="stat-val">0.1s</span>
+            <span class="stat-desc">Edge Latency</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ═══ SYSTEMS ═══ -->
-    <section id="systems" class="py-20 lg:py-32 px-6 lg:px-10">
-      <div class="max-w-7xl mx-auto">
-        <span class="text-xs uppercase tracking-[0.3em] text-brand/60 font-medium gs-reveal">Our Systems</span>
-        <h2 class="text-3xl lg:text-5xl font-display font-bold tracking-tight mt-4 mb-16 gs-reveal">Built for Scale.</h2>
+    <section id="systems" class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-eyebrow gs-reveal">(02) Systems</div>
+        <h2 class="sec-title sec-title-lg gs-reveal">Built for Scale.</h2>
+        <div class="systems-list">
+          <article class="sys-row gs-reveal">
+            <span class="sys-num">01</span>
+            <div class="sys-content">
+              <h3 class="sys-name">Edge Telemetry</h3>
+              <p class="sys-desc">Hardware modules engineered for the most brutal industrial environments. Our sensors capture precise fluid dynamics, pressure differentials, and chemical composition data in real-time — even in remote, off-grid locations.</p>
+            </div>
+            <span class="sys-badge">Hardware</span>
+          </article>
+          <article class="sys-row gs-reveal">
+            <span class="sys-num">02</span>
+            <div class="sys-content">
+              <h3 class="sys-name">Cloud Intelligence</h3>
+              <p class="sys-desc">Machine learning models that predict infrastructure anomalies before they occur. A unified cloud dashboard provides complete operational oversight across thousands of miles of pipeline, treatment plants, and distribution networks.</p>
+            </div>
+            <span class="sys-badge">Software</span>
+          </article>
+          <article class="sys-row gs-reveal">
+            <span class="sys-num">03</span>
+            <div class="sys-content">
+              <h3 class="sys-name">Predictive Analytics</h3>
+              <p class="sys-desc">Our forecasting engine leverages historical patterns, weather data, and real-time sensor feeds to prevent infrastructure failures. We don't just monitor water — we anticipate its behavior across entire networks.</p>
+            </div>
+            <span class="sys-badge">AI / ML</span>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <!-- Card 1 -->
-          <div class="glass-card rounded-3xl overflow-hidden group gs-reveal hover:border-brand/20 transition-all duration-500">
-            <div class="h-64 lg:h-80 overflow-hidden">
-              <img src="img/field-deploy.png" alt="Edge Telemetry" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-            </div>
-            <div class="p-8">
-              <h3 class="text-2xl font-display font-bold mb-3">Edge Telemetry</h3>
-              <p class="text-white/40 text-sm leading-relaxed">Hardware modules for brutal industrial environments. Precise fluid dynamics, pressure, and chemical composition capture in real-time.</p>
-            </div>
+    <!-- ═══ TESTIMONIALS ═══ -->
+    <section id="testimonials" class="sec sec-dark sec-testimonials">
+      <div class="wrap">
+        <div class="sec-eyebrow gs-reveal">(03) Testimonials</div>
+        <h2 class="sec-title sec-title-lg gs-reveal">What People Say.</h2>
+      </div>
+      <div class="marquee-wrap" id="marqueeWrap">
+        <div class="marquee-row marquee-left">
+          <div class="marquee-track">
+            <div class="tcard"><blockquote>"The telemetry platform completely transformed how we monitor our water treatment facilities. Real-time data has reduced our response time by 80%."</blockquote><cite><strong>Rajesh Kumar</strong><span>Operations Director</span></cite></div>
+            <div class="tcard"><blockquote>"SK Jalrakshak's edge sensors operate flawlessly even in our most remote installations. The reliability is exceptional."</blockquote><cite><strong>Priya Sharma</strong><span>Field Engineer</span></cite></div>
+            <div class="tcard"><blockquote>"Their predictive analytics caught a pipeline failure 72 hours before it would have happened. That single alert saved us ₹2 crore."</blockquote><cite><strong>Anand Verma</strong><span>Infrastructure Manager</span></cite></div>
+            <div class="tcard"><blockquote>"The cloud dashboard is intuitive and powerful. Our entire team adopted it within a week — no training needed."</blockquote><cite><strong>Meera Nair</strong><span>Technology Lead</span></cite></div>
+            <div class="tcard"><blockquote>"We've deployed their system across 12 facilities and the consistency of data quality is remarkable."</blockquote><cite><strong>Vikram Patel</strong><span>Plant Manager</span></cite></div>
+            <div class="tcard"><blockquote>"The telemetry platform completely transformed how we monitor our water treatment facilities. Real-time data has reduced our response time by 80%."</blockquote><cite><strong>Rajesh Kumar</strong><span>Operations Director</span></cite></div>
+            <div class="tcard"><blockquote>"SK Jalrakshak's edge sensors operate flawlessly even in our most remote installations. The reliability is exceptional."</blockquote><cite><strong>Priya Sharma</strong><span>Field Engineer</span></cite></div>
+            <div class="tcard"><blockquote>"Their predictive analytics caught a pipeline failure 72 hours before it would have happened. That single alert saved us ₹2 crore."</blockquote><cite><strong>Anand Verma</strong><span>Infrastructure Manager</span></cite></div>
+            <div class="tcard"><blockquote>"The cloud dashboard is intuitive and powerful. Our entire team adopted it within a week — no training needed."</blockquote><cite><strong>Meera Nair</strong><span>Technology Lead</span></cite></div>
+            <div class="tcard"><blockquote>"We've deployed their system across 12 facilities and the consistency of data quality is remarkable."</blockquote><cite><strong>Vikram Patel</strong><span>Plant Manager</span></cite></div>
           </div>
-          <!-- Card 2 -->
-          <div class="glass-card rounded-3xl overflow-hidden group gs-reveal hover:border-brand/20 transition-all duration-500">
-            <div class="h-64 lg:h-80 overflow-hidden">
-              <img src="assets/images/water-monitoring.png" alt="Cloud Intelligence" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-            </div>
-            <div class="p-8">
-              <h3 class="text-2xl font-display font-bold mb-3">Cloud Intelligence</h3>
-              <p class="text-white/40 text-sm leading-relaxed">ML models predicting anomalies before they occur. Unified dashboards providing operational oversight across thousands of miles.</p>
-            </div>
-          </div>
-          <!-- Card 3 -->
-          <div class="glass-card rounded-3xl overflow-hidden group gs-reveal hover:border-brand/20 transition-all duration-500">
-            <div class="h-64 lg:h-80 overflow-hidden">
-              <img src="assets/images/solar-iot-field.png" alt="Solar IoT" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-            </div>
-            <div class="p-8">
-              <h3 class="text-2xl font-display font-bold mb-3">Solar IoT Grid</h3>
-              <p class="text-white/40 text-sm leading-relaxed">Self-sustaining solar-powered monitoring stations deployed across remote water infrastructure for off-grid analytics.</p>
-            </div>
-          </div>
-          <!-- Card 4 -->
-          <div class="glass-card rounded-3xl overflow-hidden group gs-reveal hover:border-brand/20 transition-all duration-500">
-            <div class="h-64 lg:h-80 overflow-hidden">
-              <img src="img/hero-lab.png" alt="Predictive Analytics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-            </div>
-            <div class="p-8">
-              <h3 class="text-2xl font-display font-bold mb-3">Predictive Analytics</h3>
-              <p class="text-white/40 text-sm leading-relaxed">Advanced forecasting engine leveraging historical patterns, weather data, and real-time sensor feeds to prevent infrastructure failures.</p>
-            </div>
+        </div>
+        <div class="marquee-row marquee-right">
+          <div class="marquee-track">
+            <div class="tcard"><blockquote>"The integration with our existing SCADA systems was seamless. SK Jalrakshak's team handled every challenge professionally."</blockquote><cite><strong>Deepak Reddy</strong><span>Systems Architect</span></cite></div>
+            <div class="tcard"><blockquote>"From rural water stations to industrial zones, their IoT grid adapts to any environment. Truly versatile technology."</blockquote><cite><strong>Sunita Devi</strong><span>Project Coordinator</span></cite></div>
+            <div class="tcard"><blockquote>"The reporting capabilities alone justify the investment. We now have compliance-ready data at our fingertips."</blockquote><cite><strong>Arjun Singh</strong><span>Compliance Officer</span></cite></div>
+            <div class="tcard"><blockquote>"Their solar-powered monitoring stations are a game-changer for our off-grid installations in Andhra Pradesh."</blockquote><cite><strong>Lakshmi Rao</strong><span>Sustainability Lead</span></cite></div>
+            <div class="tcard"><blockquote>"Working with SK Jalrakshak feels like having an extension of our own engineering team."</blockquote><cite><strong>Mohammed Faiz</strong><span>CTO</span></cite></div>
+            <div class="tcard"><blockquote>"The integration with our existing SCADA systems was seamless. SK Jalrakshak's team handled every challenge professionally."</blockquote><cite><strong>Deepak Reddy</strong><span>Systems Architect</span></cite></div>
+            <div class="tcard"><blockquote>"From rural water stations to industrial zones, their IoT grid adapts to any environment. Truly versatile technology."</blockquote><cite><strong>Sunita Devi</strong><span>Project Coordinator</span></cite></div>
+            <div class="tcard"><blockquote>"The reporting capabilities alone justify the investment. We now have compliance-ready data at our fingertips."</blockquote><cite><strong>Arjun Singh</strong><span>Compliance Officer</span></cite></div>
+            <div class="tcard"><blockquote>"Their solar-powered monitoring stations are a game-changer for our off-grid installations in Andhra Pradesh."</blockquote><cite><strong>Lakshmi Rao</strong><span>Sustainability Lead</span></cite></div>
+            <div class="tcard"><blockquote>"Working with SK Jalrakshak feels like having an extension of our own engineering team."</blockquote><cite><strong>Mohammed Faiz</strong><span>CTO</span></cite></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ COMPANY INFO ═══ -->
-    <section class="py-20 lg:py-32 px-6 lg:px-10 relative overflow-hidden">
-      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand/[0.03] rounded-full blur-[120px] pointer-events-none"></div>
-      <div class="max-w-7xl mx-auto relative z-10">
-        <div class="text-center mb-16">
-          <span class="text-xs uppercase tracking-[0.3em] text-brand/60 font-medium gs-reveal">Corporate Details</span>
-          <h2 class="text-3xl lg:text-5xl font-display font-bold tracking-tight mt-4 gs-reveal">The Company.</h2>
+    <!-- ═══ COMPANY ═══ -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-eyebrow gs-reveal">(04) Company</div>
+        <h2 class="sec-title gs-reveal">The Company.</h2>
+        <div class="corp-grid">
+          <div class="corp-card gs-reveal"><span class="corp-key">CIN</span><span class="corp-val">U26517AP2025PTC119413</span></div>
+          <div class="corp-card gs-reveal"><span class="corp-key">ROC</span><span class="corp-val">RoC-Vijayawada</span></div>
+          <div class="corp-card gs-reveal"><span class="corp-key">Incorporated</span><span class="corp-val">16 May 2025</span></div>
+          <div class="corp-card gs-reveal"><span class="corp-key">Category</span><span class="corp-val">Private Limited (Non-Govt)</span></div>
+          <div class="corp-card gs-reveal"><span class="corp-key">Status</span><span class="corp-val corp-active">● Active</span></div>
+          <div class="corp-card gs-reveal"><span class="corp-key">Office</span><span class="corp-val">Visakhapatnam, AP 530048</span></div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div class="glass-card rounded-2xl p-6 gs-reveal">
-            <div class="text-white/30 text-xs uppercase tracking-widest mb-3">CIN</div>
-            <div class="text-sm font-medium text-white/80">U26517AP2025PTC119413</div>
+        <div class="directors-row">
+          <div class="dir-card gs-reveal">
+            <div class="dir-icon">KS</div>
+            <div><strong>Kameswara Sarma Nagabhatla</strong><span class="dir-meta">Director · DIN 11111205</span></div>
           </div>
-          <div class="glass-card rounded-2xl p-6 gs-reveal">
-            <div class="text-white/30 text-xs uppercase tracking-widest mb-3">ROC</div>
-            <div class="text-sm font-medium text-white/80">RoC-Vijayawada</div>
-          </div>
-          <div class="glass-card rounded-2xl p-6 gs-reveal">
-            <div class="text-white/30 text-xs uppercase tracking-widest mb-3">Incorporated</div>
-            <div class="text-sm font-medium text-white/80">16 May 2025</div>
-          </div>
-          <div class="glass-card rounded-2xl p-6 gs-reveal">
-            <div class="text-white/30 text-xs uppercase tracking-widest mb-3">Category</div>
-            <div class="text-sm font-medium text-white/80">Private Limited (Non-Govt)</div>
-          </div>
-          <div class="glass-card rounded-2xl p-6 gs-reveal">
-            <div class="text-white/30 text-xs uppercase tracking-widest mb-3">Status</div>
-            <div class="text-sm font-medium text-emerald-400">● Active</div>
-          </div>
-          <div class="glass-card rounded-2xl p-6 gs-reveal">
-            <div class="text-white/30 text-xs uppercase tracking-widest mb-3">Registered Office</div>
-            <div class="text-sm font-medium text-white/80">Visakhapatnam, AP 530048</div>
-          </div>
-        </div>
-
-        <!-- Directors -->
-        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="glass-card rounded-2xl p-8 gs-reveal flex items-center gap-6">
-            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-brand to-blue-600 flex items-center justify-center text-xl font-display font-bold shrink-0">KS</div>
-            <div>
-              <div class="font-display font-semibold text-lg">Kameswara Sarma Nagabhatla</div>
-              <div class="text-white/40 text-sm">Director · DIN 11111205</div>
-            </div>
-          </div>
-          <div class="glass-card rounded-2xl p-8 gs-reveal flex items-center gap-6">
-            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-brand to-blue-600 flex items-center justify-center text-xl font-display font-bold shrink-0">SK</div>
-            <div>
-              <div class="font-display font-semibold text-lg">Sirish Kumar Pagoti</div>
-              <div class="text-white/40 text-sm">Director · DIN 11111206</div>
-            </div>
+          <div class="dir-card gs-reveal">
+            <div class="dir-icon">SK</div>
+            <div><strong>Sirish Kumar Pagoti</strong><span class="dir-meta">Director · DIN 11111206</span></div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ═══ FAQ ═══ -->
-    <section id="faq" class="py-20 lg:py-32 px-6 lg:px-10">
-      <div class="max-w-3xl mx-auto">
-        <div class="text-center mb-16">
-          <span class="text-xs uppercase tracking-[0.3em] text-brand/60 font-medium gs-reveal">FAQ</span>
-          <h2 class="text-3xl lg:text-5xl font-display font-bold tracking-tight mt-4 gs-reveal">Common Questions.</h2>
-        </div>
-
-        <div class="space-y-3">
-          <div class="faq-item glass-card rounded-2xl overflow-hidden gs-reveal">
-            <button class="faq-toggle w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
-              <span class="font-display font-semibold text-base pr-4">What is SK Jalrakshak Innovations?</span>
-              <span class="faq-icon text-brand text-xl shrink-0 transition-transform duration-300">+</span>
-            </button>
-            <div class="faq-content max-h-0 overflow-hidden transition-all duration-500">
-              <p class="px-6 pb-6 text-white/40 text-sm leading-relaxed">SK Jalrakshak Innovations Private Limited is a company limited by shares, classified as a Non-government private company. We specialize in smart water intelligence systems, edge telemetry, cloud dashboards, and predictive analytics for industrial and environmental monitoring.</p>
-            </div>
-          </div>
-
-          <div class="faq-item glass-card rounded-2xl overflow-hidden gs-reveal">
-            <button class="faq-toggle w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
-              <span class="font-display font-semibold text-base pr-4">Where is the company registered?</span>
-              <span class="faq-icon text-brand text-xl shrink-0 transition-transform duration-300">+</span>
-            </button>
-            <div class="faq-content max-h-0 overflow-hidden transition-all duration-500">
-              <p class="px-6 pb-6 text-white/40 text-sm leading-relaxed">Our registered office is at D No: 2-14130, 2nd Floor, Plot-13, Revenue Ward 5, Madhurawada, Visakhapatnam, Andhra Pradesh, India — 530048. We are registered under RoC-Vijayawada with Registration Number 119413.</p>
-            </div>
-          </div>
-
-          <div class="faq-item glass-card rounded-2xl overflow-hidden gs-reveal">
-            <button class="faq-toggle w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
-              <span class="font-display font-semibold text-base pr-4">Who are the directors?</span>
-              <span class="faq-icon text-brand text-xl shrink-0 transition-transform duration-300">+</span>
-            </button>
-            <div class="faq-content max-h-0 overflow-hidden transition-all duration-500">
-              <p class="px-6 pb-6 text-white/40 text-sm leading-relaxed">The company is led by two directors: Kameswara Sarma Nagabhatla (DIN 11111205) and Sirish Kumar Pagoti (DIN 11111206), both serving since the date of incorporation on 16 May 2025.</p>
-            </div>
-          </div>
-
-          <div class="faq-item glass-card rounded-2xl overflow-hidden gs-reveal">
-            <button class="faq-toggle w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
-              <span class="font-display font-semibold text-base pr-4">How can I contact the company?</span>
-              <span class="faq-icon text-brand text-xl shrink-0 transition-transform duration-300">+</span>
-            </button>
-            <div class="faq-content max-h-0 overflow-hidden transition-all duration-500">
-              <p class="px-6 pb-6 text-white/40 text-sm leading-relaxed">You can reach us via email at <a href="mailto:info.skjipl@gmail.com" class="text-brand hover:underline">info.skjipl@gmail.com</a>. For project inquiries, use the contact section below or visit our registered office in Visakhapatnam.</p>
-            </div>
-          </div>
-
-          <div class="faq-item glass-card rounded-2xl overflow-hidden gs-reveal">
-            <button class="faq-toggle w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
-              <span class="font-display font-semibold text-base pr-4">What services do you offer?</span>
-              <span class="faq-icon text-brand text-xl shrink-0 transition-transform duration-300">+</span>
-            </button>
-            <div class="faq-content max-h-0 overflow-hidden transition-all duration-500">
-              <p class="px-6 pb-6 text-white/40 text-sm leading-relaxed">We provide end-to-end water intelligence solutions including edge telemetry hardware, cloud-based monitoring dashboards, predictive analytics engines, solar-powered IoT grids, and custom API integrations for industrial water infrastructure.</p>
-            </div>
-          </div>
-
-          <div class="faq-item glass-card rounded-2xl overflow-hidden gs-reveal">
-            <button class="faq-toggle w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
-              <span class="font-display font-semibold text-base pr-4">When was the company established?</span>
-              <span class="faq-icon text-brand text-xl shrink-0 transition-transform duration-300">+</span>
-            </button>
-            <div class="faq-content max-h-0 overflow-hidden transition-all duration-500">
-              <p class="px-6 pb-6 text-white/40 text-sm leading-relaxed">SK Jalrakshak Innovations was incorporated on 16 May 2025 as per Ministry of Corporate Affairs (MCA) records, with an authorised share capital of ₹1,00,000 and paid-up capital of ₹30,000.</p>
-            </div>
-          </div>
+    <section id="faq" class="sec sec-white">
+      <div class="wrap wrap-sm">
+        <div class="sec-eyebrow gs-reveal">(05) FAQ</div>
+        <h2 class="sec-title gs-reveal">Common Questions.</h2>
+        <div class="faq-list">
+          <details class="faq gs-reveal"><summary>What is SK Jalrakshak Innovations?</summary><p>A Private Limited Company specializing in smart water intelligence — edge telemetry, cloud dashboards, and predictive analytics for industrial water infrastructure. CIN: U26517AP2025PTC119413.</p></details>
+          <details class="faq gs-reveal"><summary>Where is the company registered?</summary><p>D No: 2-14130, 2nd Floor, Plot-13, Revenue Ward 5, Madhurawada, Visakhapatnam, Andhra Pradesh 530048. Registered under RoC-Vijayawada.</p></details>
+          <details class="faq gs-reveal"><summary>Who are the directors?</summary><p>Kameswara Sarma Nagabhatla (DIN 11111205) and Sirish Kumar Pagoti (DIN 11111206), both serving since incorporation on 16 May 2025.</p></details>
+          <details class="faq gs-reveal"><summary>How can I contact the company?</summary><p>Email us at info.skjipl@gmail.com or visit our registered office in Visakhapatnam.</p></details>
+          <details class="faq gs-reveal"><summary>What services do you offer?</summary><p>End-to-end water intelligence: edge telemetry hardware, cloud monitoring dashboards, predictive analytics engines, solar IoT grids, and custom API integrations.</p></details>
+          <details class="faq gs-reveal"><summary>When was the company established?</summary><p>Incorporated 16 May 2025 per MCA records, with authorised capital of ₹1,00,000 and paid-up capital of ₹30,000.</p></details>
         </div>
       </div>
     </section>
 
-    <!-- ═══ CONTACT / CTA ═══ -->
-    <section id="contact" class="py-20 lg:py-32 px-6 lg:px-10 relative overflow-hidden">
-      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-brand/[0.05] rounded-full blur-[160px] pointer-events-none"></div>
-      <div class="max-w-7xl mx-auto relative z-10">
-        <div class="text-center mb-16">
-          <span class="text-xs uppercase tracking-[0.3em] text-brand/60 font-medium gs-reveal">Get Started</span>
-          <h2 class="text-4xl lg:text-7xl font-display font-bold tracking-tight mt-4 gs-reveal">Start Your Project.</h2>
-          <p class="text-white/40 text-base lg:text-lg max-w-xl mx-auto mt-6 gs-reveal">Every standout project begins with one conversation. Tell us your vision and our engineering team will reach out personally.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-          <a href="mailto:info.skjipl@gmail.com" class="glass-card rounded-2xl p-6 text-center group hover:border-brand/20 transition-all duration-300 gs-reveal">
-            <div class="text-2xl mb-3">✉️</div>
-            <div class="text-xs uppercase tracking-widest text-white/30 mb-2">Email</div>
-            <div class="text-sm text-brand-light group-hover:text-brand transition-colors">info.skjipl@gmail.com</div>
-          </a>
-          <div class="glass-card rounded-2xl p-6 text-center gs-reveal">
-            <div class="text-2xl mb-3">📍</div>
-            <div class="text-xs uppercase tracking-widest text-white/30 mb-2">Location</div>
-            <div class="text-sm text-white/60">Visakhapatnam, India</div>
-          </div>
-          <div class="glass-card rounded-2xl p-6 text-center gs-reveal">
-            <div class="text-2xl mb-3">🏢</div>
-            <div class="text-xs uppercase tracking-widest text-white/30 mb-2">CIN</div>
-            <div class="text-sm text-white/60 break-all">U26517AP2025PTC119413</div>
-          </div>
+    <!-- ═══ CONTACT ═══ -->
+    <section id="contact" class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-eyebrow gs-reveal">(06) Contact</div>
+        <h2 class="cta-title gs-reveal">Let's Start<br>Your Project.</h2>
+        <p class="cta-body gs-reveal">Every standout project begins with one conversation. Tell us your vision and our engineering team will reach out personally.</p>
+        <div class="contact-row">
+          <a href="mailto:info.skjipl@gmail.com" class="cbox gs-reveal"><span class="cbox-icon">✉</span><span class="cbox-label">Email</span><span class="cbox-data">info.skjipl@gmail.com</span></a>
+          <div class="cbox gs-reveal"><span class="cbox-icon">◉</span><span class="cbox-label">Location</span><span class="cbox-data">Visakhapatnam, India</span></div>
+          <div class="cbox gs-reveal"><span class="cbox-icon">⬡</span><span class="cbox-label">CIN</span><span class="cbox-data">U26517AP2025PTC119413</span></div>
         </div>
       </div>
     </section>
   </main>
 
   <!-- ═══ FOOTER ═══ -->
-  <footer class="border-t border-white/[0.04] px-6 lg:px-10 py-12">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="text-white/30 text-sm">© 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.</div>
-      <div class="flex gap-8 text-xs uppercase tracking-widest text-white/30">
-        <a href="#" class="hover:text-white/60 transition-colors">Privacy</a>
-        <a href="#" class="hover:text-white/60 transition-colors">Terms</a>
-        <a href="#" class="hover:text-white/60 transition-colors">LinkedIn</a>
+  <footer id="footer">
+    <div class="wrap">
+      <div class="foot-top">
+        <div class="foot-brand">SK Jalrakshak</div>
+        <div class="foot-nav">
+          <a href="#about">About</a><a href="#systems">Systems</a><a href="#testimonials">Testimonials</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span class="foot-copy">© 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.</span>
+        <div class="foot-socials">
+          <a href="#" aria-label="X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10.488 14.651L15.25 21h7l-7.858-10.478L20.93 3h-2.65l-5.117 5.886L8.75 3h-7l7.51 10.015L2.32 21h2.65zM16.25 19L5.75 5h2l10.5 14z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3"/></svg></a>
+        </div>
       </div>
     </div>
   </footer>
