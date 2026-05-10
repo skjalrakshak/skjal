@@ -1,0 +1,11 @@
+{
+  "name": "skjal-rakshak-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Optimized cinematic website for SK Jalrakshak Innovations.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check script.js && node --check server.js"
+  }
+}
