@@ -22,8 +22,8 @@
   --scroll-bg: rgba(255,255,255,0.08);
   --scroll-fill: #ffffff;
   --stat-bg: #151515;
-  --card-hover-border: rgba(255,107,2,0.35);
-  --card-hover-shadow: rgba(255,107,2,0.06);
+  --card-hover-border: rgba(14,165,233,0.35);
+  --card-hover-shadow: rgba(14,165,233,0.06);
   --marquee-fade: #111111;
   --toggle-bg: #1a1a1a;
   --toggle-fg: #e8e8e8;
@@ -51,15 +51,15 @@
   --scroll-bg: rgba(0,0,0,0.06);
   --scroll-fill: #0e0e0e;
   --stat-bg: #ebe5d9;
-  --card-hover-border: rgba(255,107,2,0.4);
-  --card-hover-shadow: rgba(255,107,2,0.08);
+  --card-hover-border: rgba(14,165,233,0.4);
+  --card-hover-shadow: rgba(14,165,233,0.08);
   --marquee-fade: #eae4d8;
   --toggle-bg: #f3ede1;
   --toggle-fg: #1a1a1a;
   --toggle-ring: rgba(0,0,0,0.1);
 }
 :root {
-  --orange: #FF6B02;
+  --sky-blue: #0ea5e9;
   --green: #34d399;
   --sans: 'Satoshi', 'Inter', system-ui, -apple-system, sans-serif;
   --display: 'Satoshi', system-ui, sans-serif;
@@ -102,7 +102,7 @@ button {
   color: inherit;
 }
 ::selection {
-  background: var(--orange);
+  background: var(--sky-blue);
   color: #000;
 }
 html.lenis,html.lenis body {
