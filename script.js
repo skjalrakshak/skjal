@@ -24,7 +24,7 @@ const CURTAIN_EASE = 'cubic-bezier(0.76, 0, 0.24, 1)';
 let curtainBusy = false;
 
 // Theme token map for curtain color
-const THEME_BG = { dark: '#0a0a0a', light: '#f3ede1' };
+const THEME_BG = { dark: '#0a0a0a', light: '#ffffff' };
 
 function getTheme() {
   return document.documentElement.getAttribute('data-theme') || 'dark';
@@ -152,16 +152,11 @@ document.querySelectorAll('.sys-row').forEach(row => {
 const testimonialSec = document.getElementById('testimonials');
 const systemsSec = document.getElementById('systems');
 
-if (testimonialSec && systemsSec) {
-  gsap.to(systemsSec, {
-    filter:'blur(6px)', opacity:0.25, ease:'none',
-    scrollTrigger: { trigger:testimonialSec, start:'top bottom', end:'top 30%', scrub:1 }
-  });
-
-  const mw = document.getElementById('marqueeWrap');
+if (testimonialSec) {
+  const mw = document.getElementById('marqueeWrap') || document.querySelector('.testi-list');
   if (mw) {
-    gsap.fromTo(mw, { filter:'blur(14px)', opacity:0, y:50 }, {
-      filter:'blur(0px)', opacity:1, y:0, duration:1.2, ease:'power2.out',
+    gsap.fromTo(mw, { opacity:0, y:50 }, {
+      opacity:1, y:0, duration:1.2, ease:'power2.out',
       scrollTrigger: { trigger:testimonialSec, start:'top 60%', toggleActions:'play none none reverse' }
     });
   }
