@@ -82,7 +82,9 @@ preloaderTL
   .to('.pre-sub, .pre-bar-track', { opacity:0, duration:.25 }, '-=0.2')
   .to('#preloader', { yPercent:-100, duration:1, ease:'power4.inOut' }, '-=0.1')
   .to('.hero-line', { y:'0%', duration:1.2, stagger:.1, ease:'power4.out' }, '-=0.5')
-  .to('.hero-fade', { opacity:1, duration:1, ease:'power2.out' }, '-=0.6');
+  .to('.hero-fade', { opacity:1, duration:1, ease:'power2.out' }, '-=0.6')
+  .fromTo('.fm-1', { clipPath: 'inset(100% 0 0 0)', scale: 1.2 }, { clipPath: 'inset(0% 0 0 0)', scale: 1, duration: 1.5, ease: 'power4.out' }, '-=1')
+  .fromTo('.fm-2', { clipPath: 'inset(100% 0 0 0)', scale: 1.2 }, { clipPath: 'inset(0% 0 0 0)', scale: 1, duration: 1.5, ease: 'power4.out' }, '-=1.2');
 
 // ═══════════════════════
 // 3. NAVBAR
@@ -205,3 +207,67 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     if (target) { e.preventDefault(); lenis.scrollTo(target, { offset:-80 }); }
   });
 });
+
+// ═══════════════════════
+// 12. FLOATING HERO MEDIA
+// ═══════════════════════
+const hero = document.getElementById('hero');
+const fm1 = document.querySelector('.fm-1');
+const fm2 = document.querySelector('.fm-2');
+
+if (hero && fm1 && fm2) {
+  // Parallax on scroll
+  gsap.to(fm1, { y: 80, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to(fm2, { y: -60, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+
+  // Subtle mouse movement
+  hero.addEventListener('mousemove', (e) => {
+    const { clientX, clientY } = e;
+    const x = (clientX / window.innerWidth - 0.5) * 40;
+    const y = (clientY / window.innerHeight - 0.5) * 40;
+    
+    gsap.to(fm1, { x: x, y: y, duration: 1, ease: 'power2.out', overwrite: 'auto' });
+    gsap.to(fm2, { x: -x * 1.5, y: -y * 1.5, duration: 1, ease: 'power2.out', overwrite: 'auto' });
+  });
+}
+
+// ═══════════════════════
+// 13. CLIP REVEALS
+// ═══════════════════════
+document.querySelectorAll('.gs-clip-reveal').forEach(el => {
+  const media = el.querySelector('img, video');
+  if (media) gsap.set(media, { scale: 1.2 });
+  
+  gsap.fromTo(el, { clipPath: 'inset(100% 0 0 0)' }, {
+    clipPath: 'inset(0% 0 0 0)',
+    duration: 1.4, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+  
+  if (media) {
+    gsap.to(media, {
+      scale: 1, duration: 1.4, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+    });
+  }
+});
+
+// ═══════════════════════
+// 14. HORIZONTAL SCROLL
+// ═══════════════════════
+const deepDiveSec = document.querySelector('.deep-dive-sec');
+const deepDiveWrap = document.querySelector('.deep-dive-wrap');
+if (deepDiveSec && deepDiveWrap) {
+  gsap.to(deepDiveWrap, {
+    x: () => -(deepDiveWrap.scrollWidth - window.innerWidth),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: deepDiveSec,
+      pin: true,
+      start: 'top top',
+      end: () => `+=${deepDiveWrap.scrollWidth - window.innerWidth}`,
+      scrub: 1,
+      invalidateOnRefresh: true
+    }
+  });
+}
