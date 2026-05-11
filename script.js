@@ -82,9 +82,7 @@ preloaderTL
   .to('.pre-sub, .pre-bar-track', { opacity:0, duration:.25 }, '-=0.2')
   .to('#preloader', { yPercent:-100, duration:1, ease:'power4.inOut' }, '-=0.1')
   .to('.hero-line', { y:'0%', duration:1.2, stagger:.1, ease:'power4.out' }, '-=0.5')
-  .to('.hero-fade', { opacity:1, duration:1, ease:'power2.out' }, '-=0.6')
-  .fromTo('.fm-1', { clipPath: 'inset(100% 0 0 0)', scale: 1.2 }, { clipPath: 'inset(0% 0 0 0)', scale: 1, duration: 1.5, ease: 'power4.out' }, '-=1')
-  .fromTo('.fm-2', { clipPath: 'inset(100% 0 0 0)', scale: 1.2 }, { clipPath: 'inset(0% 0 0 0)', scale: 1, duration: 1.5, ease: 'power4.out' }, '-=1.2');
+  .to('.hero-fade', { opacity:1, duration:1, ease:'power2.out' }, '-=0.6');
 
 // ═══════════════════════
 // 3. NAVBAR
@@ -93,6 +91,30 @@ ScrollTrigger.create({
   start: 'top -60',
   onUpdate: (self) => document.getElementById('navbar').classList.toggle('scrolled', self.progress > 0)
 });
+
+// Hide navbar/logo/top-right at footer
+(function initFooterHide() {
+  const footer = document.querySelector('footer');
+  if (!footer) return;
+  const navbar = document.getElementById('navbar');
+  const siteLogo = document.getElementById('siteLogo');
+  const topRight = document.getElementById('topRightActions');
+  ScrollTrigger.create({
+    trigger: footer,
+    start: 'top 90%',
+    end: 'bottom bottom',
+    onEnter: () => {
+      navbar?.classList.add('nav-hidden');
+      siteLogo?.classList.add('logo-hidden');
+      topRight?.classList.add('tr-hidden');
+    },
+    onLeaveBack: () => {
+      navbar?.classList.remove('nav-hidden');
+      siteLogo?.classList.remove('logo-hidden');
+      topRight?.classList.remove('tr-hidden');
+    },
+  });
+})();
 
 const navPills = document.getElementById('navPills');
 const navCursor = document.getElementById('navCursor');
@@ -248,21 +270,137 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
 });
 
 // ═══════════════════════
-// 14. HORIZONTAL SCROLL
+// 14. FLOWART STORY SCROLL (Pinning + Rotation)
 // ═══════════════════════
-const deepDiveSec = document.querySelector('.deep-dive-sec');
-const deepDiveWrap = document.querySelector('.deep-dive-wrap');
-if (deepDiveSec && deepDiveWrap) {
-  gsap.to(deepDiveWrap, {
-    x: () => -(deepDiveWrap.scrollWidth - window.innerWidth),
-    ease: 'none',
-    scrollTrigger: {
-      trigger: deepDiveSec,
-      pin: true,
-      start: 'top top',
-      end: () => `+=${deepDiveWrap.scrollWidth - window.innerWidth}`,
-      scrub: 1,
-      invalidateOnRefresh: true
+(function initFlowArt() {
+  const container = document.getElementById('flow-art');
+  const navbar = document.getElementById('navbar');
+  const siteLogo = document.getElementById('siteLogo');
+  const topRight = document.getElementById('topRightActions');
+  if (!container) return;
+
+  // Respect reduced-motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const sections = container.querySelectorAll('[data-flow-section]');
+  if (!sections.length) return;
+
+  const triggers = [];
+
+  // Auto-hide navbar, logo, and top-right when inside FlowArt
+  const hideAll = () => {
+    navbar?.classList.add('nav-hidden');
+    siteLogo?.classList.add('logo-hidden');
+    topRight?.classList.add('tr-hidden');
+  };
+  const showAll = () => {
+    navbar?.classList.remove('nav-hidden');
+    siteLogo?.classList.remove('logo-hidden');
+    topRight?.classList.remove('tr-hidden');
+  };
+
+  triggers.push(
+    ScrollTrigger.create({
+      trigger: container,
+      start: 'top 80px',
+      end: 'bottom top',
+      onEnter: hideAll,
+      onLeave: showAll,
+      onEnterBack: hideAll,
+      onLeaveBack: showAll,
+    })
+  );
+
+  sections.forEach((section, i) => {
+    gsap.set(section, { zIndex: i + 1 });
+
+    const inner = section.querySelector('.flow-art-container');
+    if (!inner) return;
+
+    // Rotation entrance for all panels except the first (reduced from 30° to 12°)
+    if (i > 0) {
+      gsap.set(inner, { rotation: 12, transformOrigin: 'bottom left' });
+      const tween = gsap.to(inner, {
+        rotation: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'top 25%',
+          scrub: true,
+        },
+      });
+      if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
+    }
+
+    // Pin all except the last section
+    if (i < sections.length - 1) {
+      triggers.push(
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'bottom bottom',
+          end: 'bottom top',
+          pin: true,
+          pinSpacing: false,
+        }),
+      );
     }
   });
-}
+
+  ScrollTrigger.refresh();
+})();
+
+// ═══════════════════════
+// 15. ANIMATED THEME TOGGLER (Sun ↔ Moon SVG morph)
+// ═══════════════════════
+(function initAnimatedToggler() {
+  const svg = document.getElementById('attSvg');
+  const body = document.getElementById('attBody');
+  const mask = document.getElementById('attMaskCircle');
+  const rays = document.getElementById('attRays');
+  if (!svg || !body || !mask || !rays) return;
+
+  // Sync initial state
+  function syncATT() {
+    const isDark = getTheme() === 'dark';
+    gsap.to(svg, { rotation: isDark ? 270 : 0, duration: 0.6, ease: 'back.out(1.5)' });
+    gsap.to(body, { attr: { r: isDark ? 9 : 5 }, duration: 0.6, ease: 'back.out(1.5)' });
+    gsap.to(mask, { attr: { cx: isDark ? 17 : 33, cy: isDark ? 8 : 0 }, duration: 0.6, ease: 'back.out(1.5)' });
+    gsap.to(rays, { opacity: isDark ? 0 : 1, scale: isDark ? 0 : 1, rotation: isDark ? -30 : 0, duration: 0.5, ease: 'back.out(1.5)' });
+  }
+
+  // Initial set without animation
+  const isDarkInit = getTheme() === 'dark';
+  gsap.set(svg, { rotation: isDarkInit ? 270 : 0 });
+  gsap.set(body, { attr: { r: isDarkInit ? 9 : 5 } });
+  gsap.set(mask, { attr: { cx: isDarkInit ? 17 : 33, cy: isDarkInit ? 8 : 0 } });
+  gsap.set(rays, { opacity: isDarkInit ? 0 : 1, scale: isDarkInit ? 0 : 1, rotation: isDarkInit ? -30 : 0 });
+
+  // Observe theme changes (fired by existing toggle handler)
+  const observer = new MutationObserver(syncATT);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // Subtle click sound
+  let audioCtx = null;
+  document.getElementById('themeToggle')?.addEventListener('click', () => {
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const rate = audioCtx.sampleRate;
+      const len = Math.floor(rate * 0.006);
+      const buf = audioCtx.createBuffer(1, len, rate);
+      const ch = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) {
+        const t = i / len;
+        ch[i] = (Math.sin(2 * Math.PI * 3400 * t) * 0.6 + (Math.random() * 2 - 1) * 0.4) * Math.pow(1 - t, 3);
+      }
+      const src = audioCtx.createBufferSource();
+      const gain = audioCtx.createGain();
+      src.buffer = buf;
+      gain.gain.value = 0.08;
+      src.connect(gain);
+      gain.connect(audioCtx.destination);
+      src.start();
+    } catch(e) { /* silent */ }
+  });
+})();
