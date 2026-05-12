@@ -17,13 +17,9 @@ gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 
 // ═══════════════════════
-// 1. CURTAIN THEME TOGGLE
+// 1. CINEMATIC THEME TOGGLE (Radial Ripple Expansion)
 // ═══════════════════════
-const CURTAIN_DUR = 550;
-const CURTAIN_EASE = 'cubic-bezier(0.76, 0, 0.24, 1)';
-let curtainBusy = false;
-
-// Theme token map for curtain color
+let toggleBusy = false;
 const THEME_BG = { dark: '#0a0a0a', light: '#ffffff' };
 
 function getTheme() {
@@ -42,59 +38,132 @@ function setTheme(t) {
   if (saved) setTheme(saved);
 })();
 
-document.getElementById('themeToggle')?.addEventListener('click', () => {
-  if (curtainBusy) return;
-  curtainBusy = true;
+document.getElementById('themeToggle')?.addEventListener('click', (e) => {
+  if (toggleBusy) return;
+  toggleBusy = true;
 
   const next = getTheme() === 'dark' ? 'light' : 'dark';
-  const curtain = document.getElementById('curtain');
-  curtain.style.background = THEME_BG[next];
-  curtain.style.transformOrigin = 'top';
-  curtain.style.transition = `transform ${CURTAIN_DUR}ms ${CURTAIN_EASE}`;
-  curtain.style.transform = 'scaleY(1)';
+  const btn = document.getElementById('themeToggle');
+  const rect = btn.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
 
-  setTimeout(() => {
-    setTheme(next);
-    curtain.style.transformOrigin = 'bottom';
-    curtain.style.transform = 'scaleY(0)';
-    setTimeout(() => { curtainBusy = false; }, CURTAIN_DUR + 50);
-  }, CURTAIN_DUR);
+  // Create radial ripple overlay
+  const ripple = document.createElement('div');
+  ripple.className = 'theme-ripple';
+  ripple.style.cssText = `
+    position:fixed; z-index:9997; pointer-events:none;
+    left:${cx}px; top:${cy}px;
+    width:0; height:0;
+    border-radius:50%;
+    background:${THEME_BG[next]};
+    transform:translate(-50%,-50%);
+  `;
+  document.body.appendChild(ripple);
+
+  // Calculate max radius to cover entire viewport
+  const maxR = Math.ceil(Math.hypot(
+    Math.max(cx, window.innerWidth - cx),
+    Math.max(cy, window.innerHeight - cy)
+  )) * 2.2;
+
+  // Expand ripple → switch theme → contract ripple
+  const tl = gsap.timeline({
+    onComplete: () => {
+      ripple.remove();
+      toggleBusy = false;
+    }
+  });
+
+  tl.to(ripple, {
+    width: maxR, height: maxR,
+    duration: 0.6,
+    ease: 'power3.inOut',
+  })
+  .call(() => setTheme(next), null, 0.45)
+  .to(ripple, {
+    opacity: 0,
+    duration: 0.5,
+    ease: 'power2.out',
+  }, 0.55);
 });
 
 // ═══════════════════════
-// 2. PRELOADER
+// 2. CINEMATIC PRELOADER
 // ═══════════════════════
 lenis.stop();
 
 const preloaderTL = gsap.timeline({
   onComplete: () => {
     lenis.start();
-    document.getElementById('preloader').style.display = 'none';
+    const pre = document.getElementById('preloader');
+    if (pre) pre.style.display = 'none';
     ScrollTrigger.refresh();
   }
 });
 
 const counterObj = { val: 0 };
 const counterEl = document.getElementById('preCounter');
+const progressLine = document.querySelector('#preProgressLine');
 
+// Phase 1: Dramatic entrance — logo mark scales in with spring, counter fades in
 preloaderTL
+  .to('.pre-logo-mark', {
+    opacity: 1, scale: 1, duration: 1.0,
+    ease: 'elastic.out(1, 0.5)',
+  }, 0.2)
+  .to('.pre-progress-line', { opacity: 1, duration: 0.4 }, 0.3)
+  .to('.pre-bottom', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.4)
+  // Phase 2: Count up with cinematic easing + progress bar fill
   .to(counterObj, {
-    val: 100,
-    duration: 2.2,
-    ease: 'power3.inOut',
+    val: 100, duration: 2.0, ease: 'power2.inOut',
     onUpdate: () => {
-      if (counterEl) counterEl.innerText = Math.floor(counterObj.val) + '%';
+      const pct = Math.floor(counterObj.val);
+      if (counterEl) counterEl.innerText = pct + '%';
+      if (progressLine) progressLine.style.setProperty('--pre-fill', pct + '%');
     }
-  })
-  .to('.pre-bottom', { opacity: 1, duration: 0.5 }, 0)
-  .to('.pre-logo-mark', { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.5)' }, 0.5)
-  .to('.pre-char', { opacity: 1, y: '0%', scale: 1, duration: 0.8, stagger: 0.05, ease: 'power3.out' }, 0.8)
-  .to('.pre-char', { opacity: 0, y: '-100%', duration: 0.5, stagger: 0.02, ease: 'power3.inOut' }, 2.8)
-  .to('.pre-logo-mark', { scale: 0, opacity: 0, duration: 0.5, ease: 'power3.inOut' }, 2.9)
-  .to('.pre-bottom', { opacity: 0, duration: 0.3 }, 3.0)
-  .to('#preloader', { yPercent: -100, duration: 1.2, ease: 'power4.inOut' }, 3.2)
-  .to('.hero-line', { y: '0%', duration: 1.5, stagger: 0.1, ease: 'power4.out' }, 3.5)
-  .to('.hero-fade', { opacity: 1, duration: 1.2, ease: 'power2.out' }, 3.8);
+  }, 0.3)
+  // Phase 3: Characters cascade in with rotation
+  .to('.pre-char', {
+    opacity: 1, y: '0%', scale: 1, rotateX: 0,
+    duration: 0.7, stagger: 0.04, ease: 'back.out(1.4)',
+  }, 0.6)
+  // Phase 4: Hold for dramatic beat
+  // Phase 5: Everything dissolves upward with stagger
+  .to('.pre-char', {
+    opacity: 0, y: '-80%', scale: 0.8,
+    duration: 0.45, stagger: 0.025, ease: 'power3.in',
+  }, 2.8)
+  .to('.pre-logo-mark', {
+    scale: 1.3, opacity: 0, filter: 'blur(12px)',
+    duration: 0.6, ease: 'power3.inOut',
+  }, 2.9)
+  .to('.pre-progress-line', { opacity: 0, scaleX: 0.5, duration: 0.35, ease: 'power3.in' }, 2.9)
+  .to('.pre-bottom', { opacity: 0, y: -20, duration: 0.35, ease: 'power3.in' }, 2.95)
+  // Phase 6: Split-curtain exit — preloader slides up with momentum
+  .to('#preloader', {
+    clipPath: 'inset(0 0 100% 0)',
+    duration: 1.0, ease: 'power4.inOut',
+  }, 3.2)
+  // Phase 7: Hero reveal — lines slide in with elastic spring
+  .to('.hero-line', {
+    y: '0%', duration: 1.4, stagger: 0.12,
+    ease: 'expo.out',
+  }, 3.6)
+  .to('.hero-fade', {
+    opacity: 1, y: 0, duration: 1.0,
+    ease: 'power3.out',
+  }, 3.9)
+  // Phase 8: Navbar + logo entrance
+  .fromTo('#navbar', { y: -30, opacity: 0 }, {
+    y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+  }, 4.0)
+  .fromTo('.site-logo', { x: -20, opacity: 0 }, {
+    x: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
+  }, 4.0)
+  .fromTo('.top-right-actions', { x: 20, opacity: 0 }, {
+    x: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
+  }, 4.05);
 
 // ═══════════════════════
 // 3. NAVBAR
@@ -481,7 +550,7 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
 })();
 
 // ═══════════════════════
-// 15. ANIMATED THEME TOGGLER (Sun ↔ Moon SVG morph)
+// 15. ANIMATED THEME TOGGLER (Sun ↔ Moon — Cinematic Spring Morph)
 // ═══════════════════════
 (function initAnimatedToggler() {
   const svg = document.getElementById('attSvg');
@@ -490,13 +559,29 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
   const rays = document.getElementById('attRays');
   if (!svg || !body || !mask || !rays) return;
 
-  // Sync initial state
+  // Sequenced cinematic morph
   function syncATT() {
     const isDark = getTheme() === 'dark';
-    gsap.to(svg, { rotation: isDark ? 270 : 0, duration: 0.6, ease: 'back.out(1.5)' });
-    gsap.to(body, { attr: { r: isDark ? 9 : 5 }, duration: 0.6, ease: 'back.out(1.5)' });
-    gsap.to(mask, { attr: { cx: isDark ? 17 : 33, cy: isDark ? 8 : 0 }, duration: 0.6, ease: 'back.out(1.5)' });
-    gsap.to(rays, { opacity: isDark ? 0 : 1, scale: isDark ? 0 : 1, rotation: isDark ? -30 : 0, duration: 0.5, ease: 'back.out(1.5)' });
+    const tl = gsap.timeline({ defaults: { overwrite: 'auto' } });
+
+    // Step 1: Quick scale-down punch
+    tl.to(svg, { scale: 0.6, duration: 0.15, ease: 'power3.in' })
+    // Step 2: Morph the shapes mid-scale
+      .to(body, { attr: { r: isDark ? 9 : 5 }, duration: 0.35, ease: 'power2.out' }, 0.12)
+      .to(mask, { attr: { cx: isDark ? 17 : 33, cy: isDark ? 8 : 0 }, duration: 0.35, ease: 'power2.out' }, 0.12)
+    // Step 3: Rotate with spring
+      .to(svg, {
+        rotation: isDark ? 270 : 0, scale: 1,
+        duration: 0.7, ease: 'elastic.out(1.2, 0.4)',
+      }, 0.15)
+    // Step 4: Rays appear/disappear with stagger
+      .to(rays, {
+        opacity: isDark ? 0 : 1,
+        scale: isDark ? 0 : 1,
+        rotation: isDark ? -45 : 0,
+        duration: 0.5,
+        ease: isDark ? 'power3.in' : 'elastic.out(1, 0.5)',
+      }, isDark ? 0.08 : 0.25);
   }
 
   // Initial set without animation
@@ -504,30 +589,30 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
   gsap.set(svg, { rotation: isDarkInit ? 270 : 0 });
   gsap.set(body, { attr: { r: isDarkInit ? 9 : 5 } });
   gsap.set(mask, { attr: { cx: isDarkInit ? 17 : 33, cy: isDarkInit ? 8 : 0 } });
-  gsap.set(rays, { opacity: isDarkInit ? 0 : 1, scale: isDarkInit ? 0 : 1, rotation: isDarkInit ? -30 : 0 });
+  gsap.set(rays, { opacity: isDarkInit ? 0 : 1, scale: isDarkInit ? 0 : 1, rotation: isDarkInit ? -45 : 0 });
 
   // Observe theme changes (fired by existing toggle handler)
   const observer = new MutationObserver(syncATT);
   observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-  // Subtle click sound
+  // Subtle haptic click sound
   let audioCtx = null;
   document.getElementById('themeToggle')?.addEventListener('click', () => {
     try {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       if (audioCtx.state === 'suspended') audioCtx.resume();
       const rate = audioCtx.sampleRate;
-      const len = Math.floor(rate * 0.006);
+      const len = Math.floor(rate * 0.008);
       const buf = audioCtx.createBuffer(1, len, rate);
       const ch = buf.getChannelData(0);
       for (let i = 0; i < len; i++) {
         const t = i / len;
-        ch[i] = (Math.sin(2 * Math.PI * 3400 * t) * 0.6 + (Math.random() * 2 - 1) * 0.4) * Math.pow(1 - t, 3);
+        ch[i] = (Math.sin(2 * Math.PI * 2800 * t) * 0.5 + (Math.random() * 2 - 1) * 0.3) * Math.pow(1 - t, 4);
       }
       const src = audioCtx.createBufferSource();
       const gain = audioCtx.createGain();
       src.buffer = buf;
-      gain.gain.value = 0.08;
+      gain.gain.value = 0.06;
       src.connect(gain);
       gain.connect(audioCtx.destination);
       src.start();
