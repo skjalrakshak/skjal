@@ -74,15 +74,27 @@ const preloaderTL = gsap.timeline({
   }
 });
 
+const counterObj = { val: 0 };
+const counterEl = document.getElementById('preCounter');
+
 preloaderTL
-  .to('.pre-letter', { opacity:1, y:'0%', duration:.7, stagger:.04, ease:'power3.out', delay:.2 })
-  .to('.pre-sub', { opacity:1, duration:.5, ease:'power2.out' }, '-=0.2')
-  .to('.pre-bar-fill', { width:'100%', duration:1.4, ease:'power2.inOut' }, '-=0.3')
-  .to('.pre-letter', { opacity:0, y:'-80%', duration:.4, stagger:.025, ease:'power3.inOut' }, '+=0.3')
-  .to('.pre-sub, .pre-bar-track', { opacity:0, duration:.25 }, '-=0.2')
-  .to('#preloader', { yPercent:-100, duration:1, ease:'power4.inOut' }, '-=0.1')
-  .to('.hero-line', { y:'0%', duration:1.2, stagger:.1, ease:'power4.out' }, '-=0.5')
-  .to('.hero-fade', { opacity:1, duration:1, ease:'power2.out' }, '-=0.6');
+  .to(counterObj, {
+    val: 100,
+    duration: 2.2,
+    ease: 'power3.inOut',
+    onUpdate: () => {
+      if (counterEl) counterEl.innerText = Math.floor(counterObj.val) + '%';
+    }
+  })
+  .to('.pre-bottom', { opacity: 1, duration: 0.5 }, 0)
+  .to('.pre-logo-mark', { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.5)' }, 0.5)
+  .to('.pre-char', { opacity: 1, y: '0%', scale: 1, duration: 0.8, stagger: 0.05, ease: 'power3.out' }, 0.8)
+  .to('.pre-char', { opacity: 0, y: '-100%', duration: 0.5, stagger: 0.02, ease: 'power3.inOut' }, 2.8)
+  .to('.pre-logo-mark', { scale: 0, opacity: 0, duration: 0.5, ease: 'power3.inOut' }, 2.9)
+  .to('.pre-bottom', { opacity: 0, duration: 0.3 }, 3.0)
+  .to('#preloader', { yPercent: -100, duration: 1.2, ease: 'power4.inOut' }, 3.2)
+  .to('.hero-line', { y: '0%', duration: 1.5, stagger: 0.1, ease: 'power4.out' }, 3.5)
+  .to('.hero-fade', { opacity: 1, duration: 1.2, ease: 'power2.out' }, 3.8);
 
 // ═══════════════════════
 // 3. NAVBAR
@@ -115,6 +127,47 @@ ScrollTrigger.create({
     },
   });
 })();
+
+// ═══════════════════════
+// 14. NAVBAR HIDE ON SCROLL
+// ═══════════════════════
+const siteLogo = document.getElementById('siteLogo');
+const topRightActions = document.getElementById('topRightActions');
+const navbar = document.getElementById('navbar');
+
+let lastScrollY = window.scrollY;
+let scrollTicking = false;
+
+window.addEventListener('scroll', () => {
+  if (!scrollTicking) {
+    requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY;
+      const isDownScroll = currentScrollY > lastScrollY;
+      const delta = Math.abs(currentScrollY - lastScrollY);
+      
+      // Only trigger hide/show with meaningful scroll (not micro-jitters)
+      if (delta > 5 && currentScrollY > window.innerHeight) {
+        if (isDownScroll) {
+          siteLogo?.classList.add('logo-hidden');
+          topRightActions?.classList.add('tr-hidden');
+          navbar?.classList.add('nav-hidden');
+        } else {
+          siteLogo?.classList.remove('logo-hidden');
+          topRightActions?.classList.remove('tr-hidden');
+          navbar?.classList.remove('nav-hidden');
+        }
+      } else if (currentScrollY <= window.innerHeight) {
+        // Always show if we are near the top
+        siteLogo?.classList.remove('logo-hidden');
+        topRightActions?.classList.remove('tr-hidden');
+        navbar?.classList.remove('nav-hidden');
+      }
+      lastScrollY = currentScrollY;
+      scrollTicking = false;
+    });
+    scrollTicking = true;
+  }
+}, { passive: true });
 
 const navPills = document.getElementById('navPills');
 const navCursor = document.getElementById('navCursor');
@@ -151,11 +204,33 @@ if (progressBar) {
 // ═══════════════════════
 // 5. SCROLL REVEALS
 // ═══════════════════════
+// Clean Text-Split Reveal Fallback (Snappy, No Blur)
 document.querySelectorAll('.gs-reveal').forEach(el => {
-  gsap.fromTo(el, { y:40, opacity:0 }, {
-    y:0, opacity:1, duration:.9, ease:'power3.out',
-    scrollTrigger: { trigger:el, start:'top 90%', toggleActions:'play none none none' }
-  });
+  if (el.tagName.match(/^H[1-6]$/) || el.classList.contains('sec-title') || el.classList.contains('sys-name')) {
+    // Custom Split-Text
+    const text = el.innerText;
+    el.innerHTML = '';
+    const words = text.split(' ');
+    words.forEach(word => {
+      const wSpan = document.createElement('span');
+      wSpan.className = 'split-line';
+      const cSpan = document.createElement('span');
+      cSpan.className = 'split-char';
+      cSpan.innerText = word + ' ';
+      wSpan.appendChild(cSpan);
+      el.appendChild(wSpan);
+    });
+    gsap.fromTo(el.querySelectorAll('.split-char'), { y: '120%', opacity: 0 }, {
+      y: '0%', opacity: 1, duration: 0.9, stagger: 0.02, ease: 'expo.out',
+      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
+    });
+  } else {
+    // Standard Reveal
+    gsap.fromTo(el, { y: 40, opacity: 0 }, {
+      y: 0, opacity: 1, duration: 1.0, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none reverse' }
+    });
+  }
 });
 
 // ═══════════════════════
@@ -221,7 +296,21 @@ document.querySelectorAll('.sec-title-lg').forEach(h => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const target = document.querySelector(this.getAttribute('href'));
-    if (target) { e.preventDefault(); lenis.scrollTo(target, { offset:-80 }); }
+    if (target) {
+      e.preventDefault();
+      const overlay = document.querySelector('.page-transition-overlay');
+      const isMobile = window.innerWidth < 768;
+      
+      if(overlay && !isMobile) {
+        gsap.timeline()
+          .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
+          .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
+          .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
+          .set(overlay, { y: '-100%' });
+      } else {
+        lenis.scrollTo(target, { offset: -80 });
+      }
+    }
   });
 });
 
@@ -317,20 +406,24 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
     const inner = section.querySelector('.flow-art-container');
     if (!inner) return;
 
-    // Rotation entrance for all panels except the first (reduced from 30° to 12°)
+    // Straight parallax slide entrance for all panels except the first
     if (i > 0) {
-      gsap.set(inner, { rotation: 12, transformOrigin: 'bottom left' });
+      gsap.set(inner, { y: '50%' });
       const tween = gsap.to(inner, {
-        rotation: 0,
+        y: '0%',
         ease: 'none',
         scrollTrigger: {
           trigger: section,
           start: 'top bottom',
-          end: 'top 25%',
+          end: 'top 10%',
           scrub: true,
         },
       });
       if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
+
+      // Cinematic background crossfade (fade-in) REMOVED entirely per user request
+      // The background gradient will now simply bleed physically as it slides up
+
     }
 
     // Pin all except the last section
@@ -344,6 +437,43 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
           pinSpacing: false,
         }),
       );
+
+      // "Boxes go back" effect: Exact 2D twist and scale down matching Fourmula.ai parity
+      const bg = section.querySelector('.flow-bg-gradient');
+      
+      // Dynamically wrap the background and inner content into a single physical card
+      const cardWrap = document.createElement('div');
+      cardWrap.className = 'flow-card-wrap';
+      cardWrap.style.position = 'absolute';
+      cardWrap.style.inset = '0';
+      cardWrap.style.width = '100%';
+      cardWrap.style.height = '100%';
+      cardWrap.style.overflow = 'hidden';
+      cardWrap.style.borderRadius = '0 0 24px 24px';
+      
+      // Explicitly force the background of the section to be white so the shrinking gap is perfectly white
+      section.style.backgroundColor = '#ffffff';
+
+      section.insertBefore(cardWrap, bg);
+      cardWrap.appendChild(bg);
+      cardWrap.appendChild(inner);
+
+      // Explicitly set initial brightness to prevent GSAP from tweening from 0 (pitch black bug)
+      gsap.set(cardWrap, { filter: 'brightness(1)' });
+      
+      gsap.to(cardWrap, {
+        scale: 0.94,
+        rotate: -2.5,
+        filter: 'brightness(0.85)',
+        transformOrigin: "50% 50%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: 'bottom bottom',
+          end: 'bottom top',
+          scrub: true,
+        }
+      });
     }
   });
 
@@ -403,4 +533,61 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
       src.start();
     } catch(e) { /* silent */ }
   });
+})();
+
+// ═══════════════════════
+// 16. AWWWARDS SOTD FEATURES
+// ═══════════════════════
+(function initSOTD() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerWidth < 768) return;
+
+  // Magnetic Buttons
+  document.querySelectorAll('.btn-primary, .btn-outline, .nav-link, .nav-cta, .flow-cta-pill').forEach(btn => {
+    btn.classList.add('magnetic-btn');
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width / 2) * 0.35;
+      const y = (e.clientY - rect.top - rect.height / 2) * 0.35;
+      gsap.to(btn, { x: x, y: y, duration: 0.4, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.3)' });
+    });
+  });
+
+  // Light-Trace Glow
+  document.querySelectorAll('.why-card, .sys-row').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+
+  // Stat Counter Cinematic
+  document.querySelectorAll('.stat-val').forEach(stat => {
+    const rawVal = stat.innerText;
+    const match = rawVal.match(/[\d.]+/);
+    if (match) {
+      const num = parseFloat(match[0]);
+      const suffix = rawVal.replace(match[0], '');
+      const obj = { val: 0 };
+      
+      gsap.to(obj, {
+        val: num,
+        duration: 2.5,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: stat, start: 'top 85%', toggleActions: 'play none none none' },
+        onUpdate: () => {
+          const formatted = (num % 1 !== 0) ? obj.val.toFixed(1) : Math.floor(obj.val);
+          stat.innerText = formatted + suffix;
+        }
+      });
+    }
+  });
+
+  // FlowArt visibility is now handled purely by classes via initFlowArt ScrollTrigger
+  // No aggressive inline style overrides needed
 })();

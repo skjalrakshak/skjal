@@ -24,16 +24,22 @@
   <!-- ═══ WEBGL CANVAS ═══ -->
   <canvas id="webgl" aria-hidden="true"></canvas>
 
+  <!-- ═══ PAGE TRANSITION OVERLAY ═══ -->
+  <div class="page-transition-overlay" aria-hidden="true"></div>
+
   <!-- ═══ PRELOADER ═══ -->
   <div id="preloader">
     <div class="pre-inner">
-      <div class="pre-name">
-        <span class="pre-letter">S</span><span class="pre-letter">K</span>
-        <span class="pre-letter pre-dot">·</span>
-        <span class="pre-letter">J</span><span class="pre-letter">A</span><span class="pre-letter">L</span><span class="pre-letter">R</span><span class="pre-letter">A</span><span class="pre-letter">K</span><span class="pre-letter">S</span><span class="pre-letter">H</span><span class="pre-letter">A</span><span class="pre-letter">K</span>
+      <div class="pre-logo-wrap">
+        <div class="pre-logo-mark">SK</div>
+        <div class="pre-name-chars" id="preChars">
+          <span class="pre-char">J</span><span class="pre-char">a</span><span class="pre-char">l</span><span class="pre-char">r</span><span class="pre-char">a</span><span class="pre-char">k</span><span class="pre-char">s</span><span class="pre-char">h</span><span class="pre-char">a</span><span class="pre-char">k</span>
+        </div>
       </div>
-      <div class="pre-sub">Innovations Private Limited</div>
-      <div class="pre-bar-track"><div class="pre-bar-fill"></div></div>
+      <div class="pre-bottom">
+        <div class="pre-sub">Smart Water Intelligence</div>
+        <div class="pre-counter" id="preCounter">0%</div>
+      </div>
     </div>
   </div>
 
@@ -86,7 +92,7 @@
           <span class="hero-line-wrap"><span class="hero-line">Innovations.</span></span>
         </h1>
         <div class="hero-bottom hero-fade">
-          <p class="hero-sub">Edge telemetry, predictive analytics, and real-time cloud dashboards powering industrial water infrastructure across India.</p>
+        <p class="hero-sub">We deploy edge-AI sensor networks across India's most critical water infrastructure — delivering real-time telemetry, predictive failure detection, and autonomous compliance reporting at industrial scale.</p>
           <div class="hero-actions">
             <a href="#systems" class="btn-primary">Explore Systems</a>
             <a href="#contact" class="btn-outline">Contact Us</a>
@@ -108,8 +114,8 @@
             <h2 class="sec-title">We started with a simple question: why does so much water disappear before it ever reaches people?</h2>
           </div>
           <div class="about-right gs-reveal">
-            <p class="body-text">SK Jalrakshak Innovations (CIN: U26517AP2025PTC119413) was born from frustration with the status quo. Across India, aging pipelines leak billions of gallons daily while operators rely on spreadsheets and guesswork. We knew there had to be a better way.</p>
-            <p class="body-text" style="margin-top:16px">So we built it. Our edge sensors go where no monitoring system has gone before — deep underground, in corrosive treatment tanks, across hundreds of miles of rural pipeline. They talk to our cloud in real-time, and our AI spots trouble before humans ever could. The result? Operators who sleep better at night, communities with cleaner water, and infrastructure that actually works the way it should.</p>
+            <p class="body-text">SK Jalrakshak Innovations (CIN: U26517AP2025PTC119413) was founded to solve a problem hiding in plain sight: India loses over 40% of its treated water to infrastructure failures that nobody sees coming. Aging pipelines rupture underground, chemical levels drift unnoticed, and operators are left managing billion-dollar networks with spreadsheets and manual readings.</p>
+            <p class="body-text" style="margin-top:16px">We engineered the solution from first principles. Our ruggedized edge sensors deploy directly onto existing pipes, tanks, and treatment plants — streaming 2.4 million data points per minute to our cloud intelligence platform. Machine learning models trained on millions of real-world events detect anomalies 72 hours before they become emergencies, turning reactive crisis management into proactive infrastructure stewardship.</p>
           </div>
         </div>
         <div class="stats-row">
@@ -130,9 +136,9 @@
           </div>
           <div class="video-split-text">
             <p class="sec-eyebrow">(01) Platform Overview</p>
-            <h3 class="sys-name" style="margin-top:12px">Unified Intelligence</h3>
-            <p class="body-text" style="margin-top:16px">Monitor your entire water infrastructure from one screen. Live telemetry, predictive alerts, and compliance reporting — all streaming in real-time from every sensor in your network.</p>
-            <a href="#systems" class="btn-primary" style="margin-top:24px;display:inline-flex">Learn More</a>
+            <h3 class="sys-name" style="margin-top:12px">Unified Command Center</h3>
+            <p class="body-text" style="margin-top:16px">A single operations interface for your entire water network. Aggregated live telemetry from every sensor, AI-driven anomaly alerts, geo-mapped asset health, and one-click regulatory exports — all streaming in real-time across desktop, tablet, and mobile.</p>
+            <a href="#systems" class="btn-primary" style="margin-top:24px;display:inline-flex">Explore Platform</a>
           </div>
         </div>
       </div>
@@ -146,23 +152,23 @@
         <div class="why-grid">
           <div class="why-card gs-reveal">
             <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-            <h3 class="why-title">Sub-millisecond Latency</h3>
-            <p class="why-desc">When a pipe bursts at 3 AM, every millisecond counts. Our edge-first architecture delivers alerts faster than a heartbeat — no cloud round-trips, no queues, no waiting.</p>
+            <h3 class="why-title">Sub-millisecond Response</h3>
+            <p class="why-desc">When a pressure anomaly hits at 3 AM, response time is measured in heartbeats — not minutes. Our edge-first architecture processes alerts locally before cloud round-trips, delivering autonomous shutoff commands in under 1ms.</p>
           </div>
           <div class="why-card gs-reveal">
             <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-            <h3 class="why-title">Military-Grade Durability</h3>
-            <p class="why-desc">Our sensors have survived monsoon floods, desert heat, and chemical plants that would corrode steel in weeks. IP68-rated and built to outlast the very infrastructure they protect.</p>
+            <h3 class="why-title">IP68 Industrial Hardening</h3>
+            <p class="why-desc">Rated to survive full submersion, desert extremes, and corrosive chemical environments. Our sensor modules have maintained 99.97% uptime through two consecutive monsoon seasons across 500+ installations.</p>
           </div>
           <div class="why-card gs-reveal">
             <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-            <h3 class="why-title">Predictive, Not Reactive</h3>
-            <p class="why-desc">Our ML models have learned from millions of real-world events. They don't just watch for problems — they tell you what's coming 72 hours before it arrives.</p>
+            <h3 class="why-title">72-Hour Predictive Window</h3>
+            <p class="why-desc">Our ML models cross-reference historical failure patterns, weather forecasts, and live sensor telemetry to surface anomalies three full days before they escalate — turning catastrophic failures into scheduled maintenance.</p>
           </div>
           <div class="why-card gs-reveal">
             <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
-            <h3 class="why-title">Solar-Powered & Off-Grid</h3>
-            <p class="why-desc">No power grid? No cell towers? No problem. Our solar-powered nodes run independently for years, connecting via satellite. If there's sunlight, we're watching.</p>
+            <h3 class="why-title">Off-Grid Autonomous</h3>
+            <p class="why-desc">Solar-powered nodes with satellite backhaul operate independently in locations with zero grid access or cellular coverage. If there's sunlight, the network is live — no exceptions, no data gaps.</p>
           </div>
         </div>
       </div>
@@ -177,9 +183,9 @@
           </div>
           <div class="showcase-split-text gs-reveal">
             <p class="sec-eyebrow">(02) Our Approach</p>
-            <h3 class="sys-name" style="margin-top:12px">Intelligent Infrastructure</h3>
-            <p class="body-text" style="margin-top:16px">We deploy sensors in environments that would destroy consumer electronics — from corrosive chemical treatment tanks to flood-prone underground mains. Every device talks to our cloud in real-time, streaming 2.4 million data points per minute.</p>
-            <p class="body-text" style="margin-top:12px">The result? A living, breathing digital twin of your entire water network.</p>
+            <h3 class="sys-name" style="margin-top:12px">Field-Hardened Intelligence</h3>
+            <p class="body-text" style="margin-top:16px">Our IP68-rated sensor modules operate in environments that destroy consumer hardware — submerged in corrosive treatment chemicals, buried in flood-prone underground mains, and exposed to 50°C+ desert conditions. Each device streams continuous telemetry to our cloud, processing 2.4 million data points per minute across the network.</p>
+            <p class="body-text" style="margin-top:12px">The result: a real-time digital twin of your water infrastructure — every pipe, every valve, every chemical reading, alive on screen.</p>
           </div>
         </div>
       </div>
@@ -203,13 +209,13 @@
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Sub-millisecond alerts</span>
+              <span class="flow-feature-label">Zero-config plug-and-play</span>
             </div>
           </div>
           <div class="flow-bottom-row">
             <div class="flow-desc">
-              <p class="flow-desc-bold">Ruggedized IoT nodes</p>
-              <p class="flow-desc-light">mounted directly on pipes,<br>tanks, and treatment plants.</p>
+              <p class="flow-desc-bold">IP68 ruggedized IoT nodes</p>
+              <p class="flow-desc-light">bolt onto existing pipes, tanks,<br>and treatment infrastructure.</p>
             </div>
             <a href="#systems" class="flow-cta-pill">Explore Systems</a>
           </div>
@@ -232,17 +238,17 @@
           <div class="flow-feature-grid">
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Real-time geo mapping</span>
+              <span class="flow-feature-label">Live geo-mapped network</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Auto compliance reports</span>
+              <span class="flow-feature-label">One-click compliance exports</span>
             </div>
           </div>
           <div class="flow-bottom-row">
             <div class="flow-desc">
-              <p class="flow-desc-bold">One dashboard</p>
-              <p class="flow-desc-light">for flow rates, pressure,<br>chemical levels, and alerts.</p>
+              <p class="flow-desc-bold">Unified cloud dashboard</p>
+              <p class="flow-desc-light">for flow rates, pressure, pH,<br>chemical levels, and alerts.</p>
             </div>
             <a href="#systems" class="flow-cta-pill">See Dashboard</a>
           </div>
@@ -269,13 +275,13 @@
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">280% average ROI</span>
+              <span class="flow-feature-label">ML trained on 10M+ events</span>
             </div>
           </div>
           <div class="flow-bottom-row">
             <div class="flow-desc">
-              <p class="flow-desc-bold">AI catches problems</p>
-              <p class="flow-desc-light">three days before they<br>become emergencies.</p>
+              <p class="flow-desc-bold">AI detects anomalies</p>
+              <p class="flow-desc-light">three full days before they<br>escalate into emergencies.</p>
             </div>
             <a href="#contact" class="flow-cta-pill">Get Started</a>
           </div>
@@ -292,23 +298,23 @@
         <div class="flow-bg-gradient flow-grad-4"></div>
         <div class="flow-inner flow-art-container">
           <div class="flow-top-row">
-            <h2 class="flow-heading">Save crores.<br>Sleep better.</h2>
+            <h2 class="flow-heading">Deliver<br>results.</h2>
             <span class="flow-step-num">04</span>
           </div>
           <div class="flow-feature-grid">
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">₹2 crore saved per alert</span>
+              <span class="flow-feature-label">280% average ROI in Year 1</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">80% faster response time</span>
+              <span class="flow-feature-label">34% water loss reduction</span>
             </div>
           </div>
           <div class="flow-bottom-row">
             <div class="flow-desc">
-              <p class="flow-desc-bold">Export ready reports</p>
-              <p class="flow-desc-light">to your compliance team,<br>board, and regulators.</p>
+              <p class="flow-desc-bold">Audit-ready reports</p>
+              <p class="flow-desc-light">auto-generated for your board,<br>regulators, and compliance team.</p>
             </div>
             <a href="#contact" class="flow-cta-pill">Contact Us</a>
           </div>
@@ -328,10 +334,10 @@
         <div class="sec-eyebrow gs-reveal">(03) Systems</div>
         <h2 class="sec-title sec-title-lg gs-reveal">Built for Scale.</h2>
         <div class="systems-list">
-          <article class="sys-row gs-reveal"><span class="sys-num">01</span><div class="sys-content"><h3 class="sys-name">Edge Telemetry</h3><p class="sys-desc">Small, rugged, and relentless. Our sensor modules bolt onto existing infrastructure and start streaming data in minutes — no rewiring, no downtime, no excuses. They work in floods, in deserts, in chemical plants that would melt consumer electronics.</p></div><span class="sys-badge">Hardware</span></article>
-          <article class="sys-row gs-reveal"><span class="sys-num">02</span><div class="sys-content"><h3 class="sys-name">Cloud Intelligence</h3><p class="sys-desc">Your entire water network, visible in one dashboard. Our cloud platform pulls live feeds from every sensor, maps them geographically, and highlights exactly what needs attention — so your team stops chasing false alarms and starts solving real problems.</p></div><span class="sys-badge">Software</span></article>
-          <article class="sys-row gs-reveal"><span class="sys-num">03</span><div class="sys-content"><h3 class="sys-name">Predictive Analytics</h3><p class="sys-desc">We don't wait for things to break. Our AI cross-references historical patterns, weather forecasts, and live sensor data to flag problems 72 hours early. One client avoided a ₹2 crore emergency repair because our system caught a microfracture nobody else could see.</p></div><span class="sys-badge">AI / ML</span></article>
-          <article class="sys-row gs-reveal"><span class="sys-num">04</span><div class="sys-content"><h3 class="sys-name">Compliance & Reporting</h3><p class="sys-desc">Audits used to take weeks of paperwork. Now they take seconds. Our platform auto-generates compliance reports meeting national and international standards — with full chain-of-custody traceability that regulators actually trust.</p></div><span class="sys-badge">Governance</span></article>
+          <article class="sys-row gs-reveal"><span class="sys-num">01</span><div class="sys-content"><h3 class="sys-name">Edge Telemetry</h3><p class="sys-desc">Ruggedized IoT modules that bolt directly onto existing pipes, tanks, and treatment infrastructure. Zero-configuration deployment — streaming live flow, pressure, temperature, and chemical data within minutes of installation. Designed to outlast the infrastructure they monitor.</p></div><span class="sys-badge">Hardware</span></article>
+          <article class="sys-row gs-reveal"><span class="sys-num">02</span><div class="sys-content"><h3 class="sys-name">Cloud Intelligence</h3><p class="sys-desc">A unified operations dashboard that aggregates live sensor feeds, geo-maps your entire network, and surfaces actionable insights in real-time. Role-based access, custom alert thresholds, and one-click compliance exports built for operations teams of any size.</p></div><span class="sys-badge">Software</span></article>
+          <article class="sys-row gs-reveal"><span class="sys-num">03</span><div class="sys-content"><h3 class="sys-name">Predictive Analytics</h3><p class="sys-desc">Machine learning models trained on millions of real-world infrastructure events. Cross-references historical patterns, weather data, and live telemetry to flag pipe fatigue, chemical drift, and flow anomalies up to 72 hours before failure. One client avoided a ₹2 crore emergency repair from a single early warning.</p></div><span class="sys-badge">AI / ML</span></article>
+          <article class="sys-row gs-reveal"><span class="sys-num">04</span><div class="sys-content"><h3 class="sys-name">Compliance Automation</h3><p class="sys-desc">Auto-generated regulatory reports meeting CPCB, WHO, and ISO 24512 standards — with full chain-of-custody traceability. What used to take teams two weeks of manual paperwork now generates in seconds, with audit trails that regulators trust.</p></div><span class="sys-badge">Governance</span></article>
         </div>
       </div>
     </section>
@@ -404,9 +410,9 @@
             <img src="img/solar-field.png" alt="Solar-powered IoT station monitoring rural water canal" class="impact-img">
           </div>
           <div class="impact-content gs-reveal">
-            <p class="body-text">Numbers tell stories that words can't. Here's what happens when real intelligence meets real infrastructure:</p>
-            <p class="body-text">Across every network we monitor, operators have seen water waste plummet. Not by a few percentage points — <strong>by up to 34% in the very first year</strong>. That's billions of gallons saved, communities better served, and budgets freed up for the improvements that matter.</p>
-            <p class="body-text">And the economics speak for themselves. Our clients report an average <strong>ROI of 280%</strong> within 12 months. Some installations have paid for themselves in under 90 days — purely through waste they would have never caught without our system watching.</p>
+            <p class="body-text">The data speaks for itself. Across every network we monitor, operators have achieved measurable, auditable impact from day one:</p>
+            <p class="body-text">Water loss reduction of <strong>up to 34% within the first 12 months</strong> — translating to billions of gallons preserved, communities better served, and operational budgets redirected toward proactive upgrades instead of emergency repairs.</p>
+            <p class="body-text">Our clients consistently report an average <strong>return on investment of 280%</strong> within the first year of deployment. Several installations have achieved full payback in under 90 days — driven entirely by waste elimination and predictive maintenance savings that would have been invisible without continuous monitoring.</p>
           </div>
         </div>
       </div>
@@ -415,15 +421,15 @@
     <!-- ═══ COMPANY ═══ -->
     <section class="sec sec-alt">
       <div class="wrap">
-        <div class="sec-eyebrow gs-reveal">(06) Company</div>
-        <h2 class="sec-title gs-reveal">The Company.</h2>
+        <div class="sec-eyebrow gs-reveal">(06) Corporate Identity</div>
+        <h2 class="sec-title gs-reveal">Registered Entity.</h2>
         <div class="corp-grid">
           <div class="corp-card gs-reveal"><span class="corp-key">CIN</span><span class="corp-val">U26517AP2025PTC119413</span></div>
           <div class="corp-card gs-reveal"><span class="corp-key">ROC</span><span class="corp-val">RoC-Vijayawada</span></div>
           <div class="corp-card gs-reveal"><span class="corp-key">Incorporated</span><span class="corp-val">16 May 2025</span></div>
-          <div class="corp-card gs-reveal"><span class="corp-key">Category</span><span class="corp-val">Private Limited (Non-Govt)</span></div>
+          <div class="corp-card gs-reveal"><span class="corp-key">Classification</span><span class="corp-val">Private Limited (Non-Govt)</span></div>
           <div class="corp-card gs-reveal"><span class="corp-key">Status</span><span class="corp-val corp-active">● Active</span></div>
-          <div class="corp-card gs-reveal"><span class="corp-key">Office</span><span class="corp-val">Visakhapatnam, AP 530048</span></div>
+          <div class="corp-card gs-reveal"><span class="corp-key">Registered Office</span><span class="corp-val">Visakhapatnam, AP 530048</span></div>
         </div>
         <div class="directors-row">
           <div class="dir-card gs-reveal"><div class="dir-icon">KS</div><div><strong>Kameswara Sarma Nagabhatla</strong><span class="dir-meta">Director · DIN 11111205</span></div></div>
@@ -438,12 +444,13 @@
         <div class="sec-eyebrow gs-reveal">(07) FAQ</div>
         <h2 class="sec-title gs-reveal">Common Questions.</h2>
         <div class="faq-list">
-          <details class="faq gs-reveal"><summary>What is SK Jalrakshak Innovations?</summary><p>A Private Limited Company specializing in smart water intelligence — edge telemetry, cloud dashboards, and predictive analytics for industrial water infrastructure. CIN: U26517AP2025PTC119413.</p></details>
-          <details class="faq gs-reveal"><summary>Where is the company registered?</summary><p>D No: 2-14130, 2nd Floor, Plot-13, Revenue Ward 5, Madhurawada, Visakhapatnam, Andhra Pradesh 530048. Registered under RoC-Vijayawada.</p></details>
-          <details class="faq gs-reveal"><summary>Who are the directors?</summary><p>Kameswara Sarma Nagabhatla (DIN 11111205) and Sirish Kumar Pagoti (DIN 11111206), both serving since incorporation on 16 May 2025.</p></details>
-          <details class="faq gs-reveal"><summary>How can I contact the company?</summary><p>Email us at info.skjipl@gmail.com or visit our registered office in Visakhapatnam. We typically respond within 24 hours.</p></details>
-          <details class="faq gs-reveal"><summary>What services do you offer?</summary><p>End-to-end water intelligence: edge telemetry hardware, cloud monitoring dashboards, predictive analytics engines, solar IoT grids, compliance automation, and custom API integrations for SCADA systems.</p></details>
-          <details class="faq gs-reveal"><summary>How quickly can the system be deployed?</summary><p>Most installations are completed within 48 hours. Our plug-and-play sensor modules require zero code configuration and connect automatically to our cloud platform.</p></details>
+          <details class="faq gs-reveal"><summary>What is SK Jalrakshak Innovations?</summary><p>SK Jalrakshak Innovations Pvt Ltd is an enterprise water intelligence company specializing in edge-AI telemetry, cloud-based infrastructure monitoring, and predictive analytics for industrial and municipal water systems. Registered under CIN: U26517AP2025PTC119413, we serve utilities and operators across India.</p></details>
+          <details class="faq gs-reveal"><summary>Where is the company registered?</summary><p>Our registered office is located at D No: 2-14130, 2nd Floor, Plot-13, Revenue Ward 5, Madhurawada, Visakhapatnam, Andhra Pradesh 530048. We are registered under the Registrar of Companies, Vijayawada (RoC-Vijayawada).</p></details>
+          <details class="faq gs-reveal"><summary>Who leads the company?</summary><p>The company is led by its founding directors: Kameswara Sarma Nagabhatla (DIN 11111205) and Sirish Kumar Pagoti (DIN 11111206), both serving since incorporation on 16 May 2025. Together they bring deep expertise in embedded systems, IoT infrastructure, and water resource management.</p></details>
+          <details class="faq gs-reveal"><summary>How do I get in touch?</summary><p>Reach our engineering team directly at info.skjipl@gmail.com. We respond to all enquiries within 24 hours with a preliminary assessment. For site visits, our team operates from Visakhapatnam with deployment capability across all Indian states.</p></details>
+          <details class="faq gs-reveal"><summary>What is your full service offering?</summary><p>We provide end-to-end water infrastructure intelligence: IP68-rated edge telemetry hardware, a unified cloud monitoring platform with real-time geo-mapping, ML-powered predictive analytics engines, solar-powered off-grid IoT nodes with satellite backhaul, automated compliance reporting (CPCB, WHO, ISO 24512), and custom SCADA/API integrations.</p></details>
+          <details class="faq gs-reveal"><summary>How fast can you deploy?</summary><p>Standard deployments complete within 48 hours. Our plug-and-play sensor modules require zero firmware configuration — they auto-register with our cloud platform on power-up. For large-scale multi-site rollouts, we offer phased deployment programs with dedicated field engineering support.</p></details>
+          <details class="faq gs-reveal"><summary>What ROI can we expect?</summary><p>Our clients report an average return on investment of 280% within the first 12 months. Several installations have achieved full payback in under 90 days through early leak detection, waste reduction (up to 34%), and predictive maintenance savings. We provide detailed ROI projections during the assessment phase.</p></details>
         </div>
       </div>
     </section>
@@ -453,7 +460,7 @@
       <div class="wrap">
         <div class="sec-eyebrow gs-reveal">(08) Contact</div>
         <h2 class="cta-title gs-reveal">Let's Start<br>Your Project.</h2>
-        <p class="cta-body gs-reveal">Every great infrastructure story starts with a conversation. Tell us what you're dealing with — leaky pipes, blind spots, compliance headaches — and our engineering team will reach out personally within 24 hours.</p>
+        <p class="cta-body gs-reveal">Every infrastructure transformation begins with a single conversation. Whether you're managing leaking distribution networks, navigating compliance complexity, or seeking visibility across dispersed assets — our engineering team will respond personally within 24 hours with a tailored assessment.</p>
         <div class="contact-row">
           <a href="mailto:info.skjipl@gmail.com" class="cbox gs-reveal"><span class="cbox-icon">✉</span><span class="cbox-label">Email</span><span class="cbox-data">info.skjipl@gmail.com</span></a>
           <div class="cbox gs-reveal"><span class="cbox-icon">◉</span><span class="cbox-label">Location</span><span class="cbox-data">Visakhapatnam, India</span></div>

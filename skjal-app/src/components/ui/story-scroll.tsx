@@ -33,7 +33,7 @@ export const FlowSection: React.FC<FlowSectionProps> = ({
       data-flow-inner
       className={cx(
         'flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-6 px-[4vw] pt-[clamp(2rem,8vw,4vw)] pb-[4vw]',
-        'will-change-transform',
+        'will-change-transform shadow-[0_-30px_60px_rgba(0,0,0,0.6)]',
       )}
       style={{ transformOrigin: 'bottom left', ...style }}
     >
@@ -84,14 +84,14 @@ const FlowArt: React.FC<FlowArtProps> = ({
         if (!inner) return;
 
         if (i > 0) {
-          gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
+          gsap.set(inner, { y: '50%' });
           const tween = gsap.to(inner, {
-            rotation: 0,
+            y: '0%',
             ease: 'none',
             scrollTrigger: {
               trigger: section,
               start: 'top bottom',
-              end: 'top 25%',
+              end: 'top 10%',
               scrub: true,
             },
           });
@@ -108,6 +108,22 @@ const FlowArt: React.FC<FlowArtProps> = ({
               pinSpacing: false,
             }),
           );
+
+          // "Boxes go back" effect: Flat 2D scale down with subtle darkening (Matches Fourmula exactly)
+          const scaleTween = gsap.to(inner, {
+            scale: 0.93,
+            y: '-2%',
+            filter: 'brightness(0.6)',
+            transformOrigin: 'center top',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'bottom bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          });
+          if (scaleTween.scrollTrigger) triggers.push(scaleTween.scrollTrigger);
         }
       });
 

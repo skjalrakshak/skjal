@@ -179,7 +179,7 @@ main,#footer {
   background: var(--bg-alt);
 }
 .sec-video {
-  padding: 20px 0;
+  padding: 40px 0;
 }
 .sec-eyebrow {
   font-size: 0.72rem;
@@ -262,14 +262,14 @@ main,#footer {
 /* ═══ SITE LOGO (Fixed Top-Left) ═══ */
 .site-logo {
   position: fixed;
-  top: 20px;
-  left: 28px;
-  z-index: 101;
+  top: 24px;
+  left: 40px;
+  z-index: 1001;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   text-decoration: none;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity 0.5s cubic-bezier(0.76, 0, 0.24, 1), transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
 }
 .site-logo.logo-hidden {
   opacity: 0;
@@ -301,13 +301,13 @@ main,#footer {
 /* ═══ TOP-RIGHT ACTIONS (Fixed) ═══ */
 .top-right-actions {
   position: fixed;
-  top: 20px;
-  right: 28px;
-  z-index: 101;
+  top: 24px;
+  right: 40px;
+  z-index: 1001;
   display: flex;
   align-items: center;
-  gap: 12px;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  gap: 16px;
+  transition: opacity 0.5s cubic-bezier(0.76, 0, 0.24, 1), transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
 }
 .top-right-actions.tr-hidden {
   opacity: 0;
@@ -337,37 +337,45 @@ main,#footer {
   transform: translateX(3px);
 }
 
-/* ═══ NAVBAR (Center links only, not sticky forever) ═══ */
+/* ═══ NAVBAR (Center links, fixed position) ═══ */
 #navbar {
   position: fixed;
-  top: 16px;
+  top: 24px;
   left: 50%;
   transform: translateX(-50%);
   width: fit-content;
   max-width: 60%;
-  z-index: 100;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
+  padding: 0;
   border-radius: 100px;
-  border: 1px solid transparent;
+  border: none;
   background: transparent;
-  transition: all .5s var(--ease), opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity 0.5s cubic-bezier(0.76, 0, 0.24, 1), transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
 }
 #navbar.scrolled {
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-color: rgba(255,255,255,0.25);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.05), inset 0 0 0 0.5px rgba(255,255,255,0.35);
+  background: transparent;
+  border: none;
 }
 [data-theme="dark"] #navbar.scrolled {
-  background: rgba(10,10,10,0.6);
-  border-color: rgba(255,255,255,0.06);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 0 0 0.5px rgba(255,255,255,0.06);
+  background: transparent;
+  border: none;
 }
-/* Auto-hide navbar during FlowArt */
+#navbar.scrolled .nav-center {
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  border-color: var(--nav-pill-border);
+}
+[data-theme="dark"] #navbar.scrolled .nav-center {
+  background: rgba(18,18,18,0.85);
+  border-color: rgba(255,255,255,0.06);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+/* Auto-hide navbar during FlowArt / footer / scroll-down */
 #navbar.nav-hidden {
   opacity: 0;
   transform: translateX(-50%) translateY(-120%);
@@ -1294,7 +1302,9 @@ main,#footer {
 /* ═══ SHOWCASE MEDIA ═══ */
 .showcase-media {
   width: 100%;
-  border-radius: 32px;
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: 24px;
   overflow: hidden;
   position: relative;
   border: 1px solid var(--border);
@@ -1305,10 +1315,10 @@ main,#footer {
 }
 .showcase-media img {
   width: 100%;
-  height: auto;
+  height: 440px;
   display: block;
   object-fit: cover;
-  max-height: 560px;
+  object-position: center 30%;
 }
 @media (prefers-reduced-motion:reduce) {
   *,*::before,*::after {
@@ -2299,6 +2309,7 @@ main,#footer {
 /* ═══ FLOWART STORY SCROLL ═══ */
 .flow-art-root {
   width: 100%;
+  background-color: #ffffff !important; /* Force white background for the 'table' illusion */
   overflow-x: hidden;
 }
 .flow-section {
@@ -2309,24 +2320,18 @@ main,#footer {
   color: #fff;
 }
 
-/* ── Gradient backgrounds (fourmula.ai-inspired) ── */
+/* ── Gradient backgrounds (fourmula.ai-inspired premium look) ── */
 .flow-bg-gradient {
   position: absolute;
   inset: 0;
   z-index: 0;
+  box-shadow: 0 -30px 100px rgba(0, 0, 0, 0.15); /* Massive, ultra-soft shadow for 3D separation */
+  border-radius: 0 0 24px 24px; /* Soften bottom corners when scaled */
 }
-.flow-grad-1 {
-  background: linear-gradient(165deg, #f97316 0%, #ea580c 40%, #c2410c 80%, #9a3412 100%);
-}
-.flow-grad-2 {
-  background: linear-gradient(165deg, #93c5fd 0%, #6b8cce 25%, #b8a890 60%, #f97316 100%);
-}
-.flow-grad-3 {
-  background: linear-gradient(165deg, #818cf8 0%, #a78bfa 30%, #d4a574 60%, #f97316 100%);
-}
-.flow-grad-4 {
-  background: linear-gradient(165deg, #991b1b 0%, #dc2626 30%, #ea580c 65%, #f97316 100%);
-}
+.flow-grad-1 { background: #ff5e00; }
+.flow-grad-2 { background: linear-gradient(180deg, #1C7F9B 0%, #ff5e00 100%); } /* Neon Teal */
+.flow-grad-3 { background: linear-gradient(180deg, #6C2BD9 0%, #ff5e00 100%); } /* Neon Purple */
+.flow-grad-4 { background: linear-gradient(180deg, #D91C00 0%, #ff5e00 100%); } /* Neon Red */
 
 /* ── Flow Inner Container ── */
 .flow-inner {
@@ -2342,6 +2347,12 @@ main,#footer {
   will-change: transform;
   transform-origin: bottom left;
 }
+.flow-inner * {
+  color: #ffffff !important; /* Enforce white text to match Fourmula.ai */
+}
+.flow-inner .flow-cta-pill {
+  color: #000000 !important; /* Keep button text dark for contrast */
+}
 
 /* ── Top Row: Heading + Step Number ── */
 .flow-top-row {
@@ -2353,17 +2364,18 @@ main,#footer {
 }
 .flow-heading {
   font-family: var(--display);
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #ffffff !important;
 }
 .flow-step-num {
   font-family: var(--display);
-  font-size: clamp(5rem, 12vw, 10rem);
-  font-weight: 300;
+  font-size: clamp(6rem, 15vw, 12rem);
+  font-weight: 400;
   line-height: 0.8;
-  opacity: 0.3;
+  opacity: 1;
   color: #fff;
   letter-spacing: -0.04em;
 }
@@ -2447,14 +2459,17 @@ main,#footer {
   margin-top: auto;
   padding-top: 24px;
   overflow: hidden;
+  justify-content: center;
 }
 .flow-showcase-card {
   flex: 1;
   min-width: 0;
+  max-width: 400px;
   border-radius: 16px;
   overflow: hidden;
   background: rgba(255,255,255,0.12);
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/10;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
 }
 .flow-showcase-card img {
   width: 100%;
@@ -2751,4 +2766,198 @@ html.dark .tcard-v2 {
       --tw-scale-z: 1;
     }
   }
+}
+
+/* ═════════════════════════════════════════════════
+   AWWWARDS SOTD REDESIGN OVERRIDES (Cinematic Level)
+   ═════════════════════════════════════════════════ */
+
+/* 1. TYPOGRAPHY: Editorial Contrast & Fluid Scales */
+:root {
+  --display: 'Inter', system-ui, sans-serif;
+  --sans: 'Satoshi', system-ui, sans-serif;
+}
+.hero-h1 {
+  font-size: clamp(3.5rem, 10vw, 8.5rem);
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+.sec-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem) !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1.05 !important;
+}
+.sec-title-lg {
+  font-size: clamp(3.5rem, 8vw, 6.5rem) !important;
+  letter-spacing: -0.05em !important;
+  line-height: 0.95 !important;
+}
+
+/* 2. HOVER EFFECTS & HAPTICS (Micro-interactions) */
+/* Magnetic Button Utility applied via JS */
+.magnetic-btn {
+  display: inline-flex;
+  will-change: transform;
+}
+.btn-primary, .btn-outline, .nav-link, .nav-cta, .flow-cta-pill {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s, color 0.3s, border-color 0.3s !important;
+}
+.btn-primary:active, .btn-outline:active, .nav-link:active, .nav-cta:active, .flow-cta-pill:active {
+  transform: scale(0.92) !important;
+}
+
+/* Light-Trace Glow */
+.why-card, .sys-row {
+  position: relative;
+  overflow: hidden;
+}
+.why-card::after, .sys-row::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.06), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+[data-theme="light"] .why-card::after, [data-theme="light"] .sys-row::after {
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 0, 0, 0.04), transparent 40%);
+}
+.why-card:hover::after, .sys-row:hover::after {
+  opacity: 1;
+}
+
+/* 3. SMOOTH LOADER (Cinematic Dissolve) */
+#preloader {
+  background: var(--bg);
+}
+.pre-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.pre-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  padding: 10px;
+}
+.pre-char {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-head);
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%) scale(0.9) rotate(5deg);
+  will-change: transform, opacity;
+}
+.pre-logo-mark {
+  width: 56px; height: 56px;
+  background: var(--fg-head);
+  color: var(--bg);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display);
+  font-weight: 800; font-size: 1.2rem;
+  opacity: 0;
+  transform: scale(0.5);
+  will-change: transform, opacity;
+}
+.pre-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+  opacity: 0;
+}
+.pre-counter {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+
+/* 4. ENTRANCE REVEALS (Split Text & Cascade) */
+.split-line {
+  overflow: hidden;
+  display: block;
+}
+.split-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.gs-clip-reveal img {
+  transform: scale(1.3);
+  will-change: transform;
+}
+
+/* 5. PAGE TRANSITIONS (Motion Blur Wipe) */
+.page-transition-overlay {
+  position: fixed;
+  inset: -10vh 0;
+  height: 120vh;
+  background: var(--fg-head);
+  z-index: 99999;
+  transform: translateY(-100%);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* 6. NAVBAR SCROLL HIDE */
+.site-logo, .top-right-actions, #navbar {
+  will-change: transform, opacity;
+}
+/* Logo and top-right use their own hide classes */
+.site-logo.nav-hidden {
+  opacity: 0;
+  transform: translateY(-120%);
+  pointer-events: none;
+}
+.top-right-actions.nav-hidden {
+  opacity: 0;
+  transform: translateY(-120%);
+  pointer-events: none;
+}
+/* Navbar needs translateX(-50%) preserved when hiding */
+/* (Already handled by #navbar.nav-hidden above) */
+
+/* ═══ RESPONSIVE: Mobile nav ═══ */
+@media (max-width: 768px) {
+  .site-logo {
+    top: 16px;
+    left: 20px;
+  }
+  .top-right-actions {
+    top: 16px;
+    right: 20px;
+  }
+  .top-cta {
+    display: none;
+  }
+  #navbar {
+    top: auto;
+    bottom: 20px;
+    max-width: 92%;
+    padding: 4px 6px;
+  }
+  #navbar.nav-hidden {
+    transform: translateX(-50%) translateY(120%);
+  }
+  .nav-link {
+    padding: 6px 10px;
+    font-size: .6rem;
+  }
+}
+
+/* 7. CONTENT PRESENTATION (Stat Counter) */
+.stat-val {
+  font-variant-numeric: tabular-nums;
 }

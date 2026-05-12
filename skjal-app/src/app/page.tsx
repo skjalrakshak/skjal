@@ -141,7 +141,7 @@ export default function Home() {
       {/* ═══ STORY SCROLL — Mission, Systems, Impact, Testimonials, CTA ═══ */}
       <FlowArt aria-label="SK Jalrakshak Story">
         {/* Section: The Mission */}
-        <FlowSection aria-label="Our Mission" style={{ backgroundColor: '#0ea5e9', color: '#fff' }}>
+        <FlowSection aria-label="Our Mission" style={{ background: '#ff5e00', color: '#fff' }}>
           <p className="text-xs font-bold uppercase tracking-[0.2em]">01 — The Mission</p>
           <hr className="my-[2vw] border-none border-t border-white/40" />
           <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
@@ -155,7 +155,7 @@ export default function Home() {
         </FlowSection>
 
         {/* Section: How It Works */}
-        <FlowSection aria-label="How It Works" style={{ backgroundColor: '#000', color: '#fff' }}>
+        <FlowSection aria-label="How It Works" style={{ background: 'linear-gradient(180deg, #44899c 0%, #ff5e00 100%)', color: '#fff' }}>
           <p className="text-xs font-bold uppercase tracking-[0.2em]">02 — How It Works</p>
           <hr className="my-[2vw] border-none border-t border-white/30" />
           <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
@@ -181,7 +181,7 @@ export default function Home() {
         </FlowSection>
 
         {/* Section: Impact */}
-        <FlowSection aria-label="Impact" style={{ backgroundColor: '#1A3DE8', color: '#fff' }}>
+        <FlowSection aria-label="Impact" style={{ background: 'linear-gradient(180deg, #916896 0%, #ff5e00 100%)', color: '#fff' }}>
           <p className="text-xs font-bold uppercase tracking-[0.2em]">03 — Real Results</p>
           <hr className="my-[2vw] border-none border-t border-white/30" />
           <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
@@ -208,7 +208,7 @@ export default function Home() {
         </FlowSection>
 
         {/* Section: Testimonials */}
-        <FlowSection aria-label="Testimonials" style={{ backgroundColor: '#F5F0E8', color: '#000' }}>
+        <FlowSection aria-label="Testimonials" style={{ background: 'linear-gradient(180deg, #b01a00 0%, #ff5e00 100%)', color: '#fff' }}>
           <p className="text-xs font-bold uppercase tracking-[0.2em]">04 — What People Say</p>
           <hr className="my-[2vw] border-none border-t border-black/20" />
           <h2 className="text-[clamp(2rem,6vw,5rem)] font-bold leading-[0.9] uppercase tracking-tight mb-8">
@@ -228,7 +228,7 @@ export default function Home() {
         </FlowSection>
 
         {/* Section: Team Image */}
-        <FlowSection aria-label="Our Team" style={{ backgroundColor: '#fff', color: '#000' }}>
+        <FlowSection aria-label="Our Team" style={{ background: 'linear-gradient(180deg, #18181b 0%, #ff5e00 100%)', color: '#fff' }}>
           <p className="text-xs font-bold uppercase tracking-[0.2em]">05 — The People</p>
           <hr className="my-[2vw] border-none border-t border-black/10" />
           <div className="w-full rounded-2xl overflow-hidden">
@@ -248,7 +248,7 @@ export default function Home() {
         </FlowSection>
 
         {/* Section: Contact CTA */}
-        <FlowSection aria-label="Contact" style={{ backgroundColor: '#000', color: '#fff' }}>
+        <FlowSection aria-label="Contact" style={{ background: '#ff5e00', color: '#fff' }}>
           <p className="text-xs font-bold uppercase tracking-[0.2em]">06 — Get In Touch</p>
           <hr className="my-[2vw] border-none border-t border-white/20" />
           <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
