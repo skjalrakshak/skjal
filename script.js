@@ -734,7 +734,7 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerWidth < 768) return;
 
   // Magnetic Buttons
-  document.querySelectorAll('.nav-link, .nav-cta, .flow-cta-pill').forEach(btn => {
+  document.querySelectorAll('.nav-cta, .flow-cta-pill').forEach(btn => {
     btn.classList.add('magnetic-btn');
     btn.addEventListener('mousemove', e => {
       const rect = btn.getBoundingClientRect();
