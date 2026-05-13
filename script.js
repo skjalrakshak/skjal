@@ -17,7 +17,7 @@ gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 
 // ═══════════════════════
-// 1. CINEMATIC THEME TOGGLE (Radial Ripple Expansion)
+// 1. CINEMATIC THEME TOGGLE (Dual-Blade Warp Shutter)
 // ═══════════════════════
 let toggleBusy = false;
 const THEME_BG = { dark: '#0a0a0a', light: '#ffffff' };
@@ -44,31 +44,90 @@ document.getElementById('themeToggle')?.addEventListener('click', (e) => {
 
   const current = getTheme();
   const next = current === 'dark' ? 'light' : 'dark';
-  const btn = document.getElementById('themeToggle');
 
-  // Premium Cinematic Crossfade Toggle (No expanding circle artifacts)
-  // Create a temporary overlay matching current theme
+  // Get toggle button center coordinates
+  const btn = document.getElementById('themeToggle');
+  const rect = btn.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  // Satisfying button press micro-animation
+  gsap.timeline()
+    .to(btn, { scale: 0.75, duration: 0.12, ease: 'power3.in' })
+    .to(btn, { scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+
+  // Calculate max radius to cover every corner of the screen
+  const maxR = Math.ceil(Math.hypot(
+    Math.max(cx, window.innerWidth - cx),
+    Math.max(cy, window.innerHeight - cy)
+  ));
+
+  // ── Glow halo (expands slightly ahead, creates frosted edge depth) ──
+  const glowColor = next === 'dark'
+    ? 'rgba(255,255,255,0.08)'
+    : 'rgba(0,0,0,0.04)';
+  const halo = document.createElement('div');
+  halo.style.cssText = `
+    position: fixed; inset: 0; z-index: 9997;
+    pointer-events: none;
+    background: radial-gradient(circle at ${cx}px ${cy}px,
+      transparent 0%, ${glowColor} 98%, transparent 100%
+    );
+    clip-path: circle(0px at ${cx}px ${cy}px);
+    will-change: clip-path;
+  `;
+
+  // ── Main reveal circle ──
   const overlay = document.createElement('div');
   overlay.style.cssText = `
     position: fixed; inset: 0; z-index: 9998;
-    background: ${THEME_BG[current]};
+    background: ${THEME_BG[next]};
     pointer-events: none;
+    clip-path: circle(0px at ${cx}px ${cy}px);
+    will-change: clip-path;
   `;
+
+  document.body.appendChild(halo);
   document.body.appendChild(overlay);
 
-  // Switch theme instantly behind the overlay
-  setTheme(next);
-
-  // Smoothly fade out the overlay to reveal the new theme
-  gsap.to(overlay, {
-    opacity: 0,
-    duration: 1.2,
-    ease: 'power2.inOut',
+  const tl = gsap.timeline({
     onComplete: () => {
       overlay.remove();
+      halo.remove();
       toggleBusy = false;
     }
   });
+
+  // Halo leads slightly ahead — creates the glowing edge effect
+  tl.to(halo, {
+    clipPath: `circle(${maxR * 1.15}px at ${cx}px ${cy}px)`,
+    duration: 1.0,
+    ease: 'power3.out',
+  }, 0);
+
+  // Main circle expands with premium easing
+  tl.to(overlay, {
+    clipPath: `circle(${maxR}px at ${cx}px ${cy}px)`,
+    duration: 0.85,
+    ease: 'power3.inOut',
+  }, 0.04);
+
+  // Switch theme at ~70% expansion (circle already covers viewport)
+  tl.call(() => setTheme(next), null, 0.6);
+
+  // ── SMOOTH DISSOLVE: overlay fades out gracefully after full coverage ──
+  tl.to(overlay, {
+    opacity: 0,
+    duration: 0.5,
+    ease: 'power2.out',
+  }, 0.85);
+
+  // Halo fades out softly
+  tl.to(halo, {
+    opacity: 0,
+    duration: 0.4,
+    ease: 'power2.out',
+  }, 0.8);
 });
 
 // ═══════════════════════
