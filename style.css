@@ -555,8 +555,11 @@ main,#footer {
   transition: all .3s var(--ease);
 }
 .btn-primary:hover {
-  transform: translateY(-2px);
-  opacity: .9;
+  filter: brightness(1.2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+[data-theme="dark"] .btn-primary:hover {
+  box-shadow: 0 4px 15px rgba(255,255,255,0.15);
 }
 .btn-outline {
   padding: 13px 28px;
@@ -570,8 +573,12 @@ main,#footer {
   transition: all .3s;
 }
 .btn-outline:hover {
-  border-color: var(--fg-body);
-  background: var(--bg-card);
+  border-color: var(--fg-head);
+  background: var(--bg-alt);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+[data-theme="dark"] .btn-outline:hover {
+  box-shadow: 0 4px 15px rgba(255,255,255,0.05);
 }
 .hero-scroll-hint {
   position: absolute;
