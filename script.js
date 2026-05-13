@@ -42,62 +42,55 @@ document.getElementById('themeToggle')?.addEventListener('click', (e) => {
   if (toggleBusy) return;
   toggleBusy = true;
 
-  const next = getTheme() === 'dark' ? 'light' : 'dark';
+  const current = getTheme();
+  const next = current === 'dark' ? 'light' : 'dark';
   const btn = document.getElementById('themeToggle');
-  const rect = btn.getBoundingClientRect();
-  const cx = rect.left + rect.width / 2;
-  const cy = rect.top + rect.height / 2;
 
-  // Create radial ripple overlay
-  const ripple = document.createElement('div');
-  ripple.className = 'theme-ripple';
-  ripple.style.cssText = `
-    position:fixed; z-index:9997; pointer-events:none;
-    left:${cx}px; top:${cy}px;
-    width:0; height:0;
-    border-radius:50%;
-    background:${THEME_BG[next]};
-    transform:translate(-50%,-50%);
+  // Premium Cinematic Crossfade Toggle (No expanding circle artifacts)
+  // Create a temporary overlay matching current theme
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `
+    position: fixed; inset: 0; z-index: 9998;
+    background: ${THEME_BG[current]};
+    pointer-events: none;
   `;
-  document.body.appendChild(ripple);
+  document.body.appendChild(overlay);
 
-  // Calculate max radius to cover entire viewport
-  const maxR = Math.ceil(Math.hypot(
-    Math.max(cx, window.innerWidth - cx),
-    Math.max(cy, window.innerHeight - cy)
-  )) * 2.2;
+  // Switch theme instantly behind the overlay
+  setTheme(next);
 
-  // Expand ripple → switch theme → contract ripple
-  const tl = gsap.timeline({
+  // Smoothly fade out the overlay to reveal the new theme
+  gsap.to(overlay, {
+    opacity: 0,
+    duration: 1.2,
+    ease: 'power2.inOut',
     onComplete: () => {
-      ripple.remove();
+      overlay.remove();
       toggleBusy = false;
     }
   });
-
-  tl.to(ripple, {
-    width: maxR, height: maxR,
-    duration: 0.6,
-    ease: 'power3.inOut',
-  })
-  .call(() => setTheme(next), null, 0.45)
-  .to(ripple, {
-    opacity: 0,
-    duration: 0.5,
-    ease: 'power2.out',
-  }, 0.55);
 });
 
 // ═══════════════════════
-// 2. CINEMATIC PRELOADER
+// 2. CINEMATIC PRELOADER (Film-Grade v2 — Full Dark Cinema)
 // ═══════════════════════
 lenis.stop();
+
+// Generate enhanced ambient particle field
+// (Particles removed per user request — clean dark background)
+(function generateParticles() {
+  // Intentionally empty — no particles
+})();
 
 const preloaderTL = gsap.timeline({
   onComplete: () => {
     lenis.start();
     const pre = document.getElementById('preloader');
-    if (pre) pre.style.display = 'none';
+    if (pre) {
+      pre.style.pointerEvents = 'none';
+      // Allow GPU to reclaim memory
+      requestAnimationFrame(() => { pre.style.display = 'none'; });
+    }
     ScrollTrigger.refresh();
   }
 });
@@ -106,64 +99,93 @@ const counterObj = { val: 0 };
 const counterEl = document.getElementById('preCounter');
 const progressLine = document.querySelector('#preProgressLine');
 
-// Phase 1: Dramatic entrance — logo mark scales in with spring, counter fades in
+// ── PRELOADER MASTER TIMELINE ──
 preloaderTL
+  // Phase 1: Logo mark — dramatic scale-in with elastic spring + subtle rotation
   .to('.pre-logo-mark', {
-    opacity: 1, scale: 1, duration: 1.0,
-    ease: 'elastic.out(1, 0.5)',
+    opacity: 1, scale: 1, rotate: 0,
+    duration: 1.4,
+    ease: 'elastic.out(1.1, 0.45)',
   }, 0.2)
-  .to('.pre-progress-line', { opacity: 1, duration: 0.4 }, 0.3)
-  .to('.pre-bottom', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.4)
-  // Phase 2: Count up with cinematic easing + progress bar fill
+  // Phase 1b: Logo mark border glow reveal
+  .to('.pre-logo-mark::after', {
+    opacity: 1, duration: 0.8,
+  }, 0.8)
+  // Phase 2: Progress bar and bottom info slide in
+  .to('.pre-progress-line', {
+    opacity: 1, duration: 0.6, ease: 'power2.out',
+  }, 0.5)
+  .to('.pre-bottom', {
+    opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+  }, 0.6)
+  // Phase 3: Counter — cinematic count with custom easing
   .to(counterObj, {
-    val: 100, duration: 2.0, ease: 'power2.inOut',
+    val: 100, duration: 3.0,
+    ease: 'power2.inOut',
     onUpdate: () => {
       const pct = Math.floor(counterObj.val);
       if (counterEl) counterEl.innerText = pct + '%';
       if (progressLine) progressLine.style.setProperty('--pre-fill', pct + '%');
     }
-  }, 0.3)
-  // Phase 3: Characters cascade in with rotation
+  }, 0.5)
+  // Phase 4: Characters cascade in with 3D depth rotation + stagger
   .to('.pre-char', {
     opacity: 1, y: '0%', scale: 1, rotateX: 0,
-    duration: 0.7, stagger: 0.04, ease: 'back.out(1.4)',
-  }, 0.6)
-  // Phase 4: Hold for dramatic beat
-  // Phase 5: Everything dissolves upward with stagger
+    duration: 1.4,
+    stagger: { each: 0.045, from: 'start' },
+    ease: 'elastic.out(1, 0.35)',
+  }, 0.7)
+  // Phase 5: Tagline drifts in with a silky fade
+  .to('#preTagline', {
+    opacity: 0.5, y: 0,
+    duration: 1.0, ease: 'power2.out',
+  }, 1.4)
+  // ── HOLD — dramatic beat (audience absorbs the brand) ──
+  // Phase 6: Exit sequence — characters fly upward with blur
   .to('.pre-char', {
-    opacity: 0, y: '-80%', scale: 0.8,
-    duration: 0.45, stagger: 0.025, ease: 'power3.in',
-  }, 2.8)
-  .to('.pre-logo-mark', {
-    scale: 1.3, opacity: 0, filter: 'blur(12px)',
-    duration: 0.6, ease: 'power3.inOut',
-  }, 2.9)
-  .to('.pre-progress-line', { opacity: 0, scaleX: 0.5, duration: 0.35, ease: 'power3.in' }, 2.9)
-  .to('.pre-bottom', { opacity: 0, y: -20, duration: 0.35, ease: 'power3.in' }, 2.95)
-  // Phase 6: Split-curtain exit — preloader slides up with momentum
-  .to('#preloader', {
-    clipPath: 'inset(0 0 100% 0)',
-    duration: 1.0, ease: 'power4.inOut',
-  }, 3.2)
-  // Phase 7: Hero reveal — lines slide in with elastic spring
-  .to('.hero-line', {
-    y: '0%', duration: 1.4, stagger: 0.12,
-    ease: 'expo.out',
+    opacity: 0, y: '-130%', scale: 1.15,
+    filter: 'blur(6px)',
+    duration: 0.5,
+    stagger: { each: 0.025, from: 'end' },
+    ease: 'power4.in',
   }, 3.6)
-  .to('.hero-fade', {
-    opacity: 1, y: 0, duration: 1.0,
-    ease: 'power3.out',
+  .to('#preTagline', {
+    opacity: 0, y: -24, filter: 'blur(4px)',
+    duration: 0.4, ease: 'power4.in',
+  }, 3.6)
+  // Phase 7: Logo mark implodes with spin
+  .to('.pre-logo-mark', {
+    scale: 0.05, opacity: 0, rotate: 200,
+    duration: 0.9, ease: 'power4.inOut',
+  }, 3.5)
+  // Phase 8: Progress bar + bottom collapse
+  .to('.pre-progress-line', {
+    opacity: 0, scaleX: 0, transformOrigin: 'center',
+    duration: 0.5, ease: 'power4.in',
+  }, 3.5)
+  .to('.pre-bottom', {
+    opacity: 0, y: -20, duration: 0.4, ease: 'power4.in',
+  }, 3.6)
+  // Phase 9: CINEMATIC SWIPE REVEAL — preloader slides up like a curtain
+  .set('#preloader', {
+    transformOrigin: 'top center',
+    willChange: 'transform',
   }, 3.9)
-  // Phase 8: Navbar + logo entrance
-  .fromTo('#navbar', { y: -30, opacity: 0 }, {
-    y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
-  }, 4.0)
-  .fromTo('.site-logo', { x: -20, opacity: 0 }, {
-    x: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
-  }, 4.0)
-  .fromTo('.top-right-actions', { x: 20, opacity: 0 }, {
-    x: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
-  }, 4.05);
+  .to('#preloader', {
+    yPercent: -100,
+    duration: 1.4,
+    ease: 'power4.inOut',
+  }, 3.9)
+  // Phase 10: Hero lines sweep in from below — overlapping with swipe for fluid motion
+  .to('.hero-line', {
+    y: '0%', duration: 1.6,
+    stagger: { each: 0.1, from: 'start' },
+    ease: 'expo.out',
+  }, 4.1)
+  .to('.hero-fade', {
+    opacity: 1, y: 0,
+    duration: 1.2, ease: 'power3.out',
+  }, 4.5);
 
 // ═══════════════════════
 // 3. NAVBAR
@@ -211,26 +233,26 @@ window.addEventListener('scroll', () => {
   if (!scrollTicking) {
     requestAnimationFrame(() => {
       const currentScrollY = window.scrollY;
-      const isDownScroll = currentScrollY > lastScrollY;
-      const delta = Math.abs(currentScrollY - lastScrollY);
       
-      // Only trigger hide/show with meaningful scroll (not micro-jitters)
-      if (delta > 5 && currentScrollY > window.innerHeight) {
-        if (isDownScroll) {
-          siteLogo?.classList.add('logo-hidden');
-          topRightActions?.classList.add('tr-hidden');
-          navbar?.classList.add('nav-hidden');
-        } else {
-          siteLogo?.classList.remove('logo-hidden');
-          topRightActions?.classList.remove('tr-hidden');
-          navbar?.classList.remove('nav-hidden');
-        }
-      } else if (currentScrollY <= window.innerHeight) {
-        // Always show if we are near the top
+      // Hide permanently if past 100vh
+      if (currentScrollY > window.innerHeight) {
+        siteLogo?.classList.add('logo-hidden');
+        topRightActions?.classList.add('tr-hidden');
+        navbar?.classList.add('nav-hidden');
+      } else {
+        // Show when in the first 100vh
         siteLogo?.classList.remove('logo-hidden');
         topRightActions?.classList.remove('tr-hidden');
         navbar?.classList.remove('nav-hidden');
       }
+      
+      // Add scrolled background effect
+      if (currentScrollY > 50) {
+        navbar?.classList.add('scrolled');
+      } else {
+        navbar?.classList.remove('scrolled');
+      }
+      
       lastScrollY = currentScrollY;
       scrollTicking = false;
     });
@@ -271,12 +293,11 @@ if (progressBar) {
 }
 
 // ═══════════════════════
-// 5. SCROLL REVEALS
+// 5. SCROLL REVEALS (Cinematic Split-Text + Cascade)
 // ═══════════════════════
-// Clean Text-Split Reveal Fallback (Snappy, No Blur)
 document.querySelectorAll('.gs-reveal').forEach(el => {
   if (el.tagName.match(/^H[1-6]$/) || el.classList.contains('sec-title') || el.classList.contains('sys-name')) {
-    // Custom Split-Text
+    // Cinematic Split-Text with word-level stagger
     const text = el.innerText;
     el.innerHTML = '';
     const words = text.split(' ');
@@ -289,26 +310,33 @@ document.querySelectorAll('.gs-reveal').forEach(el => {
       wSpan.appendChild(cSpan);
       el.appendChild(wSpan);
     });
-    gsap.fromTo(el.querySelectorAll('.split-char'), { y: '120%', opacity: 0 }, {
-      y: '0%', opacity: 1, duration: 0.9, stagger: 0.02, ease: 'expo.out',
+    gsap.fromTo(el.querySelectorAll('.split-char'), { y: '130%', opacity: 0, rotateX: 15 }, {
+      y: '0%', opacity: 1, rotateX: 0,
+      duration: 1.2,
+      stagger: { each: 0.04, from: 'start' },
+      ease: 'expo.out',
       scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
     });
   } else {
-    // Standard Reveal
-    gsap.fromTo(el, { y: 40, opacity: 0 }, {
-      y: 0, opacity: 1, duration: 1.0, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none reverse' }
+    // Standard Reveal with subtle scale
+    gsap.fromTo(el, { y: 50, opacity: 0, scale: 0.98 }, {
+      y: 0, opacity: 1, scale: 1,
+      duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' }
     });
   }
 });
 
 // ═══════════════════════
-// 6. SYSTEMS slide-in
+// 6. SYSTEMS cascade slide-in
 // ═══════════════════════
-document.querySelectorAll('.sys-row').forEach(row => {
-  gsap.fromTo(row, { opacity:0.2, x:-15 }, {
-    opacity:1, x:0, duration:.7, ease:'power2.out',
-    scrollTrigger: { trigger:row, start:'top 88%', toggleActions:'play none none none' }
+document.querySelectorAll('.sys-row').forEach((row, i) => {
+  gsap.fromTo(row, { opacity: 0, x: -25, filter: 'blur(3px)' }, {
+    opacity: 1, x: 0, filter: 'blur(0px)',
+    duration: 0.9,
+    delay: i * 0.06,
+    ease: 'power3.out',
+    scrollTrigger: { trigger: row, start: 'top 88%', toggleActions: 'play none none none' }
   });
 });
 
@@ -550,7 +578,7 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
 })();
 
 // ═══════════════════════
-// 15. ANIMATED THEME TOGGLER (Sun ↔ Moon — Cinematic Spring Morph)
+// 15. ANIMATED THEME TOGGLER (Sun ↔ Moon — 5-Stage Cinematic Morph)
 // ═══════════════════════
 (function initAnimatedToggler() {
   const svg = document.getElementById('attSvg');
@@ -559,60 +587,80 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
   const rays = document.getElementById('attRays');
   if (!svg || !body || !mask || !rays) return;
 
-  // Sequenced cinematic morph
+  // 5-stage cinematic morph — smooth and silky (not fast)
   function syncATT() {
     const isDark = getTheme() === 'dark';
     const tl = gsap.timeline({ defaults: { overwrite: 'auto' } });
 
-    // Step 1: Quick scale-down punch
-    tl.to(svg, { scale: 0.6, duration: 0.15, ease: 'power3.in' })
-    // Step 2: Morph the shapes mid-scale
-      .to(body, { attr: { r: isDark ? 9 : 5 }, duration: 0.35, ease: 'power2.out' }, 0.12)
-      .to(mask, { attr: { cx: isDark ? 17 : 33, cy: isDark ? 8 : 0 }, duration: 0.35, ease: 'power2.out' }, 0.12)
-    // Step 3: Rotate with spring
-      .to(svg, {
-        rotation: isDark ? 270 : 0, scale: 1,
-        duration: 0.7, ease: 'elastic.out(1.2, 0.4)',
-      }, 0.15)
-    // Step 4: Rays appear/disappear with stagger
-      .to(rays, {
-        opacity: isDark ? 0 : 1,
-        scale: isDark ? 0 : 1,
-        rotation: isDark ? -45 : 0,
-        duration: 0.5,
-        ease: isDark ? 'power3.in' : 'elastic.out(1, 0.5)',
-      }, isDark ? 0.08 : 0.25);
+    // Stage 1: Gentle squish — soft scale down
+    tl.to(svg, {
+      scale: 0.55, scaleX: 0.9,
+      duration: 0.2, ease: 'power2.in',
+    })
+    // Stage 2: Shape morph — body radius + mask shift
+    .to(body, {
+      attr: { r: isDark ? 9 : 5 },
+      duration: 0.5, ease: 'power2.inOut',
+    }, 0.15)
+    .to(mask, {
+      attr: { cx: isDark ? 17 : 33, cy: isDark ? 8 : 0 },
+      duration: 0.5, ease: 'power2.inOut',
+    }, 0.15)
+    // Stage 3: Spring recovery — smooth elastic with gentle overshoot
+    .to(svg, {
+      rotation: isDark ? 300 : 0,
+      scale: 1, scaleX: 1,
+      duration: 1.4,
+      ease: 'elastic.out(1.0, 0.4)',
+    }, 0.2)
+    // Stage 4: Rays — smooth fade (sun) or gentle collapse (moon)
+    .to(rays, {
+      opacity: isDark ? 0 : 1,
+      scale: isDark ? 0 : 1,
+      rotation: isDark ? -90 : 0,
+      duration: isDark ? 0.5 : 0.9,
+      ease: isDark ? 'power2.inOut' : 'elastic.out(1.0, 0.45)',
+    }, isDark ? 0.1 : 0.3)
+    // Stage 5: Subtle breathe — micro-pulse settle
+    .to(svg, {
+      scale: 1.05, duration: 0.2, ease: 'power2.out',
+    }, isDark ? 1.2 : 1.4)
+    .to(svg, {
+      scale: 1, duration: 0.4, ease: 'power2.inOut',
+    }, isDark ? 1.4 : 1.6);
   }
 
   // Initial set without animation
   const isDarkInit = getTheme() === 'dark';
-  gsap.set(svg, { rotation: isDarkInit ? 270 : 0 });
+  gsap.set(svg, { rotation: isDarkInit ? 300 : 0 });
   gsap.set(body, { attr: { r: isDarkInit ? 9 : 5 } });
   gsap.set(mask, { attr: { cx: isDarkInit ? 17 : 33, cy: isDarkInit ? 8 : 0 } });
-  gsap.set(rays, { opacity: isDarkInit ? 0 : 1, scale: isDarkInit ? 0 : 1, rotation: isDarkInit ? -45 : 0 });
+  gsap.set(rays, { opacity: isDarkInit ? 0 : 1, scale: isDarkInit ? 0 : 1, rotation: isDarkInit ? -90 : 0 });
 
-  // Observe theme changes (fired by existing toggle handler)
+  // Observe theme changes
   const observer = new MutationObserver(syncATT);
   observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-  // Subtle haptic click sound
+  // Cinematic haptic click — dual-tone
   let audioCtx = null;
   document.getElementById('themeToggle')?.addEventListener('click', () => {
     try {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       if (audioCtx.state === 'suspended') audioCtx.resume();
       const rate = audioCtx.sampleRate;
-      const len = Math.floor(rate * 0.008);
+      // Primary click tone
+      const len = Math.floor(rate * 0.015);
       const buf = audioCtx.createBuffer(1, len, rate);
       const ch = buf.getChannelData(0);
       for (let i = 0; i < len; i++) {
         const t = i / len;
-        ch[i] = (Math.sin(2 * Math.PI * 2800 * t) * 0.5 + (Math.random() * 2 - 1) * 0.3) * Math.pow(1 - t, 4);
+        const freq = 2800 + t * 600; // ascending chirp
+        ch[i] = (Math.sin(2 * Math.PI * freq * t) * 0.35 + (Math.random() * 2 - 1) * 0.15) * Math.pow(1 - t, 4);
       }
       const src = audioCtx.createBufferSource();
       const gain = audioCtx.createGain();
       src.buffer = buf;
-      gain.gain.value = 0.06;
+      gain.gain.value = 0.04;
       src.connect(gain);
       gain.connect(audioCtx.destination);
       src.start();

@@ -248,7 +248,7 @@
     // Theme-reactive colors
     const dark = isDarkTheme();
     const targetColor = dark
-      ? new THREE.Color(0.4, 0.4, 0.45)
+      ? new THREE.Color(0.4, 0.4, 0.4)
       : new THREE.Color(0.15, 0.12, 0.1);
     mat.uniforms.uColor.value.lerp(targetColor, 0.05);
     mat.uniforms.uOpacity.value += ((dark ? 0.6 : 0.3) - mat.uniforms.uOpacity.value) * 0.05;
