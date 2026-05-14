@@ -360,14 +360,15 @@ document.querySelectorAll('.gs-reveal').forEach(el => {
     const text = el.innerText;
     el.innerHTML = '';
     const words = text.split(' ');
-    words.forEach(word => {
+    words.forEach((word) => {
       const wSpan = document.createElement('span');
       wSpan.className = 'split-line';
       const cSpan = document.createElement('span');
       cSpan.className = 'split-char';
-      cSpan.innerText = word + ' ';
+      cSpan.innerText = word;
       wSpan.appendChild(cSpan);
       el.appendChild(wSpan);
+      el.appendChild(document.createTextNode(' '));
     });
     gsap.fromTo(el.querySelectorAll('.split-char'), { y: '130%', opacity: 0, rotateX: 15 }, {
       y: '0%', opacity: 1, rotateX: 0,
@@ -496,23 +497,23 @@ if (hero && fm1 && fm2) {
 // ═══════════════════════
 // 13. CLIP REVEALS
 // ═══════════════════════
-document.querySelectorAll('.gs-clip-reveal').forEach(el => {
-  const media = el.querySelector('img, video');
-  if (media) gsap.set(media, { scale: 1.2 });
-  
-  gsap.fromTo(el, { clipPath: 'inset(100% 0 0 0)' }, {
-    clipPath: 'inset(0% 0 0 0)',
-    duration: 1.4, ease: 'power3.out',
-    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
-  });
-  
-  if (media) {
-    gsap.to(media, {
-      scale: 1, duration: 1.4, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
-    });
-  }
-});
+// document.querySelectorAll('.gs-clip-reveal').forEach(el => {
+//   const media = el.querySelector('img, video');
+//   if (media) gsap.set(media, { scale: 1.2 });
+//   
+//   gsap.fromTo(el, { clipPath: 'inset(100% 0 0 0)' }, {
+//     clipPath: 'inset(0% 0 0 0)',
+//     duration: 1.4, ease: 'power3.out',
+//     scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+//   });
+//   
+//   if (media) {
+//     gsap.to(media, {
+//       scale: 1, duration: 1.4, ease: 'power3.out',
+//       scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+//     });
+//   }
+// });
 
 // ═══════════════════════
 // 14. FLOWART STORY SCROLL (Pinning + Rotation)
@@ -782,4 +783,107 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
 
   // FlowArt visibility is now handled purely by classes via initFlowArt ScrollTrigger
   // No aggressive inline style overrides needed
+})();
+
+// ═══════════════════════
+// 17. FAQ ACCORDION (Radix UI Style)
+// ═══════════════════════
+(function initFAQ() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  if (!faqItems.length) return;
+
+  faqItems.forEach(item => {
+    const trigger = item.querySelector('.faq-trigger');
+    const content = item.querySelector('.faq-content');
+    if (!trigger || !content) return;
+
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
+
+      // Close all others
+      faqItems.forEach(otherItem => {
+        if (otherItem !== item && otherItem.classList.contains('is-open')) {
+          otherItem.classList.remove('is-open');
+          otherItem.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+          otherItem.querySelector('.faq-content').style.height = '0px';
+        }
+      });
+
+      // Toggle current
+      if (isOpen) {
+        item.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        content.style.height = '0px';
+      } else {
+        item.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        content.style.height = 'auto';
+        const innerHeight = content.scrollHeight;
+        content.style.height = '0px';
+        // Force reflow then animate
+        content.offsetHeight;
+        content.style.height = innerHeight + 'px';
+      }
+    });
+  });
+
+  // Handle window resize to adjust open accordion height
+  window.addEventListener('resize', () => {
+    const openItem = document.querySelector('.faq-item.is-open');
+    if (openItem) {
+      const content = openItem.querySelector('.faq-content');
+      const innerHeight = openItem.querySelector('.faq-content-inner').offsetHeight;
+      content.style.height = innerHeight + 'px';
+    }
+  });
+})();
+
+// ═══════════════════════
+// 18. DYNAMIC ISLAND CONTROLLER
+// ═══════════════════════
+(function initDynamicIsland() {
+  const wrapper = document.getElementById('dynamicIsland');
+  const trigger = document.getElementById('diTrigger');
+  const label   = document.getElementById('diLabel');
+  const pctEl   = document.getElementById('diScrollPct');
+  const panel   = document.getElementById('diPanel');
+  if (!wrapper || !trigger) return;
+
+  // Toggle open/close
+  trigger.addEventListener('click', () => {
+    const isOpen = wrapper.classList.contains('is-open');
+    if (isOpen) {
+      wrapper.classList.remove('is-open');
+      label.textContent = 'Menu';
+    } else {
+      wrapper.classList.add('is-open');
+      label.textContent = 'Close';
+    }
+  });
+
+  // Close on panel link click + smooth scroll
+  panel.querySelectorAll('.di-panel-link').forEach(link => {
+    link.addEventListener('click', () => {
+      wrapper.classList.remove('is-open');
+      label.textContent = 'Menu';
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (wrapper.classList.contains('is-open') && !wrapper.contains(e.target)) {
+      wrapper.classList.remove('is-open');
+      label.textContent = 'Menu';
+    }
+  });
+
+  // Scroll percentage
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
+    if (pctEl) pctEl.textContent = pct + '%';
+  }, { passive: true });
+
+  // Menu bar stays visible at all times — no auto-hide
 })();

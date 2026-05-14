@@ -52,54 +52,89 @@
   <div class="grain" aria-hidden="true"></div>
   <div id="scrollProgress" aria-hidden="true"></div>
 
-  <!-- ═══ FIXED TOP BAR ═══ -->
+  <!-- ═══ DYNAMIC ISLAND NAVBAR ═══ -->
   <!-- Logo top-left -->
-  <a href="#" class="site-logo" id="siteLogo">
+  <a href="#" class="site-logo" id="siteLogo" style="display:flex; align-items:center; gap:8px;">
+    <img src="img/logo.png" alt="Logo" style="height:32px; width:auto; border-radius:4px;">
     <span class="logo-mark">SK</span>
     <span class="logo-text">Jalrakshak</span>
   </a>
-  <!-- Theme toggle + CTA top-right -->
+
+  <!-- Top-right actions -->
   <div class="top-right-actions" id="topRightActions">
-    <button id="themeToggle" class="theme-btn att-btn" aria-label="Toggle theme">
-      <svg id="attSvg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="overflow:visible">
-        <defs><mask id="attMask"><rect x="0" y="0" width="100%" height="100%" fill="white"/><circle id="attMaskCircle" cx="33" cy="0" r="9" fill="black"/></mask></defs>
-        <circle id="attBody" cx="12" cy="12" r="5" fill="currentColor" stroke="none" mask="url(#attMask)"/>
-        <g id="attRays" style="transform-origin:12px 12px">
-          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="5.64" y1="5.64" x2="4.22" y2="4.22"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          <line x1="5.64" y1="18.36" x2="4.22" y2="19.78"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        </g>
-      </svg>
-    </button>
     <a href="mailto:info.skjipl@gmail.com" class="top-cta">Get in Touch<span class="cta-arrow">→</span></a>
   </div>
-  <!-- Center nav (only page links) -->
-  <nav id="navbar">
-    <div class="nav-center" id="navPills">
-      <a href="#about" class="nav-link">About</a>
-      <a href="#systems" class="nav-link">Systems</a>
-      <a href="#testimonials" class="nav-link">Testimonials</a>
-      <a href="#faq" class="nav-link">FAQ</a>
-      <a href="#contact" class="nav-link">Contact</a>
-      <div class="nav-cursor" id="navCursor"></div>
+
+  <!-- Dynamic Island -->
+  <div class="di-wrapper" id="dynamicIsland">
+    <!-- Collapsed pill (always visible) -->
+    <div class="di-pill" id="diPill">
+      <div class="di-pill-left">
+        <button class="di-trigger" id="diTrigger" aria-label="Toggle menu">
+          <svg class="di-hamburger" id="diHamburger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line class="di-line-1" x1="3" y1="6" x2="21" y2="6"/>
+            <line class="di-line-2" x1="3" y1="12" x2="21" y2="12"/>
+            <line class="di-line-3" x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <span class="di-label" id="diLabel">Menu</span>
+      </div>
+      <div class="di-pill-right">
+        <button id="themeToggle" class="di-theme-toggle" aria-label="Toggle theme">
+          <svg id="attSvg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="overflow:visible">
+            <defs><mask id="attMask"><rect x="0" y="0" width="100%" height="100%" fill="white"/><circle id="attMaskCircle" cx="33" cy="0" r="9" fill="black"/></mask></defs>
+            <circle id="attBody" cx="12" cy="12" r="5" fill="currentColor" stroke="none" mask="url(#attMask)"/>
+            <g id="attRays" style="transform-origin:12px 12px">
+              <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="5.64" y1="5.64" x2="4.22" y2="4.22"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              <line x1="5.64" y1="18.36" x2="4.22" y2="19.78"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            </g>
+          </svg>
+        </button>
+        <span class="di-scroll-pct" id="diScrollPct">0%</span>
+      </div>
     </div>
-  </nav>
+
+    <!-- Expanded dropdown panel -->
+    <div class="di-panel" id="diPanel">
+      <div class="di-panel-section">
+        <span class="di-panel-label">Menu</span>
+        <a href="#about" class="di-panel-link di-panel-link-primary">About</a>
+        <a href="#systems" class="di-panel-link di-panel-link-primary">Systems</a>
+        <a href="#value-prop" class="di-panel-link di-panel-link-primary">Value</a>
+        <a href="#faq" class="di-panel-link di-panel-link-primary">FAQ</a>
+        <a href="#contact" class="di-panel-link di-panel-link-primary">Contact</a>
+      </div>
+      <div class="di-panel-divider"></div>
+      <div class="di-panel-section">
+        <span class="di-panel-label">Other</span>
+        <a href="#" class="di-panel-link di-panel-link-secondary">Privacy Policy</a>
+        <a href="#" class="di-panel-link di-panel-link-secondary">Terms of Service</a>
+      </div>
+      <div class="di-panel-divider"></div>
+      <div class="di-panel-section">
+        <span class="di-panel-label">Social media</span>
+        <a href="#" class="di-panel-link di-panel-link-secondary">LinkedIn</a>
+        <a href="#" class="di-panel-link di-panel-link-secondary">Instagram</a>
+        <a href="#" class="di-panel-link di-panel-link-secondary">YouTube</a>
+      </div>
+    </div>
+  </div>
 
   <main>
     <!-- ═══ HERO ═══ -->
     <section id="hero" class="hero-section">
       <div class="hero-container">
-        <p class="hero-tag gs-reveal">🇮🇳 Trusted by 15+ Municipal Water Authorities Across India</p>
+        <p class="hero-tag gs-reveal">Innovating Real-Time Water Safety & Sustainability</p>
         <h1 class="hero-h1">
           <span class="hero-line-wrap"><span class="hero-line">SK Jalrakshak</span></span>
           <span class="hero-line-wrap"><span class="hero-line" style="font-size: 0.6em; margin-top: 0.2em;">Innovations Private Limited</span></span>
         </h1>
         <div class="hero-bottom hero-fade">
-        <p class="hero-sub">India loses 40% of treated water to invisible infrastructure failures. Our edge-AI sensors and predictive intelligence platform detect problems 72 hours before they happen — saving billions of gallons and delivering 280% ROI in Year 1.</p>
+        <p class="hero-sub">We design, develop, and deploy advanced water quality monitoring solutions that integrate cutting-edge sensors, IoT connectivity, edge computing, and cloud-based analytics to safeguard public health.</p>
           <div class="hero-actions">
-            <a href="#systems" class="btn-primary">See How It Works</a>
-            <a href="#contact" class="btn-rainbow">Book a Free Assessment →</a>
+            <a href="#systems" class="btn-primary">Explore Solutions</a>
           </div>
         </div>
       </div>
@@ -112,21 +147,16 @@
     <!-- ═══ ABOUT ═══ -->
     <section id="about" class="sec">
       <div class="wrap">
-        <div class="sec-eyebrow gs-reveal">(01) About Us</div>
-        <div class="about-layout">
-          <div class="about-left gs-reveal">
-            <h2 class="sec-title">Your water infrastructure, finally as smart as your ambition.</h2>
+        <div class="showcase-split">
+          <div class="showcase-split-media gs-clip-reveal">
+            <img src="img/a1.jpg" alt="Jala Raksha Journey">
           </div>
-          <div class="about-right gs-reveal">
-            <p class="body-text">India's water networks lose over 40% of treated supply to invisible failures — costing municipalities crores annually and leaving communities underserved. SK Jalrakshak Innovations was founded to end that cycle permanently.</p>
-            <p class="body-text" style="margin-top:16px">Our IP68-rated edge sensors bolt onto your existing infrastructure in under 48 hours — zero downtime, zero rewiring. They stream 2.4 million data points per minute to our AI cloud platform, which detects pipe fatigue, chemical drift, and pressure anomalies up to 72 hours before they become emergencies. The result: safer communities, stronger infrastructure, and measurable savings from the very first week.</p>
+          <div class="showcase-split-text gs-reveal">
+            <p class="sec-eyebrow">(01) About Us</p>
+            <h2 class="sec-title" style="margin-bottom: 24px; margin-top: 0;">Our Journey</h2>
+            <p class="body-text">Jala Raksha was started to protect one of the most important things on Earth — clean water. Our team of engineers came together with one goal: to create smart, low-cost, and easy-to-use systems that check water quality using IoT technology.</p>
+            <p class="body-text" style="margin-top:16px">Whether it’s a lake or a water tank, our sensors help people, communities, and governments make better decisions to keep water safe.</p>
           </div>
-        </div>
-        <div class="stats-row">
-          <div class="stat gs-reveal"><span class="stat-val">1.5B+</span><span class="stat-desc">Gallons Monitored Daily</span></div>
-          <div class="stat gs-reveal"><span class="stat-val">500+</span><span class="stat-desc">KM Infrastructure Covered</span></div>
-          <div class="stat gs-reveal"><span class="stat-val">34%</span><span class="stat-desc">Water Loss Eliminated</span></div>
-          <div class="stat gs-reveal"><span class="stat-val">15+</span><span class="stat-desc">Municipal Partnerships</span></div>
         </div>
       </div>
     </section>
@@ -135,61 +165,77 @@
     <section id="platform-video" class="sec sec-video">
       <div class="wrap">
         <div class="video-split gs-reveal">
-          <div class="video-split-media">
-            <video src="img/mp_.mp4" autoplay loop muted playsinline></video>
-          </div>
           <div class="video-split-text">
-            <p class="sec-eyebrow">(01) Platform Overview</p>
-            <h3 class="sys-name" style="margin-top:12px">Unified Command Center</h3>
-            <p class="body-text" style="margin-top:16px">A single operations interface for your entire water network. Aggregated live telemetry from every sensor, AI-driven anomaly alerts, geo-mapped asset health, and one-click regulatory exports — all streaming in real-time across desktop, tablet, and mobile.</p>
-            <a href="#systems" class="btn-primary" style="margin-top:24px;display:inline-flex">Explore Platform</a>
+            <p class="sec-eyebrow">(02) Empowering Solutions</p>
+            <h3 class="sys-name" style="margin-top:12px">For a brighter future</h3>
+            <p class="body-text" style="margin-top:16px">At Jal Rakshak, we empower Solutions by unlocking their potential through quality devices. We harness smart technology to protect water sources, support communities, and create a healthier environment.</p>
+            <a href="#systems" class="btn-primary" style="margin-top:24px;display:inline-flex">Explore Solutions</a>
+          </div>
+          <div class="video-split-media">
+            <img src="img/a2.jpg" alt="Empowering Solutions" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ WHY US (NEW SECTION) ═══ -->
+    <!-- ═══ MISSION & VISION ═══ -->
     <section id="why-us" class="sec">
       <div class="wrap">
-        <div class="sec-eyebrow gs-reveal">(02) Why Choose Us</div>
-        <h2 class="sec-title sec-title-lg gs-reveal">Engineered for India.<br>Built to last decades.</h2>
-        <div class="why-grid">
+        <div class="sec-eyebrow gs-reveal">(03) Mission & Vision</div>
+        <h2 class="sec-title sec-title-lg gs-reveal" style="max-width: 800px; margin-left: auto; margin-right: auto;">Our Purpose. Our Future.</h2>
+        <div class="why-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
           <div class="why-card gs-reveal">
-            <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-            <h3 class="why-title">Sub-millisecond Response</h3>
-            <p class="why-desc">3 AM pressure anomaly? Our edge-first architecture processes alerts locally — delivering autonomous shutoff commands in under 1ms, before the cloud even knows there's a problem. Zero human delay.</p>
+            <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+            <h3 class="why-title">Our Mission</h3>
+            <p class="why-desc">We specialize in developing IoT-based systems that provide real-time, accurate, and actionable water quality data to help safeguard public health and promote sustainable water resource use.</p>
           </div>
           <div class="why-card gs-reveal">
-            <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-            <h3 class="why-title">99.97% Uptime Guaranteed</h3>
-            <p class="why-desc">IP68-rated to survive full submersion, desert heat, and corrosive chemicals. Our sensors have run flawlessly through two consecutive monsoon seasons across 500+ installations. Built for India's toughest conditions.</p>
-          </div>
-          <div class="why-card gs-reveal">
-            <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-            <h3 class="why-title">See Failures 72 Hours Early</h3>
-            <p class="why-desc">Our ML models analyse historical failure patterns, weather data, and live telemetry to flag anomalies three full days before they escalate. One client saved ₹2 crore from a single early warning.</p>
-          </div>
-          <div class="why-card gs-reveal">
-            <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
-            <h3 class="why-title">Works Anywhere — Even Off-Grid</h3>
-            <p class="why-desc">Solar-powered nodes with satellite backhaul operate where there's zero grid power or cellular coverage. If there's sunlight, the network is live. No exceptions. No data gaps. Ever.</p>
+            <div class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <h3 class="why-title">Our Vision</h3>
+            <p class="why-desc">To be a global leader in smart water quality monitoring by innovating sustainable, reliable, and scalable technologies that ensure safe and clean water for all, protecting ecosystems through data-driven environmental stewardship.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ SHOWCASE (Split Layout) ═══ -->
+    <!-- ═══ THE CRISIS (Problem Statement) ═══ -->
     <section class="sec sec-showcase-split">
       <div class="wrap">
         <div class="showcase-split">
           <div class="showcase-split-media gs-clip-reveal">
-            <img src="img/gemini-3.jpg" alt="Water infrastructure impact">
+            <img src="img/aerial-water.png" alt="Water crisis and pollution" style="border-radius: var(--r); filter: contrast(1.1) brightness(0.9);">
           </div>
           <div class="showcase-split-text gs-reveal">
-            <p class="sec-eyebrow">(02) Our Approach</p>
-            <h3 class="sys-name" style="margin-top:12px">Field-Hardened Intelligence</h3>
-            <p class="body-text" style="margin-top:16px">Our IP68-rated sensor modules operate in environments that destroy consumer hardware — submerged in corrosive treatment chemicals, buried in flood-prone underground mains, and exposed to 50°C+ desert conditions. Each device streams continuous telemetry to our cloud, processing 2.4 million data points per minute across the network.</p>
-            <p class="body-text" style="margin-top:12px">The result: a real-time digital twin of your water infrastructure — every pipe, every valve, every chemical reading, alive on screen.</p>
+            <p class="sec-eyebrow" style="color: #ff5500;">(04) The Critical Crisis</p>
+            <h3 class="sys-name" style="margin-top:12px; font-size: 2.4rem;">The Limits of Legacy Systems</h3>
+            <p class="body-text" style="margin-top:16px; font-size: 1.05rem;">India is facing a severe and escalating water shortage, with precious resources becoming increasingly polluted. Traditional water quality monitoring methods are dangerously inadequate.</p>
+            <ul class="body-text" style="margin-top:20px; list-style:none; display:flex; flex-direction:column; gap:12px; padding-left:0;">
+              <li style="display:flex; gap:12px; align-items:flex-start;"><span style="color:#ff5500;">✕</span> <b>Slow & Expensive:</b> Manual sampling is costly and delivers delayed results, making proactive prevention impossible.</li>
+              <li style="display:flex; gap:12px; align-items:flex-start;"><span style="color:#ff5500;">✕</span> <b>Geographically Limited:</b> Hard-to-reach rural areas and vast aquatic bodies remain completely unmonitored.</li>
+              <li style="display:flex; gap:12px; align-items:flex-start;"><span style="color:#ff5500;">✕</span> <b>No Real-time Insights:</b> Authorities react to contamination events after they happen, jeopardizing aquatic and public health.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ THE INNOVATION (Solution Statement) ═══ -->
+    <section class="sec sec-showcase-split sec-alt">
+      <div class="wrap">
+        <div class="showcase-split">
+          <div class="showcase-split-media gs-clip-reveal">
+            <img src="img/solar-field.png" alt="Smart AI Buoy deployed in lake" style="border-radius: var(--r); box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+          </div>
+          <div class="showcase-split-text gs-reveal">
+            <p class="sec-eyebrow" style="color: var(--green);">(05) The Deep-Tech Innovation</p>
+            <h3 class="sys-name" style="margin-top:12px; font-size: 2.4rem;">AI-Powered Autonomous Monitoring Grid</h3>
+            <p class="body-text" style="margin-top:16px; font-size: 1.05rem;">We completely engineer the gap with a revolutionary IoT-based 4G/5G intelligence grid. Our autonomous edge devices operate completely off-grid to safeguard public infrastructure instantly.</p>
+            <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
+              <span style="background:var(--border); padding:6px 14px; border-radius:100px; font-size:0.75rem; font-weight:600; letter-spacing:0.05em;">Edge AI Computing</span>
+              <span style="background:var(--border); padding:6px 14px; border-radius:100px; font-size:0.75rem; font-weight:600; letter-spacing:0.05em;">Wi-SUN Mesh Networks</span>
+              <span style="background:var(--border); padding:6px 14px; border-radius:100px; font-size:0.75rem; font-weight:600; letter-spacing:0.05em;">100% Solar Self-Sustainable</span>
+              <span style="background:var(--border); padding:6px 14px; border-radius:100px; font-size:0.75rem; font-weight:600; letter-spacing:0.05em;">Real-Time Contaminant Detection</span>
+            </div>
           </div>
         </div>
       </div>
@@ -228,43 +274,43 @@
     <!-- ═══ INTELLIGENCE GRID (FlowArt Story Scroll — fourmula.ai style) ═══ -->
     <div id="flow-art" class="flow-art-root">
 
-      <!-- Panel 1: Deploy Sensors -->
+      <!-- Panel 1: Install Device -->
       <section class="flow-section" data-flow-section>
         <div class="flow-bg-gradient flow-grad-1"></div>
         <div class="flow-inner flow-art-container">
           <div class="flow-top-row">
-            <h2 class="flow-heading">Deploy edge<br>sensors.</h2>
+            <h2 class="flow-heading">Install the<br>Device.</h2>
             <span class="flow-step-num">01</span>
           </div>
           <div class="flow-feature-grid">
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">2.4M+ data points / min</span>
+              <span class="flow-feature-label">Compact & Easy</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Zero-config plug-and-play</span>
+              <span class="flow-feature-label">Built for outdoor use</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Sub-millisecond Latency</span>
+              <span class="flow-feature-label">Fits tanks, lakes, rivers</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">IP68 Military Grade</span>
+              <span class="flow-feature-label">Plug and Play</span>
             </div>
           </div>
           <div class="flow-bottom-row">
             <div class="flow-desc">
-              <p class="flow-desc-bold">IP68 ruggedized IoT nodes</p>
-              <p class="flow-desc-light">bolt onto existing pipes, tanks,<br>and treatment infrastructure.</p>
+              <p class="flow-desc-bold">Smart sensor kit</p>
+              <p class="flow-desc-light">Attach our smart sensor kit to any<br>water source in minutes.</p>
             </div>
             <a href="#systems" class="flow-cta-pill">Explore Systems</a>
           </div>
           <div class="flow-showcase-strip">
-            <div class="flow-showcase-card"><img src="img/sensor-device.png" alt="Edge sensor device"></div>
-            <div class="flow-showcase-card"><img src="img/gemini-1.jpg" alt="Infrastructure monitoring"></div>
-            <div class="flow-showcase-card"><img src="img/gemini-2.jpg" alt="Field deployment"></div>
+            <div class="flow-showcase-card"><img src="img/s1.png" alt="Edge sensor device"></div>
+            <div class="flow-showcase-card"><img src="img/p1.png" alt="Infrastructure monitoring"></div>
+            <div class="flow-showcase-card"><img src="img/a2.jpg" alt="Field deployment"></div>
           </div>
         </div>
       </section>
@@ -274,79 +320,79 @@
         <div class="flow-bg-gradient flow-grad-2"></div>
         <div class="flow-inner flow-art-container">
           <div class="flow-top-row">
-            <h2 class="flow-heading">Monitor<br>everything.</h2>
+            <h2 class="flow-heading">Track Data<br>Remotely.</h2>
             <span class="flow-step-num">02</span>
           </div>
           <div class="flow-feature-grid">
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Live geo-mapped network</span>
+              <span class="flow-feature-label">4G & GPS Integration</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">One-click compliance exports</span>
+              <span class="flow-feature-label">Real-time Monitoring</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Role-based Access Control</span>
+              <span class="flow-feature-label">pH, Turbidity, TDS</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Custom Alert Thresholds</span>
+              <span class="flow-feature-label">Temperature Tracking</span>
             </div>
           </div>
           <div class="flow-bottom-row">
             <div class="flow-desc">
-              <p class="flow-desc-bold">Unified cloud dashboard</p>
-              <p class="flow-desc-light">for flow rates, pressure, pH,<br>chemical levels, and alerts.</p>
+              <p class="flow-desc-bold">Automatic Data Sync</p>
+              <p class="flow-desc-light">Data is sent automatically to the<br>cloud for access anytime, anywhere.</p>
             </div>
             <a href="#systems" class="flow-cta-pill">See Dashboard</a>
           </div>
           <div class="flow-showcase-strip">
-            <div class="flow-showcase-card"><img src="img/cloud-dashboard.png" alt="Cloud dashboard"></div>
-            <div class="flow-showcase-card"><img src="img/gemini-3.jpg" alt="Analytics view"></div>
-            <div class="flow-showcase-card"><img src="img/team.png" alt="Team operations"></div>
+            <div class="flow-showcase-card"><img src="img/s2.png" alt="Cloud dashboard"></div>
+            <div class="flow-showcase-card"><img src="img/p2.png" alt="Analytics view"></div>
+            <div class="flow-showcase-card"><img src="img/t1.png" alt="Team operations"></div>
           </div>
         </div>
       </section>
 
-      <!-- Panel 3: Predictive AI -->
+      <!-- Panel 3: Analyze -->
       <section class="flow-section" data-flow-section>
         <div class="flow-bg-gradient flow-grad-3"></div>
         <div class="flow-inner flow-art-container">
           <div class="flow-top-row">
-            <h2 class="flow-heading">Predict<br>failures.</h2>
+            <h2 class="flow-heading">Analyze<br>Information.</h2>
             <span class="flow-step-num">03</span>
           </div>
           <div class="flow-feature-grid">
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">72-hour advance warnings</span>
+              <span class="flow-feature-label">Powerful Dashboard</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">ML trained on 10M+ events</span>
+              <span class="flow-feature-label">Automated Alerts</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Predictive Fatigue Analysis</span>
+              <span class="flow-feature-label">Trend Tracking</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">Autonomous Failure Isolation</span>
+              <span class="flow-feature-label">Downloadable Reports</span>
             </div>
           </div>
           <div class="flow-bottom-row">
             <div class="flow-desc">
-              <p class="flow-desc-bold">AI detects anomalies</p>
-              <p class="flow-desc-light">three full days before they<br>escalate into emergencies.</p>
+              <p class="flow-desc-bold">Impactful Decisions</p>
+              <p class="flow-desc-light">Get alerts when values exceed limits<br>and track trends over time.</p>
             </div>
             <a href="#contact" class="flow-cta-pill">Get Started</a>
           </div>
           <div class="flow-showcase-strip">
-            <div class="flow-showcase-card"><img src="img/gemini-3.jpg" alt="AI predictions"></div>
-            <div class="flow-showcase-card"><img src="img/gemini-1.jpg" alt="Data analytics"></div>
-            <div class="flow-showcase-card"><img src="img/gemini-2.jpg" alt="Sensor network"></div>
+            <div class="flow-showcase-card"><img src="img/s3.png" alt="AI predictions"></div>
+            <div class="flow-showcase-card"><img src="img/a1.jpg" alt="Data analytics"></div>
+            <div class="flow-showcase-card"><img src="img/a2.jpg" alt="Sensor network"></div>
           </div>
         </div>
       </section>
@@ -362,11 +408,11 @@
           <div class="flow-feature-grid">
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">280% average ROI in Year 1</span>
+              <span class="flow-feature-label">Immediate Contaminant Detection</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
-              <span class="flow-feature-label">34% water loss reduction</span>
+              <span class="flow-feature-label">Continuous Parameter Tracking</span>
             </div>
             <div class="flow-feature-cell">
               <span class="flow-dot"></span>
@@ -397,88 +443,157 @@
     <!-- ═══ SYSTEMS ═══ -->
     <section id="systems" class="sec">
       <div class="wrap">
-        <div class="sec-eyebrow gs-reveal">(03) Our Platform</div>
-        <h2 class="sec-title sec-title-lg gs-reveal">Everything you need.<br>Ready to deploy.</h2>
+        <div class="sec-eyebrow gs-reveal">(05) Our Solutions</div>
+        <h2 class="sec-title sec-title-lg gs-reveal">Explore our core offerings.</h2>
         <div class="systems-list">
-          <article class="sys-row gs-reveal"><span class="sys-num">01</span><div class="sys-content"><h3 class="sys-name">Edge Telemetry</h3><p class="sys-desc">Ruggedized IoT modules that bolt directly onto existing pipes, tanks, and treatment infrastructure. Zero-configuration deployment — streaming live flow, pressure, temperature, and chemical data within minutes of installation. Designed to outlast the infrastructure they monitor.</p></div><span class="sys-badge">Hardware</span></article>
-          <article class="sys-row gs-reveal"><span class="sys-num">02</span><div class="sys-content"><h3 class="sys-name">Cloud Intelligence</h3><p class="sys-desc">A unified operations dashboard that aggregates live sensor feeds, geo-maps your entire network, and surfaces actionable insights in real-time. Role-based access, custom alert thresholds, and one-click compliance exports built for operations teams of any size.</p></div><span class="sys-badge">Software</span></article>
-          <article class="sys-row gs-reveal"><span class="sys-num">03</span><div class="sys-content"><h3 class="sys-name">Predictive Analytics</h3><p class="sys-desc">Machine learning models trained on millions of real-world infrastructure events. Cross-references historical patterns, weather data, and live telemetry to flag pipe fatigue, chemical drift, and flow anomalies up to 72 hours before failure. One client avoided a ₹2 crore emergency repair from a single early warning.</p></div><span class="sys-badge">AI / ML</span></article>
-          <article class="sys-row gs-reveal"><span class="sys-num">04</span><div class="sys-content"><h3 class="sys-name">Compliance Automation</h3><p class="sys-desc">Auto-generated regulatory reports meeting CPCB, WHO, and ISO 24512 standards — with full chain-of-custody traceability. What used to take teams two weeks of manual paperwork now generates in seconds, with audit trails that regulators trust.</p></div><span class="sys-badge">Governance</span></article>
+          <article class="sys-row gs-reveal"><span class="sys-num">01</span><div class="sys-content"><h3 class="sys-name">Smart IoT Sensors</h3><p class="sys-desc">Self-sustainable, edge-computing devices equipped with Wi-SUN Mesh Networking and Long-Range Communication. Continuously tracks critical parameters including Dissolved Oxygen, pH, BOD, COD, and Ammonia.</p></div><span class="sys-badge">Hardware</span></article>
+          <article class="sys-row gs-reveal"><span class="sys-num">02</span><div class="sys-content"><h3 class="sys-name">Connected Telemetry</h3><p class="sys-desc">Our integrated 4G/5G gateways provide seamless cloud or on-premise connectivity, sending robust data from remote locations to intuitive dashboards with zero configuration required.</p></div><span class="sys-badge">Network</span></article>
+          <article class="sys-row gs-reveal"><span class="sys-num">03</span><div class="sys-content"><h3 class="sys-name">Data-Driven Analytics</h3><p class="sys-desc">Actionable insights generated through remote monitoring. We deliver customizable visualizations, predictive analytics, and seamless API integration for smart city initiatives and municipal governance.</p></div><span class="sys-badge">Software</span></article>
         </div>
       </div>
     </section>
 
-    <!-- ═══ IMPACT IMAGE ═══ -->
-    <section class="sec sec-video">
+    <!-- ═══ TARGET MARKETS ═══ -->
+    <section class="sec sec-showcase-split">
       <div class="wrap">
-        <div class="showcase-media gs-clip-reveal">
-          <img src="img/team.png" alt="Engineering team reviewing infrastructure data on-site">
+        <div class="showcase-split">
+          <div class="showcase-split-media gs-clip-reveal">
+            <img src="img/team.png" alt="Engineering team reviewing infrastructure data on-site">
+          </div>
+          <div class="showcase-split-text gs-reveal">
+            <p class="sec-eyebrow">Target Markets</p>
+            <h3 class="sys-name" style="margin-top:12px; font-size: 2rem;">Who We Serve</h3>
+            <ul class="body-text" style="margin-top:16px; list-style:none; display:flex; flex-direction:column; gap:14px; padding-left:0;">
+              <li style="display:flex; gap:12px; align-items:center;"><span style="color:var(--green); font-size:1.2rem;">●</span> Government Bodies & Water Authorities</li>
+              <li style="display:flex; gap:12px; align-items:center;"><span style="color:var(--green); font-size:1.2rem;">●</span> Environmental Monitoring Agencies</li>
+              <li style="display:flex; gap:12px; align-items:center;"><span style="color:var(--green); font-size:1.2rem;">●</span> Pharmaceutical & Manufacturing Industries</li>
+              <li style="display:flex; gap:12px; align-items:center;"><span style="color:var(--green); font-size:1.2rem;">●</span> Agriculture & Irrigation Sectors</li>
+              <li style="display:flex; gap:12px; align-items:center;"><span style="color:var(--green); font-size:1.2rem;">●</span> Smart City Projects & NGOs</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ TESTIMONIALS (Auto-Scrolling Columns) ═══ -->
-    <section id="testimonials" class="sec sec-testimonials">
+    <!-- ═══ VALUE PROPOSITION (Auto-Scrolling Columns) ═══ -->
+    <section id="value-prop" class="sec sec-testimonials">
       <div class="wrap">
         <div class="testi-header gs-reveal">
-          <span class="testi-badge">Trusted Partners</span>
-          <h2 class="sec-title sec-title-lg">Hear it from the teams we work with</h2>
-          <p class="testi-subtitle">Real results shared by the operators, engineers, and leaders who trust our platform every day.</p>
+          <span class="testi-badge">Core Benefits</span>
+          <h2 class="sec-title sec-title-lg">Transforming Water Management</h2>
+          <p class="testi-subtitle">Our unique value proposition focuses on sustainability, health, and cutting-edge operational efficiency.</p>
         </div>
         <div class="testi-columns-wrap">
           <!-- Column 1 (scroll up) -->
           <div class="testi-col">
             <div class="testi-col-track testi-scroll-up">
-              <div class="tcard-v2"><blockquote>"Before SK Jalrakshak, we were flying blind. Now I get an alert on my phone before my field teams even know something's wrong. Our response time dropped by 80%."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajesh Kumar"><div><strong>Rajesh Kumar</strong><span>Operations Director · Hyderabad Metro Water</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"Their AI flagged a hairline fracture in one of our main distribution pipes. Three days later, our manual inspection confirmed it. That single alert saved us ₹2 crore."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Anand Verma"><div><strong>Anand Verma</strong><span>Infrastructure Manager · AP State Utilities</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"The solar-powered nodes operate in locations where we couldn't even get cellular coverage. The satellite backhaul is seamless — zero data gaps in 14 months."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Arjun Reddy"><div><strong>Arjun Reddy</strong><span>Network Architect · Telangana Water Board</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"By ensuring continuous water monitoring, we significantly reduce the risk of waterborne infections and safeguard public health."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><strong>Health & Safety</strong><span>Reduce Waterborne Infections</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Our systems guarantee the continuous protection of lakes and other vital water bodies against immediate contamination."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg></div><div><strong>Environmental Protection</strong><span>Ensure Lake Protection</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Leveraging AI and continuous parameter tracking, we deliver predictive analytics that empower smart decision-making."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/></svg></div><div><strong>Data-Driven Insights</strong><span>Predictive Analytics</span></div></div></div>
               <!-- Duplicate for infinite loop -->
-              <div class="tcard-v2"><blockquote>"Before SK Jalrakshak, we were flying blind. Now I get an alert on my phone before my field teams even know something's wrong. Our response time dropped by 80%."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajesh Kumar"><div><strong>Rajesh Kumar</strong><span>Operations Director · Hyderabad Metro Water</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"Their AI flagged a hairline fracture in one of our main distribution pipes. Three days later, our manual inspection confirmed it. That single alert saved us ₹2 crore."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Anand Verma"><div><strong>Anand Verma</strong><span>Infrastructure Manager · AP State Utilities</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"The solar-powered nodes operate in locations where we couldn't even get cellular coverage. The satellite backhaul is seamless — zero data gaps in 14 months."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Arjun Reddy"><div><strong>Arjun Reddy</strong><span>Network Architect · Telangana Water Board</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"By ensuring continuous water monitoring, we significantly reduce the risk of waterborne infections and safeguard public health."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><strong>Health & Safety</strong><span>Reduce Waterborne Infections</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Our systems guarantee the continuous protection of lakes and other vital water bodies against immediate contamination."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg></div><div><strong>Environmental Protection</strong><span>Ensure Lake Protection</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Leveraging AI and continuous parameter tracking, we deliver predictive analytics that empower smart decision-making."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/></svg></div><div><strong>Data-Driven Insights</strong><span>Predictive Analytics</span></div></div></div>
             </div>
           </div>
           <!-- Column 2 (scroll down, hidden on mobile) -->
           <div class="testi-col testi-col-md">
             <div class="testi-col-track testi-scroll-down">
-              <div class="tcard-v2"><blockquote>"I've installed sensors in places where equipment usually lasts six months. Theirs have been running for eighteen — through two monsoon seasons — without a single hiccup."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Sharma"><div><strong>Priya Sharma</strong><span>Field Engineer · National Water Board</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"I was skeptical about another 'enterprise dashboard.' But my whole team — including the non-technical field staff — picked it up in a day. It just works."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Meera Nair"><div><strong>Meera Nair</strong><span>Technology Lead · Chennai Corp</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"Compliance reporting used to take our team two weeks. Now it generates automatically. Our auditors were genuinely impressed."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/women/90.jpg" alt="Kavitha Iyer"><div><strong>Kavitha Iyer</strong><span>Compliance Officer · Maharashtra Water Authority</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Designed for long-term monitoring, our smart devices require minimal maintenance while delivering maximum operational uptime."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/></svg></div><div><strong>Reliability</strong><span>Minimal Maintenance</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"We provide sustainable water resource management strategies that align with global environmental goals and SDG-6."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div><strong>Sustainability</strong><span>Resource Management</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Our primary focus is a safe water supply, preventing contamination through intelligent edge-telemetry and alerts."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg></div><div><strong>Core Mission</strong><span>Safe Water Supply</span></div></div></div>
               <!-- Duplicate -->
-              <div class="tcard-v2"><blockquote>"I've installed sensors in places where equipment usually lasts six months. Theirs have been running for eighteen — through two monsoon seasons — without a single hiccup."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Sharma"><div><strong>Priya Sharma</strong><span>Field Engineer · National Water Board</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"I was skeptical about another 'enterprise dashboard.' But my whole team — including the non-technical field staff — picked it up in a day. It just works."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Meera Nair"><div><strong>Meera Nair</strong><span>Technology Lead · Chennai Corp</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"Compliance reporting used to take our team two weeks. Now it generates automatically. Our auditors were genuinely impressed."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/women/90.jpg" alt="Kavitha Iyer"><div><strong>Kavitha Iyer</strong><span>Compliance Officer · Maharashtra Water Authority</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Designed for long-term monitoring, our smart devices require minimal maintenance while delivering maximum operational uptime."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/></svg></div><div><strong>Reliability</strong><span>Minimal Maintenance</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"We provide sustainable water resource management strategies that align with global environmental goals and SDG-6."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div><strong>Sustainability</strong><span>Resource Management</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Our primary focus is a safe water supply, preventing contamination through intelligent edge-telemetry and alerts."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg></div><div><strong>Core Mission</strong><span>Safe Water Supply</span></div></div></div>
             </div>
           </div>
           <!-- Column 3 (scroll up slower, hidden below lg) -->
           <div class="testi-col testi-col-lg">
             <div class="testi-col-track testi-scroll-up-slow">
-              <div class="tcard-v2"><blockquote>"Twelve facilities, all connected, all streaming live data. We saw positive ROI within the first quarter, and our board is now asking why we didn't do this five years ago."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vikram Patel"><div><strong>Vikram Patel</strong><span>Plant Manager · Gujarat Water Authority</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"We used to send crews out with clipboards to read gauges. Now the gauges talk to us. We've freed up 400+ man-hours every month."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Karan Desai"><div><strong>Karan Desai</strong><span>Water Works Supervisor · Vizag Municipal</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"The API integration with our existing SCADA system was painless. Their engineering team handled everything in under a week. No disruptions to live operations."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Suresh Babu"><div><strong>Suresh Babu</strong><span>Chief Engineer · Vizag Smart City</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"A comprehensive IoT solution providing continuous remote monitoring for flow rates, pH, and crucial chemical levels."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg></div><div><strong>Remote Operations</strong><span>Continuous Tracking</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Highly scalable architecture ready for smart city integration and capable of supporting multiple parameters efficiently."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div><strong>Scalability</strong><span>Smart City Ready</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Our Wi-SUN and 4G gateway deployment provides seamless data without the need for complex, over-engineered rural installations."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg></div><div><strong>Connectivity</strong><span>4G/5G Gateways</span></div></div></div>
               <!-- Duplicate -->
-              <div class="tcard-v2"><blockquote>"Twelve facilities, all connected, all streaming live data. We saw positive ROI within the first quarter, and our board is now asking why we didn't do this five years ago."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vikram Patel"><div><strong>Vikram Patel</strong><span>Plant Manager · Gujarat Water Authority</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"We used to send crews out with clipboards to read gauges. Now the gauges talk to us. We've freed up 400+ man-hours every month."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Karan Desai"><div><strong>Karan Desai</strong><span>Water Works Supervisor · Vizag Municipal</span></div></div></div>
-              <div class="tcard-v2"><blockquote>"The API integration with our existing SCADA system was painless. Their engineering team handled everything in under a week. No disruptions to live operations."</blockquote><div class="tcard-v2-meta"><img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Suresh Babu"><div><strong>Suresh Babu</strong><span>Chief Engineer · Vizag Smart City</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"A comprehensive IoT solution providing continuous remote monitoring for flow rates, pH, and crucial chemical levels."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg></div><div><strong>Remote Operations</strong><span>Continuous Tracking</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Highly scalable architecture ready for smart city integration and capable of supporting multiple parameters efficiently."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div><strong>Scalability</strong><span>Smart City Ready</span></div></div></div>
+              <div class="tcard-v2"><blockquote>"Our Wi-SUN and 4G gateway deployment provides seamless data without the need for complex, over-engineered rural installations."</blockquote><div class="tcard-v2-meta"><div class="why-icon" style="background:transparent;border:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg></div><div><strong>Connectivity</strong><span>4G/5G Gateways</span></div></div></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ IMPACT ═══ -->
-    <section id="impact" class="sec">
+    <!-- ═══ FAQ ═══ -->
+    <section id="faq" class="sec">
       <div class="wrap">
-        <div class="sec-eyebrow gs-reveal">(05) Proven Results</div>
-        <h2 class="sec-title sec-title-lg gs-reveal">Measurable impact,<br>from day one.</h2>
-        <div class="split-media-layout">
-          <div class="impact-media gs-clip-reveal">
-            <img src="img/solar-field.png" alt="Solar-powered IoT station monitoring rural water canal" class="impact-img">
+        <div class="showcase-split" style="align-items: start;">
+          <div class="showcase-split-text gs-reveal">
+            <p class="sec-eyebrow" style="color:var(--accent);">(06) Frequently Asked Questions</p>
+            <h2 class="sec-title" style="margin-bottom: 24px; margin-top: 0;">Deep-Tech Inquiries.</h2>
+            <p class="body-text">Find answers to common questions about our IoT sensors, telemetry, and data analytics solutions.</p>
           </div>
-          <div class="impact-content gs-reveal">
-            <p class="body-text">Our partners don't wait months for results — they see measurable improvements from the moment our sensors go live.</p>
-            <p class="body-text">Networks monitored by SK Jalrakshak have achieved <strong>up to 34% water loss reduction within 12 months</strong> — preserving billions of gallons, serving more communities, and freeing budgets for proactive infrastructure investment.</p>
-            <p class="body-text">Clients consistently report <strong>280% average ROI in Year 1</strong>. Several installations paid for themselves in under 90 days through waste elimination and predictive maintenance alone.</p>
+          
+          <div class="faq-list gs-reveal" id="faqAccordion" style="margin: 0;">
+            <div class="faq-item">
+              <button class="faq-trigger" aria-expanded="false">
+                What parameters does the system monitor?
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-content">
+                <div class="faq-content-inner">
+                  Our system provides real-time & continuous water quality monitoring for key parameters including Dissolved Oxygen (DO), pH, BOD (Biochemical Oxygen Demand), COD, Temperature, Electrical Conductivity, Ammonia, and Nitrate.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger" aria-expanded="false">
+                How does the system communicate data from remote locations?
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-content">
+                <div class="faq-content-inner">
+                  The system uses an integrated 4G/5G IoT gateway alongside Wi-SUN Mesh Networking to transmit robust data seamlessly to cloud or on-premise dashboards, allowing remote monitoring and reducing the need for on-site inspections.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger" aria-expanded="false">
+                Is the hardware self-sustainable?
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-content">
+                <div class="faq-content-inner">
+                  Yes. Our edge-computing devices are designed to be entirely self-sustainable, utilizing solar power integration with a battery, and are constructed with recyclable, environmentally friendly materials.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger" aria-expanded="false">
+                Who are the target customers for this system?
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-content">
+                <div class="faq-content-inner">
+                  We serve Government bodies (municipalities, water authorities), Environmental monitoring agencies, Industrial users (pharmaceuticals, manufacturing), Agriculture and irrigation sectors, as well as Smart city projects and NGOs.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger" aria-expanded="false">
+                Can it integrate with our existing infrastructure?
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-content">
+                <div class="faq-content-inner">
+                  Absolutely. Our solution offers easy API integration for external systems, making it highly scalable and ideal for Smart City initiatives, industrial applications, and municipal governance platforms.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -498,39 +613,24 @@
           <div class="corp-card gs-reveal"><span class="corp-key">Registered Office</span><span class="corp-val">Visakhapatnam, AP 530048</span></div>
         </div>
         <div class="directors-row">
-          <div class="dir-card gs-reveal"><div class="dir-icon">KS</div><div><strong>Kameswara Sarma Nagabhatla</strong><span class="dir-meta">Director · DIN 11111205</span></div></div>
-          <div class="dir-card gs-reveal"><div class="dir-icon">SK</div><div><strong>Sirish Kumar Pagoti</strong><span class="dir-meta">Director · DIN 11111206</span></div></div>
+          <div class="dir-card gs-reveal"><div class="dir-icon" style="overflow:hidden; padding:0;"><img src="img/pdf_img_page3_1.jpeg" style="width:100%;height:100%;object-fit:cover;" alt="Kamesh Sharma"></div><div><strong>Kamesh Sharma</strong><span class="dir-meta">Managing Director</span><p style="font-size:0.85rem; color:var(--text-color); opacity:0.8; margin-top:8px;">Expertise in IIoT engineering and embedded systems. Focused on real-time environmental monitoring.</p></div></div>
+          <div class="dir-card gs-reveal"><div class="dir-icon" style="overflow:hidden; padding:0;"><img src="img/pdf_img_page3_2.jpeg" style="width:100%;height:100%;object-fit:cover;" alt="Dr. P. Sirish Kumar"></div><div><strong>Dr. P. Sirish Kumar</strong><span class="dir-meta">Director</span><p style="font-size:0.85rem; color:var(--text-color); opacity:0.8; margin-top:8px;">IoT & GNSS Expert, Ph.D. with Gold Medal. Authored 100+ publications and holds 6 patents.</p></div></div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ FAQ ═══ -->
-    <section id="faq" class="sec">
-      <div class="wrap wrap-sm">
-        <div class="sec-eyebrow gs-reveal">(07) FAQ</div>
-        <h2 class="sec-title gs-reveal">Common Questions.</h2>
-        <div class="faq-list">
-          <details class="faq gs-reveal"><summary>What is SK Jalrakshak Innovations?</summary><p>SK Jalrakshak Innovations Pvt Ltd is an enterprise water intelligence company specializing in edge-AI telemetry, cloud-based infrastructure monitoring, and predictive analytics for industrial and municipal water systems. Registered under CIN: U26517AP2025PTC119413, we serve utilities and operators across India.</p></details>
-          <details class="faq gs-reveal"><summary>Where is the company registered?</summary><p>Our registered office is located at D No: 2-14130, 2nd Floor, Plot-13, Revenue Ward 5, Madhurawada, Visakhapatnam, Andhra Pradesh 530048. We are registered under the Registrar of Companies, Vijayawada (RoC-Vijayawada).</p></details>
-          <details class="faq gs-reveal"><summary>Who leads the company?</summary><p>The company is led by its founding directors: Kameswara Sarma Nagabhatla (DIN 11111205) and Sirish Kumar Pagoti (DIN 11111206), both serving since incorporation on 16 May 2025. Together they bring deep expertise in embedded systems, IoT infrastructure, and water resource management.</p></details>
-          <details class="faq gs-reveal"><summary>How do I get in touch?</summary><p>Reach our engineering team directly at info.skjipl@gmail.com. We respond to all enquiries within 24 hours with a preliminary assessment. For site visits, our team operates from Visakhapatnam with deployment capability across all Indian states.</p></details>
-          <details class="faq gs-reveal"><summary>What is your full service offering?</summary><p>We provide end-to-end water infrastructure intelligence: IP68-rated edge telemetry hardware, a unified cloud monitoring platform with real-time geo-mapping, ML-powered predictive analytics engines, solar-powered off-grid IoT nodes with satellite backhaul, automated compliance reporting (CPCB, WHO, ISO 24512), and custom SCADA/API integrations.</p></details>
-          <details class="faq gs-reveal"><summary>How fast can you deploy?</summary><p>Standard deployments complete within 48 hours. Our plug-and-play sensor modules require zero firmware configuration — they auto-register with our cloud platform on power-up. For large-scale multi-site rollouts, we offer phased deployment programs with dedicated field engineering support.</p></details>
-          <details class="faq gs-reveal"><summary>What ROI can we expect?</summary><p>Our clients report an average return on investment of 280% within the first 12 months. Several installations have achieved full payback in under 90 days through early leak detection, waste reduction (up to 34%), and predictive maintenance savings. We provide detailed ROI projections during the assessment phase.</p></details>
-        </div>
-      </div>
-    </section>
+
 
     <!-- ═══ CONTACT ═══ -->
     <section id="contact" class="sec sec-alt">
       <div class="wrap">
         <div class="sec-eyebrow gs-reveal">(08) Let's Talk</div>
-        <h2 class="cta-title gs-reveal">Your Water.<br>Our Mission.</h2>
-        <p class="cta-body gs-reveal">Whether you're battling leaking networks, compliance deadlines, or limited visibility — our engineering team will respond personally within 24 hours with a free, no-obligation assessment tailored to your infrastructure. No sales pitch. Just solutions.</p>
+        <h2 class="cta-title gs-reveal">How Can We Assist You Today?</h2>
+        <p class="cta-body gs-reveal">Have questions, need assistance, or want to provide feedback? We're here to help! Reach out to us, and our team will respond promptly to address your concerns.</p>
         <div class="contact-row">
           <a href="mailto:info.skjipl@gmail.com" class="cbox gs-reveal"><span class="cbox-icon">✉</span><span class="cbox-label">Email Us Directly</span><span class="cbox-data">info.skjipl@gmail.com</span></a>
+          <div class="cbox gs-reveal"><span class="cbox-icon">📞</span><span class="cbox-label">Phone Support</span><span class="cbox-data">+91 8978859246</span></div>
           <div class="cbox gs-reveal"><span class="cbox-icon">◉</span><span class="cbox-label">Headquarters</span><span class="cbox-data">Visakhapatnam, India</span></div>
-          <div class="cbox gs-reveal"><span class="cbox-icon">⬡</span><span class="cbox-label">Company CIN</span><span class="cbox-data">U26517AP2025PTC119413</span></div>
         </div>
       </div>
     </section>
@@ -541,13 +641,15 @@
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-brand-col">
-          <div class="foot-brand">SK Jalrakshak</div>
-          <p class="foot-tagline">Enterprise water intelligence — from sensor to insight. Protecting India's most critical infrastructure with edge AI, predictive analytics, and field-hardened IoT.</p>
+          <div class="foot-brand">
+            <span class="logo-mark">SK</span> Jalrakshak
+          </div>
+          <p class="foot-tagline">Enterprise water intelligence — from sensor to insight. We design, develop, and deploy advanced IoT systems to safeguard public health and ensure sustainable water management.</p>
           <a href="mailto:info.skjipl@gmail.com" class="foot-email-link">info.skjipl@gmail.com</a>
         </div>
         <div class="foot-col">
           <h4 class="foot-col-title">Platform</h4>
-          <ul class="foot-links"><li><a href="#systems">Edge Telemetry</a></li><li><a href="#systems">Cloud Dashboard</a></li><li><a href="#systems">Predictive Analytics</a></li><li><a href="#">Solar IoT Grid</a></li><li><a href="#">API Integrations</a></li></ul>
+          <ul class="foot-links"><li><a href="#systems">Smart IoT Sensors</a></li><li><a href="#systems">Cloud/On-Premise Dashboards</a></li><li><a href="#systems">Predictive Analytics</a></li><li><a href="#">Wi-SUN Mesh Networks</a></li><li><a href="#">4G Edge Gateways</a></li></ul>
         </div>
         <div class="foot-col">
           <h4 class="foot-col-title">Company</h4>
@@ -559,13 +661,25 @@
         </div>
         <div class="foot-col">
           <h4 class="foot-col-title">Connect</h4>
-          <ul class="foot-links"><li><a href="#">LinkedIn</a></li><li><a href="#">Instagram</a></li><li><a href="#">X / Twitter</a></li><li><a href="#">YouTube</a></li></ul>
+          <ul class="foot-links">
+            <li><a href="#" style="display:flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn</a></li>
+            <li><a href="#" style="display:flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram</a></li>
+            <li><a href="#" style="display:flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              X / Twitter</a></li>
+            <li><a href="#" style="display:flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              YouTube</a></li>
+          </ul>
         </div>
       </div>
       <div class="foot-bottom">
-        <span class="foot-copy">© 2026 SK Jalrakshak Innovations Pvt Ltd. CIN: U26517AP2025PTC119413. All rights reserved.</span>
+        <span class="foot-copy">© 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.</span>
         <div class="foot-legal">
-          <a href="#">Terms & Conditions</a>
           <a href="#">Privacy Policy</a>
           <a href="#hero" class="foot-back-top" aria-label="Back to top">↑ Top</a>
         </div>
