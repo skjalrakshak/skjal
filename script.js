@@ -166,10 +166,6 @@ preloaderTL
     duration: 1.4,
     ease: 'elastic.out(1.1, 0.45)',
   }, 0.2)
-  // Phase 1b: Logo mark border glow reveal
-  .to('.pre-logo-mark::after', {
-    opacity: 1, duration: 0.8,
-  }, 0.8)
   // Phase 2: Progress bar and bottom info slide in
   .to('.pre-progress-line', {
     opacity: 1, duration: 0.6, ease: 'power2.out',
