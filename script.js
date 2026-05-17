@@ -884,7 +884,7 @@ if (hero && fm1 && fm2) {
 (function initAnimatedTestimonials() {
   const testimonials = [
     {
-      name: "Rajesh Kumar",
+      name: "Ravi Chandra",
       role: "Chief Engineer",
       company: "L&T Construction",
       content: "The real-time dashboards have completely transformed how we monitor our urban water projects. The predictive maintenance alerts save us thousands.",
@@ -892,14 +892,14 @@ if (hero && fm1 && fm2) {
       avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d"
     },
     {
-      name: "Priya Sharma",
+      name: "Satish Chandra",
       role: "Home Maker",
       content: "SK Jalrakshak's IoT integration seamlessly scales across hundreds of villages. The data accuracy is unparalleled in the industry.",
       rating: 4,
       avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
     },
     {
-      name: "Amit Patel",
+      name: "Koushik",
       role: "Operations Head",
       company: "Tata Projects",
       content: "We reduced our water leakage incidents by 40% within the first three months of deployment. Thanks to sk jalrakshak and their hardworking team.",

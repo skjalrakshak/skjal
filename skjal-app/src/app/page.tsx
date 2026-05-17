@@ -109,7 +109,7 @@ const testimonials = [
     id: 1,
     content:
       "Before SK Jalrakshak, we were flying blind. Now I get an alert on my phone before my field teams even know something's wrong. Our response time dropped by 80%.",
-    name: "Rajesh Kumar",
+    name: "Ravi Chandra",
     role: "Operations Director, Hyderabad Metro Water",
     rating: 5,
     avatar: "https://i.pravatar.cc/150?u=rajesh",
@@ -118,7 +118,7 @@ const testimonials = [
     id: 2,
     content:
       "I've installed sensors in places where equipment usually lasts six months. Theirs have been running for eighteen — through two monsoon seasons — without a single hiccup.",
-    name: "Priya Sharma",
+    name: "Satish Chandra",
     role: "Field Engineer, National Water Board",
     rating: 5,
     avatar: "https://i.pravatar.cc/150?u=priya",
