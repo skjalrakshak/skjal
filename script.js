@@ -886,7 +886,7 @@ if (hero && fm1 && fm2) {
       name: "Rajesh Kumar",
       role: "Chief Engineer",
       company: "L&T Construction",
-      content: "The real-time dashboards have completely transformed how we monitor our urban water projects. The predictive maintenance alerts save us millions.",
+      content: "The real-time dashboards have completely transformed how we monitor our urban water projects. The predictive maintenance alerts save us thousands.",
       rating: 5,
       avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d"
     },
