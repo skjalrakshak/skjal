@@ -37,7 +37,8 @@ const mimeTypes = {
   ".webp": "image/webp",
   ".svg": "image/svg+xml",
   ".ico": "image/x-icon",
-  ".txt": "text/plain; charset=utf-8"
+  ".txt": "text/plain; charset=utf-8",
+  ".apk": "application/vnd.android.package-archive"
 };
 
 const buckets = new Map();
@@ -188,11 +189,18 @@ function handler(req, res) {
   const body = fs.readFileSync(file);
   const isStaticAsset = /\.(css|js|png|jpg|jpeg|webp|svg|ico)$/.test(ext);
 
-  send(res, req.method === "HEAD" ? 204 : 200, req.method === "HEAD" ? "" : body, {
+  const responseHeaders = {
     ...securityHeaders(mimeTypes[ext] || "application/octet-stream"),
     "Cache-Control": "no-cache, no-store, must-revalidate",
     acceptEncoding: req.headers["accept-encoding"] || ""
-  });
+  };
+
+  // Force download for APK files
+  if (ext === ".apk") {
+    responseHeaders["Content-Disposition"] = `attachment; filename="${path.basename(file)}"`;
+  }
+
+  send(res, req.method === "HEAD" ? 204 : 200, req.method === "HEAD" ? "" : body, responseHeaders);
 }
 
 // ── Vercel Serverless Export ──
