@@ -579,19 +579,9 @@ if (hero && fm1 && fm2) {
 
     }
 
-    // Pin all except the last section
+    // Pin and shrink all except the last section
     if (i < sections.length - 1) {
-      triggers.push(
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'bottom bottom',
-          end: 'bottom top',
-          pin: true,
-          pinSpacing: false,
-        }),
-      );
-
-      // "Boxes go back" effect: Exact 2D twist and scale down matching Fourmula.ai parity
+      // "Boxes go back" effect
       const bg = section.querySelector('.flow-bg-gradient');
       
       // Dynamically wrap the background and inner content into a single physical card
@@ -614,19 +604,22 @@ if (hero && fm1 && fm2) {
       // Explicitly set initial brightness to prevent GSAP from tweening from 0 (pitch black bug)
       gsap.set(cardWrap, { filter: 'brightness(1)' });
       
-      gsap.to(cardWrap, {
-        scale: 0.94,
-        rotate: -2.5,
-        filter: 'brightness(0.85)',
+      const tween = gsap.to(cardWrap, {
+        scale: 0.80,
+        rotate: -3,
+        filter: 'brightness(0.5)',
         transformOrigin: "50% 50%",
         ease: "none",
         scrollTrigger: {
           trigger: section,
-          start: 'bottom bottom',
+          start: 'top top',
           end: 'bottom top',
+          pin: true,
+          pinSpacing: false,
           scrub: true,
         }
       });
+      triggers.push(tween.scrollTrigger);
     }
   });
 
@@ -882,4 +875,121 @@ if (hero && fm1 && fm2) {
   }, { passive: true });
 
   // Menu bar stays visible at all times — no auto-hide
+})();
+
+// ═══════════════════════
+// 19. ANIMATED TESTIMONIALS (Glassmorphism slider)
+// ═══════════════════════
+(function initAnimatedTestimonials() {
+  const testimonials = [
+    {
+      name: "Rajesh Kumar",
+      role: "Chief Engineer",
+      company: "L&T Construction",
+      content: "The real-time dashboards have completely transformed how we monitor our urban water projects. The predictive maintenance alerts save us millions.",
+      rating: 5,
+      avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d"
+    },
+    {
+      name: "Priya Sharma",
+      role: "Director of Sustainability",
+      company: "Jal Jeevan Mission",
+      content: "SK Jalrakshak's IoT integration seamlessly scales across hundreds of villages. The data accuracy is unparalleled in the industry.",
+      rating: 5,
+      avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
+    },
+    {
+      name: "Amit Patel",
+      role: "Operations Head",
+      company: "Tata Projects",
+      content: "We reduced our water leakage incidents by 40% within the first three months of deployment. The glassmorphism UI makes complex data incredibly easy to digest.",
+      rating: 5,
+      avatar: "https://i.pravatar.cc/150?u=a04258a2462d826712d"
+    }
+  ];
+
+  const wrap = document.getElementById('testiCardsWrap');
+  const dotsContainer = document.getElementById('testiDots');
+  if (!wrap || !dotsContainer) return;
+
+  let activeIndex = 0;
+  let autoRotate;
+
+  // Render cards
+  testimonials.forEach((t, i) => {
+    // Card HTML
+    const card = document.createElement('div');
+    card.className = 'animated-testi-card';
+    if (i === 0) card.classList.add('active');
+    
+    let stars = '';
+    for(let j=0; j<5; j++) {
+      stars += `<svg class="testi-star ${j < t.rating ? 'filled' : ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+    }
+
+    card.innerHTML = `
+      <div class="testi-stars">${stars}</div>
+      <blockquote class="testi-quote">"${t.content}"</blockquote>
+      <div class="testi-author">
+        <img src="${t.avatar}" alt="${t.name}">
+        <div class="testi-author-info">
+          <strong>${t.name}</strong>
+          <span>${t.role}, ${t.company}</span>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(card);
+
+    // Dot HTML
+    const dot = document.createElement('button');
+    dot.className = 'testi-dot';
+    dot.setAttribute('aria-label', `Testimonial ${i + 1}`);
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToTestimonial(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  const cards = wrap.querySelectorAll('.animated-testi-card');
+  const dots = dotsContainer.querySelectorAll('.testi-dot');
+
+  function goToTestimonial(index) {
+    if (index === activeIndex) return;
+    
+    const oldCard = cards[activeIndex];
+    const newCard = cards[index];
+
+    // GSAP Animation - cinematic 3D slide and rotate
+    gsap.to(oldCard, { 
+      opacity: 0, scale: 0.9, x: -100, rotateY: -20, rotateZ: -4, duration: 0.6, ease: 'power3.inOut', 
+      onComplete: () => { 
+        oldCard.classList.remove('active'); 
+        oldCard.style.zIndex = 0; 
+      }
+    });
+
+    newCard.classList.add('active');
+    newCard.style.zIndex = 1;
+    gsap.fromTo(newCard, 
+      { opacity: 0, scale: 0.8, x: 100, rotateY: 20, rotateZ: 4 }, 
+      { opacity: 1, scale: 1, x: 0, rotateY: 0, rotateZ: 0, duration: 0.8, ease: 'expo.out' }
+    );
+
+    dots[activeIndex].classList.remove('active');
+    dots[index].classList.add('active');
+
+    activeIndex = index;
+    resetRotate();
+  }
+
+  function nextTestimonial() {
+    let next = (activeIndex + 1) % testimonials.length;
+    goToTestimonial(next);
+  }
+
+  function resetRotate() {
+    clearInterval(autoRotate);
+    autoRotate = setInterval(nextTestimonial, 6000);
+  }
+
+  resetRotate();
 })();

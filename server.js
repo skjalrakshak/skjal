@@ -195,20 +195,28 @@ function handler(req, res) {
   });
 }
 
-function listen(port) {
-  const server = http.createServer(handler);
+// ── Vercel Serverless Export ──
+// Vercel will import this module and call the exported handler directly.
+module.exports = handler;
 
-  server.on("error", (error) => {
-    if (error.code === "EADDRINUSE" && port < startPort + 20) {
-      listen(port + 1);
-      return;
-    }
-    throw error;
-  });
+// ── Local Development Server ──
+// Only starts the HTTP listener when running locally (not on Vercel).
+if (!process.env.VERCEL) {
+  function listen(port) {
+    const server = http.createServer(handler);
 
-  server.listen(port, host, () => {
-    console.log(`SK Jalrakshak site running at http://${host}:${port}/`);
-  });
+    server.on("error", (error) => {
+      if (error.code === "EADDRINUSE" && port < startPort + 20) {
+        listen(port + 1);
+        return;
+      }
+      throw error;
+    });
+
+    server.listen(port, host, () => {
+      console.log(`SK Jalrakshak site running at http://${host}:${port}/`);
+    });
+  }
+
+  listen(startPort);
 }
-
-listen(startPort);
