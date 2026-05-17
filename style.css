@@ -664,8 +664,13 @@ main,#footer {
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
 }
 @media (max-width: 991px) {
+  .hero-section {
+    padding: 80px 20px 40px;
+    min-height: auto;
+  }
   .hero-app-mockup {
     transform: translateY(0);
+    max-width: 300px;
   }
   .hero-split {
     flex-direction: column;
@@ -673,13 +678,22 @@ main,#footer {
   }
   .hero-right {
     justify-content: center;
-    margin-top: 60px;
+    margin-top: 40px;
     width: 100%;
   }
   .hero-bottom {
     margin: 40px auto 0;
   }
   .hero-actions {
+    justify-content: center;
+  }
+  .hero-h1 {
+    font-size: clamp(1.8rem, 7vw, 2.8rem);
+  }
+  .hero-sub {
+    font-size: 0.95rem;
+  }
+  .hero-metrics {
     justify-content: center;
   }
 }
@@ -3802,6 +3816,107 @@ h1, h2, h3, .sys-name, .flow-heading {
 
 .flow-showcase-card:hover img {
   opacity: 1;
+}
+
+/* ═══ FLOW SECTIONS — MOBILE RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .flow-section {
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .flow-inner {
+    padding: 60px 20px 40px !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+
+  .flow-top-row {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px !important;
+  }
+
+  .flow-heading {
+    font-size: clamp(2.2rem, 10vw, 3rem) !important;
+    max-width: 100% !important;
+  }
+
+  .flow-step-num {
+    font-size: clamp(3rem, 12vw, 5rem) !important;
+    align-self: flex-end;
+    margin-top: -2rem;
+  }
+
+  .flow-feature-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 100% !important;
+    gap: 0 !important;
+    margin: 20px 0 !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-radius: 8px !important;
+  }
+
+  .flow-feature-cell {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .flow-feature-cell:last-child {
+    border-bottom: none;
+  }
+
+  .flow-feature-cell:nth-child(2) {
+    border-left: none !important;
+  }
+
+  .flow-feature-label {
+    font-size: 0.85rem !important;
+  }
+
+  .flow-bottom-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    max-width: 100% !important;
+    gap: 16px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .flow-desc {
+    max-width: 100% !important;
+  }
+
+  .flow-desc-bold {
+    font-size: 1.1rem !important;
+  }
+
+  .flow-desc-light {
+    font-size: 0.95rem !important;
+  }
+
+  .flow-cta-pill {
+    padding: 12px 24px !important;
+    font-size: 0.8rem !important;
+    align-self: flex-start !important;
+  }
+
+  .flow-showcase-strip {
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    display: flex !important;
+    gap: 12px !important;
+    margin-top: 20px !important;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .flow-showcase-card {
+    width: 140px !important;
+    height: 100px !important;
+    flex-shrink: 0 !important;
+  }
 }
 
 /* ═══ ANIMATED TESTIMONIALS (Apple Glassmorphism Style) ═══ */

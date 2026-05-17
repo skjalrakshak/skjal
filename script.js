@@ -521,8 +521,9 @@ if (hero && fm1 && fm2) {
   const topRight = document.getElementById('topRightActions');
   if (!container) return;
 
-  // Respect reduced-motion preference
+  // Respect reduced-motion preference or mobile screens
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.innerWidth < 768) return;
 
   const sections = container.querySelectorAll('[data-flow-section]');
   if (!sections.length) return;
@@ -901,7 +902,7 @@ if (hero && fm1 && fm2) {
       name: "Amit Patel",
       role: "Operations Head",
       company: "Tata Projects",
-      content: "We reduced our water leakage incidents by 40% within the first three months of deployment. The glassmorphism UI makes complex data incredibly easy to digest.",
+      content: "We reduced our water leakage incidents by 40% within the first three months of deployment. Thanks to sk jalrakshak and their hardworking team.",
       rating: 5,
       avatar: "https://i.pravatar.cc/150?u=a04258a2462d826712d"
     }
