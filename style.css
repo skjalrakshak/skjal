@@ -3563,19 +3563,33 @@ main,#footer {
 /* Navbar needs translateX(-50%) preserved when hiding */
 /* (Already handled by #navbar.nav-hidden above) */
 
-/* ═══ RESPONSIVE: Mobile nav ═══ */
+/* ═══ RESPONSIVE: Mobile nav + hero ═══ */
 @media (max-width: 768px) {
+  /* Hide the fixed logo — Dynamic Island handles navigation */
   .site-logo {
-    top: 16px;
-    left: 20px;
-  }
-  .top-right-actions {
-    top: 16px;
-    right: 20px;
-  }
-  .top-cta {
     display: none;
   }
+
+  /* Reposition top-right download button for mobile */
+  .top-right-actions {
+    top: 12px;
+    right: 12px;
+  }
+
+  /* Compact download button for mobile */
+  .top-cta {
+    display: flex;
+    padding: 8px 14px;
+    font-size: 0.62rem;
+    gap: 5px;
+    border-radius: 80px;
+  }
+  .top-cta .cta-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Dynamic Island compact */
   #navbar {
     top: auto;
     bottom: 20px;
@@ -3588,6 +3602,14 @@ main,#footer {
   .nav-link {
     padding: 6px 10px;
     font-size: .6rem;
+  }
+
+  /* Hero: clear the Dynamic Island at the top */
+  .hero-section {
+    padding-top: 70px !important;
+  }
+  .hero-tag {
+    margin-top: 10px;
   }
 }
 
