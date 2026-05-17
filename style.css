@@ -228,7 +228,7 @@ main,#footer {
 .site-logo {
   position: fixed;
   top: 22px;
-  left: 40px;
+  left: 28px;
   z-index: 1001;
   display: flex;
   align-items: center;
@@ -648,9 +648,11 @@ main,#footer {
 .hero-right {
   flex: 1 1 45%;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   position: relative;
+  gap: 24px;
 }
 .hero-app-mockup {
   width: 100%;
@@ -658,7 +660,37 @@ main,#footer {
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
-  transform: translateY(-100px);
+  transform: translateY(-60px);
+}
+.hero-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  border: none;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35);
+  transform: translateY(-60px);
+}
+.hero-download-btn:hover {
+  transform: translateY(-63px) scale(1.04);
+  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.45);
+  background: linear-gradient(135deg, #14b8ff, #0393da);
+}
+.hero-download-btn svg {
+  transition: transform 0.3s ease;
+}
+.hero-download-btn:hover svg {
+  transform: translateY(3px);
 }
 [data-theme="dark"] .hero-app-mockup {
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
@@ -3565,28 +3597,15 @@ main,#footer {
 
 /* ═══ RESPONSIVE: Mobile nav + hero ═══ */
 @media (max-width: 768px) {
-  /* Hide the fixed logo — Dynamic Island handles navigation */
+  /* Logo icon only — keep visible, push further left */
   .site-logo {
-    display: none;
+    top: 16px;
+    left: 16px;
   }
 
-  /* Reposition top-right download button for mobile */
+  /* Hide the top-right download button — it's now below the mockup */
   .top-right-actions {
-    top: 12px;
-    right: 12px;
-  }
-
-  /* Compact download button for mobile */
-  .top-cta {
-    display: flex;
-    padding: 8px 14px;
-    font-size: 0.62rem;
-    gap: 5px;
-    border-radius: 80px;
-  }
-  .top-cta .cta-icon {
-    width: 12px;
-    height: 12px;
+    display: none;
   }
 
   /* Dynamic Island compact */
@@ -3610,6 +3629,20 @@ main,#footer {
   }
   .hero-tag {
     margin-top: 10px;
+  }
+
+  /* Hero download button below mockup — mobile optimized */
+  .hero-app-mockup {
+    transform: translateY(0) !important;
+    max-width: 280px !important;
+  }
+  .hero-download-btn {
+    transform: translateY(0) !important;
+    padding: 12px 24px;
+    font-size: 0.75rem;
+  }
+  .hero-download-btn:hover {
+    transform: translateY(-2px) scale(1.02) !important;
   }
 }
 
