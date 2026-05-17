@@ -9,6 +9,7 @@
     "check": "node --check script.js && node --check server.js"
   },
   "dependencies": {
+    "cloudinary": "^2.10.0",
     "pdf-parse": "^2.4.5"
   }
 }
