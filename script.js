@@ -892,10 +892,9 @@ if (hero && fm1 && fm2) {
     },
     {
       name: "Priya Sharma",
-      role: "Director of Sustainability",
-      company: "Jal Jeevan Mission",
+      role: "Home Maker",
       content: "SK Jalrakshak's IoT integration seamlessly scales across hundreds of villages. The data accuracy is unparalleled in the industry.",
-      rating: 5,
+      rating: 4,
       avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
     },
     {
