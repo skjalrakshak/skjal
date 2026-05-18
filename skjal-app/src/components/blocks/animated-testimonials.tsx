@@ -64,7 +64,7 @@ export function AnimatedTestimonials({
       y: 0,
       transition: {
         duration: 0.7,
-        ease: [0.16, 1, 0.3, 1], // cinematic easing
+        ease: [0.16, 1, 0.3, 1] as const, // cinematic easing
       },
     },
   };
@@ -161,7 +161,7 @@ export function AnimatedTestimonials({
                   scale: activeIndex === index ? 1 : 0.95,
                   filter: activeIndex === index ? "blur(0px)" : "blur(10px)",
                 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
                 style={{
                   zIndex: activeIndex === index ? 10 : 0,
                   pointerEvents: activeIndex === index ? "auto" : "none",
