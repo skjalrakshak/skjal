@@ -118,9 +118,14 @@ function send(res, status, body, headers = {}) {
 }
 
 function resolveFile(urlPath) {
-  const pathname = decodeURIComponent(urlPath.split("?")[0]);
+  let pathname = decodeURIComponent(urlPath.split("?")[0]);
+  
+  if (pathname !== "/" && pathname.endsWith("/")) {
+    pathname = pathname.slice(0, -1);
+  }
+
   const cleaned = pathname === "/" ? "/index.html" : pathname;
-  const normalized = path.normalize(cleaned).replace(/^(\.\.[/\\])+/, "");
+  const normalized = path.normalize(cleaned).replace(/^(\.\.[/\\])+/, "").replace(/^[/\\]+/, "");
   let absolute = path.join(root, normalized);
 
   if (!absolute.startsWith(root)) return null;
