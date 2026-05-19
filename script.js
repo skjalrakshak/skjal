@@ -131,116 +131,20 @@ document.getElementById('themeToggle')?.addEventListener('click', (e) => {
 });
 
 // ═══════════════════════
-// 2. CINEMATIC PRELOADER (Film-Grade v2 — Full Dark Cinema)
+// 2. HERO REVEAL (Preloader Removed)
 // ═══════════════════════
-lenis.stop();
 
-// Generate enhanced ambient particle field
-// (Particles removed per user request — clean dark background)
-(function generateParticles() {
-  // Intentionally empty — no particles
-})();
-
-const preloaderTL = gsap.timeline({
-  onComplete: () => {
-    lenis.start();
-    const pre = document.getElementById('preloader');
-    if (pre) {
-      pre.style.pointerEvents = 'none';
-      // Allow GPU to reclaim memory
-      requestAnimationFrame(() => { pre.style.display = 'none'; });
-    }
-    ScrollTrigger.refresh();
-  }
-});
-
-const counterObj = { val: 0 };
-const counterEl = document.getElementById('preCounter');
-const progressLine = document.querySelector('#preProgressLine');
-
-// ── PRELOADER MASTER TIMELINE ──
-preloaderTL
-  // Phase 1: Logo mark — dramatic scale-in with elastic spring + subtle rotation
-  .to('.pre-logo-mark', {
-    opacity: 1, scale: 1, rotate: 0,
-    duration: 1.4,
-    ease: 'elastic.out(1.1, 0.45)',
-  }, 0.2)
-  // Phase 2: Progress bar and bottom info slide in
-  .to('.pre-progress-line', {
-    opacity: 1, duration: 0.6, ease: 'power2.out',
-  }, 0.5)
-  .to('.pre-bottom', {
-    opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-  }, 0.6)
-  // Phase 3: Counter — cinematic count with custom easing
-  .to(counterObj, {
-    val: 100, duration: 3.0,
-    ease: 'power2.inOut',
-    onUpdate: () => {
-      const pct = Math.floor(counterObj.val);
-      if (counterEl) counterEl.innerText = pct + '%';
-      if (progressLine) progressLine.style.setProperty('--pre-fill', pct + '%');
-    }
-  }, 0.5)
-  // Phase 4: Characters cascade in with 3D depth rotation + stagger
-  .to('.pre-char', {
-    opacity: 1, y: '0%', scale: 1, rotateX: 0,
-    duration: 1.4,
-    stagger: { each: 0.045, from: 'start' },
-    ease: 'elastic.out(1, 0.35)',
-  }, 0.7)
-  // Phase 5: Tagline drifts in with a silky fade
-  .to('#preTagline', {
-    opacity: 0.5, y: 0,
-    duration: 1.0, ease: 'power2.out',
-  }, 1.4)
-  // ── HOLD — dramatic beat (audience absorbs the brand) ──
-  // Phase 6: Exit sequence — characters fly upward with blur
-  .to('.pre-char', {
-    opacity: 0, y: '-130%', scale: 1.15,
-    filter: 'blur(6px)',
-    duration: 0.5,
-    stagger: { each: 0.025, from: 'end' },
-    ease: 'power4.in',
-  }, 3.6)
-  .to('#preTagline', {
-    opacity: 0, y: -24, filter: 'blur(4px)',
-    duration: 0.4, ease: 'power4.in',
-  }, 3.6)
-  // Phase 7: Logo mark implodes with spin
-  .to('.pre-logo-mark', {
-    scale: 0.05, opacity: 0, rotate: 200,
-    duration: 0.9, ease: 'power4.inOut',
-  }, 3.5)
-  // Phase 8: Progress bar + bottom collapse
-  .to('.pre-progress-line', {
-    opacity: 0, scaleX: 0, transformOrigin: 'center',
-    duration: 0.5, ease: 'power4.in',
-  }, 3.5)
-  .to('.pre-bottom', {
-    opacity: 0, y: -20, duration: 0.4, ease: 'power4.in',
-  }, 3.6)
-  // Phase 9: CINEMATIC SWIPE REVEAL — preloader slides up like a curtain
-  .set('#preloader', {
-    transformOrigin: 'top center',
-    willChange: 'transform',
-  }, 3.9)
-  .to('#preloader', {
-    yPercent: -100,
-    duration: 1.4,
-    ease: 'power4.inOut',
-  }, 3.9)
-  // Phase 10: Hero lines sweep in from below — overlapping with swipe for fluid motion
+const heroTL = gsap.timeline();
+heroTL
   .to('.hero-line', {
     y: '0%', duration: 1.6,
     stagger: { each: 0.1, from: 'start' },
     ease: 'expo.out',
-  }, 4.1)
+  }, 0)
   .to('.hero-fade', {
     opacity: 1, y: 0,
     duration: 1.2, ease: 'power3.out',
-  }, 4.5);
+  }, 0.4);
 
 // ═══════════════════════
 // 3. NAVBAR

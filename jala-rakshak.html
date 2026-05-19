@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jala Rakshak — Smart Water Intelligence | SK Jalrakshak Innovations</title>
+  <meta name="description" content="Jala Rakshak: Advanced IoT-enabled water quality monitoring systems with cloud analytics, predictive AI, and real-time dashboards by SK Jalrakshak Innovations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .product-hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 32px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .product-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.35);
+    }
+    .product-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      color: #ffffff;
+    }
+    .product-hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: #0099ff;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .product-hero-title {
+      font-family: var(--display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+    }
+    .product-hero-sub {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      opacity: 0.85;
+      max-width: 560px;
+      margin-bottom: 32px;
+    }
+    .product-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .product-back:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(-4px);
+    }
+    .product-section {
+      padding: 80px 0;
+    }
+    .product-features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    @media (max-width: 900px) {
+      .product-features-grid { grid-template-columns: 1fr; }
+      .product-hero { padding: 100px 20px 60px; min-height: 50vh; }
+    }
+    .product-feature-card {
+      padding: 32px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+    .product-feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(0, 153, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: #0099ff;
+    }
+    .product-feature-card h3 {
+      font-family: var(--display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--fg-head);
+      margin-bottom: 8px;
+    }
+    .product-feature-card p {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--fg-body);
+    }
+    .product-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    @media (max-width: 768px) {
+      .product-stats { grid-template-columns: 1fr 1fr; }
+    }
+    .product-stat {
+      text-align: center;
+      padding: 32px 16px;
+      background: var(--bg-alt);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+    .product-stat-value {
+      font-family: var(--display);
+      font-size: 2rem;
+      font-weight: 900;
+      color: #0099ff;
+      margin-bottom: 4px;
+    }
+    .product-stat-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--fg-body);
+    }
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) {
+      .industries-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .industry-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--fg-head);
+    }
+    .industry-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #0099ff;
+      flex-shrink: 0;
+    }
+    .product-cta-section {
+      padding: 80px 0;
+      background: var(--bg-alt);
+      text-align: center;
+    }
+    .product-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: #0099ff;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 24px rgba(0,153,255,0.3);
+      margin-top: 24px;
+    }
+    .product-cta-btn:hover {
+      background: #007acc;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(0,153,255,0.4);
+    }
+  </style>
+</head>
+<body>
+  <!-- Nav -->
+  <!-- ═══ ENTERPRISE NAVBAR ═══ -->
+  <header id="mainNav" class="main-nav">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a href="/" class="nav-logo" id="navLogo">
+        <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/logo.png" srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_100/skjal/logo.png 100w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/logo.png 200w" sizes="100px" alt="SK Jalrakshak Logo" class="nav-logo-img">
+        <span class="nav-logo-text">SK Jalrakshak</span>
+      </a>
+
+      <!-- Desktop Menu -->
+      <nav class="nav-menu" id="navMenu">
+        <a href="/" class="nav-link">Home</a>
+
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger active">Our Products <svg class="nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-dropdown-menu">
+            <a href="/jala-rakshak.html" class="nav-dropdown-item">Jala Rakshak — Water Intelligence</a>
+            <a href="/shield.html" class="nav-dropdown-item">S.H.I.E.L.D. — Driving Safety</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger">About Us <svg class="nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-dropdown-menu">
+            <a href="/#about" class="nav-dropdown-item">About</a>
+            <a href="/#" class="nav-dropdown-item">Directors</a>
+            <a href="/#" class="nav-dropdown-item">Careers</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger">Resources <svg class="nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-dropdown-menu">
+            <a href="/#" class="nav-dropdown-item">Documentation</a>
+            <a href="/#" class="nav-dropdown-item">Case Studies</a>
+            <a href="/#faq" class="nav-dropdown-item">FAQ</a>
+            <a href="/#" class="nav-dropdown-item">Whitepapers</a>
+          </div>
+        </div>
+
+        <a href="/#contact" class="nav-link">Contact Us</a>
+      </nav>
+
+      <!-- Right side: Theme + CTA -->
+      <div class="nav-actions">
+        <button id="themeToggle" class="nav-theme-toggle" aria-label="Toggle theme">
+          <svg id="attSvg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="overflow:visible">
+            <defs><mask id="attMask"><rect x="0" y="0" width="100%" height="100%" fill="white"/><circle id="attMaskCircle" cx="33" cy="0" r="9" fill="black"/></mask></defs>
+            <circle id="attBody" cx="12" cy="12" r="5" fill="currentColor" stroke="none" mask="url(#attMask)"/>
+            <g id="attRays" style="transform-origin:12px 12px">
+              <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="5.64" y1="5.64" x2="4.22" y2="4.22"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              <line x1="5.64" y1="18.36" x2="4.22" y2="19.78"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            </g>
+          </svg>
+        </button>
+        <a href="/#contact" class="nav-cta-btn">
+          Contact Us
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+
+        <!-- Mobile Hamburger -->
+        <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+          <span class="nav-ham-line"></span>
+          <span class="nav-ham-line"></span>
+          <span class="nav-ham-line"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="nav-mobile-drawer" id="navDrawer">
+      <div class="nav-drawer-header">
+        <span class="nav-drawer-title">Menu</span>
+        <button class="nav-drawer-close" id="navDrawerClose" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <nav class="nav-drawer-links">
+        <a href="/" class="nav-drawer-link">Home</a>
+        <div class="nav-drawer-group">
+          <button class="nav-drawer-link nav-drawer-trigger active">Our Products <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-drawer-sub">
+            <a href="/jala-rakshak.html" class="nav-drawer-sublink">Jala Rakshak — Water Intelligence</a>
+            <a href="/shield.html" class="nav-drawer-sublink">S.H.I.E.L.D. — Driving Safety</a>
+          </div>
+        </div>
+        <div class="nav-drawer-group">
+          <button class="nav-drawer-link nav-drawer-trigger">About Us <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-drawer-sub">
+            <a href="/#about" class="nav-drawer-sublink">About</a>
+            <a href="/#" class="nav-drawer-sublink">Directors</a>
+            <a href="/#" class="nav-drawer-sublink">Careers</a>
+          </div>
+        </div>
+        <div class="nav-drawer-group">
+          <button class="nav-drawer-link nav-drawer-trigger">Resources <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-drawer-sub">
+            <a href="/#" class="nav-drawer-sublink">Documentation</a>
+            <a href="/#" class="nav-drawer-sublink">Case Studies</a>
+            <a href="/#faq" class="nav-drawer-sublink">FAQ</a>
+            <a href="/#" class="nav-drawer-sublink">Whitepapers</a>
+          </div>
+        </div>
+        <a href="/#contact" class="nav-drawer-link">Contact Us</a>
+      </nav>
+    </div>
+    <div class="nav-drawer-overlay" id="navOverlay"></div>
+  </header>
+
+  <!-- Hero -->
+  <section class="product-hero">
+    <div class="product-hero-bg">
+      <img src="img/skjal-hero-banner.png" alt="Jala Rakshak Platform">
+    </div>
+    <div class="product-hero-content">
+      <span class="product-hero-badge">Flagship Product</span>
+      <h1 class="product-hero-title">Jala Rakshak</h1>
+      <p class="product-hero-sub">Advanced IoT-enabled water quality monitoring systems with cloud analytics, predictive AI, and real-time dashboards — protecting every drop, from sensor to insight.</p>
+      <a href="/" class="product-back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to Home
+      </a>
+    </div>
+  </section>
+
+  <!-- Core Capabilities -->
+  <section class="product-section">
+    <div class="wrap">
+      <p class="sec-eyebrow" style="color:#0099ff;">What We Do</p>
+      <h2 class="sec-title">Core Capabilities</h2>
+      <div class="product-features-grid">
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Smart Water Monitoring</h3>
+          <p>Real-time monitoring of water quality, usage, flow rates, and leakage detection using advanced IoT sensor arrays deployed at scale.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Cloud & On-Premise Dashboards</h3>
+          <p>Beautiful, data-rich dashboards with live telemetry, historical trends, and automated reporting — accessible from any device, anywhere.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>IoT & Embedded Solutions</h3>
+          <p>Custom embedded system design, sensor integration, PCB prototyping, firmware development, and wireless communication modules.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Real-Time Data Monitoring</h3>
+          <p>Data acquisition platforms that provide live insights for operational efficiency and better decision-making across infrastructure.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <h3>AI-Driven Analytics</h3>
+          <p>Predictive monitoring, smart alerts, data visualization, trend analysis, and intelligent automation powered by machine learning.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>Industrial Automation</h3>
+          <p>Process automation, control systems, remote monitoring, and smart industrial integration for Industry 4.0 readiness.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section class="product-section" style="background: var(--bg-alt);">
+    <div class="wrap">
+      <p class="sec-eyebrow" style="color:#0099ff;">Industries We Serve</p>
+      <h2 class="sec-title">Built for Critical Infrastructure</h2>
+      <div class="industries-grid">
+        <div class="industry-item"><span class="industry-dot"></span> Water Management</div>
+        <div class="industry-item"><span class="industry-dot"></span> Smart Cities</div>
+        <div class="industry-item"><span class="industry-dot"></span> Manufacturing</div>
+        <div class="industry-item"><span class="industry-dot"></span> Healthcare & Biomedical</div>
+        <div class="industry-item"><span class="industry-dot"></span> Agriculture & Irrigation</div>
+        <div class="industry-item"><span class="industry-dot"></span> Education</div>
+        <div class="industry-item"><span class="industry-dot"></span> Environmental Monitoring</div>
+        <div class="industry-item"><span class="industry-dot"></span> Infrastructure & Utilities</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="product-cta-section">
+    <div class="wrap">
+      <h2 class="sec-title" style="margin-bottom: 8px;">Ready to Protect Every Drop?</h2>
+      <p class="body-text" style="max-width: 480px; margin: 0 auto;">Get in touch with our team to explore how Jala Rakshak can transform your water infrastructure.</p>
+      <a href="/#contact" class="product-cta-btn">
+        Contact Us
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <script>
+    // Theme toggle
+    document.getElementById('themeToggle')?.addEventListener('click', () => {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+      localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+    });
+    // Restore theme
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  </script>
+</body>
+</html>
