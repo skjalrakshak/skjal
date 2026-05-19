@@ -304,6 +304,7 @@
       box-shadow: 0 10px 32px rgba(255,85,0,0.4);
     }
   </style>
+  <link rel="preload" as="image" href="img/energy-monitoring.jpeg">
 </head>
 <body>
   <!-- Nav -->
@@ -424,7 +425,7 @@
   
   <section class="energy-split-hero">
     <div class="energy-hero-img-wrap gs-reveal">
-      <img src="img/energy-monitoring.jpeg" alt="Energy Monitoring Panel">
+      <img src="img/energy-monitoring.jpeg" alt="Energy Monitoring Panel" fetchpriority="high" decoding="sync">
     </div>
     <div class="energy-hero-content gs-reveal">
       <div class="energy-hero-eyebrow">Energy Meter Monitoring</div>

@@ -283,6 +283,7 @@
       box-shadow: 0 10px 32px rgba(255,85,0,0.4);
     }
   </style>
+  <link rel="preload" as="image" href="img/shield-hero.png">
 </head>
 <body>
   <!-- Nav -->
@@ -402,7 +403,7 @@
   <!-- Hero -->
   <section class="product-hero">
     <div class="product-hero-bg">
-      <img src="img/shield-hero.png" alt="S.H.I.E.L.D. Platform">
+      <img src="img/shield-hero.png" alt="S.H.I.E.L.D. Platform" fetchpriority="high" decoding="sync">
     </div>
     <div class="product-hero-content">
       <span class="product-hero-badge">Patent Granted</span>

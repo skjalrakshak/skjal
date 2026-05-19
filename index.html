@@ -18,6 +18,9 @@
   <script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script defer src="webgl.js"></script>
   <script defer src="script.js"></script>
+  <link rel="preload" as="image" href="img/skjal-hero-banner.png">
+  <link rel="preload" as="image" href="img/shield-hero.png">
+  <link rel="preload" as="image" href="img/energy-monitoring.jpeg">
 </head>
 <body>
 
@@ -510,7 +513,7 @@
           <!-- Product 1: Jala Rakshak -->
           <a href="/jala-rakshak"  class="innovation-card gs-reveal">
             <div class="innovation-card-img">
-              <img src="img/skjal-hero-banner.png" alt="Jala Rakshak — Smart Water Intelligence Platform">
+              <img src="img/skjal-hero-banner.png" alt="Jala Rakshak — Smart Water Intelligence Platform" fetchpriority="high" decoding="sync">
               <div class="innovation-card-badge">Flagship Product</div>
             </div>
             <div class="innovation-card-body">
@@ -533,7 +536,7 @@
           <!-- Product 2: S.H.I.E.L.D. -->
           <a href="/shield"  class="innovation-card gs-reveal">
             <div class="innovation-card-img">
-              <img src="img/shield-hero.png" alt="S.H.I.E.L.D. — Smart Health Intelligence for Ergonomic & Live Driving">
+              <img src="img/shield-hero.png" alt="S.H.I.E.L.D. — Smart Health Intelligence for Ergonomic & Live Driving" fetchpriority="high" decoding="sync">
               <div class="innovation-card-badge" style="background: #FF5500;">Patent Granted</div>
             </div>
             <div class="innovation-card-body">
@@ -555,7 +558,7 @@
           <!-- Product 3: Energy Monitoring -->
           <a href="/energy-monitoring"  class="innovation-card">
             <div class="innovation-card-img">
-              <img src="img/energy-monitoring.jpeg" alt="Energy Monitoring">
+              <img src="img/energy-monitoring.jpeg" alt="Energy Monitoring" fetchpriority="high" decoding="sync">
               <div class="innovation-card-badge" style="background: #10b981;">New Product</div>
             </div>
             <div class="innovation-card-body">

@@ -210,6 +210,7 @@
       box-shadow: 0 10px 32px rgba(0,153,255,0.4);
     }
   </style>
+  <link rel="preload" as="image" href="img/skjal-hero-banner.png">
 </head>
 <body>
   <!-- Nav -->
@@ -329,7 +330,7 @@
   <!-- Hero -->
   <section class="product-hero">
     <div class="product-hero-bg">
-      <img src="img/skjal-hero-banner.png" alt="Jala Rakshak Platform">
+      <img src="img/skjal-hero-banner.png" alt="Jala Rakshak Platform" fetchpriority="high" decoding="sync">
     </div>
     <div class="product-hero-content">
       <span class="product-hero-badge">Flagship Product</span>
