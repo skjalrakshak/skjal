@@ -121,9 +121,14 @@ function resolveFile(urlPath) {
   const pathname = decodeURIComponent(urlPath.split("?")[0]);
   const cleaned = pathname === "/" ? "/index.html" : pathname;
   const normalized = path.normalize(cleaned).replace(/^(\.\.[/\\])+/, "");
-  const absolute = path.join(root, normalized);
+  let absolute = path.join(root, normalized);
 
   if (!absolute.startsWith(root)) return null;
+
+  if (!fs.existsSync(absolute) && fs.existsSync(absolute + ".html")) {
+    return absolute + ".html";
+  }
+
   return absolute;
 }
 
@@ -165,6 +170,16 @@ function handler(req, res) {
   if (redirects.has(lowerPath)) {
     res.writeHead(308, {
       Location: redirects.get(lowerPath),
+      ...securityHeaders("text/plain; charset=utf-8")
+    });
+    res.end();
+    return;
+  }
+
+  if (lowerPath.endsWith('.html') && lowerPath !== '/404.html') {
+    const cleanPath = lowerPath === '/index.html' ? '/' : lowerPath.replace(/\.html$/, '');
+    res.writeHead(308, {
+      Location: cleanPath,
       ...securityHeaders("text/plain; charset=utf-8")
     });
     res.end();
