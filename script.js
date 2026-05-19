@@ -242,8 +242,21 @@ if (progressBar) {
 }
 
 // ═══════════════════════
-// SCROLL REVEALS DISABLED PER USER REQUEST
+// 10A. SCROLL REVEAL ANIMATIONS (gs-reveal)
 // ═══════════════════════
+document.querySelectorAll('.gs-reveal').forEach((el, i) => {
+  gsap.set(el, { opacity: 0, y: 40 });
+  gsap.to(el, {
+    opacity: 1, y: 0,
+    duration: 0.8,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 90%',
+      toggleActions: 'play none none none',
+    }
+  });
+});
 
 // ═══════════════════════
 // 10. PARALLAX headings
