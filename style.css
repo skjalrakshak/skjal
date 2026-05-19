@@ -781,7 +781,7 @@ main,#footer {
 }
 .hero-line {
   display: block;
-  transform: translateY(110%);
+  transform: translateY(0);
   will-change: transform;
 }
 .hero-bottom {
@@ -790,7 +790,7 @@ main,#footer {
   align-items: flex-start;
   margin-top: 32px;
   gap: 32px;
-  opacity: 0;
+  opacity: 1;
 }
 .hero-sub {
   max-width: 580px;

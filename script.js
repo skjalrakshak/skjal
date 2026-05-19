@@ -131,20 +131,10 @@ document.getElementById('themeToggle')?.addEventListener('click', (e) => {
 });
 
 // ═══════════════════════
-// 2. HERO REVEAL (Preloader Removed)
+// 2. HERO REVEAL (Removed per user request)
 // ═══════════════════════
 
-const heroTL = gsap.timeline();
-heroTL
-  .to('.hero-line', {
-    y: '0%', duration: 1.6,
-    stagger: { each: 0.1, from: 'start' },
-    ease: 'expo.out',
-  }, 0)
-  .to('.hero-fade', {
-    opacity: 1, y: 0,
-    duration: 1.2, ease: 'power3.out',
-  }, 0.4);
+// Hero animations disabled for immediate load
 
 // ═══════════════════════
 // 3. NAVBAR
@@ -252,90 +242,8 @@ if (progressBar) {
 }
 
 // ═══════════════════════
-// 5. SCROLL REVEALS (Cinematic Split-Text + Cascade)
+// SCROLL REVEALS DISABLED PER USER REQUEST
 // ═══════════════════════
-document.querySelectorAll('.gs-reveal').forEach(el => {
-  if (el.tagName.match(/^H[1-6]$/) || el.classList.contains('sec-title') || el.classList.contains('sys-name')) {
-    // Cinematic Split-Text with word-level stagger
-    const text = el.innerText;
-    el.innerHTML = '';
-    const words = text.split(' ');
-    words.forEach((word) => {
-      const wSpan = document.createElement('span');
-      wSpan.className = 'split-line';
-      const cSpan = document.createElement('span');
-      cSpan.className = 'split-char';
-      cSpan.innerText = word;
-      wSpan.appendChild(cSpan);
-      el.appendChild(wSpan);
-      el.appendChild(document.createTextNode(' '));
-    });
-    gsap.fromTo(el.querySelectorAll('.split-char'), { y: '130%', opacity: 0, rotateX: 15 }, {
-      y: '0%', opacity: 1, rotateX: 0,
-      duration: 1.2,
-      stagger: { each: 0.04, from: 'start' },
-      ease: 'expo.out',
-      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
-    });
-  } else {
-    // Standard Reveal with subtle scale
-    gsap.fromTo(el, { y: 50, opacity: 0, scale: 0.98 }, {
-      y: 0, opacity: 1, scale: 1,
-      duration: 1.2, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' }
-    });
-  }
-});
-
-// ═══════════════════════
-// 6. SYSTEMS cascade slide-in
-// ═══════════════════════
-document.querySelectorAll('.sys-row').forEach((row, i) => {
-  gsap.fromTo(row, { opacity: 0, x: -25, filter: 'blur(3px)' }, {
-    opacity: 1, x: 0, filter: 'blur(0px)',
-    duration: 0.9,
-    delay: i * 0.06,
-    ease: 'power3.out',
-    scrollTrigger: { trigger: row, start: 'top 88%', toggleActions: 'play none none none' }
-  });
-});
-
-// ═══════════════════════
-// 7. TESTIMONIALS blur reveal
-// ═══════════════════════
-const testimonialSec = document.getElementById('testimonials');
-const systemsSec = document.getElementById('systems');
-
-if (testimonialSec) {
-  const mw = document.getElementById('marqueeWrap') || document.querySelector('.testi-list');
-  if (mw) {
-    gsap.fromTo(mw, { opacity:0, y:50 }, {
-      opacity:1, y:0, duration:1.2, ease:'power2.out',
-      scrollTrigger: { trigger:testimonialSec, start:'top 60%', toggleActions:'play none none reverse' }
-    });
-  }
-}
-
-// ═══════════════════════
-// 8. STATS pop-in
-// ═══════════════════════
-document.querySelectorAll('.stat').forEach((s, i) => {
-  gsap.fromTo(s, { y:25, opacity:0 }, {
-    y:0, opacity:1, duration:.6, delay:i*.08, ease:'power2.out',
-    scrollTrigger: { trigger:s, start:'top 92%', toggleActions:'play none none none' }
-  });
-});
-
-// ═══════════════════════
-// 9. CTA scale reveal
-// ═══════════════════════
-const ctaTitle = document.querySelector('.cta-title');
-if (ctaTitle) {
-  gsap.fromTo(ctaTitle, { scale:0.88, opacity:0 }, {
-    scale:1, opacity:1, duration:1, ease:'power3.out',
-    scrollTrigger: { trigger:ctaTitle, start:'top 80%', toggleActions:'play none none none' }
-  });
-}
 
 // ═══════════════════════
 // 10. PARALLAX headings
