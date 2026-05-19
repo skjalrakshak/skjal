@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jala Rakshak — Smart Water Intelligence | SK Jalrakshak Innovations</title>
-  <meta name="description" content="Jala Rakshak: Advanced IoT-enabled water quality monitoring systems with cloud analytics, predictive AI, and real-time dashboards by SK Jalrakshak Innovations.">
+  <title>Energy Monitoring | SK Jalrakshak Innovations</title>
+  <meta name="description" content="Energy Monitoring: Smart Monitoring for Smarter Energy Decisions. Detailed insights into energy consumption patterns across your facility.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.35);
+      filter: brightness(0.4);
     }
     .product-hero-content {
       position: relative;
@@ -43,7 +43,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #ffffff;
-      background: #0099ff;
+      background: #10b981;
       border-radius: 100px;
       margin-bottom: 24px;
     }
@@ -109,12 +109,12 @@
       width: 48px;
       height: 48px;
       border-radius: 12px;
-      background: rgba(0, 153, 255, 0.1);
+      background: rgba(255, 85, 0, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
-      color: #0099ff;
+      color: #10b981;
     }
     .product-feature-card h3 {
       font-family: var(--display);
@@ -128,62 +128,135 @@
       line-height: 1.65;
       color: var(--fg-body);
     }
-    .product-stats {
+    .problem-solution {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      margin-top: 48px;
-    }
-    @media (max-width: 768px) {
-      .product-stats { grid-template-columns: 1fr 1fr; }
-    }
-    .product-stat {
-      text-align: center;
-      padding: 32px 16px;
-      background: var(--bg-alt);
-      border-radius: 16px;
-      border: 1px solid var(--border);
-    }
-    .product-stat-value {
-      font-family: var(--display);
-      font-size: 2rem;
-      font-weight: 900;
-      color: #0099ff;
-      margin-bottom: 4px;
-    }
-    .product-stat-label {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--fg-body);
-    }
-    .industries-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
       margin-top: 40px;
     }
     @media (max-width: 768px) {
-      .industries-grid { grid-template-columns: 1fr 1fr; }
+      .problem-solution { grid-template-columns: 1fr; }
     }
-    .industry-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 20px;
-      background: var(--bg-alt);
+    .ps-card {
+      padding: 40px;
+      border-radius: 16px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 0.88rem;
-      font-weight: 500;
+    }
+    .ps-card.problem {
+      background: rgba(220, 38, 38, 0.04);
+      border-color: rgba(220, 38, 38, 0.15);
+    }
+    .ps-card.solution {
+      background: rgba(0, 153, 255, 0.04);
+      border-color: rgba(0, 153, 255, 0.15);
+    }
+    .ps-card h3 {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 16px;
       color: var(--fg-head);
     }
-    .industry-dot {
+    .ps-card ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .ps-card li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--fg-body);
+    }
+    .ps-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #0099ff;
       flex-shrink: 0;
+      margin-top: 6px;
     }
+    .ps-card.problem .ps-dot { background: #dc2626; }
+    .ps-card.solution .ps-dot { background: #0099ff; }
+
+    .target-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) {
+      .target-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .target-item {
+      text-align: center;
+      padding: 32px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+    .target-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255, 85, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: #10b981;
+    }
+    .target-item h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--fg-head);
+    }
+    .status-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) {
+      .status-grid { grid-template-columns: 1fr; }
+    }
+    .status-card {
+      padding: 32px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+    .status-label {
+      display: inline-block;
+      padding: 4px 12px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .status-now .status-label { background: #dcfce7; color: #166534; }
+    .status-next .status-label { background: #fef3c7; color: #92400e; }
+    .status-card ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .status-card li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--fg-body);
+    }
+    .check { color: #22c55e; font-weight: 700; }
+    .arrow { color: #10b981; font-weight: 700; }
     .product-cta-section {
       padding: 80px 0;
       background: var(--bg-alt);
@@ -197,17 +270,17 @@
       font-size: 1rem;
       font-weight: 600;
       color: #ffffff;
-      background: #0099ff;
+      background: #10b981;
       border-radius: 100px;
       text-decoration: none;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 24px rgba(0,153,255,0.3);
+      box-shadow: 0 6px 24px rgba(255,85,0,0.3);
       margin-top: 24px;
     }
     .product-cta-btn:hover {
-      background: #007acc;
+      background: #e04d00;
       transform: translateY(-2px);
-      box-shadow: 0 10px 32px rgba(0,153,255,0.4);
+      box-shadow: 0 10px 32px rgba(255,85,0,0.4);
     }
   </style>
 </head>
@@ -329,12 +402,12 @@
   <!-- Hero -->
   <section class="product-hero">
     <div class="product-hero-bg">
-      <img src="img/skjal-hero-banner.png" alt="Jala Rakshak Platform">
+      <img src="img/shield-hero.png" alt="S.H.I.E.L.D. Platform">
     </div>
     <div class="product-hero-content">
-      <span class="product-hero-badge">Flagship Product</span>
-      <h1 class="product-hero-title">Jala Rakshak</h1>
-      <p class="product-hero-sub">Advanced IoT-enabled water quality monitoring systems with cloud analytics, predictive AI, and real-time dashboards — protecting every drop, from sensor to insight.</p>
+      <span class="product-hero-badge">Patent Granted</span>
+      <h1 class="product-hero-title">Energy Monitoring</h1>
+      <p class="product-hero-sub">Smart Monitoring for Smarter Energy Decisions. Our Energy Meter Monitoring solution offers detailed insights into energy consumption patterns across your facility. By identifying inefficiencies and optimizing usage, you can significantly reduce energy costs and enhance sustainability.</p>
       <a href="index.html" class="product-back">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
         Back to Home
@@ -342,81 +415,99 @@
     </div>
   </section>
 
-  <!-- Core Capabilities -->
+  <!-- Problem & Solution -->
+  
   <section class="product-section">
     <div class="wrap">
-      <p class="sec-eyebrow" style="color:#0099ff;">What We Do</p>
-      <h2 class="sec-title">Core Capabilities</h2>
-      <div class="product-features-grid">
-        <div class="product-feature-card">
-          <div class="product-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <p class="sec-eyebrow" style="color:#10b981;">Applications</p>
+      <h2 class="sec-title">Where It's Used</h2>
+      <p class="body-text" style="margin-bottom: 12px;">Detailed Monitoring energy use to optimize production processesing in IOT Is a Crucial Process.</p>
+      <div class="target-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="target-item">
+          <div class="target-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </div>
-          <h3>Smart Water Monitoring</h3>
-          <p>Real-time monitoring of water quality, usage, flow rates, and leakage detection using advanced IoT sensor arrays deployed at scale.</p>
+          <h4>Manufacturing Plants</h4>
+          <p style="font-size: 0.85rem; margin-top:10px; color:var(--fg-body);">Detailed Monitoring energy use to optimize production processesing in IOT Is a Crucial Process</p>
         </div>
-        <div class="product-feature-card">
-          <div class="product-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <div class="target-item">
+          <div class="target-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
           </div>
-          <h3>Cloud & On-Premise Dashboards</h3>
-          <p>Beautiful, data-rich dashboards with live telemetry, historical trends, and automated reporting — accessible from any device, anywhere.</p>
+          <h4>Office Buildings</h4>
+          <p style="font-size: 0.85rem; margin-top:10px; color:var(--fg-body);">Identifying and reducing energy waste in HVAC and lighting systems</p>
         </div>
-        <div class="product-feature-card">
-          <div class="product-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <div class="target-item">
+          <div class="target-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
           </div>
-          <h3>IoT & Embedded Solutions</h3>
-          <p>Custom embedded system design, sensor integration, PCB prototyping, firmware development, and wireless communication modules.</p>
-        </div>
-        <div class="product-feature-card">
-          <div class="product-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <h3>Real-Time Data Monitoring</h3>
-          <p>Data acquisition platforms that provide live insights for operational efficiency and better decision-making across infrastructure.</p>
-        </div>
-        <div class="product-feature-card">
-          <div class="product-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-          </div>
-          <h3>AI-Driven Analytics</h3>
-          <p>Predictive monitoring, smart alerts, data visualization, trend analysis, and intelligent automation powered by machine learning.</p>
-        </div>
-        <div class="product-feature-card">
-          <div class="product-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          </div>
-          <h3>Industrial Automation</h3>
-          <p>Process automation, control systems, remote monitoring, and smart industrial integration for Industry 4.0 readiness.</p>
+          <h4>Data Centers</h4>
+          <p style="font-size: 0.85rem; margin-top:10px; color:var(--fg-body);">Tracking energy consumption to manage cooling systems efficiently</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Industries -->
+
+  <!-- Features -->
+
   <section class="product-section" style="background: var(--bg-alt);">
     <div class="wrap">
-      <p class="sec-eyebrow" style="color:#0099ff;">Industries We Serve</p>
-      <h2 class="sec-title">Built for Critical Infrastructure</h2>
-      <div class="industries-grid">
-        <div class="industry-item"><span class="industry-dot"></span> Water Management</div>
-        <div class="industry-item"><span class="industry-dot"></span> Smart Cities</div>
-        <div class="industry-item"><span class="industry-dot"></span> Manufacturing</div>
-        <div class="industry-item"><span class="industry-dot"></span> Healthcare & Biomedical</div>
-        <div class="industry-item"><span class="industry-dot"></span> Agriculture & Irrigation</div>
-        <div class="industry-item"><span class="industry-dot"></span> Education</div>
-        <div class="industry-item"><span class="industry-dot"></span> Environmental Monitoring</div>
-        <div class="industry-item"><span class="industry-dot"></span> Infrastructure & Utilities</div>
+      <p class="sec-eyebrow" style="color:#10b981;">Features</p>
+      <h2 class="sec-title">Key Benefits</h2>
+      <div class="product-features-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="product-feature-card">
+          <div class="product-feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3>Reduce Energy Costs</h3>
+          <p>Optimize energy usage to lower operational expenses.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3>Promote Sustainability</h3>
+          <p>Support green initiatives by reducing energy waste.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Improve Efficiency</h3>
+          <p>Identify and address areas of high energy consumption.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Extended Life</h3>
+          <p>Keep machines running smoothly and prolong their operational lifespan.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <h3>Budget Forecasting</h3>
+          <p>Provide accurate data to assist in better energy budgeting and financial planning.</p>
+        </div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>Compliance & Reporting</h3>
+          <p>Ensure compliance with energy regulations and generate detailed reports for audits and certifications.</p>
+        </div>
       </div>
     </div>
   </section>
+
 
   <!-- CTA -->
   <section class="product-cta-section">
     <div class="wrap">
-      <h2 class="sec-title" style="margin-bottom: 8px;">Ready to Protect Every Drop?</h2>
-      <p class="body-text" style="max-width: 480px; margin: 0 auto;">Get in touch with our team to explore how Jala Rakshak can transform your water infrastructure.</p>
+      <h2 class="sec-title" style="margin-bottom: 8px;">Partner With Us</h2>
+      <p class="body-text" style="max-width: 480px; margin: 0 auto;">Whether you're a fleet operator, insurance company, or urban mobility platform — let's build safer roads together.</p>
       <a href="index.html#contact" class="product-cta-btn">
         Contact Us
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
