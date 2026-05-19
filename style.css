@@ -3102,7 +3102,7 @@ main,#footer {
 /* Grid layout */
 .foot-grid {
   display: grid;
-  grid-template-columns: 2.5fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2.5fr 1.2fr 1fr 1.5fr;
   gap: 48px;
   margin-bottom: 32px;
 }

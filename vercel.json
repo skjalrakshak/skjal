@@ -7,7 +7,6 @@
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "favicon.svg",
           "index.html",
           "404.html",
           "jal-rakshak.html",
