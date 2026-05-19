@@ -173,7 +173,7 @@ main,#footer {
   z-index: 1;
 }
 .sec {
-  padding: 120px 0;
+  padding: 80px 0;
   position: relative;
   background-image: radial-gradient(var(--border) 1px, transparent 1px);
   background-size: 50px 50px;
@@ -642,7 +642,7 @@ main,#footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 140px 32px 64px;
+  padding: 100px 32px 48px;
   position: relative;
 }
 .hero-container {
@@ -993,14 +993,14 @@ main,#footer {
 .about-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  margin-bottom: 60px;
+  gap: 48px;
+  margin-bottom: 40px;
 }
 /* ═══ VIDEO SPLIT (Photo left, text right) ═══ */
 .video-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 40px;
   align-items: center;
 }
 .video-split-media {
@@ -1027,7 +1027,7 @@ main,#footer {
 .showcase-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 40px;
   align-items: center;
 }
 .showcase-split-media {
@@ -1175,7 +1175,7 @@ main,#footer {
 .testi-split-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  gap: 48px;
   align-items: start;
   margin-top: 40px;
 }
@@ -1744,7 +1744,7 @@ main,#footer {
 }
 @media (max-width:900px) {
   .sec {
-    padding: 80px 0;
+    padding: 60px 0;
   }
   .about-layout {
     grid-template-columns: 1fr;
@@ -2765,7 +2765,7 @@ main,#footer {
   flex-direction: column;
   justify-content: flex-start;
   gap: 0;
-  padding: 80px 4vw 40px;
+  padding: 60px 4vw 32px;
   will-change: transform;
   transform-origin: bottom left;
 }
@@ -3954,13 +3954,13 @@ h1, h2, h3, .sys-name, .flow-heading {
 
 /* ═══ ANIMATED TESTIMONIALS (Apple Glassmorphism Style) ═══ */
 .animated-testi-sec {
-  padding: 120px 0;
+  padding: 80px 0;
   overflow: hidden;
 }
 .animated-testi-container {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
-  gap: 80px;
+  gap: 48px;
   align-items: center;
 }
 @media (max-width: 991px) {
@@ -4145,9 +4145,9 @@ h1, h2, h3, .sys-name, .flow-heading {
 
 /* Logos Section */
 .animated-testi-logos {
-  margin-top: 80px;
+  margin-top: 48px;
   text-align: center;
-  padding-top: 60px;
+  padding-top: 40px;
   border-top: 1px solid var(--border);
 }
 .animated-testi-logos-title {
