@@ -6,8 +6,7 @@
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "index.html",
-          "404.html",
+          "*.html",
           "style.css",
           "script.js",
           "webgl.js",
