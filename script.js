@@ -263,7 +263,19 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       e.preventDefault();
-      lenis.scrollTo(target, { offset: -80 });
+      const overlay = document.querySelector('.page-transition-overlay');
+      const href = this.getAttribute('href');
+
+      // Skip the overlay animation for #contact — scroll directly
+      if(overlay && href !== '#contact') {
+        gsap.timeline()
+          .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
+          .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
+          .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
+          .set(overlay, { y: '-100%' });
+      } else {
+        lenis.scrollTo(target, { offset: -80 });
+      }
     }
   });
 });
@@ -393,7 +405,7 @@ if (hero && fm1 && fm2) {
       cardWrap.style.inset = '0';
       cardWrap.style.width = '100%';
       cardWrap.style.height = '100%';
-      cardWrap.style.overflow = 'hidden';
+      cardWrap.style.overflow = 'visible';
       cardWrap.style.borderRadius = '0 0 24px 24px';
       
       // Explicitly force the background of the section to be white so the shrinking gap is perfectly white
