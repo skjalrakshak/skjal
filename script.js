@@ -141,15 +141,15 @@ document.getElementById('themeToggle')?.addEventListener('click', (e) => {
 // ═══════════════════════
 ScrollTrigger.create({
   start: 'top -60',
-  onUpdate: (self) => document.getElementById('navbar').classList.toggle('scrolled', self.progress > 0)
+  onUpdate: (self) => document.getElementById('mainNav')?.classList.toggle('scrolled', self.progress > 0)
 });
 
 // Hide navbar/logo/top-right at footer
 (function initFooterHide() {
   const footer = document.querySelector('footer');
   if (!footer) return;
-  const navbar = document.getElementById('navbar');
-  const siteLogo = document.getElementById('siteLogo');
+  const navbar = document.getElementById('mainNav');
+  const siteLogo = document.getElementById('navLogo');
   const topRight = document.getElementById('topRightActions');
   ScrollTrigger.create({
     trigger: footer,
@@ -171,9 +171,9 @@ ScrollTrigger.create({
 // ═══════════════════════
 // 14. NAVBAR HIDE ON SCROLL
 // ═══════════════════════
-const siteLogo = document.getElementById('siteLogo');
+const siteLogo = document.getElementById('navLogo');
 const topRightActions = document.getElementById('topRightActions');
-const navbar = document.getElementById('navbar');
+const navbar = document.getElementById('mainNav');
 
 let lastScrollY = window.scrollY;
 let scrollTicking = false;
@@ -341,8 +341,8 @@ if (hero && fm1 && fm2) {
 // ═══════════════════════
 (function initFlowArt() {
   const container = document.getElementById('flow-art');
-  const navbar = document.getElementById('navbar');
-  const siteLogo = document.getElementById('siteLogo');
+  const navbar = document.getElementById('mainNav');
+  const siteLogo = document.getElementById('navLogo');
   const topRight = document.getElementById('topRightActions');
   if (!container) return;
 
