@@ -263,18 +263,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       e.preventDefault();
-      const overlay = document.querySelector('.page-transition-overlay');
-      const isMobile = window.innerWidth < 768;
-      
-      if(overlay && !isMobile) {
-        gsap.timeline()
-          .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
-          .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
-          .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
-          .set(overlay, { y: '-100%' });
-      } else {
-        lenis.scrollTo(target, { offset: -80 });
-      }
+      lenis.scrollTo(target, { offset: -80 });
     }
   });
 });
