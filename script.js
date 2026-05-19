@@ -245,14 +245,13 @@ if (progressBar) {
 // 10A. SCROLL REVEAL ANIMATIONS (gs-reveal)
 // ═══════════════════════
 document.querySelectorAll('.gs-reveal').forEach((el, i) => {
-  gsap.set(el, { opacity: 0, y: 40 });
-  gsap.to(el, {
-    opacity: 1, y: 0,
+  gsap.from(el, {
+    opacity: 0, y: 40,
     duration: 0.8,
     ease: 'power2.out',
     scrollTrigger: {
       trigger: el,
-      start: 'top 90%',
+      start: 'top 92%',
       toggleActions: 'play none none none',
     }
   });
