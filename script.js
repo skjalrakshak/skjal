@@ -545,7 +545,31 @@ if (hero && fm1 && fm2) {
 })();
 
 // ═══════════════════════
-// 16. AWWWARDS SOTD FEATURES
+// 16. STAT COUNTER ANIMATION (works on all devices)
+// ═══════════════════════
+document.querySelectorAll('.stat-val').forEach(stat => {
+  const rawVal = stat.innerText;
+  const match = rawVal.match(/[\d.]+/);
+  if (match) {
+    const num = parseFloat(match[0]);
+    const suffix = rawVal.replace(match[0], '');
+    const obj = { val: 0 };
+    
+    gsap.to(obj, {
+      val: num,
+      duration: 2.5,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: stat, start: 'top 85%', toggleActions: 'play none none none' },
+      onUpdate: () => {
+        const formatted = (num % 1 !== 0) ? obj.val.toFixed(1) : Math.floor(obj.val);
+        stat.innerText = formatted + suffix;
+      }
+    });
+  }
+});
+
+// ═══════════════════════
+// 16B. AWWWARDS SOTD DESKTOP EFFECTS (mouse-only)
 // ═══════════════════════
 (function initSOTD() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerWidth < 768) return;
@@ -574,31 +598,6 @@ if (hero && fm1 && fm2) {
       card.style.setProperty('--mouse-y', `${y}px`);
     });
   });
-
-  // Stat Counter Cinematic
-  document.querySelectorAll('.stat-val').forEach(stat => {
-    const rawVal = stat.innerText;
-    const match = rawVal.match(/[\d.]+/);
-    if (match) {
-      const num = parseFloat(match[0]);
-      const suffix = rawVal.replace(match[0], '');
-      const obj = { val: 0 };
-      
-      gsap.to(obj, {
-        val: num,
-        duration: 2.5,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: stat, start: 'top 85%', toggleActions: 'play none none none' },
-        onUpdate: () => {
-          const formatted = (num % 1 !== 0) ? obj.val.toFixed(1) : Math.floor(obj.val);
-          stat.innerText = formatted + suffix;
-        }
-      });
-    }
-  });
-
-  // FlowArt visibility is now handled purely by classes via initFlowArt ScrollTrigger
-  // No aggressive inline style overrides needed
 })();
 
 // ═══════════════════════
