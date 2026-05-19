@@ -52,30 +52,56 @@
   <div class="grain" aria-hidden="true"></div>
   <div id="scrollProgress" aria-hidden="true"></div>
 
-  <!-- ═══ DYNAMIC ISLAND NAVBAR ═══ -->
-  <!-- Logo top-left -->
-  <a href="#" class="site-logo" id="siteLogo">
-    <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/logo.png" srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_100/skjal/logo.png 100w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/logo.png 200w" sizes="100px" alt="SK Jalrakshak Logo" style="height:36px; width:auto; border-radius:6px;">
-  </a>
+  <!-- ═══ ENTERPRISE NAVBAR ═══ -->
+  <header id="mainNav" class="main-nav">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a href="#" class="nav-logo" id="navLogo">
+        <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/logo.png" srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_100/skjal/logo.png 100w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/logo.png 200w" sizes="100px" alt="SK Jalrakshak Logo" class="nav-logo-img">
+        <span class="nav-logo-text">SK Jalrakshak</span>
+      </a>
 
+      <!-- Desktop Menu -->
+      <nav class="nav-menu" id="navMenu">
+        <a href="#" class="nav-link active">Home</a>
 
-  <!-- Dynamic Island -->
-  <div class="di-wrapper" id="dynamicIsland">
-    <!-- Collapsed pill (always visible) -->
-    <div class="di-pill" id="diPill">
-      <div class="di-pill-left">
-        <button class="di-trigger" id="diTrigger" aria-label="Toggle menu">
-          <svg class="di-hamburger" id="diHamburger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="overflow:visible">
-            <line class="di-line-1" x1="3" y1="6" x2="21" y2="6"/>
-            <line class="di-line-2" x1="3" y1="12" x2="21" y2="12"/>
-            <line class="di-line-3" x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-        </button>
-        <span class="di-label" id="diLabel">Menu</span>
-      </div>
-      <div class="di-pill-right">
-        <button id="themeToggle" class="di-theme-toggle" aria-label="Toggle theme">
-          <svg id="attSvg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="overflow:visible">
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger">Our Products <svg class="nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-dropdown-menu">
+            <a href="#systems" class="nav-dropdown-item">Smart IoT Sensors</a>
+            <a href="#systems" class="nav-dropdown-item">Cloud Dashboards</a>
+            <a href="#systems" class="nav-dropdown-item">Predictive Analytics</a>
+            <a href="#" class="nav-dropdown-item">Wi-SUN Mesh Networks</a>
+            <a href="#" class="nav-dropdown-item">4G Edge Gateways</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger">About Us <svg class="nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-dropdown-menu">
+            <a href="#about" class="nav-dropdown-item">About</a>
+            <a href="#" class="nav-dropdown-item">Directors</a>
+            <a href="#" class="nav-dropdown-item">Careers</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger">Resources <svg class="nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-dropdown-menu">
+            <a href="#" class="nav-dropdown-item">Documentation</a>
+            <a href="#" class="nav-dropdown-item">Case Studies</a>
+            <a href="#faq" class="nav-dropdown-item">FAQ</a>
+            <a href="#" class="nav-dropdown-item">Whitepapers</a>
+          </div>
+        </div>
+
+        <a href="#contact" class="nav-link">Contact Us</a>
+      </nav>
+
+      <!-- Right side: Theme + CTA -->
+      <div class="nav-actions">
+        <button id="themeToggle" class="nav-theme-toggle" aria-label="Toggle theme">
+          <svg id="attSvg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="overflow:visible">
             <defs><mask id="attMask"><rect x="0" y="0" width="100%" height="100%" fill="white"/><circle id="attMaskCircle" cx="33" cy="0" r="9" fill="black"/></mask></defs>
             <circle id="attBody" cx="12" cy="12" r="5" fill="currentColor" stroke="none" mask="url(#attMask)"/>
             <g id="attRays" style="transform-origin:12px 12px">
@@ -86,35 +112,62 @@
             </g>
           </svg>
         </button>
-        <span class="di-scroll-pct" id="diScrollPct">0%</span>
+        <a href="#contact" class="nav-cta-btn">
+          Get In Touch
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+
+        <!-- Mobile Hamburger -->
+        <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+          <span class="nav-ham-line"></span>
+          <span class="nav-ham-line"></span>
+          <span class="nav-ham-line"></span>
+        </button>
       </div>
     </div>
 
-    <!-- Expanded dropdown panel -->
-    <div class="di-panel" id="diPanel">
-      <div class="di-panel-section">
-        <span class="di-panel-label">Menu</span>
-        <a href="#about" class="di-panel-link di-panel-link-primary">About</a>
-        <a href="#systems" class="di-panel-link di-panel-link-primary">Systems</a>
-        <a href="#value-prop" class="di-panel-link di-panel-link-primary">Value</a>
-        <a href="#faq" class="di-panel-link di-panel-link-primary">FAQ</a>
-        <a href="#contact" class="di-panel-link di-panel-link-primary">Contact</a>
+    <!-- Mobile Drawer -->
+    <div class="nav-mobile-drawer" id="navDrawer">
+      <div class="nav-drawer-header">
+        <span class="nav-drawer-title">Menu</span>
+        <button class="nav-drawer-close" id="navDrawerClose" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
       </div>
-      <div class="di-panel-divider"></div>
-      <div class="di-panel-section">
-        <span class="di-panel-label">Other</span>
-        <a href="#" class="di-panel-link di-panel-link-secondary">Privacy Policy</a>
-        <a href="#" class="di-panel-link di-panel-link-secondary">Terms of Service</a>
-      </div>
-      <div class="di-panel-divider"></div>
-      <div class="di-panel-section">
-        <span class="di-panel-label">Social media</span>
-        <a href="#" class="di-panel-link di-panel-link-secondary">LinkedIn</a>
-        <a href="#" class="di-panel-link di-panel-link-secondary">Instagram</a>
-        <a href="#" class="di-panel-link di-panel-link-secondary">YouTube</a>
-      </div>
+      <nav class="nav-drawer-links">
+        <a href="#" class="nav-drawer-link active">Home</a>
+        <div class="nav-drawer-group">
+          <button class="nav-drawer-link nav-drawer-trigger">Our Products <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-drawer-sub">
+            <a href="#systems" class="nav-drawer-sublink">Smart IoT Sensors</a>
+            <a href="#systems" class="nav-drawer-sublink">Cloud Dashboards</a>
+            <a href="#systems" class="nav-drawer-sublink">Predictive Analytics</a>
+            <a href="#" class="nav-drawer-sublink">Wi-SUN Mesh Networks</a>
+            <a href="#" class="nav-drawer-sublink">4G Edge Gateways</a>
+          </div>
+        </div>
+        <div class="nav-drawer-group">
+          <button class="nav-drawer-link nav-drawer-trigger">About Us <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-drawer-sub">
+            <a href="#about" class="nav-drawer-sublink">About</a>
+            <a href="#" class="nav-drawer-sublink">Directors</a>
+            <a href="#" class="nav-drawer-sublink">Careers</a>
+          </div>
+        </div>
+        <div class="nav-drawer-group">
+          <button class="nav-drawer-link nav-drawer-trigger">Resources <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="nav-drawer-sub">
+            <a href="#" class="nav-drawer-sublink">Documentation</a>
+            <a href="#" class="nav-drawer-sublink">Case Studies</a>
+            <a href="#faq" class="nav-drawer-sublink">FAQ</a>
+            <a href="#" class="nav-drawer-sublink">Whitepapers</a>
+          </div>
+        </div>
+        <a href="#contact" class="nav-drawer-link">Contact Us</a>
+      </nav>
     </div>
-  </div>
+    <div class="nav-drawer-overlay" id="navOverlay"></div>
+  </header>
 
   <main>
     <!-- ═══ HERO ═══ -->
@@ -169,9 +222,9 @@
     <!-- ═══ PLATFORM VIDEO ═══ -->
     <section id="platform-video" class="sec sec-video">
       <div class="wrap">
-        <div class="video-split gs-reveal">
+        <div class="video-split">
           <div class="video-split-text">
-            <p class="sec-eyebrow">(01) Empowering Solutions</p>
+            <p class="sec-eyebrow">Empowering Solutions</p>
             <h3 class="sys-name" style="margin-top:12px">For a brighter future</h3>
             <p class="body-text" style="margin-top:16px">At Jal Rakshak, we empower Solutions by unlocking their potential through quality devices. We harness smart technology to protect water sources, support communities, and create a healthier environment.</p>
             <a href="#systems" class="btn-primary" style="margin-top:24px;display:inline-flex">Explore Solutions</a>
@@ -186,7 +239,7 @@
     <!-- ═══ MISSION & VISION ═══ -->
     <section id="why-us" class="sec">
       <div class="wrap">
-        <div class="sec-eyebrow gs-reveal">(03) Mission & Vision</div>
+        <div class="sec-eyebrow">Mission & Vision</div>
         <h2 class="sec-title sec-title-lg gs-reveal" style="max-width: 800px; margin-left: auto; margin-right: auto;">Our Purpose. Our Future.</h2>
         <div class="why-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
           <div class="why-card gs-reveal">
@@ -210,8 +263,8 @@
           <div class="showcase-split-media gs-clip-reveal">
             <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/aerial-water.png" srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/aerial-water.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_800/skjal/aerial-water.png 800w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/aerial-water.png 1200w" sizes="(max-width: 768px) 100vw, 50vw" alt="Water crisis and pollution" style="border-radius: var(--r); filter: contrast(1.1) brightness(0.9);" loading="lazy">
           </div>
-          <div class="showcase-split-text gs-reveal">
-            <p class="sec-eyebrow" style="color: #ff5500;">(04) The Critical Crisis</p>
+          <div class="showcase-split-text">
+            <p class="sec-eyebrow" style="color: #ff5500;">The Critical Crisis</p>
             <h3 class="sys-name" style="margin-top:12px; font-size: 2.4rem;">The Limits of Legacy Systems</h3>
             <p class="body-text" style="margin-top:16px; font-size: 1.05rem;">India is facing a severe and escalating water shortage, with precious resources becoming increasingly polluted. Traditional water quality monitoring methods are dangerously inadequate.</p>
             <ul class="body-text" style="margin-top:20px; list-style:none; display:flex; flex-direction:column; gap:12px; padding-left:0;">
@@ -231,8 +284,8 @@
           <div class="showcase-split-media gs-clip-reveal">
             <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/solar-field.png" srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/solar-field.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_800/skjal/solar-field.png 800w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/solar-field.png 1200w" sizes="(max-width: 768px) 100vw, 50vw" alt="Smart AI Buoy deployed in lake" style="border-radius: var(--r); box-shadow: 0 20px 40px rgba(0,0,0,0.2);" loading="lazy">
           </div>
-          <div class="showcase-split-text gs-reveal">
-            <p class="sec-eyebrow" style="color: var(--green);">(05) The Deep-Tech Innovation</p>
+          <div class="showcase-split-text">
+            <p class="sec-eyebrow" style="color: var(--green);">The Deep-Tech Innovation</p>
             <h3 class="sys-name" style="margin-top:12px; font-size: 2.4rem;">AI-Powered Autonomous Monitoring Grid</h3>
             <p class="body-text" style="margin-top:16px; font-size: 1.05rem;">We completely engineer the gap with a revolutionary IoT-based 4G/5G intelligence grid. Our autonomous edge devices operate completely off-grid to safeguard public infrastructure instantly.</p>
             <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
@@ -445,18 +498,6 @@
 
     </div>
 
-    <!-- ═══ SYSTEMS ═══ -->
-    <section id="systems" class="sec">
-      <div class="wrap">
-        <div class="sec-eyebrow gs-reveal">(02) Our Solutions</div>
-        <h2 class="sec-title sec-title-lg gs-reveal">Explore our core offerings.</h2>
-        <div class="systems-list">
-          <article class="sys-row gs-reveal"><span class="sys-num">01</span><div class="sys-content"><h3 class="sys-name">Smart IoT Sensors</h3><p class="sys-desc">Self-sustainable, edge-computing devices equipped with Wi-SUN Mesh Networking and Long-Range Communication. Continuously tracks critical parameters including Dissolved Oxygen, pH, BOD, COD, and Ammonia.</p></div><span class="sys-badge">Hardware</span></article>
-          <article class="sys-row gs-reveal"><span class="sys-num">02</span><div class="sys-content"><h3 class="sys-name">Connected Telemetry</h3><p class="sys-desc">Our integrated 4G/5G gateways provide seamless cloud or on-premise connectivity, sending robust data from remote locations to intuitive dashboards with zero configuration required.</p></div><span class="sys-badge">Network</span></article>
-          <article class="sys-row gs-reveal"><span class="sys-num">03</span><div class="sys-content"><h3 class="sys-name">Data-Driven Analytics</h3><p class="sys-desc">Actionable insights generated through remote monitoring. We deliver customizable visualizations, predictive analytics, and seamless API integration for smart city initiatives and municipal governance.</p></div><span class="sys-badge">Software</span></article>
-        </div>
-      </div>
-    </section>
 
     <!-- ═══ TARGET MARKETS ═══ -->
     <section class="sec sec-showcase-split">
@@ -465,7 +506,7 @@
           <div class="showcase-split-media gs-clip-reveal">
             <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/team.png" srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/team.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/team.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/team.png 600w" sizes="(max-width: 768px) 160px, 200px" alt="Engineering team reviewing infrastructure data on-site" loading="lazy">
           </div>
-          <div class="showcase-split-text gs-reveal">
+          <div class="showcase-split-text">
             <p class="sec-eyebrow">Target Markets</p>
             <h3 class="sys-name" style="margin-top:12px; font-size: 2rem;">Who We Serve</h3>
             <ul class="body-text" style="margin-top:16px; list-style:none; display:flex; flex-direction:column; gap:14px; padding-left:0;">
@@ -486,7 +527,7 @@
         <div class="animated-testi-container gs-reveal">
           <!-- Left side -->
           <div class="animated-testi-left">
-            <div class="animated-testi-badge">03 — What People Say</div>
+            <div class="animated-testi-badge">What People Say</div>
             <h2 class="sec-title animated-testi-title">Trusted by<br>Industry Leaders</h2>
             <p class="body-text animated-testi-sub">Don't just take our word for it. See how our smart water intelligence is transforming infrastructure operations.</p>
             <div class="animated-testi-dots" id="testiDots">
@@ -503,12 +544,12 @@
         </div>
 
         <div class="animated-testi-logos gs-reveal">
-          <p class="animated-testi-logos-title">TRUSTED BY MUNICIPALITIES AND ENTERPRISES WORLDWIDE</p>
+          <h3 class="animated-testi-logos-title">Trusted By</h3>
           <div class="animated-testi-logos-row">
-            <span>L&T Construction</span>
-            <span>Tata Projects</span>
-            <span>Jal Jeevan Mission</span>
-            <span>HMWSSB</span>
+            <span style="display:inline-flex; align-items:center; gap:12px; font-weight:600;">
+              <img src="img/kltif.png" alt="KL Tech Logo" style="height:48px; width:auto; object-fit:contain;">
+              KL Tech
+            </span>
           </div>
         </div>
       </div>
@@ -518,8 +559,8 @@
     <section id="faq" class="sec">
       <div class="wrap">
         <div class="showcase-split" style="align-items: start;">
-          <div class="showcase-split-text gs-reveal">
-            <p class="sec-eyebrow" style="color:var(--accent);">(04) Frequently Asked Questions</p>
+          <div class="showcase-split-text">
+            <p class="sec-eyebrow" style="color:var(--accent);">Frequently Asked Questions</p>
             <h2 class="sec-title" style="margin-bottom: 24px; margin-top: 0;">Deep-Tech Inquiries.</h2>
             <p class="body-text">Find answers to common questions about our IoT sensors, telemetry, and data analytics solutions.</p>
           </div>
@@ -592,7 +633,7 @@
     <!-- ═══ ABOUT & CORPORATE IDENTITY ═══ -->
     <section id="about" class="sec sec-alt">
       <div class="wrap">
-        <div class="sec-eyebrow gs-reveal">(05) About & Corporate Identity</div>
+        <div class="sec-eyebrow">About & Corporate Identity</div>
         <h2 class="sec-title gs-reveal" style="margin-bottom: 40px;">Our Journey & Entity.</h2>
         
         <div class="about-corp-container gs-reveal" style="display: flex; flex-direction: column; gap: 48px;">
@@ -603,15 +644,7 @@
             </p>
           </div>
 
-          <!-- Corp Details -->
-          <div class="corp-grid">
-            <div class="corp-card"><span class="corp-key">CIN</span><span class="corp-val">U26517AP2025PTC119413</span></div>
-            <div class="corp-card"><span class="corp-key">ROC</span><span class="corp-val">RoC-Vijayawada</span></div>
-            <div class="corp-card"><span class="corp-key">Incorporated</span><span class="corp-val">16 May 2025</span></div>
-            <div class="corp-card"><span class="corp-key">Classification</span><span class="corp-val">Private Limited (Non-Govt)</span></div>
-            <div class="corp-card"><span class="corp-key">Status</span><span class="corp-val corp-active">● Active</span></div>
-            <div class="corp-card"><span class="corp-key">Registered Office</span><span class="corp-val">Visakhapatnam, AP 530048</span></div>
-          </div>
+
           
           <!-- Leadership -->
           <div style="margin-top: 16px;">
@@ -630,11 +663,11 @@
     <!-- ═══ CONTACT ═══ -->
     <section id="contact" class="sec sec-alt">
       <div class="wrap">
-        <div class="sec-eyebrow gs-reveal">(06) Let's Talk</div>
+        <div class="sec-eyebrow">Let's Talk</div>
         <h2 class="cta-title gs-reveal">How Can We Assist You Today?</h2>
         <p class="cta-body gs-reveal">Have questions, need assistance, or want to provide feedback? We're here to help! Reach out to us, and our team will respond promptly to address your concerns.</p>
         <div class="contact-row">
-          <a href="mailto:info.skjipl@gmail.com?subject=Enquiry%20-%20SK%20Jalrakshak%20Innovations" class="cbox gs-reveal"><span class="cbox-icon">✉</span><span class="cbox-label">Email Us Directly</span><span class="cbox-data">info.skjipl@gmail.com</span></a>
+          <a href="mailto:sales@skjal.in?subject=Enquiry%20-%20SK%20Jalrakshak%20Innovations" class="cbox gs-reveal"><span class="cbox-icon">✉</span><span class="cbox-label">Email Us Directly</span><span class="cbox-data">sales@skjal.in</span></a>
           <a href="tel:+918978859246" class="cbox gs-reveal"><span class="cbox-icon">📞</span><span class="cbox-label">Phone Support</span><span class="cbox-data">+91 8978859246</span></a>
           <div class="cbox gs-reveal"><span class="cbox-icon">◉</span><span class="cbox-label">Headquarters</span><span class="cbox-data">Visakhapatnam, India</span></div>
         </div>
@@ -647,11 +680,20 @@
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-brand-col">
-          <div class="foot-brand">
-            <span class="logo-mark">SK</span> Jalrakshak
+          <img src="img/make-in-india.png" alt="Make in India" style="width: 100%; max-width: 310px; height: auto; object-fit: contain; margin-left: -12px; margin-top: -8px; margin-bottom: 20px;">
+          
+          <div style="font-size: 1.1rem; line-height: 1.6; color: var(--foot-fg);">
+            <div style="margin-bottom: 16px;">
+              <strong style="font-weight: 700;">SK Jalrakshak:</strong> <span style="font-weight: 400; opacity: 0.9;">Proudly Make in India</span>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.95rem;">
+              <div><strong style="font-weight: 700;">CIN:</strong> </div>
+              <div><strong style="font-weight: 700;">GSTIN:</strong> </div>
+              <div><strong style="font-weight: 700;">D-U-N-S:</strong> </div>
+              <div><strong style="font-weight: 700;">Startup India Recognized:</strong> </div>
+            </div>
           </div>
-          <p class="foot-tagline">Enterprise water intelligence — from sensor to insight. We design, develop, and deploy advanced IoT systems to safeguard public health and ensure sustainable water management.</p>
-          <a href="mailto:info.skjipl@gmail.com" class="foot-email-link">info.skjipl@gmail.com</a>
         </div>
         <div class="foot-col">
           <h4 class="foot-col-title">Platform</h4>

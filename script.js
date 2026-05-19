@@ -831,51 +831,81 @@ if (hero && fm1 && fm2) {
 // ═══════════════════════
 // 18. DYNAMIC ISLAND CONTROLLER
 // ═══════════════════════
-(function initDynamicIsland() {
-  const wrapper = document.getElementById('dynamicIsland');
-  const trigger = document.getElementById('diTrigger');
-  const label   = document.getElementById('diLabel');
-  const pctEl   = document.getElementById('diScrollPct');
-  const panel   = document.getElementById('diPanel');
-  if (!wrapper || !trigger) return;
+// ═══════════════════════
+// 18. ENTERPRISE NAVBAR
+// ═══════════════════════
+(function initEnterpriseNav() {
+  const nav = document.getElementById('mainNav');
+  const hamburger = document.getElementById('navHamburger');
+  const drawer = document.getElementById('navDrawer');
+  const drawerClose = document.getElementById('navDrawerClose');
+  const overlay = document.getElementById('navOverlay');
+  if (!nav) return;
 
-  // Toggle open/close
-  trigger.addEventListener('click', () => {
-    const isOpen = wrapper.classList.contains('is-open');
-    if (isOpen) {
-      wrapper.classList.remove('is-open');
-      label.textContent = 'Menu';
-    } else {
-      wrapper.classList.add('is-open');
-      label.textContent = 'Close';
+  // Scroll: add shadow + hide on scroll down, show on scroll up
+  let lastScroll = 0;
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const currentScroll = window.scrollY;
+        // Shadow
+        if (currentScroll > 10) {
+          nav.classList.add('nav-scrolled');
+        } else {
+          nav.classList.remove('nav-scrolled');
+        }
+        // Hide/show (only after scrolling past 200px)
+        if (currentScroll > 200) {
+          if (currentScroll > lastScroll + 5) {
+            nav.classList.add('nav-hidden');
+          } else if (currentScroll < lastScroll - 5) {
+            nav.classList.remove('nav-hidden');
+          }
+        } else {
+          nav.classList.remove('nav-hidden');
+        }
+        lastScroll = currentScroll;
+        ticking = false;
+      });
+      ticking = true;
     }
-  });
+  }, { passive: true });
 
-  // Close on panel link click + smooth scroll
-  panel.querySelectorAll('.di-panel-link').forEach(link => {
-    link.addEventListener('click', () => {
-      wrapper.classList.remove('is-open');
-      label.textContent = 'Menu';
+  // Mobile drawer
+  function openDrawer() {
+    drawer.classList.add('is-open');
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  if (hamburger) hamburger.addEventListener('click', openDrawer);
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+
+  // Drawer accordion
+  document.querySelectorAll('.nav-drawer-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const group = trigger.closest('.nav-drawer-group');
+      group.classList.toggle('is-open');
     });
   });
 
-  // Close on outside click
-  document.addEventListener('click', (e) => {
-    if (wrapper.classList.contains('is-open') && !wrapper.contains(e.target)) {
-      wrapper.classList.remove('is-open');
-      label.textContent = 'Menu';
-    }
+  // Close drawer on link click
+  document.querySelectorAll('.nav-drawer-sublink, .nav-drawer-link:not(.nav-drawer-trigger)').forEach(link => {
+    link.addEventListener('click', closeDrawer);
   });
 
-  // Scroll percentage
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
-    if (pctEl) pctEl.textContent = pct + '%';
-  }, { passive: true });
-
-  // Menu bar stays visible at all times — no auto-hide
+  // Close dropdown menus on link click (desktop)
+  document.querySelectorAll('.nav-dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+      // The dropdown closes naturally on mouseout
+    });
+  });
 })();
 
 // ═══════════════════════

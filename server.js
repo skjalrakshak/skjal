@@ -82,7 +82,7 @@ function securityHeaders(contentType) {
       "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://cdn.tailwindcss.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: https://randomuser.me https://images.unsplash.com https://res.cloudinary.com",
+      "img-src 'self' data: https://randomuser.me https://images.unsplash.com https://res.cloudinary.com https://i.pravatar.cc",
       "connect-src 'self'",
       "object-src 'none'",
       "base-uri 'self'",
