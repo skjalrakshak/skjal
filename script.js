@@ -225,49 +225,61 @@ document.querySelectorAll('.sec-title-lg').forEach(h => {
     scrollTrigger: { trigger:h, start:'top bottom', end:'bottom top', scrub:0.6 }
   });
 });
-
 // ═══════════════════════
 // 11. SMOOTH ANCHOR & HASH HANDLING
 // ═══════════════════════
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 document.querySelectorAll('a').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const href = this.getAttribute('href');
     if (!href) return;
 
-    let targetSelector = '';
-    if (href.startsWith('#')) {
-      targetSelector = href;
-    } else if (href.includes('#')) {
-      const parts = href.split('#');
-      const pagePath = parts[0];
-      const hash = '#' + parts[1];
+    try {
+      // Resolve clicked link's absolute URL automatically
+      const clickedUrl = new URL(this.href);
+      const currentUrl = new URL(window.location.href);
 
-      const currentPath = window.location.pathname;
-      const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+      // Verify same domain/origin
+      if (clickedUrl.origin === currentUrl.origin) {
+        
+        // Normalize pathnames by removing leading/trailing slashes and index.html
+        const normalizePath = (p) => {
+          let normalized = p.replace(/^\/|\/$/g, '');
+          if (normalized === 'index.html') {
+            normalized = '';
+          } else if (normalized.endsWith('/index.html')) {
+            normalized = normalized.substring(0, normalized.length - 10).replace(/^\/|\/$/g, '');
+          }
+          return normalized;
+        };
 
-      // If the link points to index.html#something and we are on the homepage, scroll locally
-      if (pagePath === '' || pagePath === 'index.html' && (currentPage === '' || currentPage === 'index.html' || currentPage === 'index.html#')) {
-        targetSelector = hash;
-      }
-    }
+        const pathMatches = normalizePath(clickedUrl.pathname) === normalizePath(currentUrl.pathname);
 
-    if (targetSelector) {
-      const target = document.querySelector(targetSelector);
-      if (target) {
-        e.preventDefault();
-        const overlay = document.querySelector('.page-transition-overlay');
+        // If pointing to a section on the current page, scroll smooth
+        if (pathMatches && clickedUrl.hash) {
+          const target = document.querySelector(clickedUrl.hash);
+          if (target) {
+            e.preventDefault();
+            const overlay = document.querySelector('.page-transition-overlay');
 
-        // Skip the overlay animation for #contact — scroll directly
-        if (overlay && targetSelector !== '#contact') {
-          gsap.timeline()
-            .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
-            .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
-            .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
-            .set(overlay, { y: '-100%' });
-        } else {
-          lenis.scrollTo(target, { offset: -80 });
+            // Skip overlay for #contact
+            if (overlay && clickedUrl.hash !== '#contact') {
+              gsap.timeline()
+                .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
+                .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
+                .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
+                .set(overlay, { y: '-100%' });
+            } else {
+              lenis.scrollTo(target, { offset: -80 });
+            }
+          }
         }
       }
+    } catch (err) {
+      console.warn('URL parsing failed for link:', err);
     }
   });
 });
@@ -278,13 +290,15 @@ window.addEventListener('load', () => {
     const target = document.querySelector(window.location.hash);
     if (target) {
       setTimeout(() => {
+        if (typeof ScrollTrigger !== 'undefined') {
+          ScrollTrigger.refresh();
+        }
         lenis.scrollTo(target, { offset: -80, immediate: true });
-      }, 300);
+      }, 350);
     }
   }
 });
 
-// ═══════════════════════
 // 12. FLOATING HERO MEDIA
 // ═══════════════════════
 const hero = document.getElementById('hero');
