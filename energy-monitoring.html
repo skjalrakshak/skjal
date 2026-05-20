@@ -487,9 +487,8 @@
     </div>
     <div class="nav-drawer-overlay" id="navOverlay"></div>
   </header>
-
   <!-- Hero -->
-  <section class="energy-split-hero">
+  <section id="hero" class="energy-split-hero">
     <div class="energy-hero-img-wrap gs-reveal">
       <img src="img/energy-monitoring.webp?v=2" alt="Energy Monitoring Panel" fetchpriority="high" decoding="sync">
     </div>
@@ -662,7 +661,7 @@
       <div class="foot-bottom">
         <span class="foot-copy">© 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.</span>
         <div class="foot-legal">
-          <a href="index.html#footer">Privacy Policy</a>
+          <a href="#footer">Privacy Policy</a>
           <a href="#hero" class="foot-back-top" aria-label="Back to top">↑ Top</a>
         </div>
       </div>
@@ -757,14 +756,18 @@
 
             const pathMatches = normalizePath(clickedUrl.pathname) === normalizePath(currentUrl.pathname);
 
-            if (pathMatches && clickedUrl.hash) {
-              const target = document.querySelector(clickedUrl.hash);
-              if (target) {
+            if (pathMatches) {
+              if (clickedUrl.hash) {
+                const target = document.querySelector(clickedUrl.hash);
+                if (target) {
+                  e.preventDefault();
+                  lenis.scrollTo(target, { offset: -80 });
+                }
+              } else {
                 e.preventDefault();
-                lenis.scrollTo(target, { offset: -80 });
+                lenis.scrollTo(0);
               }
             }
-          }
         } catch (err) {
           console.warn('URL parsing failed for link:', err);
         }

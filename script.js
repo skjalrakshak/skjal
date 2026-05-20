@@ -259,25 +259,30 @@ document.querySelectorAll('a').forEach(anchor => {
         const pathMatches = normalizePath(clickedUrl.pathname) === normalizePath(currentUrl.pathname);
 
         // If pointing to a section on the current page, scroll smooth
-        if (pathMatches && clickedUrl.hash) {
-          const target = document.querySelector(clickedUrl.hash);
-          if (target) {
-            e.preventDefault();
-            const overlay = document.querySelector('.page-transition-overlay');
+        if (pathMatches) {
+          if (clickedUrl.hash) {
+            const target = document.querySelector(clickedUrl.hash);
+            if (target) {
+              e.preventDefault();
+              const overlay = document.querySelector('.page-transition-overlay');
 
-            // Skip overlay for #contact
-            if (overlay && clickedUrl.hash !== '#contact') {
-              gsap.timeline()
-                .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
-                .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
-                .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
-                .set(overlay, { y: '-100%' });
-            } else {
-              lenis.scrollTo(target, { offset: -80 });
+              // Skip overlay for #contact
+              if (overlay && clickedUrl.hash !== '#contact') {
+                gsap.timeline()
+                  .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
+                  .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
+                  .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
+                  .set(overlay, { y: '-100%' });
+              } else {
+                lenis.scrollTo(target, { offset: -80 });
+              }
             }
+          } else {
+            // Same page navigation with no hash (e.g. logo or Home clicked) -> scroll to top
+            e.preventDefault();
+            lenis.scrollTo(0);
           }
         }
-      }
     } catch (err) {
       console.warn('URL parsing failed for link:', err);
     }
