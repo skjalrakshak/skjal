@@ -593,6 +593,51 @@
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
+
+    // Smooth scroll for same-page anchors
+    document.querySelectorAll('a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href) return;
+
+        let targetSelector = '';
+        if (href.startsWith('#')) {
+          targetSelector = href;
+        } else if (href.includes('#')) {
+          const parts = href.split('#');
+          const pagePath = parts[0];
+          const hash = '#' + parts[1];
+
+          const currentPath = window.location.pathname;
+          const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+
+          // If the link is for the current page, scroll locally
+          if (pagePath === currentPage) {
+            targetSelector = hash;
+          }
+        }
+
+        if (targetSelector) {
+          const target = document.querySelector(targetSelector);
+          if (target) {
+            e.preventDefault();
+            lenis.scrollTo(target, { offset: -80 });
+          }
+        }
+      });
+    });
+
+    // Scroll to hash on page load
+    window.addEventListener('load', () => {
+      if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+          setTimeout(() => {
+            lenis.scrollTo(target, { offset: -80, immediate: true });
+          }, 300);
+        }
+      }
+    });
   </script>
 </body>
 </html>

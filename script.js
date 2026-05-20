@@ -227,28 +227,61 @@ document.querySelectorAll('.sec-title-lg').forEach(h => {
 });
 
 // ═══════════════════════
-// 11. SMOOTH ANCHOR
+// 11. SMOOTH ANCHOR & HASH HANDLING
 // ═══════════════════════
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+document.querySelectorAll('a').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const overlay = document.querySelector('.page-transition-overlay');
-      const href = this.getAttribute('href');
+    const href = this.getAttribute('href');
+    if (!href) return;
 
-      // Skip the overlay animation for #contact — scroll directly
-      if(overlay && href !== '#contact') {
-        gsap.timeline()
-          .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
-          .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
-          .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
-          .set(overlay, { y: '-100%' });
-      } else {
-        lenis.scrollTo(target, { offset: -80 });
+    let targetSelector = '';
+    if (href.startsWith('#')) {
+      targetSelector = href;
+    } else if (href.includes('#')) {
+      const parts = href.split('#');
+      const pagePath = parts[0];
+      const hash = '#' + parts[1];
+
+      const currentPath = window.location.pathname;
+      const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+
+      // If the link points to index.html#something and we are on the homepage, scroll locally
+      if (pagePath === '' || pagePath === 'index.html' && (currentPage === '' || currentPage === 'index.html' || currentPage === 'index.html#')) {
+        targetSelector = hash;
+      }
+    }
+
+    if (targetSelector) {
+      const target = document.querySelector(targetSelector);
+      if (target) {
+        e.preventDefault();
+        const overlay = document.querySelector('.page-transition-overlay');
+
+        // Skip the overlay animation for #contact — scroll directly
+        if (overlay && targetSelector !== '#contact') {
+          gsap.timeline()
+            .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
+            .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
+            .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
+            .set(overlay, { y: '-100%' });
+        } else {
+          lenis.scrollTo(target, { offset: -80 });
+        }
       }
     }
   });
+});
+
+// Scroll to hash on page load
+window.addEventListener('load', () => {
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target) {
+      setTimeout(() => {
+        lenis.scrollTo(target, { offset: -80, immediate: true });
+      }, 300);
+    }
+  }
 });
 
 // ═══════════════════════
