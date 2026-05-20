@@ -283,6 +283,7 @@ document.querySelectorAll('a').forEach(anchor => {
             lenis.scrollTo(0);
           }
         }
+      }
     } catch (err) {
       console.warn('URL parsing failed for link:', err);
     }
