@@ -168,47 +168,6 @@ ScrollTrigger.create({
   });
 })();
 
-// ═══════════════════════
-// 14. NAVBAR HIDE ON SCROLL
-// ═══════════════════════
-const siteLogo = document.getElementById('navLogo');
-const topRightActions = document.getElementById('topRightActions');
-const navbar = document.getElementById('mainNav');
-
-let lastScrollY = window.scrollY;
-let scrollTicking = false;
-
-window.addEventListener('scroll', () => {
-  if (!scrollTicking) {
-    requestAnimationFrame(() => {
-      const currentScrollY = window.scrollY;
-      
-      // Hide permanently if past 100vh
-      if (currentScrollY > window.innerHeight) {
-        siteLogo?.classList.add('logo-hidden');
-        topRightActions?.classList.add('tr-hidden');
-        navbar?.classList.add('nav-hidden');
-      } else {
-        // Show when in the first 100vh
-        siteLogo?.classList.remove('logo-hidden');
-        topRightActions?.classList.remove('tr-hidden');
-        navbar?.classList.remove('nav-hidden');
-      }
-      
-      // Add scrolled background effect
-      if (currentScrollY > 50) {
-        navbar?.classList.add('scrolled');
-      } else {
-        navbar?.classList.remove('scrolled');
-      }
-      
-      lastScrollY = currentScrollY;
-      scrollTicking = false;
-    });
-    scrollTicking = true;
-  }
-}, { passive: true });
-
 const navPills = document.getElementById('navPills');
 const navCursor = document.getElementById('navCursor');
 const navLinks = document.querySelectorAll('.nav-link');
