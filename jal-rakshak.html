@@ -506,6 +506,37 @@
     // Restore theme
     const saved = localStorage.getItem('theme');
     if (saved) document.documentElement.setAttribute('data-theme', saved);
+
+    // Mobile Drawer Logic
+    const hamburger = document.getElementById('navHamburger');
+    const drawer = document.getElementById('navDrawer');
+    const drawerClose = document.getElementById('navDrawerClose');
+    const overlay = document.getElementById('navOverlay');
+
+    function openDrawer() {
+      if(drawer) drawer.classList.add('is-open');
+      if(overlay) overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      if(drawer) drawer.classList.remove('is-open');
+      if(overlay) overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    if (hamburger) hamburger.addEventListener('click', openDrawer);
+    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+
+    document.querySelectorAll('.nav-drawer-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const group = trigger.closest('.nav-drawer-group');
+        if(group) group.classList.toggle('is-open');
+      });
+    });
+
+    document.querySelectorAll('.nav-drawer-sublink, .nav-drawer-link:not(.nav-drawer-trigger)').forEach(link => {
+      link.addEventListener('click', closeDrawer);
+    });
   </script>
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
