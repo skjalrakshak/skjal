@@ -45,6 +45,19 @@ const buckets = new Map();
 const windowMs = 30_000;
 const maxRequests = 120;
 
+const fileCache = new Map();
+const isProduction = process.env.VERCEL || process.env.NODE_ENV === "production";
+
+function getFileContent(filePath) {
+  if (isProduction) {
+    if (!fileCache.has(filePath)) {
+      fileCache.set(filePath, fs.readFileSync(filePath));
+    }
+    return fileCache.get(filePath);
+  }
+  return fs.readFileSync(filePath);
+}
+
 function cleanBuckets(now) {
   for (const [key, bucket] of buckets) {
     if (now - bucket.started > windowMs * 2) buckets.delete(key);
@@ -95,10 +108,19 @@ function securityHeaders(contentType) {
   };
 }
 
-function send(res, status, body, headers = {}) {
+function send(req, res, status, body, headers = {}) {
   const payload = Buffer.isBuffer(body) ? body : Buffer.from(body);
   const etag = `"${crypto.createHash("sha1").update(payload).digest("hex")}"`;
-  const acceptsGzip = /\bgzip\b/.test(headers.acceptEncoding || "");
+
+  if (req && req.headers && req.headers["if-none-match"] === etag) {
+    const responseHeaders = { ...headers, ETag: etag };
+    delete responseHeaders.acceptEncoding;
+    res.writeHead(304, responseHeaders);
+    res.end();
+    return;
+  }
+
+  const acceptsGzip = /\bgzip\b/.test(headers.acceptEncoding || (req && req.headers && req.headers["accept-encoding"]) || "");
   const responseHeaders = { ...headers, ETag: etag };
   delete responseHeaders.acceptEncoding;
 
@@ -143,17 +165,17 @@ function resolveFile(urlPath) {
 
 function serve404(req, res) {
   const file = path.join(root, "404.html");
-  const body = fs.existsSync(file) ? fs.readFileSync(file) : "404";
-  send(res, 404, body, {
+  const body = fs.existsSync(file) ? getFileContent(file) : "404";
+  send(req, res, 404, body, {
     ...securityHeaders("text/html; charset=utf-8"),
-    "Cache-Control": "no-store",
+    "Cache-Control": "public, max-age=0, must-revalidate",
     acceptEncoding: req.headers["accept-encoding"] || ""
   });
 }
 
 function handler(req, res) {
   if (!rateLimit(req)) {
-    send(res, 429, "Too many requests. Please slow down.", {
+    send(req, res, 429, "Too many requests. Please slow down.", {
       ...securityHeaders("text/plain; charset=utf-8"),
       "Retry-After": "30"
     });
@@ -161,7 +183,7 @@ function handler(req, res) {
   }
 
   if (!["GET", "HEAD"].includes(req.method)) {
-    send(res, 405, "Method not allowed", {
+    send(req, res, 405, "Method not allowed", {
       ...securityHeaders("text/plain; charset=utf-8"),
       Allow: "GET, HEAD"
     });
@@ -169,7 +191,7 @@ function handler(req, res) {
   }
 
   if ((req.url || "").length > 2048) {
-    send(res, 414, "URI too long", securityHeaders("text/plain; charset=utf-8"));
+    send(req, res, 414, "URI too long", securityHeaders("text/plain; charset=utf-8"));
     return;
   }
 
@@ -196,7 +218,7 @@ function handler(req, res) {
   }
 
   if (lowerPath === "/health") {
-    send(res, 200, JSON.stringify({ ok: true }), {
+    send(req, res, 200, JSON.stringify({ ok: true }), {
       ...securityHeaders("application/json; charset=utf-8"),
       "Cache-Control": "no-store"
     });
@@ -211,12 +233,14 @@ function handler(req, res) {
     }
 
     const ext = path.extname(file).toLowerCase();
-    const body = fs.readFileSync(file);
+    const body = getFileContent(file);
     const isStaticAsset = /\.(css|js|png|jpg|jpeg|webp|svg|ico)$/.test(ext);
 
     const responseHeaders = {
       ...securityHeaders(mimeTypes[ext] || "application/octet-stream"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Cache-Control": isStaticAsset 
+        ? "public, max-age=31536000, immutable" 
+        : "public, max-age=0, must-revalidate",
       acceptEncoding: req.headers["accept-encoding"] || ""
     };
 
@@ -225,10 +249,10 @@ function handler(req, res) {
       responseHeaders["Content-Disposition"] = `attachment; filename="${path.basename(file)}"`;
     }
 
-    send(res, req.method === "HEAD" ? 204 : 200, req.method === "HEAD" ? "" : body, responseHeaders);
+    send(req, res, req.method === "HEAD" ? 204 : 200, req.method === "HEAD" ? "" : body, responseHeaders);
   } catch (err) {
     console.error("Error serving request:", err);
-    send(res, 500, "Internal Server Error", {
+    send(req, res, 500, "Internal Server Error", {
       ...securityHeaders("text/plain; charset=utf-8"),
       "Cache-Control": "no-store"
     });
