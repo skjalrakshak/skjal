@@ -53,7 +53,7 @@ function cleanBuckets(now) {
 
 function rateLimit(req) {
   const now = Date.now();
-  const ip = req.headers["x-forwarded-for"]?.split(",")[0].trim() || req.socket.remoteAddress || "local";
+  const ip = req.headers["cf-connecting-ip"] || req.headers["x-real-ip"] || req.headers["x-forwarded-for"]?.split(",")[0].trim() || req.socket.remoteAddress || "local";
   const bucket = buckets.get(ip) || { started: now, count: 0 };
 
   if (now - bucket.started > windowMs) {
@@ -73,7 +73,9 @@ function securityHeaders(contentType) {
     "Content-Type": contentType,
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
     "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
     "Cross-Origin-Opener-Policy": "same-origin",
     "Cross-Origin-Resource-Policy": "same-origin",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
@@ -87,7 +89,8 @@ function securityHeaders(contentType) {
       "object-src 'none'",
       "base-uri 'self'",
       "frame-ancestors 'none'",
-      "form-action 'self' mailto:"
+      "form-action 'self' mailto:",
+      "upgrade-insecure-requests"
     ].join("; ")
   };
 }
@@ -128,7 +131,8 @@ function resolveFile(urlPath) {
   const normalized = path.normalize(cleaned).replace(/^(\.\.[/\\])+/, "").replace(/^[/\\]+/, "");
   let absolute = path.join(root, normalized);
 
-  if (!absolute.startsWith(root)) return null;
+  const safeRoot = root.endsWith(path.sep) ? root : root + path.sep;
+  if (absolute !== root && !absolute.startsWith(safeRoot)) return null;
 
   if (!fs.existsSync(absolute) && fs.existsSync(absolute + ".html")) {
     return absolute + ".html";
@@ -199,28 +203,36 @@ function handler(req, res) {
     return;
   }
 
-  const file = resolveFile(requestUrl.pathname);
-  if (!file || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
-    serve404(req, res);
-    return;
+  try {
+    const file = resolveFile(requestUrl.pathname);
+    if (!file || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+      serve404(req, res);
+      return;
+    }
+
+    const ext = path.extname(file).toLowerCase();
+    const body = fs.readFileSync(file);
+    const isStaticAsset = /\.(css|js|png|jpg|jpeg|webp|svg|ico)$/.test(ext);
+
+    const responseHeaders = {
+      ...securityHeaders(mimeTypes[ext] || "application/octet-stream"),
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      acceptEncoding: req.headers["accept-encoding"] || ""
+    };
+
+    // Force download for APK files
+    if (ext === ".apk") {
+      responseHeaders["Content-Disposition"] = `attachment; filename="${path.basename(file)}"`;
+    }
+
+    send(res, req.method === "HEAD" ? 204 : 200, req.method === "HEAD" ? "" : body, responseHeaders);
+  } catch (err) {
+    console.error("Error serving request:", err);
+    send(res, 500, "Internal Server Error", {
+      ...securityHeaders("text/plain; charset=utf-8"),
+      "Cache-Control": "no-store"
+    });
   }
-
-  const ext = path.extname(file).toLowerCase();
-  const body = fs.readFileSync(file);
-  const isStaticAsset = /\.(css|js|png|jpg|jpeg|webp|svg|ico)$/.test(ext);
-
-  const responseHeaders = {
-    ...securityHeaders(mimeTypes[ext] || "application/octet-stream"),
-    "Cache-Control": "no-cache, no-store, must-revalidate",
-    acceptEncoding: req.headers["accept-encoding"] || ""
-  };
-
-  // Force download for APK files
-  if (ext === ".apk") {
-    responseHeaders["Content-Disposition"] = `attachment; filename="${path.basename(file)}"`;
-  }
-
-  send(res, req.method === "HEAD" ? 204 : 200, req.method === "HEAD" ? "" : body, responseHeaders);
 }
 
 // ── Vercel Serverless Export ──
