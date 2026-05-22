@@ -182,7 +182,7 @@ export function AnimatedTestimonials({
                   <div className="relative mb-10 flex-1">
                     <Quote className="absolute -top-4 -left-4 h-12 w-12 text-white/10 rotate-180 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-12" />
                     <p className="relative z-10 text-[clamp(1.1rem,1.5vw,1.4rem)] font-medium leading-relaxed text-white/90">
-                      "{testimonial.content}"
+                      &quot;{testimonial.content}&quot;
                     </p>
                   </div>
 

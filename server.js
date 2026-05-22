@@ -37,6 +37,7 @@ const mimeTypes = {
   ".webp": "image/webp",
   ".svg": "image/svg+xml",
   ".ico": "image/x-icon",
+  ".mp4": "video/mp4",
   ".txt": "text/plain; charset=utf-8",
   ".apk": "application/vnd.android.package-archive"
 };
@@ -108,7 +109,7 @@ function securityHeaders(contentType) {
   };
 }
 
-function send(req, res, status, body, headers = {}) {
+function send(req, res, status, body, headers = {}, headOnly = false) {
   const payload = Buffer.isBuffer(body) ? body : Buffer.from(body);
   const etag = `"${crypto.createHash("sha1").update(payload).digest("hex")}"`;
 
@@ -131,7 +132,7 @@ function send(req, res, status, body, headers = {}) {
       "Content-Encoding": "gzip",
       "Content-Length": compressed.length
     });
-    res.end(compressed);
+    res.end(headOnly ? undefined : compressed);
     return;
   }
 
@@ -139,11 +140,17 @@ function send(req, res, status, body, headers = {}) {
     ...responseHeaders,
     "Content-Length": payload.length
   });
-  res.end(payload);
+  res.end(headOnly ? undefined : payload);
 }
 
 function resolveFile(urlPath) {
-  let pathname = decodeURIComponent(urlPath.split("?")[0]);
+  let pathname;
+  try {
+    pathname = decodeURIComponent(urlPath.split("?")[0]);
+  } catch (error) {
+    error.statusCode = 400;
+    throw error;
+  }
   
   if (pathname !== "/" && pathname.endsWith("/")) {
     pathname = pathname.slice(0, -1);
@@ -234,11 +241,11 @@ function handler(req, res) {
 
     const ext = path.extname(file).toLowerCase();
     const body = getFileContent(file);
-    const isStaticAsset = /\.(css|js|png|jpg|jpeg|webp|svg|ico)$/.test(ext);
+    const isImmutableAsset = /\.(png|jpg|jpeg|webp|svg|ico|mp4)$/.test(ext);
 
     const responseHeaders = {
       ...securityHeaders(mimeTypes[ext] || "application/octet-stream"),
-      "Cache-Control": isStaticAsset 
+      "Cache-Control": isImmutableAsset
         ? "public, max-age=31536000, immutable" 
         : "public, max-age=0, must-revalidate",
       acceptEncoding: req.headers["accept-encoding"] || ""
@@ -249,10 +256,13 @@ function handler(req, res) {
       responseHeaders["Content-Disposition"] = `attachment; filename="${path.basename(file)}"`;
     }
 
-    send(req, res, req.method === "HEAD" ? 204 : 200, req.method === "HEAD" ? "" : body, responseHeaders);
+    send(req, res, 200, body, responseHeaders, req.method === "HEAD");
   } catch (err) {
-    console.error("Error serving request:", err);
-    send(req, res, 500, "Internal Server Error", {
+    const isBadRequest = err && err.statusCode === 400;
+    if (!isBadRequest) {
+      console.error("Error serving request:", err);
+    }
+    send(req, res, isBadRequest ? 400 : 500, isBadRequest ? "Bad request" : "Internal Server Error", {
       ...securityHeaders("text/plain; charset=utf-8"),
       "Cache-Control": "no-store"
     });

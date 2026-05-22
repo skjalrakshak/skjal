@@ -672,10 +672,11 @@
       const html = document.documentElement;
       const current = html.getAttribute('data-theme');
       html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-      localStorage.setItem('skj-theme', current === 'dark' ? 'light' : 'dark');
+      try { localStorage.setItem('skj-theme', current === 'dark' ? 'light' : 'dark'); } catch (err) {}
     });
     // Restore theme
-    const saved = localStorage.getItem('skj-theme');
+    let saved = null;
+    try { saved = localStorage.getItem('skj-theme'); } catch (err) {}
     if (saved) document.documentElement.setAttribute('data-theme', saved);
 
     // Mobile Drawer Logic

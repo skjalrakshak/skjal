@@ -6,6 +6,8 @@
 (function() {
   'use strict';
 
+  if (typeof window.THREE === 'undefined') return;
+
   // ── GPU TIER DETECTION ──
   const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
   const cores = navigator.hardwareConcurrency || 4;

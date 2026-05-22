@@ -34,81 +34,76 @@ const ScrollExpandMedia = ({
 }: ScrollExpandMediaProps) => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
-  const [mediaFullyExpanded, setMediaFullyExpanded] = useState<boolean>(false);
-  const [touchStartY, setTouchStartY] = useState<number>(0);
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const mediaFullyExpandedRef = useRef(false);
+  const touchStartYRef = useRef<number | null>(null);
 
   useEffect(() => {
-    setScrollProgress(0);
-    setShowContent(false);
-    setMediaFullyExpanded(false);
+    const frame = requestAnimationFrame(() => {
+      mediaFullyExpandedRef.current = false;
+      touchStartYRef.current = null;
+      setScrollProgress(0);
+      setShowContent(false);
+    });
+
+    return () => cancelAnimationFrame(frame);
   }, [mediaType]);
 
   useEffect(() => {
-    const handleWheel = (e: globalThis.WheelEvent) => {
-      if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
-        setMediaFullyExpanded(false);
-        e.preventDefault();
-      } else if (!mediaFullyExpanded) {
-        e.preventDefault();
-        const scrollDelta = e.deltaY * 0.0009;
-        const newProgress = Math.min(
-          Math.max(scrollProgress + scrollDelta, 0),
-          1
-        );
-        setScrollProgress(newProgress);
+    const updateProgress = (delta: number): void => {
+      setScrollProgress((current) => {
+        const newProgress = Math.min(Math.max(current + delta, 0), 1);
 
         if (newProgress >= 1) {
-          setMediaFullyExpanded(true);
+          mediaFullyExpandedRef.current = true;
           setShowContent(true);
         } else if (newProgress < 0.75) {
           setShowContent(false);
         }
+
+        return newProgress;
+      });
+    };
+
+    const handleWheel = (e: globalThis.WheelEvent) => {
+      if (mediaFullyExpandedRef.current && e.deltaY < 0 && window.scrollY <= 5) {
+        mediaFullyExpandedRef.current = false;
+        e.preventDefault();
+      } else if (!mediaFullyExpandedRef.current) {
+        e.preventDefault();
+        updateProgress(e.deltaY * 0.0009);
       }
     };
 
     const handleTouchStart = (e: globalThis.TouchEvent) => {
-      setTouchStartY(e.touches[0].clientY);
+      touchStartYRef.current = e.touches[0]?.clientY ?? null;
     };
 
     const handleTouchMove = (e: globalThis.TouchEvent) => {
-      if (!touchStartY) return;
+      if (touchStartYRef.current === null) return;
 
       const touchY = e.touches[0].clientY;
-      const deltaY = touchStartY - touchY;
+      const deltaY = touchStartYRef.current - touchY;
 
-      if (mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
-        setMediaFullyExpanded(false);
+      if (mediaFullyExpandedRef.current && deltaY < -20 && window.scrollY <= 5) {
+        mediaFullyExpandedRef.current = false;
         e.preventDefault();
-      } else if (!mediaFullyExpanded) {
+      } else if (!mediaFullyExpandedRef.current) {
         e.preventDefault();
         const scrollFactor = deltaY < 0 ? 0.008 : 0.005;
-        const scrollDelta = deltaY * scrollFactor;
-        const newProgress = Math.min(
-          Math.max(scrollProgress + scrollDelta, 0),
-          1
-        );
-        setScrollProgress(newProgress);
-
-        if (newProgress >= 1) {
-          setMediaFullyExpanded(true);
-          setShowContent(true);
-        } else if (newProgress < 0.75) {
-          setShowContent(false);
-        }
-
-        setTouchStartY(touchY);
+        updateProgress(deltaY * scrollFactor);
+        touchStartYRef.current = touchY;
       }
     };
 
     const handleTouchEnd = (): void => {
-      setTouchStartY(0);
+      touchStartYRef.current = null;
     };
 
     const handleScroll = (): void => {
-      if (!mediaFullyExpanded) {
+      if (!mediaFullyExpandedRef.current) {
         window.scrollTo(0, 0);
       }
     };
@@ -126,7 +121,7 @@ const ScrollExpandMedia = ({
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [scrollProgress, mediaFullyExpanded, touchStartY]);
+  }, []);
 
   useEffect(() => {
     const checkIfMobile = (): void => {

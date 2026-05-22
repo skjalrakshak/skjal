@@ -1,20 +1,67 @@
 /* ═══ SK JALRAKSHAK — ANIMATION ENGINE v6 ═══ */
 
 // ── LENIS ──
-const lenis = new Lenis({
+const hasGsap = Boolean(window.gsap);
+const hasScrollTrigger = Boolean(window.ScrollTrigger);
+const hasLenis = Boolean(window.Lenis);
+
+const noopTween = {
+  to() { return this; },
+  call(fn) { if (typeof fn === 'function') fn(); return this; },
+  set() { return this; }
+};
+
+const gsap = window.gsap || {
+  registerPlugin() {},
+  timeline() { return Object.create(noopTween); },
+  to() { return {}; },
+  from() { return {}; },
+  fromTo() { return {}; },
+  set() {},
+  ticker: { add() {}, lagSmoothing() {} }
+};
+
+const ScrollTrigger = window.ScrollTrigger || {
+  update() {},
+  refresh() {},
+  create() { return { kill() {} }; }
+};
+
+const lenis = hasLenis ? new window.Lenis({
   duration: 1.3,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smooth: true, mouseMultiplier: 0.7,
   smoothTouch: false, touchMultiplier: 2,
-});
-// Let GSAP Ticker handle Lenis for perfect sync and performance
-// function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-// requestAnimationFrame(raf);
+}) : {
+  on() {},
+  raf() {},
+  scrollTo(target, options = {}) {
+    const offset = options.offset || 0;
+    const behavior = options.immediate ? 'auto' : 'smooth';
+    if (typeof target === 'number') {
+      window.scrollTo({ top: target, behavior });
+      return;
+    }
+    if (target && typeof target.getBoundingClientRect === 'function') {
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY + offset, behavior });
+    }
+  }
+};
 
-gsap.registerPlugin(ScrollTrigger);
+if (hasGsap && hasScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);
+}
 lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time) => lenis.raf(time * 1000));
-gsap.ticker.lagSmoothing(0);
+if (hasGsap) {
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+} else if (hasLenis) {
+  const raf = (time) => {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  };
+  requestAnimationFrame(raf);
+}
 
 // ═══════════════════════
 // 1. CINEMATIC THEME TOGGLE (Dual-Blade Warp Shutter)
@@ -29,12 +76,21 @@ function getTheme() {
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_BG[t]);
-  localStorage.setItem('skj-theme', t);
+  try {
+    localStorage.setItem('skj-theme', t);
+  } catch (err) {
+    /* Theme persistence is optional when storage is blocked. */
+  }
 }
 
 // Restore saved theme before paint
 (function() {
-  const saved = localStorage.getItem('skj-theme');
+  let saved = null;
+  try {
+    saved = localStorage.getItem('skj-theme');
+  } catch (err) {
+    saved = null;
+  }
   if (saved) setTheme(saved);
 })();
 
@@ -196,7 +252,7 @@ const progressBar = document.getElementById('scrollProgress');
 if (progressBar) {
   window.addEventListener('scroll', () => {
     const h = document.documentElement.scrollHeight - window.innerHeight;
-    progressBar.style.width = (window.scrollY / h * 100) + '%';
+    progressBar.style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0%';
   }, { passive: true });
 }
 
@@ -780,6 +836,13 @@ document.querySelectorAll('.stat-val').forEach(stat => {
 
   let activeIndex = 0;
   let autoRotate;
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
 
   // Render cards
   testimonials.forEach((t, i) => {
@@ -787,6 +850,7 @@ document.querySelectorAll('.stat-val').forEach(stat => {
     const card = document.createElement('div');
     card.className = 'animated-testi-card';
     if (i === 0) card.classList.add('active');
+    const authorMeta = t.company ? `${t.role}, ${t.company}` : t.role;
     
     let stars = '';
     for(let j=0; j<5; j++) {
@@ -795,12 +859,12 @@ document.querySelectorAll('.stat-val').forEach(stat => {
 
     card.innerHTML = `
       <div class="testi-stars">${stars}</div>
-      <blockquote class="testi-quote">"${t.content}"</blockquote>
+      <blockquote class="testi-quote">"${escapeHtml(t.content)}"</blockquote>
       <div class="testi-author">
-        <img src="${t.avatar}" alt="${t.name}">
+        <img src="${escapeHtml(t.avatar)}" alt="${escapeHtml(t.name)}">
         <div class="testi-author-info">
-          <strong>${t.name}</strong>
-          <span>${t.role}, ${t.company}</span>
+          <strong>${escapeHtml(t.name)}</strong>
+          <span>${escapeHtml(authorMeta)}</span>
         </div>
       </div>
     `;

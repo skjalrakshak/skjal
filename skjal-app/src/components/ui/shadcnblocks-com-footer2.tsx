@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface MenuItem {
   title: string;
   links: {
@@ -82,11 +84,14 @@ const Footer2 = ({
             <div className="col-span-2 mb-8 lg:mb-0">
               <div className="flex items-center gap-2 lg:justify-start">
                 <a href={logo.url}>
-                  <img
+                  <Image
                     src={logo.src}
                     alt={logo.alt}
                     title={logo.title}
+                    width={160}
+                    height={40}
                     className="h-10"
+                    unoptimized={logo.src.endsWith(".svg")}
                   />
                 </a>
                 <p className="text-xl font-semibold">{logo.title}</p>
