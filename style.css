@@ -4324,4 +4324,19 @@ h1, h2, h3, .sys-name, .flow-heading {
   }
 }
 
+/* Marquee Mobile Optimizations */
+@media (max-width: 768px) {
+  .marquee-section {
+    height: 300px; /* Give it a bit more vertical breathing room on mobile */
+  }
+  .marquee-item {
+    width: 90vw;
+    padding: 6px 12px;
+    margin: 0 auto 10px auto;
+  }
+  .marquee-text {
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+}
 
