@@ -1,27 +1,94 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "builds": [
+  "trailingSlash": false,
+  "headers": [
     {
-      "src": "server.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "index.html",
-          "404.html",
-          "jal-rakshak.html",
-          "shield.html",
-          "energy-monitoring.html",
-          "style.css",
-          "script.js",
-          "webgl.js",
-          "img/**",
-          "assets/**"
-        ]
-      }
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://randomuser.me https://images.unsplash.com https://res.cloudinary.com https://i.pravatar.cc; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' mailto:; upgrade-insecure-requests"
+        }
+      ]
+    },
+    {
+      "source": "/:path*\\.(png|jpg|jpeg|webp|svg|gif|ico|mp4)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/:filename.apk",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=:filename.apk"
+        }
+      ]
+    },
+    {
+      "source": "/:path*/:filename.apk",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=:filename.apk"
+        }
+      ]
     }
   ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/server.js" }
+  "redirects": [
+    { "source": "/home", "destination": "/#home", "permanent": true },
+    { "source": "/about", "destination": "/#about", "permanent": true },
+    { "source": "/systems", "destination": "/#systems", "permanent": true },
+    { "source": "/services", "destination": "/#systems", "permanent": true },
+    { "source": "/technology", "destination": "/#architecture", "permanent": true },
+    { "source": "/tech", "destination": "/#architecture", "permanent": true },
+    { "source": "/platform", "destination": "/#architecture", "permanent": true },
+    { "source": "/architecture", "destination": "/#architecture", "permanent": true },
+    { "source": "/work", "destination": "/#systems", "permanent": true },
+    { "source": "/use-cases", "destination": "/#story", "permanent": true },
+    { "source": "/field-story", "destination": "/#story", "permanent": true },
+    { "source": "/company", "destination": "/#contact", "permanent": true },
+    { "source": "/contact", "destination": "/#contact", "permanent": true },
+    { "source": "/pricing", "destination": "/#systems", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/health", "destination": "/health.json" }
   ]
 }

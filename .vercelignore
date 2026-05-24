@@ -1,0 +1,14 @@
+node_modules
+dist
+scratch_pdf
+skjal-app
+skjal-next
+verification
+*.log
+server.log
+server.err.log
+.env
+.env.*
+.sixth
+extract.py
+pdf_text.txt
