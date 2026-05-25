@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S.H.I.E.L.D. — Smart Health Intelligence for Driving | SK Jalrakshak Innovations</title>
-  <meta name="description" content="S.H.I.E.L.D.: AI-driven health and speed intelligence system for drivers — monitors vibration exposure and provides real-time personalized safety guidance. Patent Granted.">
+  <title>S.H.I.E.L.D. — AI Driver Safety System | Patent Granted</title>
+  <meta name="description" content="S.H.I.E.L.D. monitors whole-body vibration & driver fatigue in real time. Patent-granted AI safety system by SK Jalrakshak, incubated at AIC IIT Delhi.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -84,6 +84,13 @@
       transform: translateX(-4px);
     }
     .product-section {
+      padding: 55px 0;
+    }
+    /* Collapse padding of adjacent product sections */
+    .product-section + .product-section:not([style*="background"]) {
+      padding-top: 0;
+    }
+    .product-section-old {
       padding: 80px 0;
     }
     .product-features-grid {
@@ -93,6 +100,8 @@
       margin-top: 40px;
     }
     @media (max-width: 900px) {
+      .product-section { padding: 35px 0; }
+      .product-cta-section { padding: 35px 0; }
       .product-features-grid { grid-template-columns: 1fr; }
       .product-hero { padding: 100px 20px 60px; min-height: 50vh; }
     }
@@ -270,6 +279,11 @@
     .check { color: #22c55e; font-weight: 700; }
     .arrow { color: #FF5500; font-weight: 700; }
     .product-cta-section {
+      padding: 55px 0;
+      background: var(--bg-alt);
+      text-align: center;
+    }
+    .product-cta-section-old {
       padding: 80px 0;
       background: var(--bg-alt);
       text-align: center;

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jal Rakshak — Smart Water Intelligence | SK Jalrakshak Innovations</title>
-  <meta name="description" content="Jal Rakshak: Advanced IoT-enabled water quality monitoring systems with cloud analytics, predictive AI, and real-time dashboards by SK Jalrakshak Innovations.">
+  <title>Jal Rakshak — IoT Water Quality Monitoring | Vizag</title>
+  <meta name="description" content="Jal Rakshak: real-time IoT water quality monitoring with solar-powered buoys, 4G edge telemetry & AI alerts. Made in Visakhapatnam by SK Jalrakshak.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -84,6 +84,13 @@
       transform: translateX(-4px);
     }
     .product-section {
+      padding: 55px 0;
+    }
+    /* Collapse padding of adjacent product sections */
+    .product-section + .product-section:not([style*="background"]) {
+      padding-top: 0;
+    }
+    .product-section-old {
       padding: 80px 0;
     }
     .product-features-grid {
@@ -93,6 +100,8 @@
       margin-top: 40px;
     }
     @media (max-width: 900px) {
+      .product-section { padding: 35px 0; }
+      .product-cta-section { padding: 35px 0; }
       .product-features-grid { grid-template-columns: 1fr; }
       .product-hero { padding: 100px 20px 60px; min-height: 50vh; }
     }
@@ -194,6 +203,11 @@
       flex-shrink: 0;
     }
     .product-cta-section {
+      padding: 55px 0;
+      background: var(--bg-alt);
+      text-align: center;
+    }
+    .product-cta-section-old {
       padding: 80px 0;
       background: var(--bg-alt);
       text-align: center;
