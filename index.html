@@ -26,6 +26,24 @@
 </head>
 <body>
 
+  <!-- ═══ PRELOADER (Intro Scene) ═══ -->
+  <div id="preloader">
+    <div class="pre-inner">
+      <div class="pre-logo-wrap">
+        <div class="pre-logo-mark">SK</div>
+        <div class="pre-name-chars" id="preChars">
+          <span class="pre-char">J</span><span class="pre-char">a</span><span class="pre-char">l</span><span class="pre-char">r</span><span class="pre-char">a</span><span class="pre-char">k</span><span class="pre-char">s</span><span class="pre-char">h</span><span class="pre-char">a</span><span class="pre-char">k</span>
+        </div>
+      </div>
+      <div class="pre-tagline" id="preTagline">Protecting Every Drop</div>
+      <div class="pre-progress-line" id="preProgressLine"></div>
+      <div class="pre-bottom">
+        <div class="pre-sub">Smart Water Intelligence</div>
+        <div class="pre-counter" id="preCounter">0%</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══ WEBGL CANVAS ═══ -->
   <canvas id="webgl" aria-hidden="true"></canvas>
 
@@ -664,7 +682,6 @@
           <div class="animated-testi-logos-row">
             <span style="display:inline-flex; align-items:center; gap:12px; font-weight:600;">
               <img src="img/kltif.png" alt="KL Tech Logo" style="height:48px; width:auto; object-fit:contain;">
-              KL Tech
             </span>
           </div>
         </div>
@@ -859,5 +876,28 @@
       </div>
     </div>
   </footer>
+
+  <!-- Failsafe: if preloader is still visible after 6 seconds, fade it out and reveal hero content -->
+  <script>
+    setTimeout(function() {
+      var pre = document.getElementById('preloader');
+      if (pre && window.getComputedStyle(pre).display !== 'none') {
+        pre.style.transition = 'opacity 0.8s ease';
+        pre.style.opacity = '0';
+        pre.style.pointerEvents = 'none';
+        setTimeout(function() { pre.style.display = 'none'; }, 800);
+        // Reset hero styles in case they remain hidden
+        var heroLines = document.querySelectorAll('.hero-line');
+        heroLines.forEach(function(line) { line.style.transform = 'translateY(0)'; });
+        var heroBottom = document.querySelector('.hero-bottom');
+        if (heroBottom) heroBottom.style.opacity = '1';
+        // Unlock scroll
+        if (typeof lenis !== 'undefined' && typeof lenis.start === 'function') {
+          lenis.start();
+        }
+      }
+    }, 6000);
+  </script>
+
 </body>
 </html>

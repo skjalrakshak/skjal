@@ -189,95 +189,107 @@ document.getElementById('themeToggle')?.addEventListener('click', (e) => {
 // ═══════════════════════
 // 2. CINEMATIC PRELOADER (Intro Scene + Intro Reveal)
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-if (typeof lenis.stop === 'function') lenis.stop();
+const preloaderEl = document.getElementById('preloader');
 
-const preloaderTL = gsap.timeline({
-  onComplete: () => {
-    if (typeof lenis.start === 'function') lenis.start();
-    const pre = document.getElementById('preloader');
-    if (pre) {
-      pre.style.pointerEvents = 'none';
-      requestAnimationFrame(() => { pre.style.display = 'none'; });
+if (preloaderEl) {
+  if (typeof lenis.stop === 'function') lenis.stop();
+
+  const preloaderTL = gsap.timeline({
+    onComplete: () => {
+      if (typeof lenis.start === 'function') lenis.start();
+      preloaderEl.style.pointerEvents = 'none';
+      requestAnimationFrame(() => { preloaderEl.style.display = 'none'; });
+      ScrollTrigger.refresh();
     }
-    ScrollTrigger.refresh();
-  }
-});
+  });
 
-const counterObj = { val: 0 };
-const counterEl = document.getElementById('preCounter');
-const progressLine = document.querySelector('#preProgressLine');
+  const counterObj = { val: 0 };
+  const counterEl = document.getElementById('preCounter');
+  const progressLine = document.querySelector('#preProgressLine');
 
-preloaderTL
-  .to('.pre-logo-mark', {
-    opacity: 1, scale: 1, rotate: 0,
-    duration: 1.4,
-    ease: 'elastic.out(1.1, 0.45)',
-  }, 0.2)
-  .to('.pre-progress-line', {
-    opacity: 1, duration: 0.6, ease: 'power2.out',
-  }, 0.5)
-  .to('.pre-bottom', {
-    opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-  }, 0.6)
-  .to(counterObj, {
-    val: 100, duration: 3.0,
-    ease: 'power2.inOut',
-    onUpdate: () => {
-      const pct = Math.floor(counterObj.val);
-      if (counterEl) counterEl.innerText = pct + '%';
-      if (progressLine) progressLine.style.setProperty('--pre-fill', pct + '%');
-    }
-  }, 0.5)
-  .to('.pre-char', {
-    opacity: 1, y: '0%', scale: 1, rotateX: 0,
-    duration: 1.4,
-    stagger: { each: 0.045, from: 'start' },
-    ease: 'elastic.out(1, 0.35)',
-  }, 0.7)
-  .to('#preTagline', {
-    opacity: 0.5, y: 0,
-    duration: 1.0, ease: 'power2.out',
-  }, 1.4)
-  .to('.pre-char', {
-    opacity: 0, y: '-130%', scale: 1.15,
-    filter: 'blur(6px)',
-    duration: 0.5,
-    stagger: { each: 0.025, from: 'end' },
-    ease: 'power4.in',
-  }, 3.6)
-  .to('#preTagline', {
-    opacity: 0, y: -24, filter: 'blur(4px)',
-    duration: 0.4, ease: 'power4.in',
-  }, 3.6)
-  .to('.pre-logo-mark', {
-    scale: 0.05, opacity: 0, rotate: 200,
-    duration: 0.9, ease: 'power4.inOut',
-  }, 3.5)
-  .to('.pre-progress-line', {
-    opacity: 0, scaleX: 0, transformOrigin: 'center',
-    duration: 0.5, ease: 'power4.in',
-  }, 3.5)
-  .to('.pre-bottom', {
-    opacity: 0, y: -20, duration: 0.4, ease: 'power4.in',
-  }, 3.6)
-  .set('#preloader', {
-    transformOrigin: 'top center',
-    willChange: 'transform',
-  }, 3.9)
-  .to('#preloader', {
-    yPercent: -100,
-    duration: 1.4,
-    ease: 'power4.inOut',
-  }, 3.9)
-  .to('.hero-line', {
+  preloaderTL
+    .to('.pre-logo-mark', {
+      opacity: 1, scale: 1, rotate: 0,
+      duration: 1.4,
+      ease: 'elastic.out(1.1, 0.45)',
+    }, 0.2)
+    .to('.pre-progress-line', {
+      opacity: 1, duration: 0.6, ease: 'power2.out',
+    }, 0.5)
+    .to('.pre-bottom', {
+      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+    }, 0.6)
+    .to(counterObj, {
+      val: 100, duration: 3.0,
+      ease: 'power2.inOut',
+      onUpdate: () => {
+        const pct = Math.floor(counterObj.val);
+        if (counterEl) counterEl.innerText = pct + '%';
+        if (progressLine) progressLine.style.setProperty('--pre-fill', pct + '%');
+      }
+    }, 0.5)
+    .to('.pre-char', {
+      opacity: 1, y: '0%', scale: 1, rotateX: 0,
+      duration: 1.4,
+      stagger: { each: 0.045, from: 'start' },
+      ease: 'elastic.out(1, 0.35)',
+    }, 0.7)
+    .to('#preTagline', {
+      opacity: 0.5, y: 0,
+      duration: 1.0, ease: 'power2.out',
+    }, 1.4)
+    .to('.pre-char', {
+      opacity: 0, y: '-130%', scale: 1.15,
+      filter: 'blur(6px)',
+      duration: 0.5,
+      stagger: { each: 0.025, from: 'end' },
+      ease: 'power4.in',
+    }, 3.6)
+    .to('#preTagline', {
+      opacity: 0, y: -24, filter: 'blur(4px)',
+      duration: 0.4, ease: 'power4.in',
+    }, 3.6)
+    .to('.pre-logo-mark', {
+      scale: 0.05, opacity: 0, rotate: 200,
+      duration: 0.9, ease: 'power4.inOut',
+    }, 3.5)
+    .to('.pre-progress-line', {
+      opacity: 0, scaleX: 0, transformOrigin: 'center',
+      duration: 0.5, ease: 'power4.in',
+    }, 3.5)
+    .to('.pre-bottom', {
+      opacity: 0, y: -20, duration: 0.4, ease: 'power4.in',
+    }, 3.6)
+    .set('#preloader', {
+      transformOrigin: 'top center',
+      willChange: 'transform',
+    }, 3.9)
+    .to('#preloader', {
+      yPercent: -100,
+      duration: 1.4,
+      ease: 'power4.inOut',
+    }, 3.9)
+    .to('.hero-line', {
+      y: '0%', duration: 1.6,
+      stagger: { each: 0.1, from: 'start' },
+      ease: 'expo.out',
+    }, 4.1)
+    .to('.hero-fade', {
+      opacity: 1, y: 0,
+      duration: 1.2, ease: 'power3.out',
+    }, 4.5);
+} else {
+  if (typeof lenis.start === 'function') lenis.start();
+  gsap.to('.hero-line', {
     y: '0%', duration: 1.6,
     stagger: { each: 0.1, from: 'start' },
     ease: 'expo.out',
-  }, 4.1)
-  .to('.hero-fade', {
+  });
+  gsap.to('.hero-fade', {
     opacity: 1, y: 0,
     duration: 1.2, ease: 'power3.out',
-  }, 4.5);
+  });
+}
 
 
 // ═══════════════════════
