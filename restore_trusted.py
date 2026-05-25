@@ -65,11 +65,19 @@ testi_end_block_n = testi_end_block.replace('\r\n', '\n')
 replacement_testi = """        </div>
 
         <div class="animated-testi-logos gs-reveal">
-          <h3 class="animated-testi-logos-title">Trusted By</h3>
+          <h3 class="animated-testi-logos-title">Supported By</h3>
           <div class="animated-testi-logos-row">
             <span style="display:inline-flex; align-items:center; gap:12px; font-weight:600;">
               <img src="img/kltif.png" alt="KL Tech Logo" style="height:48px; width:auto; object-fit:contain;">
-              KL Tech
+            </span>
+          </div>
+        </div>
+
+        <div class="animated-testi-logos gs-reveal" style="margin-top: 32px;">
+          <h3 class="animated-testi-logos-title">Trusted By</h3>
+          <div class="animated-testi-logos-row">
+            <span style="display:inline-flex; align-items:center; gap:12px; font-weight:600; font-size: 1.15rem; color: var(--fg-head); letter-spacing: 0.02em;">
+              Satya Sri Electricals
             </span>
           </div>
         </div>
@@ -102,7 +110,7 @@ else:
                 div_idx = content_normalized.rfind('</div>', 0, sec_idx)
                 if div_idx != -1:
                     # We can insert before that closing </div>
-                    content_normalized = content_normalized[:div_idx] + "\n        <div class=\"animated-testi-logos gs-reveal\">\n          <h3 class=\"animated-testi-logos-title\">Trusted By</h3>\n          <div class=\"animated-testi-logos-row\">\n            <span style=\"display:inline-flex; align-items:center; gap:12px; font-weight:600;\">\n              <img src=\"img/kltif.png\" alt=\"KL Tech Logo\" style=\"height:48px; width:auto; object-fit:contain;\">\n              KL Tech\n            </span>\n          </div>\n        </div>\n      " + content_normalized[div_idx:]
+                    content_normalized = content_normalized[:div_idx] + "\n        <div class=\"animated-testi-logos gs-reveal\">\n          <h3 class=\"animated-testi-logos-title\">Supported By</h3>\n          <div class=\"animated-testi-logos-row\">\n            <span style=\"display:inline-flex; align-items:center; gap:12px; font-weight:600;\">\n              <img src=\"img/kltif.png\" alt=\"KL Tech Logo\" style=\"height:48px; width:auto; object-fit:contain;\">\n            </span>\n          </div>\n        </div>\n\n        <div class=\"animated-testi-logos gs-reveal\" style=\"margin-top: 32px;\">\n          <h3 class=\"animated-testi-logos-title\">Trusted By</h3>\n          <div class=\"animated-testi-logos-row\">\n            <span style=\"display:inline-flex; align-items:center; gap:12px; font-weight:600; font-size: 1.15rem; color: var(--fg-head); letter-spacing: 0.02em;\">\n              Satya Sri Electricals\n            </span>\n          </div>\n        </div>\n      " + content_normalized[div_idx:]
                     print("Restored KL Tech logo block in Testimonials using index calculations.")
                 else:
                     print("Error: Could not find closing div inside testimonials section")
