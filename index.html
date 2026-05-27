@@ -6,16 +6,17 @@
   <title>SK Jalrakshak | Smart Water Quality Monitoring Vizag, India</title>
   <meta name="description" content="SK Jalrakshak Innovations is a deep tech IoT company in Vizag, India. We deliver smart water quality monitoring, energy analytics, and AI driver safety systems.">
   <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="index, follow, noai, noimageai">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=2.1.0">
   <!-- Three.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" integrity="sha384-aUS0jUAjhhBFNPifgxTHTNcsZDqkbegLd/JKEhJzK3Lyg9nFF1PZ2J++mzKwd8Kz" crossorigin="anonymous"></script>
   <!-- GSAP -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+  <script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" integrity="sha384-tKsJDT6PlUI0pSBt9/sBKJluKgA19/a6mBrDsZaXotLB4ZYfMGM6xt6/WgGpYhTm" crossorigin="anonymous"></script>
   <script defer src="webgl.js?v=2.1.0"></script>
   <script defer src="script.js?v=2.1.0"></script>
   <link rel="preload" as="image" href="img/skjal-hero-banner.webp?v=2">
@@ -23,13 +24,7 @@
   <link rel="preload" as="image" href="img/energy-monitoring.webp?v=2">
 
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_64/skjal/logo.png">
-  <script>
-    // Reset scroll position on page load to prevent GSAP/Lenis from getting stuck
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0);
-  </script>
+  <script src="init.js"></script>
 </head>
 <body>
 
