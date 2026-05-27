@@ -240,13 +240,12 @@ if (preloaderEl) {
     }, 1.4)
     .to('.pre-char', {
       opacity: 0, y: '-130%', scale: 1.15,
-      filter: 'blur(6px)',
       duration: 0.5,
       stagger: { each: 0.025, from: 'end' },
       ease: 'power4.in',
     }, 3.6)
     .to('#preTagline', {
-      opacity: 0, y: -24, filter: 'blur(4px)',
+      opacity: 0, y: -24,
       duration: 0.4, ease: 'power4.in',
     }, 3.6)
     .to('.pre-logo-mark', {
@@ -684,30 +683,8 @@ if (hero && fm1 && fm2) {
   const observer = new MutationObserver(syncATT);
   observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-  // Cinematic haptic click — dual-tone
-  let audioCtx = null;
   document.getElementById('themeToggle')?.addEventListener('click', () => {
-    try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      const rate = audioCtx.sampleRate;
-      // Primary click tone
-      const len = Math.floor(rate * 0.015);
-      const buf = audioCtx.createBuffer(1, len, rate);
-      const ch = buf.getChannelData(0);
-      for (let i = 0; i < len; i++) {
-        const t = i / len;
-        const freq = 2800 + t * 600; // ascending chirp
-        ch[i] = (Math.sin(2 * Math.PI * freq * t) * 0.35 + (Math.random() * 2 - 1) * 0.15) * Math.pow(1 - t, 4);
-      }
-      const src = audioCtx.createBufferSource();
-      const gain = audioCtx.createGain();
-      src.buffer = buf;
-      gain.gain.value = 0.04;
-      src.connect(gain);
-      gain.connect(audioCtx.destination);
-      src.start();
-    } catch(e) { /* silent */ }
+    // Haptic click removed for performance
   });
 })();
 

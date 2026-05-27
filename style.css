@@ -58,7 +58,7 @@
   --toggle-fg: #1a1a1a;
   --toggle-ring: rgba(0,0,0,0.1);
 }
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+/* Fonts loaded via HTML <link> tags — do not duplicate with @import */
 :root {
   --sky-blue: #ffffff; /* Neutralize blue */
   --accent: #d4af37; /* Premium Gold accent instead of blue */
@@ -237,8 +237,8 @@ main,#footer {
   right: 0;
   z-index: 1100;
   background: var(--nav-bg);
-  backdrop-filter: blur(20px) saturate(1.8);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
   border-bottom: 1px solid var(--border);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               background 0.3s ease,
@@ -1579,8 +1579,8 @@ main,#footer {
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(60px) saturate(2) contrast(1.05);
-  -webkit-backdrop-filter: blur(60px) saturate(2) contrast(1.05);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
   border-radius: 24px;
   overflow: hidden;
   box-shadow:
@@ -4534,3 +4534,39 @@ h1, h2, h3, .sys-name, .flow-heading {
   }
 }
 
+/* ═══ PERFORMANCE OPTIMIZATIONS ═══ */
+
+/* Skip rendering for off-screen sections */
+.sec,
+.product-section,
+.product-cta-section,
+footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* GPU compositing hints for frequently animated elements */
+.main-nav {
+  will-change: transform;
+}
+.page-transition-overlay {
+  will-change: transform;
+}
+
+/* Respect reduced motion — disable all heavy animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain {
+    display: none !important;
+  }
+  #webgl {
+    display: none !important;
+  }
+}

@@ -12,7 +12,7 @@
   const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
   const cores = navigator.hardwareConcurrency || 4;
   const lowTier = isMobile || cores <= 2;
-  const PARTICLE_COUNT = lowTier ? 40000 : 150000;
+  const PARTICLE_COUNT = lowTier ? 15000 : 60000;
 
   // ── REDUCED MOTION CHECK ──
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -25,7 +25,7 @@
   const renderer = new THREE.WebGLRenderer({
     canvas, antialias: false, alpha: true, powerPreference: 'high-performance'
   });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
@@ -233,8 +233,25 @@
   // ═══════════════════════════════════
   const clock = new THREE.Clock();
 
+  // ── VISIBILITY + INTERSECTION BASED PAUSE ──
+  let isVisible = true;
+  let isOnScreen = true;
+
+  document.addEventListener('visibilitychange', () => {
+    isVisible = !document.hidden;
+  });
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(([entry]) => {
+      isOnScreen = entry.isIntersecting;
+    }, { threshold: 0 });
+    obs.observe(canvas);
+  }
+
   function animate() {
     requestAnimationFrame(animate);
+
+    if (!isVisible || !isOnScreen) return;
 
     const elapsed = clock.getElapsedTime();
 
@@ -269,13 +286,17 @@
 
   animate();
 
-  // ── RESIZE ──
+  // ── RESIZE (throttled) ──
+  let resizeTimer;
   window.addEventListener('resize', () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h);
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }, 150);
   });
 
   // Expose scroll sync for script.js
