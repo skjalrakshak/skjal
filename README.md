@@ -100,10 +100,13 @@ git push
 ├── jal-rakshak.html            # Product: Water Intelligence
 ├── shield.html                 # Product: Driver Safety
 ├── energy-monitoring.html      # Product: Energy Management
-├── style.css                   # Global Design System (Typography, Grid, Colors)
-├── script.js                   # GSAP Animations & Motion Logic
-├── webgl.js                    # Three.js 3D Interactive Backgrounds
-├── init.js                     # Early execution script (Scroll position reset)
+├── assets/                     # Organized static assets
+│   ├── css/
+│   │   └── style.css           # Global Design System (Typography, Grid, Colors)
+│   └── js/
+│       ├── script.js           # GSAP Animations & Motion Logic
+│       ├── webgl.js            # Three.js 3D Interactive Backgrounds
+│       └── init.js             # Early execution script (Scroll position reset)
 ├── server.js                   # Custom Local Node.js Server (Port 5173)
 ├── vercel.json                 # Production Routing & Security Headers
 ├── sitemap.xml                 # SEO Sitemap
