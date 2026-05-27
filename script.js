@@ -50,6 +50,8 @@ const lenis = hasLenis ? new window.Lenis({
 
 if (hasGsap && hasScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.clearScrollMemory("manual");
+  window.scrollTo(0, 0);
 }
 lenis.on('scroll', ScrollTrigger.update);
 if (hasGsap) {

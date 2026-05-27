@@ -4536,14 +4536,7 @@ h1, h2, h3, .sys-name, .flow-heading {
 
 /* ═══ PERFORMANCE OPTIMIZATIONS ═══ */
 
-/* Skip rendering for off-screen sections */
-.sec,
-.product-section,
-.product-cta-section,
-footer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
+/* content-visibility removed — breaks GSAP ScrollTrigger position calculations */
 
 /* GPU compositing hints for frequently animated elements */
 .main-nav {
