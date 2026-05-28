@@ -12,7 +12,6 @@
   const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
   const cores = navigator.hardwareConcurrency || 4;
   const lowTier = isMobile || cores <= 2;
-  const PARTICLE_COUNT = lowTier ? 15000 : 60000;
 
   // ── REDUCED MOTION CHECK ──
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -42,11 +41,21 @@
     mouse.ty = -(e.clientY / window.innerHeight) * 2 + 1;
   }, { passive: true });
 
-  // ── SCROLL TRACKING ──
+  // ── SCROLL TRACKING & VELOCITY ──
   let scrollProgress = 0;
+  let scrollVelocity = 0;
+  let lastScrollY = window.scrollY;
+  let lastScrollTime = Date.now();
   window.addEventListener('scroll', () => {
     const h = document.documentElement.scrollHeight - window.innerHeight;
     scrollProgress = h > 0 ? window.scrollY / h : 0;
+    
+    const now = Date.now();
+    const dt = Math.max(1, now - lastScrollTime);
+    const dy = window.scrollY - lastScrollY;
+    scrollVelocity = Math.min(Math.abs(dy / dt), 1.5); // cap velocity
+    lastScrollY = window.scrollY;
+    lastScrollTime = now;
   }, { passive: true });
 
   // ── THEME TRACKING ──
@@ -55,30 +64,28 @@
   }
 
   // ═══════════════════════════════════
-  // VERTEX SHADER — PARTICLE SYSTEM
+  // VERTEX SHADER — LIQUID TOPOGRAPHY
   // ═══════════════════════════════════
-  const particleVert = `
+  const liquidVert = `
     uniform float uTime;
     uniform float uScroll;
+    uniform float uVelocity;
     uniform vec2 uMouse;
-    uniform float uRepel;
-    uniform float uSpread;
-    attribute float aRandom;
-    attribute float aPhase;
-    attribute float aSize;
-    varying float vAlpha;
-    varying float vRandom;
+    
+    varying vec2 vUv;
+    varying vec3 vPos;
+    varying float vElevation;
 
-    // Simplex noise helpers
-    vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
-    vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
+    // Simplex 3D Noise
+    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
     vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
-    vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314*r; }
-
+    vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+    
     float snoise(vec3 v) {
       const vec2 C = vec2(1.0/6.0, 1.0/3.0);
       const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
-      vec3 i = floor(v + dot(v, C.yyy));
+      vec3 i  = floor(v + dot(v, C.yyy));
       vec3 x0 = v - i + dot(i, C.xxx);
       vec3 g = step(x0.yzx, x0.xyz);
       vec3 l = 1.0 - g;
@@ -89,16 +96,16 @@
       vec3 x3 = x0 - D.yyy;
       i = mod289(i);
       vec4 p = permute(permute(permute(
-        i.z + vec4(0.0, i1.z, i2.z, 1.0))
-        + i.y + vec4(0.0, i1.y, i2.y, 1.0))
-        + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+                i.z + vec4(0.0, i1.z, i2.z, 1.0))
+              + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+              + i.x + vec4(0.0, i1.x, i2.x, 1.0));
       float n_ = 0.142857142857;
       vec3 ns = n_ * D.wyz - D.xzx;
       vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
       vec4 x_ = floor(j * ns.z);
       vec4 y_ = floor(j - 7.0 * x_);
-      vec4 x = x_ * ns.x + ns.yyyy;
-      vec4 y = y_ * ns.x + ns.yyyy;
+      vec4 x = x_*ns.x + ns.yyyy;
+      vec4 y = y_*ns.x + ns.yyyy;
       vec4 h = 1.0 - abs(x) - abs(y);
       vec4 b0 = vec4(x.xy, y.xy);
       vec4 b1 = vec4(x.zw, y.zw);
@@ -111,122 +118,101 @@
       vec3 p1 = vec3(a0.zw,h.y);
       vec3 p2 = vec3(a1.xy,h.z);
       vec3 p3 = vec3(a1.zw,h.w);
-      vec4 norm = taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+      vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
       p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
-      vec4 m = max(0.6 - vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)), 0.0);
+      vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
       m = m * m;
-      return 42.0 * dot(m*m, vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+      return 105.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
     }
 
     void main() {
-      vRandom = aRandom;
+      vUv = uv;
       vec3 pos = position;
+      
+      // Calculate complex wave elevation
+      float elevation = snoise(vec3(pos.x * 0.8, pos.y * 0.8 + uScroll * 1.5, uTime * 0.2)) * 0.5;
+      elevation += snoise(vec3(pos.x * 2.0, pos.y * 2.0 - uTime * 0.1, 0.0)) * 0.15;
+      
+      // Velocity distortion: wave gets extremely choppy when scrolling fast
+      elevation *= (1.0 + uVelocity * 3.0);
+      
+      // Mouse interaction (localized ripple/bulge)
+      float dist = distance(vUv, uMouse * 0.5 + 0.5);
+      float influence = smoothstep(0.4, 0.0, dist);
+      elevation += influence * 0.6 * sin(dist * 20.0 - uTime * 5.0);
 
-      // Noise displacement — organic flow
-      float t = uTime * 0.15 + aPhase;
-      float noiseScale = 0.3;
-      pos.x += snoise(vec3(pos.x*noiseScale, pos.y*noiseScale, t)) * 0.6 * uSpread;
-      pos.y += snoise(vec3(pos.y*noiseScale, pos.z*noiseScale, t + 100.0)) * 0.6 * uSpread;
-      pos.z += snoise(vec3(pos.z*noiseScale, pos.x*noiseScale, t + 200.0)) * 0.3;
-
-      // Scroll: spread particles outward
-      pos *= 1.0 + uScroll * 0.4;
-      pos.y -= uScroll * 3.0;
-
-      // Cursor repulsion force field
-      vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
-      vec4 projected = projectionMatrix * mvPos;
-      vec2 screen = projected.xy / projected.w;
-      vec2 toMouse = screen - uMouse;
-      float dist = length(toMouse);
-      float radius = 0.4;
-      float force = uRepel * smoothstep(radius, 0.0, dist) * 2.0;
-      pos.x += toMouse.x * force;
-      pos.y += toMouse.y * force;
-
-      // Depth-based alpha
-      float depth = length(mvPos.xyz);
-      vAlpha = smoothstep(20.0, 2.0, depth) * (0.3 + aRandom * 0.7);
-      vAlpha *= 1.0 - uScroll * 0.3;
-
+      pos.z += elevation * 3.0; // scale elevation to physical z-height
+      
+      vElevation = elevation;
+      vPos = pos;
+      
       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-      gl_PointSize = aSize * (300.0 / depth);
     }
   `;
 
   // ═══════════════════════════════════
-  // FRAGMENT SHADER — SOFT CIRCLES
+  // FRAGMENT SHADER — METALLIC / IRIDESCENT
   // ═══════════════════════════════════
-  const particleFrag = `
-    uniform vec3 uColor;
+  const liquidFrag = `
+    uniform vec3 uColorA;
+    uniform vec3 uColorB;
     uniform float uOpacity;
-    varying float vAlpha;
-    varying float vRandom;
+    
+    varying vec2 vUv;
+    varying vec3 vPos;
+    varying float vElevation;
 
     void main() {
-      // Circular point sprite with soft edges
-      vec2 center = gl_PointCoord - vec2(0.5);
-      float dist = length(center);
-      if (dist > 0.5) discard;
+      // Base color mix based on elevation (creates topographical lines/shading)
+      float mixStrength = (vElevation + 0.5) * 0.8;
+      vec3 color = mix(uColorA, uColorB, mixStrength);
+      
+      // Fake topographical contour lines (creates a techy/data vibe)
+      float contour = fract(vElevation * 8.0);
+      float lineThickness = smoothstep(0.0, 0.05, contour) - smoothstep(0.05, 0.1, contour);
+      color += lineThickness * 0.15; // add subtle lines
+      
+      // Edge fading for seamless blending into background
+      float edgeAlpha = smoothstep(0.0, 0.2, vUv.x) * smoothstep(1.0, 0.8, vUv.x) *
+                        smoothstep(0.0, 0.2, vUv.y) * smoothstep(1.0, 0.8, vUv.y);
 
-      float alpha = smoothstep(0.5, 0.1, dist) * vAlpha * uOpacity;
-
-      // Slight color variation per particle
-      vec3 col = uColor + vRandom * 0.08;
-
-      gl_FragColor = vec4(col, alpha);
+      gl_FragColor = vec4(color, uOpacity * edgeAlpha * 0.85);
     }
   `;
 
   // ═══════════════════════════════════
-  // PARTICLE GEOMETRY
+  // PLANE GEOMETRY (High density)
   // ═══════════════════════════════════
-  const geo = new THREE.BufferGeometry();
-  const positions = new Float32Array(PARTICLE_COUNT * 3);
-  const randoms = new Float32Array(PARTICLE_COUNT);
-  const phases = new Float32Array(PARTICLE_COUNT);
-  const sizes = new Float32Array(PARTICLE_COUNT);
-
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    // Distribute in a sphere-like volume
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(2 * Math.random() - 1);
-    const r = Math.pow(Math.random(), 0.5) * 12;
-    positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
-    positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-    positions[i * 3 + 2] = r * Math.cos(phi) - 4;
-    randoms[i] = Math.random();
-    phases[i] = Math.random() * Math.PI * 2;
-    sizes[i] = 0.8 + Math.random() * 2.5;
-  }
-
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geo.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
-  geo.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1));
-  geo.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+  // Use less segments on mobile to preserve 60fps
+  const segments = lowTier ? 64 : 128;
+  const geo = new THREE.PlaneGeometry(24, 24, segments, segments);
 
   // ═══════════════════════════════════
   // MATERIAL
   // ═══════════════════════════════════
   const mat = new THREE.ShaderMaterial({
-    vertexShader: particleVert,
-    fragmentShader: particleFrag,
+    vertexShader: liquidVert,
+    fragmentShader: liquidFrag,
     uniforms: {
       uTime:    { value: 0 },
       uScroll:  { value: 0 },
+      uVelocity:{ value: 0 },
       uMouse:   { value: new THREE.Vector2(0, 0) },
-      uRepel:   { value: 1.0 },
-      uSpread:  { value: 1.0 },
-      uColor:   { value: new THREE.Color(0.45, 0.45, 0.45) },
-      uOpacity: { value: 0.65 },
+      uColorA:  { value: new THREE.Color(0x0a0a0a) }, // Deep background color
+      uColorB:  { value: new THREE.Color(0x2a2a2a) }, // Highlight color
+      uOpacity: { value: 1.0 },
     },
     transparent: true,
+    wireframe: false, // Set to true for a very cool matrix look, but solid looks more liquid
     depthWrite: false,
-    blending: THREE.AdditiveBlending,
+    blending: THREE.AdditiveBlending, // Use additive for glowy water
   });
 
-  const particles = new THREE.Points(geo, mat);
-  scene.add(particles);
+  const liquidPlane = new THREE.Mesh(geo, mat);
+  // Tilt the plane so it looks like a surface we are looking across
+  liquidPlane.rotation.x = -Math.PI * 0.25; 
+  liquidPlane.position.y = -2;
+  scene.add(liquidPlane);
 
   // ═══════════════════════════════════
   // RENDER LOOP — SINGLE RAF
@@ -259,27 +245,37 @@
     mouse.x += (mouse.tx - mouse.x) * 0.08;
     mouse.y += (mouse.ty - mouse.y) * 0.08;
 
+    // Smooth scroll velocity decay
+    scrollVelocity += (0 - scrollVelocity) * 0.06;
+
     // Update uniforms
     mat.uniforms.uTime.value = elapsed;
     mat.uniforms.uScroll.value = scrollProgress;
+    mat.uniforms.uVelocity.value = scrollVelocity;
     mat.uniforms.uMouse.value.set(mouse.x, mouse.y);
 
     // Theme-reactive colors
     const dark = isDarkTheme();
-    const targetColor = dark
-      ? new THREE.Color(0.4, 0.4, 0.4)
-      : new THREE.Color(0.15, 0.12, 0.1);
-    mat.uniforms.uColor.value.lerp(targetColor, 0.05);
-    mat.uniforms.uOpacity.value += ((dark ? 0.6 : 0.3) - mat.uniforms.uOpacity.value) * 0.05;
+    
+    // Dark Theme: Deep charcoal liquid with subtle silver/blue highlights
+    const darkColorA = new THREE.Color(0.04, 0.04, 0.04);
+    const darkColorB = new THREE.Color(0.12, 0.15, 0.18);
+    
+    // Light Theme: Bright icy water with soft blue highlights
+    const lightColorA = new THREE.Color(0.9, 0.92, 0.95);
+    const lightColorB = new THREE.Color(0.6, 0.7, 0.85);
+
+    mat.uniforms.uColorA.value.lerp(dark ? darkColorA : lightColorA, 0.05);
+    mat.uniforms.uColorB.value.lerp(dark ? darkColorB : lightColorB, 0.05);
+    mat.uniforms.uOpacity.value += ((dark ? 0.8 : 0.6) - mat.uniforms.uOpacity.value) * 0.05;
+    
+    // Change blending mode dynamically (Additive is too bright for light mode)
+    mat.blending = dark ? THREE.AdditiveBlending : THREE.NormalBlending;
 
     // Camera parallax from mouse
-    camera.position.x += (mouse.x * 1.5 - camera.position.x) * 0.03;
-    camera.position.y += (mouse.y * 0.8 - camera.position.y) * 0.03;
+    camera.position.x += (mouse.x * 2.0 - camera.position.x) * 0.03;
+    camera.position.y += ((mouse.y * 1.5 + 2.0) - camera.position.y) * 0.03;
     camera.lookAt(0, 0, 0);
-
-    // Slow rotation
-    particles.rotation.y = elapsed * 0.02;
-    particles.rotation.x = Math.sin(elapsed * 0.01) * 0.1;
 
     renderer.render(scene, camera);
   }
