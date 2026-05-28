@@ -3287,6 +3287,12 @@ main,#footer {
   margin-bottom: 32px;
 }
 
+.foot-mii-img {
+  filter: var(--mii-filter) !important;
+  mix-blend-mode: var(--mii-blend) !important;
+  transition: filter 0.5s ease, mix-blend-mode 0.5s ease;
+}
+
 /* Brand column */
 .foot-brand-col .foot-brand {
   font-family: var(--display);
