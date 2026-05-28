@@ -105,6 +105,12 @@
     ]
   }
   </script>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://res.cloudinary.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -132,7 +138,7 @@
     crossorigin="anonymous"></script>
   <script defer src="assets/js/webgl.js?v=2.1.0"></script>
   <script defer src="assets/js/script.js?v=2.1.0"></script>
-  <link rel="preload" as="image" href="img/skjal-hero-banner.webp?v=2">
+  <link rel="preload" as="image" href="img/skjal-hero-banner.webp?v=2" fetchpriority="high">
 
   <link rel="icon" type="image/png" sizes="192x192"
     href="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_192,h_192,c_pad/skjal/logo.png">
@@ -1123,7 +1129,7 @@
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-brand-col">
-          <img src="img/make-in-india.png" alt="Make in India" loading="lazy" decoding="async"
+          <img src="img/make-in-india.webp" alt="Make in India" loading="lazy" decoding="async"
             style="width: 100%; max-width: 310px; height: auto; object-fit: contain; margin-left: -12px; margin-top: -8px; margin-bottom: 20px;">
 
           <div style="font-size: 1.1rem; line-height: 1.6; color: var(--foot-fg);">
