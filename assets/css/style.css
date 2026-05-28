@@ -173,7 +173,7 @@ main,#footer {
   z-index: 1;
 }
 .sec {
-  padding: 55px 0;
+  padding: 32px 0;
   position: relative;
   background-image: radial-gradient(var(--border) 1px, transparent 1px);
   background-size: 50px 50px;
@@ -1940,7 +1940,7 @@ main,#footer {
 }
 @media (max-width:900px) {
   .sec {
-    padding: 35px 0;
+    padding: 24px 0;
   }
   .about-layout {
     grid-template-columns: 1fr;
@@ -3272,23 +3272,6 @@ main,#footer {
   --foot-accent: #FF5500;
   --mii-filter: invert(0) contrast(1.2) grayscale(1);
   --mii-blend: multiply;
-}
-
-/* Animated gradient line at the top */
-#footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, #FF5500 20%, #6D67C8 50%, #82BDD0 80%, transparent 100%);
-  background-size: 200% 100%;
-  animation: footerGradientSlide 6s ease-in-out infinite alternate;
-}
-@keyframes footerGradientSlide {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
 }
 
 /* Grid layout */
