@@ -3261,7 +3261,7 @@ main,#footer {
   --mii-blend: screen;
 
   position: relative;
-  padding: 40px 0 16px;
+  padding: 28px 0 12px;
   background: var(--foot-bg) !important;
   color: var(--foot-fg) !important;
   border-top: none;
@@ -3283,8 +3283,8 @@ main,#footer {
 .foot-grid {
   display: grid;
   grid-template-columns: 2.5fr 1.2fr 1fr 1.5fr;
-  gap: 48px;
-  margin-bottom: 32px;
+  gap: 32px;
+  margin-bottom: 20px;
 }
 
 .foot-mii-img {
@@ -3318,7 +3318,7 @@ main,#footer {
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--foot-muted) !important;
-  margin-bottom: 24px;
+  margin-bottom: 14px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   transition: color 0.5s ease;
@@ -3329,10 +3329,10 @@ main,#footer {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 .foot-links li a {
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   color: var(--foot-muted) !important;
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
