@@ -523,18 +523,7 @@ document.querySelectorAll('a').forEach(anchor => {
             const target = getHashTarget(clickedUrl.hash);
             if (target) {
               e.preventDefault();
-              const overlay = document.querySelector('.page-transition-overlay');
-
-              // Skip overlay for #contact
-              if (overlay && clickedUrl.hash !== '#contact') {
-                gsap.timeline()
-                  .to(overlay, { y: '0%', duration: 0.6, ease: 'power3.inOut' })
-                  .call(() => { lenis.scrollTo(target, { offset: -80, immediate: true }); })
-                  .to(overlay, { y: '100%', duration: 0.6, ease: 'power3.inOut', delay: 0.1 })
-                  .set(overlay, { y: '-100%' });
-              } else {
-                lenis.scrollTo(target, { offset: -80 });
-              }
+              lenis.scrollTo(target, { offset: -80 });
             }
           } else {
             // Same page navigation with no hash (e.g. logo or Home clicked) -> scroll to top
