@@ -7,5 +7,12 @@
     "start": "node server.js",
     "dev": "node server.js",
     "check": "node --check assets/js/init.js && node --check assets/js/webgl.js && node --check assets/js/script.js && node --check server.js"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "critical": "^8.0.0",
+    "html-minifier": "^4.0.0",
+    "purgecss": "^8.0.0",
+    "sharp": "^0.34.5"
   }
 }

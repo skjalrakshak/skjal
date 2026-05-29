@@ -495,6 +495,8 @@ document.querySelectorAll('a').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const href = this.getAttribute('href');
     if (!href) return;
+    // Skip external links opened in new tabs
+    if (this.target === '_blank') return;
 
     try {
       // Resolve clicked link's absolute URL automatically
@@ -529,6 +531,22 @@ document.querySelectorAll('a').forEach(anchor => {
             // Same page navigation with no hash (e.g. logo or Home clicked) -> scroll to top
             e.preventDefault();
             lenis.scrollTo(0);
+          }
+        } else {
+          // Cross-page navigation — apply cinematic wipe transition
+          e.preventDefault();
+          const wipe = document.querySelector('.cinematic-wipe');
+          if (wipe) {
+            gsap.fromTo(wipe, { scaleY: 0, transformOrigin: 'top' }, {
+              scaleY: 1,
+              duration: 1.0,
+              ease: 'expo.inOut',
+              onComplete: () => {
+                window.location.href = href;
+              }
+            });
+          } else {
+            window.location.href = href;
           }
         }
       }
@@ -690,7 +708,7 @@ document.querySelectorAll('.gs-clip-reveal').forEach(el => {
       cardWrap.style.borderRadius = '0 0 24px 24px';
       
       // Explicitly force the background of the section to be white so the shrinking gap is perfectly white
-      section.style.backgroundColor = '#ffffff';
+      section.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#ffffff';
 
       section.insertBefore(cardWrap, bg);
       cardWrap.appendChild(bg);
@@ -893,16 +911,20 @@ document.querySelectorAll('.stat-val').forEach(stat => {
     });
   });
 
-  // Handle window resize to adjust open accordion height
+  // Handle window resize to adjust open accordion height (debounced)
+  let faqResizeTimer;
   window.addEventListener('resize', () => {
-    const openItem = document.querySelector('.faq-item.is-open');
-    if (openItem) {
-      const content = openItem.querySelector('.faq-content');
-      const inner = openItem.querySelector('.faq-content-inner');
-      if (content && inner) {
-        content.style.height = inner.offsetHeight + 'px';
+    clearTimeout(faqResizeTimer);
+    faqResizeTimer = setTimeout(() => {
+      const openItem = document.querySelector('.faq-item.is-open');
+      if (openItem) {
+        const content = openItem.querySelector('.faq-content');
+        const inner = openItem.querySelector('.faq-content-inner');
+        if (content && inner) {
+          content.style.height = inner.offsetHeight + 'px';
+        }
       }
-    }
+    }, 150);
   });
 })();
 
@@ -1149,7 +1171,6 @@ document.querySelectorAll('.stat-val').forEach(stat => {
 window.addEventListener('DOMContentLoaded', () => {
   const wipe = document.querySelector('.cinematic-wipe');
   if (wipe) {
-    // Animate out on load
     gsap.fromTo(wipe, { scaleY: 1, transformOrigin: 'bottom' }, {
       scaleY: 0,
       duration: 1.2,
@@ -1159,34 +1180,21 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-document.querySelectorAll('a').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const href = this.getAttribute('href');
-    if (!href || href.startsWith('#') || this.target === '_blank') return;
 
-    try {
-      const clickedUrl = new URL(this.href);
-      const currentUrl = new URL(window.location.href);
 
-      if (clickedUrl.origin === currentUrl.origin && clickedUrl.pathname !== currentUrl.pathname) {
-        e.preventDefault();
-        const wipe = document.querySelector('.cinematic-wipe');
-        if (wipe) {
-          gsap.fromTo(wipe, { scaleY: 0, transformOrigin: 'top' }, {
-            scaleY: 1,
-            duration: 1.0,
-            ease: 'expo.inOut',
-            onComplete: () => {
-              window.location.href = href;
-            }
-          });
-        } else {
-          window.location.href = href;
-        }
-      }
-    } catch(err) {
-      // Ignored
-    }
-  });
-});
-
+// DYNAMIC WEBGL ENGINE LAZY LOAD
+(function initWebGL() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const loadWebGL = () => {
+    if (!document.getElementById('webgl-canvas')) return;
+    const script = document.createElement('script');
+    script.src = 'assets/js/webgl.js';
+    script.defer = true;
+    document.body.appendChild(script);
+  };
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(loadWebGL, { timeout: 2000 });
+  } else {
+    setTimeout(loadWebGL, 500);
+  }
+})();

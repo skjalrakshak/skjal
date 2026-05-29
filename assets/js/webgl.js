@@ -240,6 +240,12 @@
     obs.observe(canvas);
   }
 
+  // Pre-allocated theme colors (avoid GC churn in render loop)
+  const darkColorA = new THREE.Color(0.04, 0.04, 0.04);
+  const darkColorB = new THREE.Color(0.12, 0.15, 0.18);
+  const lightColorA = new THREE.Color(0.9, 0.92, 0.95);
+  const lightColorB = new THREE.Color(0.6, 0.7, 0.85);
+
   function animate() {
     requestAnimationFrame(animate);
 
@@ -262,14 +268,6 @@
 
     // Theme-reactive colors
     const dark = isDarkTheme();
-    
-    // Dark Theme: Deep charcoal liquid with subtle silver/blue highlights
-    const darkColorA = new THREE.Color(0.04, 0.04, 0.04);
-    const darkColorB = new THREE.Color(0.12, 0.15, 0.18);
-    
-    // Light Theme: Bright icy water with soft blue highlights
-    const lightColorA = new THREE.Color(0.9, 0.92, 0.95);
-    const lightColorB = new THREE.Color(0.6, 0.7, 0.85);
 
     mat.uniforms.uColorA.value.lerp(dark ? darkColorA : lightColorA, 0.05);
     mat.uniforms.uColorB.value.lerp(dark ? darkColorB : lightColorB, 0.05);
