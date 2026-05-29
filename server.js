@@ -50,6 +50,12 @@ const maxRequests = 120;
 const fileCache = new Map();
 const isProduction = process.env.VERCEL || process.env.NODE_ENV === "production";
 
+function writeDiagnostic(message, error) {
+  if (isProduction) return;
+  const suffix = error && error.stack ? `\n${error.stack}` : "";
+  process.stderr.write(`${message}${suffix}\n`);
+}
+
 function getFileContent(filePath) {
   if (isProduction) {
     if (!fileCache.has(filePath)) {
@@ -96,7 +102,7 @@ function securityHeaders(contentType) {
     "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
     "Content-Security-Policy": [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://cdn.tailwindcss.com",
+      "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://cdn.tailwindcss.com https://cdn.jsdelivr.net",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: https://randomuser.me https://images.unsplash.com https://res.cloudinary.com https://i.pravatar.cc",
@@ -261,7 +267,7 @@ function handler(req, res) {
   } catch (err) {
     const isBadRequest = err && err.statusCode === 400;
     if (!isBadRequest) {
-      console.error("Error serving request:", err);
+      writeDiagnostic("Error serving request:", err);
     }
     send(req, res, isBadRequest ? 400 : 500, isBadRequest ? "Bad request" : "Internal Server Error", {
       ...securityHeaders("text/plain; charset=utf-8"),
@@ -289,7 +295,7 @@ if (!process.env.VERCEL) {
     });
 
     server.listen(port, host, () => {
-      console.log(`SK Jalrakshak site running at http://${host}:${port}/`);
+      process.stdout.write(`SK Jalrakshak site running at http://${host}:${port}/\n`);
     });
   }
 

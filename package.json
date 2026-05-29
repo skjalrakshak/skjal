@@ -6,10 +6,6 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "check": "node --check script.js && node --check server.js"
-  },
-  "dependencies": {
-    "cloudinary": "^2.10.0",
-    "pdf-parse": "^2.4.5"
+    "check": "node --check assets/js/init.js && node --check assets/js/webgl.js && node --check assets/js/script.js && node --check server.js"
   }
 }

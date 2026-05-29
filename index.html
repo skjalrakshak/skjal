@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="view-transition" content="same-origin">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SKJAL — SK Jalrakshak Innovations | IoT & Energy Monitoring Company, Vizag</title>
   <meta name="description"
     content="SKJAL (SK Jalrakshak Innovations Pvt Ltd) is Vizag's leading deep-tech IoT company. We build real-time water quality monitoring systems, AI-powered energy monitoring devices, and industrial telemetry solutions. Headquartered in Visakhapatnam, Andhra Pradesh.">
@@ -122,11 +122,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet">
   </noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=2.1.0">
-  <!-- Three.js (async — non-blocking, webgl.js checks for THREE before using it) -->
-  <script async src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"
-    integrity="sha384-aUS0jUAjhhBFNPifgxTHTNcsZDqkbegLd/JKEhJzK3Lyg9nFF1PZ2J++mzKwd8Kz"
-    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="assets/css/style.css?v=2.1.2">
   <!-- GSAP -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
     integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt"
@@ -137,8 +133,7 @@
   <script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"
     integrity="sha384-tKsJDT6PlUI0pSBt9/sBKJluKgA19/a6mBrDsZaXotLB4ZYfMGM6xt6/WgGpYhTm"
     crossorigin="anonymous"></script>
-  <script defer src="assets/js/webgl.js?v=2.1.0"></script>
-  <script defer src="assets/js/script.js?v=2.1.0"></script>
+  <script defer src="assets/js/script.js?v=2.1.2"></script>
   <link rel="preload" as="image" href="img/skjal-hero-banner.webp?v=2" fetchpriority="high">
 
   <link rel="icon" type="image/png" sizes="192x192"
@@ -173,9 +168,6 @@
     </div>
   </div>
 
-  <!-- ═══ WEBGL CANVAS ═══ -->
-  <canvas id="webgl" aria-hidden="true"></canvas>
-
   <!-- ═══ PAGE TRANSITION OVERLAY ═══ -->
   <div class="page-transition-overlay" aria-hidden="true"></div>
 
@@ -191,9 +183,7 @@
     <div class="nav-inner">
       <!-- Logo -->
       <a href="index.html" class="nav-logo" id="navLogo">
-        <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/logo.png"
-          srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_100/skjal/logo.png 100w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/logo.png 200w"
-          sizes="100px" alt="SK Jalrakshak Logo" class="nav-logo-img">
+        <img src="img/logo.png" width="100" height="100" alt="SK Jalrakshak Logo" class="nav-logo-img">
         <span class="nav-logo-text">SK Jalrakshak</span>
       </a>
 
@@ -243,28 +233,7 @@
 
       <!-- Right side: Theme + CTA -->
       <div class="nav-actions" id="topRightActions">
-        <button id="themeToggle" class="nav-theme-toggle" aria-label="Toggle theme">
-          <svg id="attSvg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" style="overflow:visible">
-            <defs>
-              <mask id="attMask">
-                <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                <circle id="attMaskCircle" cx="33" cy="0" r="9" fill="black" />
-              </mask>
-            </defs>
-            <circle id="attBody" cx="12" cy="12" r="5" fill="currentColor" stroke="none" mask="url(#attMask)" />
-            <g id="attRays" style="transform-origin:12px 12px">
-              <line x1="12" y1="1" x2="12" y2="3" />
-              <line x1="12" y1="21" x2="12" y2="23" />
-              <line x1="1" y1="12" x2="3" y2="12" />
-              <line x1="21" y1="12" x2="23" y2="12" />
-              <line x1="5.64" y1="5.64" x2="4.22" y2="4.22" />
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-              <line x1="5.64" y1="18.36" x2="4.22" y2="19.78" />
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-            </g>
-          </svg>
-        </button>
+
         <a href="#contact" class="nav-cta-btn">
           Contact Us
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -373,9 +342,7 @@
           </div>
         </div>
         <div class="hero-right hero-fade">
-          <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_800/skjal/p1-transparent.png"
-            srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/p1-transparent.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_800/skjal/p1-transparent.png 800w"
-            sizes="(max-width: 768px) 280px, 420px" alt="Jal Rakshak App Mockup" class="hero-app-mockup">
+          <img src="img/p1-transparent.png" width="420" height="420" alt="Jal Rakshak App Mockup" class="hero-app-mockup">
         </div>
       </div>
       <div class="hero-scroll-hint hero-fade">
@@ -398,9 +365,7 @@
             <a href="#innovations" class="btn-primary" style="margin-top:24px;display:inline-flex">Explore Solutions</a>
           </div>
           <div class="video-split-media">
-            <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/a2.jpg"
-              srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/a2.jpg 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_800/skjal/a2.jpg 800w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/a2.jpg 1200w"
-              sizes="(max-width: 768px) 100vw, 50vw" alt="Empowering Solutions"
+            <img src="img/a2.jpg" alt="Empowering Solutions"
               style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
           </div>
         </div>
@@ -446,9 +411,7 @@
       <div class="wrap">
         <div class="showcase-split">
           <div class="showcase-split-media">
-            <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/aerial-water.png"
-              srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/aerial-water.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_800/skjal/aerial-water.png 800w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/aerial-water.png 1200w"
-              sizes="(max-width: 768px) 100vw, 50vw" alt="Water crisis and pollution"
+            <img src="img/aerial-water.png" alt="Water crisis and pollution"
               style="border-radius: var(--r); filter: contrast(1.1) brightness(0.9);">
           </div>
           <div class="showcase-split-text">
@@ -663,17 +626,11 @@
           </div>
           <div class="flow-showcase-strip">
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/s1.png"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/s1.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/s1.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/s1.png 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="Edge sensor device"></div>
+                src="img/s1.png" alt="Edge sensor device"></div>
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/p1.png"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/p1.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/p1.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/p1.png 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="Infrastructure monitoring"></div>
+                src="img/p1.png" alt="Infrastructure monitoring"></div>
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/a2.jpg"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/a2.jpg 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_800/skjal/a2.jpg 800w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/a2.jpg 1200w"
-                sizes="(max-width: 768px) 100vw, 50vw" alt="Field deployment"></div>
+                src="img/a2.jpg" alt="Field deployment"></div>
           </div>
         </div>
       </section>
@@ -713,17 +670,11 @@
           </div>
           <div class="flow-showcase-strip">
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/s2.png"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/s2.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/s2.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/s2.png 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="Cloud dashboard"></div>
+                src="img/s2.png" alt="Cloud dashboard"></div>
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/p2.png"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/p2.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/p2.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/p2.png 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="Analytics view"></div>
+                src="img/p2.png" alt="Analytics view"></div>
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/t1.png"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/t1.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/t1.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/t1.png 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="Team operations"></div>
+                src="img/t1.png" alt="Team operations"></div>
           </div>
         </div>
       </section>
@@ -763,17 +714,11 @@
           </div>
           <div class="flow-showcase-strip">
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/s3.png"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/s3.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/s3.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/s3.png 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="AI predictions"></div>
+                src="img/s3.png" alt="AI predictions"></div>
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/a1.jpg"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/a1.jpg 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/a1.jpg 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/a1.jpg 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="Data analytics"></div>
+                src="img/a1.jpg" alt="Data analytics"></div>
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/a2.jpg"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/a2.jpg 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_800/skjal/a2.jpg 800w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_1200/skjal/a2.jpg 1200w"
-                sizes="(max-width: 768px) 100vw, 50vw" alt="Sensor network"></div>
+                src="img/a2.jpg" alt="Sensor network"></div>
           </div>
         </div>
       </section>
@@ -813,17 +758,11 @@
           </div>
           <div class="flow-showcase-strip">
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/team.png"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/team.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/team.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/team.png 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="Team success"></div>
+                src="img/team.png" alt="Team success"></div>
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/gemini-2.jpg"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/gemini-2.jpg 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/gemini-2.jpg 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/gemini-2.jpg 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="Infrastructure"></div>
+                src="img/gemini-2.jpg" alt="Infrastructure"></div>
             <div class="flow-showcase-card"><img
-                src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/cloud-dashboard.png"
-                srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/cloud-dashboard.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/cloud-dashboard.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/cloud-dashboard.png 600w"
-                sizes="(max-width: 768px) 160px, 200px" alt="Reports"></div>
+                src="img/cloud-dashboard.png" alt="Reports"></div>
           </div>
         </div>
       </section>
@@ -836,9 +775,7 @@
       <div class="wrap">
         <div class="showcase-split">
           <div class="showcase-split-media">
-            <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/team.png"
-              srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/team.png 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/team.png 400w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_600/skjal/team.png 600w"
-              sizes="(max-width: 768px) 160px, 200px" alt="Engineering team reviewing infrastructure data on-site">
+            <img src="img/team.png" alt="Engineering team reviewing infrastructure data on-site">
           </div>
           <div class="showcase-split-text">
 
@@ -1051,7 +988,7 @@
     </section>
 
     <!-- ═══ ABOUT & CORPORATE IDENTITY ═══ -->
-    <section id="about" class="sec sec-alt">
+    <section id="about" class="sec" style="background: var(--bg); background-image: none;">
       <div class="wrap">
 
         <h2 class="sec-title gs-split" style="margin-bottom: 40px;">Our Journey & Entity.</h2>
@@ -1079,9 +1016,7 @@
             <div class="directors-row">
               <div class="dir-card gs-reveal">
                 <div class="dir-icon" style="overflow:hidden; padding:0;"><img
-                    src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/pdf_img_page3_1.jpeg"
-                    srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/pdf_img_page3_1.jpeg 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/pdf_img_page3_1.jpeg 400w"
-                    sizes="100px" style="width:100%;height:100%;object-fit:cover;" alt="Kamesh Sharma"></div>
+                    src="img/pdf_img_page3_1.jpeg" style="width:100%;height:100%;object-fit:cover;" alt="Kamesh Sharma"></div>
                 <div><strong>Kamesh Sharma</strong><span class="dir-meta">Managing Director</span>
                   <p style="font-size:0.85rem; color:var(--text-color); opacity:0.8; margin-top:8px;">Expertise in IIoT
                     engineering and embedded systems. Focused on real-time environmental monitoring.</p>
@@ -1089,9 +1024,7 @@
               </div>
               <div class="dir-card gs-reveal">
                 <div class="dir-icon" style="overflow:hidden; padding:0;"><img
-                    src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/pdf_img_page3_2.jpeg"
-                    srcset="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/pdf_img_page3_2.jpeg 200w, https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_400/skjal/pdf_img_page3_2.jpeg 400w"
-                    sizes="100px" style="width:100%;height:100%;object-fit:cover;" alt="Dr. P. Sirish Kumar"></div>
+                    src="img/pdf_img_page3_2.jpeg" style="width:100%;height:100%;object-fit:cover;" alt="Dr. P. Sirish Kumar"></div>
                 <div><strong>Dr. P. Sirish Kumar</strong><span class="dir-meta">Director</span>
                   <p style="font-size:0.85rem; color:var(--text-color); opacity:0.8; margin-top:8px;">IoT & GNSS Expert,
                     Ph.D. with Gold Medal. Authored 100+ publications and holds 6 patents.</p>
@@ -1106,7 +1039,7 @@
 
 
     <!-- ═══ CONTACT ═══ -->
-    <section id="contact" class="sec sec-alt">
+    <section id="contact" class="sec" style="background: var(--bg); background-image: none;">
       <div class="wrap">
 
         <h2 class="cta-title gs-reveal">How Can We Assist You Today?</h2>

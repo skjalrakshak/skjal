@@ -21,9 +21,15 @@
   if (!canvas) return;
 
   // ── RENDERER ──
-  const renderer = new THREE.WebGLRenderer({
-    canvas, antialias: false, alpha: true, powerPreference: 'high-performance'
-  });
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({
+      canvas, antialias: false, alpha: true, powerPreference: 'high-performance'
+    });
+  } catch (error) {
+    canvas.hidden = true;
+    return;
+  }
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;

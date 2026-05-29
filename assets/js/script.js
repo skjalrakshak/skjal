@@ -5,18 +5,28 @@ const hasGsap = Boolean(window.gsap);
 const hasScrollTrigger = Boolean(window.ScrollTrigger);
 const hasLenis = Boolean(window.Lenis);
 
+function runAnimationCallback(vars) {
+  if (vars && typeof vars.onComplete === 'function') {
+    window.setTimeout(vars.onComplete, 0);
+  }
+}
+
 const noopTween = {
-  to() { return this; },
+  to(target, vars) { runAnimationCallback(vars); return this; },
   call(fn) { if (typeof fn === 'function') fn(); return this; },
   set() { return this; }
 };
 
 const gsap = window.gsap || {
   registerPlugin() {},
-  timeline() { return Object.create(noopTween); },
-  to() { return {}; },
+  timeline(config = {}) {
+    const tween = Object.create(noopTween);
+    runAnimationCallback(config);
+    return tween;
+  },
+  to(target, vars) { runAnimationCallback(vars); return {}; },
   from() { return {}; },
-  fromTo() { return {}; },
+  fromTo(target, fromVars, toVars) { runAnimationCallback(toVars); return {}; },
   set() {},
   ticker: { add() {}, lagSmoothing() {} }
 };
@@ -82,6 +92,16 @@ function setTheme(t) {
     localStorage.setItem('skj-theme', t);
   } catch (err) {
     /* Theme persistence is optional when storage is blocked. */
+  }
+}
+
+function getHashTarget(hash) {
+  if (!hash || hash === '#') return null;
+  try {
+    const id = decodeURIComponent(hash.slice(1));
+    return document.getElementById(id) || document.querySelector(hash);
+  } catch (err) {
+    return null;
   }
 }
 
@@ -193,7 +213,19 @@ document.getElementById('themeToggle')?.addEventListener('click', (e) => {
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const preloaderEl = document.getElementById('preloader');
 
-if (preloaderEl) {
+if (preloaderEl && !hasGsap) {
+  if (typeof lenis.start === 'function') lenis.start();
+  preloaderEl.style.pointerEvents = 'none';
+  preloaderEl.style.display = 'none';
+  document.querySelectorAll('.hero-line').forEach((line) => {
+    line.style.transform = 'translateY(0)';
+    line.style.opacity = '1';
+  });
+  document.querySelectorAll('.hero-fade, .hero-app-mockup, .main-nav').forEach((el) => {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
+} else if (preloaderEl) {
   if (typeof lenis.stop === 'function') lenis.stop();
 
   const preloaderTL = gsap.timeline({
@@ -377,9 +409,15 @@ if (navPills && navCursor) {
 // ═══════════════════════
 const progressBar = document.getElementById('scrollProgress');
 if (progressBar) {
+  let progressTicking = false;
   window.addEventListener('scroll', () => {
-    const h = document.documentElement.scrollHeight - window.innerHeight;
-    progressBar.style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0%';
+    if (progressTicking) return;
+    progressTicking = true;
+    window.requestAnimationFrame(() => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0%';
+      progressTicking = false;
+    });
   }, { passive: true });
 }
 
@@ -388,7 +426,7 @@ if (progressBar) {
 // ═══════════════════════
 function wrapWords(el) {
   const words = el.innerText.split(' ');
-  el.innerHTML = '';
+  el.replaceChildren();
   words.forEach(word => {
     const wordSpan = document.createElement('span');
     wordSpan.style.display = 'inline-block';
@@ -482,7 +520,7 @@ document.querySelectorAll('a').forEach(anchor => {
         // If pointing to a section on the current page, scroll smooth
         if (pathMatches) {
           if (clickedUrl.hash) {
-            const target = document.querySelector(clickedUrl.hash);
+            const target = getHashTarget(clickedUrl.hash);
             if (target) {
               e.preventDefault();
               const overlay = document.querySelector('.page-transition-overlay');
@@ -506,7 +544,7 @@ document.querySelectorAll('a').forEach(anchor => {
         }
       }
     } catch (err) {
-      console.warn('URL parsing failed for link:', err);
+      // Invalid URLs are ignored so malformed anchors cannot break navigation.
     }
   });
 });
@@ -514,7 +552,7 @@ document.querySelectorAll('a').forEach(anchor => {
 // Scroll to hash on page load
 window.addEventListener('load', () => {
   if (window.location.hash) {
-    const target = document.querySelector(window.location.hash);
+    const target = getHashTarget(window.location.hash);
     if (target) {
       setTimeout(() => {
         if (typeof ScrollTrigger !== 'undefined') {
@@ -840,9 +878,11 @@ document.querySelectorAll('.stat-val').forEach(stat => {
       // Close all others
       faqItems.forEach(otherItem => {
         if (otherItem !== item && otherItem.classList.contains('is-open')) {
+          const otherTrigger = otherItem.querySelector('.faq-trigger');
+          const otherContent = otherItem.querySelector('.faq-content');
           otherItem.classList.remove('is-open');
-          otherItem.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
-          otherItem.querySelector('.faq-content').style.height = '0px';
+          otherTrigger?.setAttribute('aria-expanded', 'false');
+          if (otherContent) otherContent.style.height = '0px';
         }
       });
 
@@ -869,8 +909,10 @@ document.querySelectorAll('.stat-val').forEach(stat => {
     const openItem = document.querySelector('.faq-item.is-open');
     if (openItem) {
       const content = openItem.querySelector('.faq-content');
-      const innerHeight = openItem.querySelector('.faq-content-inner').offsetHeight;
-      content.style.height = innerHeight + 'px';
+      const inner = openItem.querySelector('.faq-content-inner');
+      if (content && inner) {
+        content.style.height = inner.offsetHeight + 'px';
+      }
     }
   });
 })();
@@ -888,6 +930,10 @@ document.querySelectorAll('.stat-val').forEach(stat => {
   const drawerClose = document.getElementById('navDrawerClose');
   const overlay = document.getElementById('navOverlay');
   if (!nav) return;
+
+  hamburger?.setAttribute('aria-controls', 'navDrawer');
+  hamburger?.setAttribute('aria-expanded', 'false');
+  drawer?.setAttribute('aria-hidden', 'true');
 
   // Scroll: add shadow + hide on scroll down, show on scroll up
   let lastScroll = 0;
@@ -921,13 +967,17 @@ document.querySelectorAll('.stat-val').forEach(stat => {
 
   // Mobile drawer
   function openDrawer() {
-    drawer.classList.add('is-open');
-    overlay.classList.add('is-open');
+    drawer?.classList.add('is-open');
+    overlay?.classList.add('is-open');
+    drawer?.setAttribute('aria-hidden', 'false');
+    hamburger?.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
   function closeDrawer() {
-    drawer.classList.remove('is-open');
-    overlay.classList.remove('is-open');
+    drawer?.classList.remove('is-open');
+    overlay?.classList.remove('is-open');
+    drawer?.setAttribute('aria-hidden', 'true');
+    hamburger?.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   }
   if (hamburger) hamburger.addEventListener('click', openDrawer);
@@ -936,9 +986,12 @@ document.querySelectorAll('.stat-val').forEach(stat => {
 
   // Drawer accordion
   document.querySelectorAll('.nav-drawer-trigger').forEach(trigger => {
+    trigger.setAttribute('aria-expanded', 'false');
     trigger.addEventListener('click', () => {
       const group = trigger.closest('.nav-drawer-group');
-      group.classList.toggle('is-open');
+      if (!group) return;
+      const isOpen = group.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', String(isOpen));
     });
   });
 
@@ -1071,11 +1124,32 @@ document.querySelectorAll('.stat-val').forEach(stat => {
     goToTestimonial(next);
   }
 
-  function resetRotate() {
-    clearInterval(autoRotate);
-    autoRotate = setInterval(nextTestimonial, 6000);
+  function stopRotate() {
+    if (autoRotate) {
+      clearInterval(autoRotate);
+      autoRotate = null;
+    }
   }
 
+  function startRotate() {
+    if (!autoRotate) {
+      autoRotate = setInterval(nextTestimonial, 6000);
+    }
+  }
+
+  function resetRotate() {
+    stopRotate();
+    startRotate();
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopRotate();
+    } else {
+      resetRotate();
+    }
+  });
+  window.addEventListener('pagehide', stopRotate, { once: true });
   resetRotate();
 })();
 
