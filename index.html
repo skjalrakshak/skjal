@@ -136,17 +136,8 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media = 'all'"
-    />
-    <noscript
-      ><link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet"
-    /></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
     <style>
       /*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
       @layer properties;
@@ -212,8 +203,8 @@
         --sky-blue: #ffffff;
         --accent: #d4af37;
         --green: #34d399;
-        --sans: "Montserrat", system-ui, -apple-system, sans-serif;
-        --display: "Playfair Display", serif;
+        --sans: "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+        --display: var(--sans);
         --r: 12px;
         --ease: cubic-bezier(0.16, 1, 0.3, 1);
         --dur: 0.4s;
@@ -817,12 +808,12 @@
       }
       .hero-h1 {
         font-family: var(--display);
-        font-size: clamp(2rem, 3.5vw, 3.2rem);
-        font-weight: 800;
-        line-height: 1.1;
-        letter-spacing: -0.02em;
-        text-transform: uppercase;
-        color: #0ea5e9;
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 400;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+        color: #1a1a1a;
+        text-transform: none;
         transition: color var(--dur) ease;
       }
       .hero-line-wrap {
@@ -1456,9 +1447,7 @@
         transition-timing-function: var(--tw-ease, ease);
         transition-duration: var(--tw-duration, 0s);
       }
-      @layer base {
-        -webkit-text-size-adjust: 100%;
-      }
+      @layer base { html { -webkit-text-size-adjust: 100%; } }
       body {
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
@@ -2214,7 +2203,6 @@
       }
       .flow-heading,
       .sys-name,
-      h1,
       h2,
       h3 {
         font-family: var(--display);
@@ -2222,6 +2210,11 @@
         letter-spacing: -0.02em;
         line-height: 1.15;
         text-transform: uppercase;
+      }
+      h1 {
+        font-family: var(--display);
+        letter-spacing: -0.02em;
+        line-height: 1.15;
       }
       .flow-art-root {
         width: 100%;
@@ -2633,66 +2626,56 @@
     <div id="scrollProgress" aria-hidden="true"></div>
     <header id="mainNav" class="main-nav">
       <div class="nav-inner">
-        <a href="index.html" class="nav-logo" id="navLogo"
-          ><img
-            src="img/logo.webp"
-            width="100"
-            height="100"
-            alt="SK Jalrakshak Logo"
-            class="nav-logo-img"
-            loading="lazy"
-            decoding="async"
-          />
-          <span class="nav-logo-text">SK Jalrakshak</span></a
-        >
-        <nav class="nav-menu" id="navMenu">
-          <a href="index.html" class="nav-link active">Home</a>
-          <div class="nav-dropdown">
-            <button class="nav-link nav-dropdown-trigger">
-              Our Products
-              <svg
-                class="nav-chevron"
-                width="10"
-                height="10"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="nav-dropdown-menu">
-              <a href="jal-rakshak.html" class="nav-dropdown-item"
-                >Jal Rakshak — Water Intelligence</a
-              >
-              <a href="shield.html" class="nav-dropdown-item"
-                >S.H.I.E.L.D. — Driving Safety</a
-              >
-              <a href="energy-monitoring.html" class="nav-dropdown-item"
-                >Energy Monitoring</a
-              >
+        <div class="nav-left" style="display: flex; align-items: center; gap: 32px;">
+          <a href="index.html" class="nav-logo" id="navLogo"
+            ><img
+              src="img/logo.webp"
+              width="100"
+              height="100"
+              alt="SK Jalrakshak Logo"
+              class="nav-logo-img"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="nav-logo-text">SK Jalrakshak</span></a
+          >
+          <nav class="nav-menu" id="navMenu">
+            <a href="index.html" class="nav-link active">Home</a>
+            <div class="nav-dropdown">
+              <button class="nav-link nav-dropdown-trigger">
+                Our Products
+                <svg
+                  class="nav-chevron"
+                  width="10"
+                  height="10"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div class="nav-dropdown-menu">
+                <a href="jal-rakshak.html" class="nav-dropdown-item"
+                  >Jal Rakshak — Water Intelligence</a
+                >
+                <a href="shield.html" class="nav-dropdown-item"
+                  >S.H.I.E.L.D. — Driving Safety</a
+                >
+                <a href="energy-monitoring.html" class="nav-dropdown-item"
+                  >Energy Monitoring</a
+                >
+              </div>
             </div>
-          </div>
-          <a href="about.html" class="nav-link">About Us</a>
-          <a href="resources.html" class="nav-link">Resources</a>
-          <a href="contact.html" class="nav-link">Contact Us</a>
-        </nav>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="resources.html" class="nav-link">Resources</a>
+            <a href="contact.html" class="nav-link">Contact Us</a>
+           <a href="index.html#faq" class="nav-link">FAQ</a>
+</nav>
+        </div>
         <div class="nav-actions" id="topRightActions">
-          <a href="contact.html" class="nav-cta-btn"
-            >Contact Us
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg> </a
-          ><button
+          <button
             class="nav-hamburger"
             id="navHamburger"
             aria-label="Open menu"
@@ -2757,70 +2740,51 @@
           <a href="about.html" class="nav-drawer-link">About Us</a>
           <a href="resources.html" class="nav-drawer-link">Resources</a>
           <a href="contact.html" class="nav-drawer-link">Contact Us</a>
-        </nav>
+         <a href="index.html#faq" class="nav-drawer-link">FAQ</a>
+</nav>
       </div>
       <div class="nav-drawer-overlay" id="navOverlay"></div>
     </header>
     <main>
-      <section id="hero" class="hero-section">
-        <div class="hero-container hero-split">
-          <div class="hero-left">
-            <p class="hero-tag gs-reveal">
-              Innovating Real-Time Water Safety & Sustainability
+      <section id="hero" class="hero-section" style="justify-content: flex-start; align-items: center; text-align: center; position: relative; overflow: hidden; min-height: auto; padding: 120px 32px 80px;">
+        <!-- Abstract Enterprise Wave Background -->
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: radial-gradient(ellipse at bottom center, rgba(0, 112, 243, 0.15) 0%, transparent 80%); z-index: 0; pointer-events: none;"></div>
+        <svg style="position: absolute; bottom: 0; left: 0; width: 100%; height: auto; z-index: 0; opacity: 0.8; pointer-events: none;" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+          <path fill="none" stroke="rgba(0,112,243,0.15)" stroke-width="1.5" d="M0,160 C320,300, 420,0, 720,160 C1020,320, 1120,20, 1440,160" />
+          <path fill="none" stroke="rgba(0,112,243,0.1)" stroke-width="1.5" d="M0,200 C280,340, 480,40, 720,200 C960,360, 1160,60, 1440,200" />
+          <path fill="none" stroke="rgba(0,112,243,0.07)" stroke-width="1.5" d="M0,240 C240,380, 540,80, 720,240 C900,400, 1200,100, 1440,240" />
+        </svg>
+
+        <div class="hero-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 1; width: 100%; max-width: 860px; margin: 0 auto; padding: 0 20px;">
+            <p class="hero-tag gs-reveal" style="color: #10b981; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; font-size: 12px;">
+              AI-POWERED ENTERPRISE SOFTWARE
             </p>
-            <h1 class="hero-h1">
-              <span class="hero-line-wrap"
-                ><span class="hero-line">SK Jalrakshak</span></span
-              >
-              <span class="hero-line-wrap"
-                ><span class="hero-line"
-                  >Innovations Private Limited</span
-                ></span
-              >
+            <h1 class="hero-h1" style="line-height: 1.2; font-size: clamp(28px, 4vw, 44px); margin-bottom: 20px; color: #1a1a1a; font-weight: 400; letter-spacing: -0.5px; text-transform: none !important;">
+              <span class="hero-line-wrap" style="text-align: center;">
+                <span class="hero-line" style="color: #1a1a1a;">Accelerate enterprise growth with</span>
+              </span>
+              <span class="hero-line-wrap" style="text-align: center;">
+                <span class="hero-line" style="color: #1a1a1a;">intelligent edge IoT solutions</span>
+              </span>
             </h1>
-            <div class="hero-bottom hero-fade">
-              <p class="hero-sub">
-                We design, develop, and deploy advanced water quality monitoring
-                solutions that integrate cutting-edge sensors, IoT connectivity,
-                edge computing, and cloud-based analytics to safeguard public
-                health.
+            
+            <div style="width: 28px; height: 2px; background-color: #ef4444; margin-bottom: 20px;"></div>
+
+            <div class="hero-bottom hero-fade" style="align-items: center; text-align: center; width: 100%; display: flex; flex-direction: column;">
+              <p class="hero-sub" style="max-width: 600px; margin: 0 auto 36px auto; font-size: 16px; line-height: 1.6; color: #6b7280;">
+                Deliver real-time water monitoring, collaborate seamlessly, and automate infrastructure safety—<strong style="font-weight: 500; color: #374151;">all</strong> on an IoT platform built in India.
               </p>
-              <div class="hero-actions">
-                <a href="resources.html" class="btn-primary"
-                  >Explore Solutions</a
-                >
-              </div>
-              <div class="hero-metrics">
-                <div class="metric-item">
-                  <strong class="metric-value">Real-Time</strong>
-                  <span class="metric-label">IoT Monitoring</span>
-                </div>
-                <div class="metric-divider"></div>
-                <div class="metric-item">
-                  <strong class="metric-value">4G / 5G</strong>
-                  <span class="metric-label">Edge Telemetry</span>
-                </div>
-                <div class="metric-divider"></div>
-                <div class="metric-item">
-                  <strong class="metric-value">Cloud</strong>
-                  <span class="metric-label">Predictive Analytics</span>
-                </div>
+              <div class="hero-actions" style="justify-content: center; margin-bottom: 0;">
+                <style>
+                  .hero-zoho-btn::before { display: none !important; }
+                  .hero-zoho-btn { transition: background 0.3s ease !important; }
+                  .hero-zoho-btn:hover { background: #dc2626 !important; transform: none !important; box-shadow: none !important; }
+                </style>
+                <a href="contact.html" class="btn-primary hero-zoho-btn" style="background: #ef4444; color: #fff; border: none; font-weight: 600; padding: 13px 30px; font-size: 13px; text-transform: uppercase; border-radius: 4px; box-shadow: none; letter-spacing: 0.5px;">
+                  CONTACT SALES &nbsp;&gt;
+                </a>
               </div>
             </div>
-          </div>
-          <div class="hero-right hero-fade">
-            <img
-              src="img/p1-transparent.webp"
-              width="420"
-              height="420"
-              alt="Jal Rakshak App Mockup"
-              class="hero-app-mockup"
-            />
-          </div>
-        </div>
-        <div class="hero-scroll-hint hero-fade">
-          <span>Scroll to explore</span>
-          <div class="scroll-line"></div>
         </div>
       </section>
       <section id="platform-video" class="sec sec-video">
@@ -3958,6 +3922,30 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- ═══ OUR PARTNERS ═══ -->
+      <section class="sec" style="background: #0070f3; text-align: center; padding: 60px 20px;">
+        <div class="wrap" style="max-width: 1000px; margin: 0 auto;">
+          <h2 style="color: #ffffff; font-size: 2.5rem; font-weight: 700; margin-bottom: 12px;">Our Partners</h2>
+          <p style="color: #ffffff; font-size: 1.1rem; opacity: 0.9; margin-bottom: 40px; font-weight: 500;">
+            Trusted by industry leaders, our partners drive innovation and success with us.
+          </p>
+          
+          <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: stretch;">
+            <!-- Card 1: Satya Sri Electricals -->
+            <div class="gs-reveal" style="background: #ffffff; border-radius: 12px; padding: 30px 20px; width: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); min-height: 120px;">
+              <span style="font-size: 1.1rem; font-weight: 700; color: #1a1a1a; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3;">
+                Satya Sri<br>Electricals
+              </span>
+            </div>
+            
+            <!-- Card 2: KLTIF -->
+            <div class="gs-reveal" style="background: #ffffff; border-radius: 12px; padding: 30px 20px; width: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); min-height: 120px;">
+              <img src="img/kltiflogo.png" alt="KLTIF" style="max-width: 160px; max-height: 60px; object-fit: contain;" loading="lazy" decoding="async">
             </div>
           </div>
         </div>

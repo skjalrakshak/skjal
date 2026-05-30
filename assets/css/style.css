@@ -63,8 +63,8 @@
   --sky-blue: #ffffff; /* Neutralize blue */
   --accent: #d4af37; /* Premium Gold accent instead of blue */
   --green: #34d399;
-  --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
-  --display: 'Playfair Display', serif;
+  --sans: "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --display: var(--sans);
   --r: 12px;
   --ease: cubic-bezier(0.16,1,0.3,1);
   --dur: 0.4s;
@@ -3544,8 +3544,8 @@ main,#footer {
 
 /* 1. TYPOGRAPHY: Editorial Contrast & Fluid Scales */
 :root {
-  --display: 'Playfair Display', serif;
-  --sans: 'Montserrat', system-ui, sans-serif;
+  --display: var(--sans);
+  --sans: "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
 .sec-title {
