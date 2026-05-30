@@ -271,20 +271,18 @@
         left: 0;
         right: 0;
         z-index: 1100;
-        background: var(--nav-bg);
-        backdrop-filter: blur(12px) saturate(1.5);
-        -webkit-backdrop-filter: blur(12px) saturate(1.5);
-        border-bottom: 1px solid var(--border);
+        background: transparent;
+        border-bottom: none;
         transition:
           transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
           background 0.3s,
           box-shadow 0.3s;
       }
       .main-nav.nav-scrolled {
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+        box-shadow: none;
       }
       [data-theme="dark"] .main-nav.nav-scrolled {
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        box-shadow: none;
       }
       .main-nav.nav-hidden {
         transform: translateY(-100%);
@@ -318,7 +316,7 @@
         font-family: var(--display);
         font-size: 1.1rem;
         font-weight: 700;
-        color: var(--fg-head);
+        color: #000 !important;
         letter-spacing: -0.01em;
         transition: color 0.3s;
       }
@@ -331,7 +329,7 @@
         font-family: var(--sans);
         font-size: 0.88rem;
         font-weight: 500;
-        color: var(--fg-body);
+        color: #000 !important;
         padding: 8px 16px;
         border-radius: 8px;
         text-decoration: none;
@@ -345,8 +343,8 @@
       }
       .nav-link.active,
       .nav-link:hover {
-        color: var(--fg-head);
-        background: var(--nav-pill);
+        color: #000 !important;
+        background: transparent;
       }
       .nav-chevron {
         transition: transform 0.25s;
@@ -407,7 +405,7 @@
         padding: 10px 16px;
         font-size: 0.88rem;
         font-weight: 500;
-        color: var(--fg-body);
+        color: #000 !important;
         text-decoration: none;
         border-radius: 8px;
         transition:
@@ -415,8 +413,8 @@
           color 0.2s;
       }
       .nav-dropdown-item:hover {
-        background: var(--nav-pill);
-        color: var(--fg-head);
+        background: transparent;
+        color: #000 !important;
       }
       .nav-actions {
         display: flex;
@@ -732,12 +730,12 @@ width: 100%;
       }
       .hero-h1 {
         font-family: var(--display);
-        font-size: clamp(2rem, 3.5vw, 3.2rem);
-        font-weight: 800;
-        line-height: 1.1;
-        letter-spacing: -0.02em;
-        text-transform: uppercase;
-        color: #0ea5e9;
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 400;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+        color: #1a1a1a;
+        text-transform: none;
         transition: color var(--dur) ease;
       }
       .hero-line-wrap {
@@ -2136,7 +2134,6 @@ width: 100%;
       }
       .flow-heading,
       .sys-name,
-      h1,
       h2,
       h3 {
         font-family: var(--display);
@@ -2144,6 +2141,11 @@ width: 100%;
         letter-spacing: -0.02em;
         line-height: 1.15;
         text-transform: uppercase;
+      }
+      h1 {
+        font-family: var(--display);
+        letter-spacing: -0.02em;
+        line-height: 1.15;
       }
       .flow-art-root {
         width: 100%;
@@ -2934,7 +2936,8 @@ width: 100%;
             />
             <span class="nav-logo-text">SK Jalrakshak</span></a
           >
-          <nav class="nav-menu" id="navMenu">
+        </div>
+        <nav class="nav-menu" id="navMenu" style="margin: 0 auto; gap: 12px;">
             <a href="index.html" class="nav-link">Home</a>
             <div class="nav-dropdown">
               <button class="nav-link nav-dropdown-trigger">
@@ -2968,7 +2971,6 @@ width: 100%;
             <a href="contact.html" class="nav-link">Contact Us</a>
            <a href="index.html#faq" class="nav-link">FAQ</a>
 </nav>
-        </div>
         <div class="nav-actions" id="topRightActions">
           <button
             class="nav-hamburger"
@@ -3004,7 +3006,7 @@ width: 100%;
           </button>
         </div>
         <nav class="nav-drawer-links">
-          <a href="index.html" class="nav-drawer-link">Home</a>
+          <a href="index.html" class="nav-drawer-link active">Home</a>
           <div class="nav-drawer-group">
             <button class="nav-drawer-link nav-drawer-trigger">
               Our Products
