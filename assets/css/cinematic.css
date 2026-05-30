@@ -1,0 +1,178 @@
+/* Cinematic Overhaul Layout */
+
+.cinematic-scroll {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--fg);
+  padding: 40px 0;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+@media (min-width: 900px) {
+  .cinematic-scroll {
+    flex-direction: row;
+    position: relative;
+    padding: 80px 0;
+  }
+}
+
+.cinematic-sticky {
+  position: sticky;
+  top: 120px;
+  height: calc(100vh - 160px);
+  width: 50%;
+  display: none;
+  padding: 0 40px;
+}
+
+@media (min-width: 900px) {
+  .cinematic-sticky {
+    display: block;
+  }
+}
+
+.cinematic-sticky img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.6s ease;
+}
+
+[data-theme="dark"] .cinematic-sticky img {
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+.cinematic-content {
+  width: 100%;
+  padding: 40px 20px;
+}
+
+@media (min-width: 900px) {
+  .cinematic-content {
+    width: 50%;
+    padding: 0 60px 0 20px;
+  }
+}
+
+.cinematic-block {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0.15;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(40px);
+  margin-bottom: 60px;
+}
+
+@media (max-width: 899px) {
+  .cinematic-block {
+    min-height: auto;
+    opacity: 1;
+    transform: translateY(0);
+    margin-bottom: 80px;
+  }
+  .cinematic-block::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    margin-bottom: 32px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  }
+  .cinematic-block[data-image="img/jal_rakshak_sensor.png"]::before { background-image: url('../../img/jal_rakshak_sensor.png'); }
+  .cinematic-block[data-image="img/jal_rakshak_dash.png"]::before { background-image: url('../../img/jal_rakshak_dash.png'); }
+  .cinematic-block[data-image="img/shield_dashcam.png"]::before { background-image: url('../../img/shield_dashcam.png'); }
+  .cinematic-block[data-image="img/shield_fleet.png"]::before { background-image: url('../../img/shield_fleet.png'); }
+  .cinematic-block[data-image="img/energy_node.png"]::before { background-image: url('../../img/energy_node.png'); }
+  .cinematic-block[data-image="img/energy_dash.png"]::before { background-image: url('../../img/energy_dash.png'); }
+}
+
+.cinematic-block.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cinematic-block h2 {
+  font-family: var(--display);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 800;
+  color: var(--fg-head);
+  margin-bottom: 24px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.cinematic-block p {
+  font-family: var(--sans);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--fg-body);
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+.cinematic-stat {
+  font-family: var(--display);
+  font-size: 5rem;
+  font-weight: 900;
+  color: #09f;
+  line-height: 1;
+  margin-bottom: 12px;
+  letter-spacing: -0.04em;
+}
+
+.cinematic-stat span {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--fg-head);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 12px;
+}
+
+.cinematic-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cinematic-feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--fg-head);
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cinematic-feature-list li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.cinematic-feature-list li svg {
+  color: #09f;
+  flex-shrink: 0;
+}
+
+/* Mobile Background Fix Override */
+.product-hero, .product-section, .product-cta-section {
+  background-color: var(--bg) !important;
+  transition: background-color 0.4s ease;
+}
+.bg-alt {
+  background-color: var(--bg-alt) !important;
+}

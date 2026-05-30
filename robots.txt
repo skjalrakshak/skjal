@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /img/
 
-Sitemap: https://www.skjal.in/sitemap.xml
+# Sitemaps
+Sitemap: https://skjal.in/sitemap.xml
