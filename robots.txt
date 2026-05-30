@@ -2,6 +2,10 @@ User-agent: *
 Allow: /
 Allow: /assets/
 Allow: /img/
+Allow: /scripts/
 
-# Sitemaps
+Disallow: /admin/
+Disallow: /*?s=
+Disallow: /*&sort=
+
 Sitemap: https://skjal.in/sitemap.xml
