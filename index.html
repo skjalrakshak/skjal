@@ -1401,6 +1401,15 @@
           line-height: 1.35;
           overflow-wrap: anywhere;
         }
+        .dir-card {
+          flex-direction: column;
+          text-align: center;
+          gap: 16px;
+        }
+        .dir-icon {
+          width: 96px;
+          height: 96px;
+        }
       }
       .absolute {
         position: absolute;
@@ -2597,7 +2606,11 @@
         transform-origin: bottom;
         pointer-events: none;
       }
-    </style>
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
     <script
       defer="defer"
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
@@ -2650,7 +2663,11 @@
       .hero-line { display: block; transform: translateY(100%); opacity: 0; }
       .hero-divider { transform: scaleX(0); transform-origin: center; opacity: 0; }
       .hero-bottom { opacity: 0; transform: translateY(20px); }
-    </style>
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
 </head>
   <body>
     <div class="page-transition-overlay" aria-hidden="true"></div>
@@ -2812,7 +2829,11 @@
                   .hero-zoho-btn::before { display: none !important; }
                   .hero-zoho-btn { transition: background 0.3s ease !important; }
                   .hero-zoho-btn:hover { background: #dc2626 !important; transform: none !important; box-shadow: none !important; }
-                </style>
+                @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
                 <a href="contact.html" class="btn-primary hero-zoho-btn" style="background: #ef4444; color: #fff; border: none; font-weight: 600; padding: 13px 30px; font-size: 13px; text-transform: uppercase; border-radius: 4px; box-shadow: none; letter-spacing: 0.5px;">
                   CONTACT SALES &nbsp;&gt;
                 </a>

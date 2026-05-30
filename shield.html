@@ -1312,6 +1312,15 @@
           line-height: 1.35;
           overflow-wrap: anywhere;
         }
+        .dir-card {
+          flex-direction: column;
+          text-align: center;
+          gap: 16px;
+        }
+        .dir-icon {
+          width: 96px;
+          height: 96px;
+        }
       }
       .absolute {
         position: absolute;
@@ -2504,7 +2513,11 @@
         transform-origin: bottom;
         pointer-events: none;
       }
-    </style>
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
     <style>
       .product-hero {
         padding: 130px 0 80px;
@@ -2897,7 +2910,11 @@
           font-size: clamp(2.2rem, 8vw, 3.2rem);
         }
       }
-    </style>
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
     <link rel="preload" as="image" href="img/shield-hero.webp?v=2" />
     <link
       rel="icon"

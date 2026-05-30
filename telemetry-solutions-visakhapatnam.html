@@ -10,7 +10,11 @@
         h1, h2 { color: #09f; }
         .faq-item { margin-bottom: 20px; }
         .cta { display: inline-block; padding: 10px 20px; background: #09f; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
-    </style>
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>

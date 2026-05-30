@@ -120,7 +120,11 @@
           justify-content: center;
         }
       }
-    </style>
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
   </head>
   <body>
     <div class="container">

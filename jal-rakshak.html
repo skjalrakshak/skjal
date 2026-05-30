@@ -1310,6 +1310,15 @@
           line-height: 1.35;
           overflow-wrap: anywhere;
         }
+        .dir-card {
+          flex-direction: column;
+          text-align: center;
+          gap: 16px;
+        }
+        .dir-icon {
+          width: 96px;
+          height: 96px;
+        }
       }
       .absolute {
         position: absolute;
@@ -2502,7 +2511,11 @@
         transform-origin: bottom;
         pointer-events: none;
       }
-    </style>
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
     <script
       defer="defer"
       src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"
@@ -2806,7 +2819,11 @@
           font-size: clamp(2.2rem, 8vw, 3.2rem);
         }
       }
-    </style>
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
     <link rel="preload" as="image" href="img/skjal-hero-banner.webp?v=2" />
     <link
       rel="icon"

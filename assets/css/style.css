@@ -2042,6 +2042,15 @@ main,#footer {
   .stats-row {
     grid-template-columns: 1fr;
   }
+  .dir-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  .dir-icon {
+    width: 96px;
+    height: 96px;
+  }
   .corp-grid {
     grid-template-columns: 1fr;
   }
