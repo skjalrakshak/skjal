@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (!blocks.length || !stickyImage) return;
 
-    // Intersection Observer to trigger active states
+    // Use a very forgiving intersection observer for desktop mode on small screens
     const observerOptions = {
         root: null,
-        rootMargin: '-30% 0px -40% 0px',
+        rootMargin: '-10% 0px -10% 0px',
         threshold: 0
     };
 
@@ -36,10 +36,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     blocks.forEach(block => observer.observe(block));
     
-    // Set initial image
+    // Set initial image and make first block active
     if (blocks[0]) {
         blocks[0].classList.add('active');
         const src = blocks[0].getAttribute('data-image');
         if (src) stickyImage.setAttribute('src', src);
     }
+    
+    // Fallback: If scrolling is weird on some mobile desktop views, ensure at least one is active on scroll
+    window.addEventListener('scroll', () => {
+        let anyActive = false;
+        blocks.forEach(b => {
+            if (b.classList.contains('active')) anyActive = true;
+        });
+        if (!anyActive && blocks[0]) blocks[0].classList.add('active');
+    }, { passive: true });
 });

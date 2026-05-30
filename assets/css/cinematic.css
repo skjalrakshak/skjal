@@ -3,17 +3,18 @@
 .cinematic-scroll {
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background-color: var(--bg-alt) !important;
   color: var(--fg);
   padding: 40px 0;
-  transition: background 0.4s ease, color 0.4s ease;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  width: 100%;
 }
 
 @media (min-width: 900px) {
   .cinematic-scroll {
     flex-direction: row;
     position: relative;
-    padding: 80px 0;
+    padding: 100px 0;
   }
 }
 
@@ -62,30 +63,35 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  opacity: 0.15;
-  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  transform: translateY(40px);
+  opacity: 0.35;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(30px);
   margin-bottom: 60px;
 }
 
 @media (max-width: 899px) {
   .cinematic-block {
     min-height: auto;
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1 !important; /* Force visible on mobile */
+    transform: translateY(0) !important;
     margin-bottom: 80px;
   }
   .cinematic-block::before {
     content: '';
     display: block;
     width: 100%;
-    height: 300px;
+    height: 350px;
     background-size: cover;
     background-position: center;
     border-radius: 20px;
     margin-bottom: 32px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
   }
+  [data-theme="dark"] .cinematic-block::before {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Absolute and relative paths fallback */
   .cinematic-block[data-image="img/jal_rakshak_sensor.png"]::before { background-image: url('../../img/jal_rakshak_sensor.png'); }
   .cinematic-block[data-image="img/jal_rakshak_dash.png"]::before { background-image: url('../../img/jal_rakshak_dash.png'); }
   .cinematic-block[data-image="img/shield_dashcam.png"]::before { background-image: url('../../img/shield_dashcam.png'); }
@@ -111,7 +117,7 @@
 
 .cinematic-block p {
   font-family: var(--sans);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.8;
   color: var(--fg-body);
   max-width: 520px;
@@ -120,7 +126,7 @@
 
 .cinematic-stat {
   font-family: var(--display);
-  font-size: 5rem;
+  font-size: 4.5rem;
   font-weight: 900;
   color: #09f;
   line-height: 1;
@@ -139,40 +145,8 @@
   margin-top: 12px;
 }
 
-.cinematic-feature-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.cinematic-feature-list li {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: var(--fg-head);
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-.cinematic-feature-list li:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.cinematic-feature-list li svg {
-  color: #09f;
-  flex-shrink: 0;
-}
-
 /* Mobile Background Fix Override */
 .product-hero, .product-section, .product-cta-section {
   background-color: var(--bg) !important;
   transition: background-color 0.4s ease;
-}
-.bg-alt {
-  background-color: var(--bg-alt) !important;
 }
