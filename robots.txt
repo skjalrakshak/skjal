@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 Allow: /assets/
 Allow: /img/
-Allow: /scripts/
 
 Disallow: /admin/
 Disallow: /*?s=

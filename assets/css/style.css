@@ -239,19 +239,17 @@ main,#footer {
   left: 0;
   right: 0;
   z-index: 1100;
-  background: var(--nav-bg);
-  backdrop-filter: blur(12px) saturate(1.5);
-  -webkit-backdrop-filter: blur(12px) saturate(1.5);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
+  border-bottom: none;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               background 0.3s ease,
               box-shadow 0.3s ease;
 }
 .main-nav.nav-scrolled {
-  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  box-shadow: none;
 }
 [data-theme="dark"] .main-nav.nav-scrolled {
-  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  box-shadow: none;
 }
 .main-nav.nav-hidden {
   transform: translateY(-100%);
@@ -288,7 +286,7 @@ main,#footer {
   font-family: var(--display);
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--fg-head);
+  color: #000 !important;
   letter-spacing: -0.01em;
   transition: color 0.3s ease;
 }
@@ -303,7 +301,7 @@ main,#footer {
   font-family: var(--sans);
   font-size: 0.88rem;
   font-weight: 500;
-  color: var(--fg-body);
+  color: #000 !important;
   padding: 8px 16px;
   border-radius: 8px;
   text-decoration: none;
@@ -318,8 +316,8 @@ main,#footer {
 }
 .nav-link:hover,
 .nav-link.active {
-  color: var(--fg-head);
-  background: var(--nav-pill);
+  color: #000 !important;
+  background: transparent;
 }
 .nav-chevron {
   transition: transform 0.25s ease;
@@ -375,14 +373,14 @@ main,#footer {
   padding: 10px 16px;
   font-size: 0.88rem;
   font-weight: 500;
-  color: var(--fg-body);
+  color: #000 !important;
   text-decoration: none;
   border-radius: 8px;
   transition: background 0.2s ease, color 0.2s ease;
 }
 .nav-dropdown-item:hover {
-  background: var(--nav-pill);
-  color: var(--fg-head);
+  background: transparent;
+  color: #000 !important;
 }
 
 /* Actions */

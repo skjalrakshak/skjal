@@ -1,50 +1,25 @@
-node_modules
-dist
-scratch_pdf
-skjal-app
-skjal-next
-verification
+# Dev tools & scripts — not needed for deployment
+node_modules/
+*.py
 *.log
-server.log
-server.err.log
+
+# Environment secrets
 .env
 .env.*
-.sixth
-*.py
-pdf_text.txt
-SHADCN_SETUP.md
+
+# Documentation
 README.md
-server.js
+
+# Package files — no build step
 package.json
 package-lock.json
-img/b11.png
-img/bg9.png
-img/bg10.png
-img/shield-hero.png
-img/skjal-hero-banner.png
-img/hero-facility.png
-img/hero-lab.png
-img/field-deploy.png
-img/sensor-device.png
-img/solar-field.png
-img/energy_analytics.png
-img/jal_rakshak_ui.png
-img/shield_dashboard.png
-img/mp_.mp4
-img/gemini-video.mp4
-img/logo (2).png
-img/gemini-1.jpg
-img/gemini-3.jpg
-img/0012d69b-316c-4ddb-8efc-fcb73c446a55.jpg
-img/157f70fd-0338-45eb-a04e-0eb5a1626406.jpg
-img/d5a6dc39-e464-4388-9082-d44bc722d53f.jpg
-img/p3.png
-img/make-in-india-brand.png
-img/make-in-india-clean.png
-img/make-in-india.png
-img/pdf_img_page*
-!img/pdf_img_page3_1.jpeg
-!img/pdf_img_page3_2.jpeg
-img/make-in-india-downloaded.webp
-img/make-in-india.webp
-img/energy-monitoring.jpeg
+
+# Git
+.git/
+.gitignore
+
+# Editor & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
