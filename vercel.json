@@ -1,5 +1,4 @@
 {
-  "__performance_budget": "JS bundle < 50KB | CSS < 20KB | Total page weight < 500KB | LCP < 1.2s",
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
