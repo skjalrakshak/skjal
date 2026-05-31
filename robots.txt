@@ -1,10 +1,20 @@
 User-agent: *
 Allow: /
+Allow: /*.css$
+Allow: /*.js$
 Allow: /assets/
 Allow: /img/
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.woff$
+Allow: /*.woff2$
 
 Disallow: /admin/
-Disallow: /*?s=
-Disallow: /*&sort=
+Disallow: /cgi-bin/
+Disallow: /wp-admin/
 
 Sitemap: https://skjal.in/sitemap.xml
