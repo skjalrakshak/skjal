@@ -37,7 +37,7 @@ const ScrollTrigger = window.ScrollTrigger || {
   create() { return { kill() {} }; }
 };
 
-const lenis = hasLenis ? new window.Lenis({
+const lenis = window.lenis = hasLenis ? new window.Lenis({
   duration: 1.3,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smooth: true, mouseMultiplier: 0.7,
@@ -1198,4 +1198,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Run it once on initial load
 window.SkjInitAll();
+
+// Handle direct load hash scroll (non-transition direct page load)
+window.addEventListener('load', () => {
+  const hash = window.location.hash;
+  if (hash) {
+    let target = null;
+    try {
+      target = (hash && hash !== '#') ? document.querySelector(hash) : null;
+    } catch(err) {
+      console.warn("Invalid hash on load:", hash);
+    }
+    if (target) {
+      setTimeout(() => {
+        if (window.lenis) {
+          window.lenis.scrollTo(target, { immediate: true });
+        } else {
+          target.scrollIntoView();
+        }
+      }, 100);
+    }
+  }
+});
 

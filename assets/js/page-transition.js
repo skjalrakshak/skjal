@@ -109,6 +109,52 @@
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Initialize premium footer link staggered 3D rolls
+    try {
+        const initFooterLinkRolls = () => {
+            document.querySelectorAll('#footer .foot-links a').forEach(link => {
+                if (link.querySelector('.roll-text-container')) return;
+                const svg = link.querySelector('svg');
+                const originalText = link.textContent.trim();
+                
+                link.innerHTML = '';
+                if (svg) {
+                    link.appendChild(svg);
+                }
+                
+                const rollContainer = document.createElement('span');
+                rollContainer.className = 'roll-text-container';
+                
+                const line1 = document.createElement('span');
+                line1.className = 'roll-line-1';
+                
+                const line2 = document.createElement('span');
+                line2.className = 'roll-line-2';
+                
+                originalText.split('').forEach((char, index) => {
+                    const span1 = document.createElement('span');
+                    span1.className = 'roll-char';
+                    span1.textContent = char === ' ' ? '\u00A0' : char;
+                    span1.style.transitionDelay = `${index * 0.015}s`;
+                    line1.appendChild(span1);
+                    
+                    const span2 = document.createElement('span');
+                    span2.className = 'roll-char';
+                    span2.textContent = char === ' ' ? '\u00A0' : char;
+                    span2.style.transitionDelay = `${index * 0.015}s`;
+                    line2.appendChild(span2);
+                });
+                
+                rollContainer.appendChild(line1);
+                rollContainer.appendChild(line2);
+                link.appendChild(rollContainer);
+            });
+        };
+        initFooterLinkRolls();
+    } catch (err) {
+        console.warn("Failed to initialize footer staggered rolls:", err);
+    }
+
     // Define easing variables with fallbacks
     let osmoEase = "power4.inOut";
     let expoOut = "expo.out";
@@ -145,6 +191,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Start entering
                 tl.add("startEnter", 0.4);
+                
+                tl.call(() => {
+                    const hash = window.location.hash;
+                    if (hash) {
+                        let target = null;
+                        try {
+                            target = (hash && hash !== '#') ? document.querySelector(hash) : null;
+                        } catch (err) {
+                            console.warn("Invalid load hash selector:", hash);
+                        }
+                        if (target) {
+                            if (window.lenis) {
+                                window.lenis.scrollTo(target, { immediate: true });
+                            } else {
+                                window.scrollTo(0, target.offsetTop);
+                            }
+                        }
+                    }
+                }, [], "startEnter");
                 
             // Calculate offsets based on viewport
             const sweepOffset = window.innerHeight + (window.innerWidth * 0.15);
@@ -219,6 +284,23 @@ document.addEventListener("DOMContentLoaded", () => {
     let isTransitioning = false;
     let transitionTimeout;
 
+    function normalizePathname(p) {
+        if (!p) return '/';
+        let res = p;
+        if (res.endsWith('/')) {
+            res = res.slice(0, -1);
+        }
+        if (res.endsWith('/index.html')) {
+            res = res.slice(0, -11);
+        } else if (res === 'index.html' || res === '/index.html') {
+            res = '';
+        }
+        if (!res.startsWith('/')) {
+            res = '/' + res;
+        }
+        return res;
+    }
+
     // --- 2. Handle WIPE OUT (Departure / runPageLeaveAnimation) ---
     document.querySelectorAll("a:not([data-transition-bound])").forEach(link => {
         link.dataset.transitionBound = 'true';
@@ -243,12 +325,32 @@ document.addEventListener("DOMContentLoaded", () => {
             // PREVENT SAME-PAGE HASH NAVIGATION FROM GETTING STUCK
             const currentUrl = new URL(window.location.href);
             const linkUrl = new URL(this.href);
-            if (currentUrl.pathname === linkUrl.pathname && currentUrl.search === linkUrl.search) {
-                // Only ignore if the link has a hash (anchor scroll)
-                if (linkUrl.hash || this.getAttribute("href").startsWith("#")) {
+            
+            const currentPath = normalizePathname(currentUrl.pathname);
+            const linkPath = normalizePathname(linkUrl.pathname);
+
+            if (currentPath === linkPath && currentUrl.search === linkUrl.search) {
+                const hash = linkUrl.hash || (href.startsWith("#") ? href : '');
+                if (hash) {
+                    e.preventDefault();
+                    let targetEl = null;
+                    try {
+                        targetEl = (hash && hash !== '#') ? document.querySelector(hash) : document.body;
+                    } catch (err) {
+                        console.warn("Invalid selector for hash:", hash);
+                    }
+                    if (targetEl) {
+                        if (window.lenis) {
+                            window.lenis.scrollTo(targetEl);
+                        } else {
+                            targetEl.scrollIntoView({ behavior: 'smooth' });
+                        }
+                        // Update hash in URL bar without reload
+                        history.pushState(null, null, hash);
+                    }
                     return;
                 }
-                // If it's the exact same page with NO hash (e.g. clicking current product in navbar),
+                // If same page but NO hash (e.g. clicking current product in navbar),
                 // we SHOULD do the transition because the browser is going to reload the page.
             }
             

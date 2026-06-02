@@ -5631,25 +5631,118 @@ body.has-curtain-footer {
     <script src="/assets/js/page-transition.js?v=1780420197360"></script>
   <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script defer="defer" src="assets/js/script.js?v=639160345626847531.1780395253886"></script>
-    <script defer="defer" src="assets/js/init.js"></script><style id="compact-footer-styles">
+    <script defer="defer" src="assets/js/init.js"></script><style id='compact-footer-styles'>
   #footer {
-    padding: 12px 0 6px !important;
+    padding: 30px 0 20px !important;
+    background: #111823 !important;
+    color: #ffffff !important;
+    --foot-bg: #111823 !important;
+    --foot-fg: #ffffff !important;
+    --foot-muted: rgba(255, 255, 255, 0.6) !important;
+    --foot-dim: rgba(255, 255, 255, 0.45) !important;
+    --foot-border: rgba(255, 255, 255, 0.1) !important;
+    --foot-accent: #b46e0cc2 !important;
+    --mii-filter: invert(1) !important;
+  }
+  [data-theme=dark] #footer {
+    --foot-bg: #111823 !important;
+    --foot-fg: #ffffff !important;
+    --foot-muted: rgba(255, 255, 255, 0.6) !important;
+    --foot-dim: rgba(255, 255, 255, 0.45) !important;
+    --foot-border: rgba(255, 255, 255, 0.1) !important;
+    --foot-accent: #b46e0cc2 !important;
+    --mii-filter: invert(1) !important;
   }
   .foot-grid {
-    margin-bottom: 8px !important;
-    gap: 16px !important;
+    margin-bottom: 24px !important;
+    gap: 32px !important;
   }
   .foot-mii-img {
-    height: 38px !important;
+    height: 150px !important;
     width: auto !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 12px !important;
     object-fit: contain !important;
   }
   .foot-col-title {
-    margin-bottom: 6px !important;
+    margin-bottom: 12px !important;
+    font-size: 0.85rem !important;
+    color: #ffffff !important;
   }
   .foot-links {
-    gap: 4px !important;
+    gap: 10px !important;
+  }
+  .foot-links li a {
+    font-size: 0.88rem !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    perspective: 800px !important;
+    transform-style: preserve-3d !important;
+  }
+  .foot-links li a svg {
+    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95), color 0.3s !important;
+  }
+  .foot-links li a:hover svg {
+    transform: translateX(4px) !important;
+    color: #b46e0cc2 !important;
+  }
+  .roll-text-container {
+    display: inline-flex !important;
+    position: relative !important;
+    overflow: hidden !important;
+    vertical-align: middle !important;
+    line-height: 1.2 !important;
+    perspective: 800px !important;
+    transform-style: preserve-3d !important;
+  }
+  .roll-line-1 {
+    display: inline-block !important;
+    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95) !important;
+    will-change: transform !important;
+  }
+  .roll-line-2 {
+    display: inline-block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 100% !important;
+    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95) !important;
+    will-change: transform !important;
+  }
+  .roll-char {
+    display: inline-block !important;
+    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95), color 0.3s !important;
+    will-change: transform !important;
+  }
+  .roll-line-2 .roll-char {
+    transform: rotateX(90deg) !important;
+    transform-origin: bottom center !important;
+  }
+  .roll-line-1 .roll-char {
+    transform-origin: top center !important;
+  }
+  #footer .foot-links li a:hover .roll-line-1 .roll-char {
+    transform: translateY(-100%) rotateX(-90deg) !important;
+    color: #b46e0cc2 !important;
+  }
+  #footer .foot-links li a:hover .roll-line-2 .roll-char {
+    transform: translateY(-100%) rotateX(0deg) !important;
+    color: #b46e0cc2 !important;
+  }
+  .foot-bottom {
+    padding-top: 16px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  .foot-copy {
+    color: rgba(255, 255, 255, 0.45) !important;
+  }
+  @media (max-width: 600px) {
+    #footer {
+      padding: 24px 0 16px !important;
+    }
+    .foot-col-title {
+      margin-bottom: 10px !important;
+    }
   }
 </style>
 </head>
@@ -5934,10 +6027,7 @@ body.has-curtain-footer {
           </div>
           <div class="foot-bottom">
             <span class="foot-copy">&copy; 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.</span>
-            <div class="foot-legal">
-              <a href="privacy.html">Privacy Policy</a>
-              <a href="#" class="foot-back-top" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">&uarr; Top</a>
-            </div>
+            
           </div>
         </div>
       </footer>
