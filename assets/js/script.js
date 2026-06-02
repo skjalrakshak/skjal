@@ -373,64 +373,10 @@ function createTransitionOverlay() {
   return overlay;
 }
 
-if (typeof barba !== 'undefined') {
-  barba.init({
-    prevent: ({ el }) => el.hash && el.pathname === window.location.pathname,
-    transitions: [{
-      name: 'award-winning',
-      leave(data) {
-        const done = this.async();
-        createTransitionOverlay();
-        const path = document.querySelector('.skj-transition-path');
-        
-        // Fluid SVG wave animation
-        const tl = gsap.timeline({ onComplete: done });
-        
-        tl.set(path, { attr: { d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z' } })
-          .to(path, {
-            duration: 0.6,
-            ease: 'power4.in',
-            attr: { d: 'M 0 100 V 50 Q 50 0 100 50 V 100 z' }
-          })
-          .to(path, {
-            duration: 0.4,
-            ease: 'power2.out',
-            attr: { d: 'M 0 100 V 0 Q 50 0 100 0 V 100 z' }
-          });
-      },
-      enter(data) {
-        // Scroll to top instantly
-        window.scrollTo(0, 0);
-        if (typeof lenis !== 'undefined') lenis.scrollTo(0, { immediate: true });
-        
-        // Kill old ScrollTriggers to prevent duplication
-        if (typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        }
-
-        // Re-initialize all scripts for the new page
-        if (typeof window.SkjInitAll === 'function') {
-            window.SkjInitAll();
-        }
-
-        const path = document.querySelector('.skj-transition-path');
-        const tl = gsap.timeline();
-        
-        tl.set(path, { attr: { d: 'M 0 100 V 0 Q 50 0 100 0 V 100 z' } })
-          .to(path, {
-            duration: 0.4,
-            ease: 'power2.in',
-            attr: { d: 'M 0 0 V 0 Q 50 50 100 0 V 0 z' }
-          })
-          .to(path, {
-            duration: 0.6,
-            ease: 'power4.out',
-            attr: { d: 'M 0 0 V 0 Q 50 0 100 0 V 0 z' }
-          });
-      }
-    }]
-  });
-}
+// if (typeof barba !== 'undefined') {
+//   barba.init({ ...
+// disabled to allow page-transition.js to run uniformly
+// }
 
 // Global initialization function to run on page load AND barba enter
 window.SkjInitAll = function() {
