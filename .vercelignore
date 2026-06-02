@@ -1,15 +1,44 @@
-# Vercel Ignore Rules
-# Exclude everything that is not required to serve the production static site
+# Vercel Deployment Exclusions
+# Explicitly block all files that are not strictly required at edge runtime.
 
-tools/
-README.md
-design_system.md
-*.md
-.gitignore
+# Source Control & Configuration
 .git/
+.gitignore
+.vercelignore
+vercel.json
 package.json
 package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build Tools & Local Scripts
+tools/
+scripts/
+dev-server.js
+
+# Documentation
+*.md
+README.md
+design_system.md
+docs/
+
+# Logs & Debug
 *.log
-*.patch
-*.txt
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 scratch/
+
+# OS Generated
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment Variables
+.env
+.env.*
