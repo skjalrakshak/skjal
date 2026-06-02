@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,10 +16,55 @@
 }
 </style>
     <link rel="stylesheet" href="assets/css/style.css">
+<style>
+        body { font-family: system-ui, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1, h2 { color: #09f; }
+        .faq-item { margin-bottom: 20px; }
+        .cta { display: inline-block; padding: 10px 20px; background: #09f; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
+
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
+
+<style id="gisi-animations-css">
+/* Reveal Animations */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Curtain Footer Structure */
+body.has-curtain-footer {
+  position: relative;
+  min-height: 100vh;
+}
+.curtain-main {
+  position: relative;
+  z-index: 2;
+  background-color: var(--bg) !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+}
+.curtain-footer-active {
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1 !important;
+}
+</style>
 </head>
 <body>
     <header>
-        <h1>Industrial Telemetry Solutions in Visakhapatnam</h1>
+        <h1 class=" reveal-up">Industrial Telemetry Solutions in Visakhapatnam</h1>
     </header>
 
     <main>
@@ -28,21 +73,21 @@
         </section>
 
         <section class="details">
-            <h2>Automated Data Transmission</h2>
+            <h2 class=" reveal-up">Automated Data Transmission</h2>
             <p>Our telemetry hardware eliminates the need for manual site audits. By deploying our IoT nodes onto legacy equipment, industrial operators receive continuous data streams regarding power consumption, vibration, and temperature without deploying field technicians.</p>
 
-            <h2>Secure Industrial Protocols</h2>
+            <h2 class=" reveal-up">Secure Industrial Protocols</h2>
             <p>Data security is paramount in heavy industry. Our telemetry solutions utilize encrypted MQTT protocols and cellular IoT networks (NB-IoT/LTE-M) to ensure machine data is transmitted securely to our cloud dashboards, entirely bypassing vulnerable local Wi-Fi networks.</p>
 
-            <h2>Edge Computing Integration</h2>
+            <h2 class=" reveal-up">Edge Computing Integration</h2>
             <p>Rather than flooding the cloud with raw data, our Visakhapatnam-manufactured telemetry nodes feature edge computing capabilities. The hardware analyzes voltage drops and flow rates locally, instantly transmitting high-priority alerts when parameters breach compliance thresholds.</p>
 
-            <h2>Custom Dashboards for Andhra Pradesh Industry</h2>
+            <h2 class=" reveal-up">Custom Dashboards for Andhra Pradesh Industry</h2>
             <p>All telemetry data feeds into our proprietary software dashboards. Whether you are managing an aquaculture farm, a steel manufacturing plant, or a municipal water grid, our interface provides real-time visualization of your distributed assets.</p>
         </section>
 
         <section class="faqs">
-            <h2>Frequently Asked Questions</h2>
+            <h2 class=" reveal-up">Frequently Asked Questions</h2>
             
             <div class="faq-item">
                 <h3>What is telemetry and who provides it in Vizag?</h3>
@@ -71,65 +116,68 @@
         </section>
         
         <section class="contact">
-            <h2>Automate Your Data Collection</h2>
+            <h2 class=" reveal-up">Automate Your Data Collection</h2>
             <p>Ready to deploy secure telemetry solutions in your industrial facility?</p>
             <a href="/contact.html" class="cta">Contact Engineering Support (+91 89788 59246)</a>
         </section>
     </main>
 
         <footer id="footer">
-      <div class="wrap" style="max-width: 1200px; padding: 0 20px; position: relative; z-index: 1;">
-        <div class="foot-grid">
-          <!-- Brand -->
-          <div class="foot-brand-col">
-            <img src="img/make-in-india-transparent.webp" alt="Make in India" class="foot-mii-img" loading="lazy" decoding="async" />
-            <div class="foot-brand-details">
-              <div><strong>SK Jalrakshak:</strong> Proudly Make in India</div>
-              <div class="foot-brand-list">
-                <div><strong>CIN:</strong> U26517AP2025PTC119413</div>
-                <div><strong>GSTIN:</strong> </div>
-                <div><strong>D-U-N-S:</strong> </div>
-                <div><strong>Startup India Recognized</strong></div>
+        <div class="wrap" style="max-width: 1200px; padding: 0 20px; position: relative; z-index: 1;">
+          <div class="foot-grid">
+            <!-- Brand -->
+            <div class="foot-brand-col reveal-up">
+              <img src="assets/img/make-in-india-transparent.webp" alt="Make in India" class="foot-mii-img" loading="lazy" decoding="async" />
+              <div class="foot-brand-details">
+                <div><strong>SK Jalrakshak:</strong> Proudly Make in India</div>
+                <div class="foot-brand-list">
+                  <div><strong>CIN:</strong> U26517AP2025PTC119413</div>
+                  <div><strong>GSTIN:</strong> </div>
+                  <div><strong>D-U-N-S:</strong> </div>
+                  <div><strong>Startup India Recognized</strong></div>
+                </div>
               </div>
             </div>
+            <!-- Products -->
+            <div class="foot-col">
+              <h4 class="foot-col-title">Our Products</h4>
+              <ul class="foot-links">
+                <li><a href="jal-rakshak.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Jal Rakshak</a></li>
+                <li><a href="shield.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> S.H.I.E.L.D.</a></li>
+                <li><a href="energy-monitoring.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Energy Monitoring</a></li>
+              </ul>
+            </div>
+            <!-- Quick Links -->
+            <div class="foot-col">
+              <h4 class="foot-col-title">Quick Links</h4>
+              <ul class="foot-links">
+                <li><a href="index.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Home</a></li>
+                <li><a href="about.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> About Us</a></li>
+                <li><a href="/#contact"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Careers</a></li>
+              </ul>
+            </div>
+            <!-- Contact -->
+            <div class="foot-col">
+              <h4 class="foot-col-title">Contact Us</h4>
+              <ul class="foot-links">
+                <li><a href="tel:+918978859246"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +91 89788 59246</a></li>
+                <li><a href="mailto:sales@skjal.in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> sales@skjal.in</a></li>
+                <li><a href="https://maps.google.com/?q=Innovation+Valley+Visakhapatnam" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Innovation Valley, Visakhapatnam</a></li>
+                <li><a href="https://www.linkedin.com/company/sk-jalrakshak-innovations-pvt-ltd/" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a></li>
+              </ul>
+            </div>
           </div>
-          <!-- Products -->
-          <div class="foot-col">
-            <h4 class="foot-col-title">Our Products</h4>
-            <ul class="foot-links">
-              <li><a href="jal-rakshak.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Jal Rakshak</a></li>
-              <li><a href="shield.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> S.H.I.E.L.D.</a></li>
-              <li><a href="energy-monitoring.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Energy Monitoring</a></li>
-            </ul>
-          </div>
-          <!-- Quick Links -->
-          <div class="foot-col">
-            <h4 class="foot-col-title">Quick Links</h4>
-            <ul class="foot-links">
-              <li><a href="index.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Home</a></li>
-              <li><a href="about.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> About Us</a></li>
-              <li><a href="contact.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Careers</a></li>
-            </ul>
-          </div>
-          <!-- Contact -->
-          <div class="foot-col">
-            <h4 class="foot-col-title">Contact Us</h4>
-            <ul class="foot-links">
-              <li><a href="tel:+918978859246"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +91 89788 59246</a></li>
-              <li><a href="mailto:sales@skjal.in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> sales@skjal.in</a></li>
-              <li><a href="https://maps.google.com/?q=Innovation+Valley+Visakhapatnam" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Innovation Valley, Visakhapatnam</a></li>
-              <li><a href="https://www.linkedin.com/company/sk-jalrakshak-innovations-pvt-ltd/" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a></li>
-            </ul>
+          <div class="foot-bottom">
+            <span class="foot-copy">&copy; 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.</span>
+            <div class="foot-legal">
+              <a href="privacy.html">Privacy Policy</a>
+              <a href="#" class="foot-back-top" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">&uarr; Top</a>
+            </div>
           </div>
         </div>
-        <div class="foot-bottom">
-          <span class="foot-copy">&copy; 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.</span>
-          <div class="foot-legal">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="#" class="foot-back-top" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">&uarr; Top</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+      </footer>
 </body>
 </html>
+
+
+

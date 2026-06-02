@@ -351,7 +351,143 @@ if (preloaderEl && !hasGsap) {
 
 
 
+
 // ═══════════════════════
+// 11. AWWWARDS BARBA.JS TRANSITION
+// ═══════════════════════
+function createTransitionOverlay() {
+  let overlay = document.getElementById('skj-transition-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'skj-transition-overlay';
+    // Deep black or brand primary for premium feel
+    overlay.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:999999; display:flex; justify-content:center; align-items:center; background: transparent;';
+    
+    overlay.innerHTML = `
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%; height:100%; position:absolute; top:0; left:0;">
+        <path class="skj-transition-path" d="M 0 100 V 100 Q 50 100 100 100 V 100 z" fill="#0ea5e9" />
+      </svg>
+    `;
+    document.body.appendChild(overlay);
+  }
+  return overlay;
+}
+
+if (typeof barba !== 'undefined') {
+  barba.init({
+    prevent: ({ el }) => el.hash && el.pathname === window.location.pathname,
+    transitions: [{
+      name: 'award-winning',
+      leave(data) {
+        const done = this.async();
+        createTransitionOverlay();
+        const path = document.querySelector('.skj-transition-path');
+        
+        // Fluid SVG wave animation
+        const tl = gsap.timeline({ onComplete: done });
+        
+        tl.set(path, { attr: { d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z' } })
+          .to(path, {
+            duration: 0.6,
+            ease: 'power4.in',
+            attr: { d: 'M 0 100 V 50 Q 50 0 100 50 V 100 z' }
+          })
+          .to(path, {
+            duration: 0.4,
+            ease: 'power2.out',
+            attr: { d: 'M 0 100 V 0 Q 50 0 100 0 V 100 z' }
+          });
+      },
+      enter(data) {
+        // Scroll to top instantly
+        window.scrollTo(0, 0);
+        if (typeof lenis !== 'undefined') lenis.scrollTo(0, { immediate: true });
+        
+        // Kill old ScrollTriggers to prevent duplication
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.getAll().forEach(t => t.kill());
+        }
+
+        // Re-initialize all scripts for the new page
+        if (typeof window.SkjInitAll === 'function') {
+            window.SkjInitAll();
+        }
+
+        const path = document.querySelector('.skj-transition-path');
+        const tl = gsap.timeline();
+        
+        tl.set(path, { attr: { d: 'M 0 100 V 0 Q 50 0 100 0 V 100 z' } })
+          .to(path, {
+            duration: 0.4,
+            ease: 'power2.in',
+            attr: { d: 'M 0 0 V 0 Q 50 50 100 0 V 0 z' }
+          })
+          .to(path, {
+            duration: 0.6,
+            ease: 'power4.out',
+            attr: { d: 'M 0 0 V 0 Q 50 0 100 0 V 0 z' }
+          });
+      }
+    }]
+  });
+}
+
+// Global initialization function to run on page load AND barba enter
+window.SkjInitAll = function() {
+
+  // ==========================================
+  // GISI-Style Curtain Footer & Scroll Reveals
+  // ==========================================
+  (function initGisiAnimations() {
+    // 1. Scroll Reveal Animations
+    const revealElements = document.querySelectorAll('.reveal-up');
+    
+    if (revealElements.length > 0) {
+      const revealOptions = {
+        root: null,
+        rootMargin: '0px 0px -10% 0px',
+        threshold: 0
+      };
+
+      const revealCallback = (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      };
+
+      const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+      revealElements.forEach(el => revealObserver.observe(el));
+    }
+
+    // 2. Curtain Footer Parallax Height Calculation
+    const footer = document.querySelector('#footer');
+    // STRICT TARGETING: Select the main element to prevent layout breakage
+    const mainWrapper = document.querySelector('main');
+
+    if (footer && mainWrapper) {
+      document.body.classList.add('has-curtain-footer');
+      mainWrapper.classList.add('curtain-main');
+      footer.classList.add('curtain-footer-active');
+
+      function updateFooterHeight() {
+        const fHeight = footer.offsetHeight;
+        mainWrapper.style.marginBottom = fHeight + 'px';
+      }
+
+      updateFooterHeight();
+      window.addEventListener('resize', updateFooterHeight);
+      setTimeout(updateFooterHeight, 500);
+      setTimeout(updateFooterHeight, 1500);
+    }
+  })();
+
+
+  
+
+  // ═══════════════════════
 // 3. NAVBAR
 // ═══════════════════════
 ScrollTrigger.create({
@@ -484,93 +620,6 @@ document.querySelectorAll('.sec-title-lg').forEach(h => {
     scrollTrigger: { trigger:h, start:'top bottom', end:'bottom top', scrub:0.6 }
   });
 });
-// ═══════════════════════
-// 11. SMOOTH ANCHOR & HASH HANDLING
-// ═══════════════════════
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-
-document.querySelectorAll('a').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const href = this.getAttribute('href');
-    if (!href) return;
-    // Skip external links opened in new tabs
-    if (this.target === '_blank') return;
-
-    try {
-      // Resolve clicked link's absolute URL automatically
-      const clickedUrl = new URL(this.href);
-      const currentUrl = new URL(window.location.href);
-
-      // Verify same domain/origin
-      if (clickedUrl.origin === currentUrl.origin) {
-        
-        // Normalize pathnames by removing leading/trailing slashes and index.html
-        const normalizePath = (p) => {
-          let normalized = p.replace(/^\/|\/$/g, '');
-          if (normalized === 'index.html') {
-            normalized = '';
-          } else if (normalized.endsWith('/index.html')) {
-            normalized = normalized.substring(0, normalized.length - 10).replace(/^\/|\/$/g, '');
-          }
-          return normalized;
-        };
-
-        const pathMatches = normalizePath(clickedUrl.pathname) === normalizePath(currentUrl.pathname);
-
-        // If pointing to a section on the current page, scroll smooth
-        if (pathMatches) {
-          if (clickedUrl.hash) {
-            const target = getHashTarget(clickedUrl.hash);
-            if (target) {
-              e.preventDefault();
-              lenis.scrollTo(target, { offset: -80 });
-            }
-          } else {
-            // Same page navigation with no hash (e.g. logo or Home clicked) -> scroll to top
-            e.preventDefault();
-            lenis.scrollTo(0);
-          }
-        } else {
-          // Cross-page navigation — apply cinematic wipe transition
-          e.preventDefault();
-          const wipe = document.querySelector('.cinematic-wipe');
-          if (wipe) {
-            gsap.fromTo(wipe, { scaleY: 0, transformOrigin: 'top' }, {
-              scaleY: 1,
-              duration: 1.0,
-              ease: 'expo.inOut',
-              onComplete: () => {
-                window.location.href = href;
-              }
-            });
-          } else {
-            window.location.href = href;
-          }
-        }
-      }
-    } catch (err) {
-      // Invalid URLs are ignored so malformed anchors cannot break navigation.
-    }
-  });
-});
-
-// Scroll to hash on page load
-window.addEventListener('load', () => {
-  if (window.location.hash) {
-    const target = getHashTarget(window.location.hash);
-    if (target) {
-      setTimeout(() => {
-        if (typeof ScrollTrigger !== 'undefined') {
-          ScrollTrigger.refresh();
-        }
-        lenis.scrollTo(target, { offset: -80, immediate: true });
-      }, 350);
-    }
-  }
-});
-
 // 12. FLOATING HERO MEDIA
 // ═══════════════════════
 const hero = document.getElementById('hero');
@@ -1198,3 +1247,9 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(loadWebGL, 500);
   }
 })();
+
+};
+
+// Run it once on initial load
+window.SkjInitAll();
+

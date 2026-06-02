@@ -20,15 +20,15 @@ const MIME_TYPES = {
 
 const server = http.createServer((req, res) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-    
+
     // Normalize URL
     let urlPath = req.url.split('?')[0];
     if (urlPath === '/') {
         urlPath = '/index.html';
     }
-    
-    let filePath = path.join(__dirname, urlPath);
-    
+
+    let filePath = path.join(path.join(__dirname, '..'), urlPath);
+
     // Auto-append .html if path has no extension and isn't a directory
     if (!path.extname(filePath)) {
         filePath += '.html';
@@ -37,7 +37,7 @@ const server = http.createServer((req, res) => {
     fs.stat(filePath, (err, stats) => {
         if (err || !stats.isFile()) {
             // Serve 404
-            fs.readFile(path.join(__dirname, '404.html'), (err404, content) => {
+            fs.readFile(path.join(path.join(__dirname, '..'), '404.html'), (err404, content) => {
                 res.writeHead(404, { 'Content-Type': 'text/html' });
                 res.end(content || '404 Not Found', 'utf-8');
             });
@@ -52,8 +52,10 @@ const server = http.createServer((req, res) => {
                 res.writeHead(500);
                 res.end(`Server Error: ${err.code}`);
             } else {
-                res.writeHead(200, { 
-                    'Content-Type': contentType,
+                res.writeHead(200, {
+                    'Content-Type': contentType.startsWith('text/') || contentType === 'application/json' 
+                        ? `${contentType}; charset=utf-8` 
+                        : contentType,
                     'Cache-Control': 'no-cache'
                 });
                 res.end(content, 'utf-8');

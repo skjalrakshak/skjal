@@ -4,7 +4,7 @@
   "private": true,
   "description": "SK Jalrakshak Innovations — Corporate website.",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js"
+    "dev": "node tools/dev-server.js",
+    "start": "node tools/dev-server.js"
   }
 }

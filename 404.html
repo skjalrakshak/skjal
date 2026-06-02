@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -125,11 +125,163 @@
   .dir-icon { width: 96px !important; height: 96px !important; }
 }
 </style>
-  </head>
+  <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, sans-serif;
+        color: #ffffff;
+        background: #0a0a0a;
+      }
+
+      .container {
+        text-align: center;
+        padding: 2rem;
+        max-width: 600px;
+      }
+
+      .error-code {
+        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", serif;
+        font-size: clamp(7rem, 20vw, 12rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: #0ea5e9;
+        opacity: 0.15;
+        margin-bottom: -1.5rem;
+        position: relative;
+      }
+
+      h1 {
+        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", serif;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.55);
+        max-width: 440px;
+        margin: 0 auto 2.5rem;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0.75rem 1.5rem;
+        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.25s ease;
+      }
+
+      .btn-primary {
+        color: #ffffff;
+        background: #0ea5e9;
+      }
+      .btn-primary:hover {
+        background: #0284c7;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        color: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: transparent;
+      }
+      .btn-secondary:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+        color: #ffffff;
+      }
+
+      .divider {
+        width: 48px;
+        height: 2px;
+        background: rgba(14, 165, 233, 0.3);
+        margin: 0 auto 1.5rem;
+        border-radius: 2px;
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 1.5rem;
+        }
+        .actions {
+          flex-direction: column;
+          align-items: center;
+        }
+        a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    @media (max-width: 640px) {
+  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
+  .dir-icon { width: 96px !important; height: 96px !important; }
+}
+</style>
+
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
+
+<style id="gisi-animations-css">
+/* Reveal Animations */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Curtain Footer Structure */
+body.has-curtain-footer {
+  position: relative;
+  min-height: 100vh;
+}
+.curtain-main {
+  position: relative;
+  z-index: 2;
+  background-color: var(--bg) !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+}
+.curtain-footer-active {
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1 !important;
+}
+</style>
+</head>
   <body>
     <div class="container">
       <div class="error-code">404</div>
-      <h1>Page Not Found</h1>
+      <h1 class=" reveal-up">Page Not Found</h1>
       <div class="divider"></div>
       <p>
         The page you're looking for doesn't exist or has been moved. Head back
@@ -152,7 +304,7 @@
           </svg>
           Return Home
         </a>
-        <a class="btn-secondary" href="contact.html">
+        <a class="btn-secondary" href="/#contact">
           <svg
             width="16"
             height="16"
@@ -174,3 +326,6 @@
     </div>
   </body>
 </html>
+
+
+

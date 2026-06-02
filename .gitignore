@@ -1,41 +1,19 @@
-# Dependencies
 node_modules/
-package-lock.json
-
-# Environment & secrets
-.env
-.env.*
-
-# Build output
-dist/
-
-# Logs & runtime artifacts
-*.log
-server.err.log
-server.out.log
-
-# OS files
 .DS_Store
-Thumbs.db
-Desktop.ini
-ehthumbs.db
-
-# Editor & IDE
-.vscode/
+*.log
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 .idea/
-*.swp
-*.swo
-*~
-
-# Vercel
-.vercel/
-
-# Abandoned prototypes
-skjal-app/
-skjal-next/
-
-# Dev artifacts
-verification/
-scripts/
-*.pyc
-__pycache__/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

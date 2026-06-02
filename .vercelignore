@@ -1,25 +1,15 @@
-# Dev tools & scripts — not needed for deployment
-node_modules/
-*.py
-*.log
+# Vercel Ignore Rules
+# Exclude everything that is not required to serve the production static site
 
-# Environment secrets
-.env
-.env.*
-
-# Documentation
+tools/
 README.md
-
-# Package files — no build step
+design_system.md
+*.md
+.gitignore
+.git/
 package.json
 package-lock.json
-
-# Git
-.git/
-.gitignore
-
-# Editor & OS
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
+*.log
+*.patch
+*.txt
+scratch/

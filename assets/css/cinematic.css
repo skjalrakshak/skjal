@@ -92,12 +92,12 @@
   }
   
   /* Absolute and relative paths fallback */
-  .cinematic-block[data-image="img/jal_rakshak_sensor.png"]::before { background-image: url('../../img/jal_rakshak_sensor.png'); }
-  .cinematic-block[data-image="img/jal_rakshak_dash.png"]::before { background-image: url('../../img/jal_rakshak_dash.png'); }
-  .cinematic-block[data-image="img/shield_dashcam.png"]::before { background-image: url('../../img/shield_dashcam.png'); }
-  .cinematic-block[data-image="img/shield_fleet.png"]::before { background-image: url('../../img/shield_fleet.png'); }
-  .cinematic-block[data-image="img/energy_node.png"]::before { background-image: url('../../img/energy_node.png'); }
-  .cinematic-block[data-image="img/energy_dash.png"]::before { background-image: url('../../img/energy_dash.png'); }
+  .cinematic-block[data-image="img/jal_rakshak_sensor.png"]::before { background-image: url('../img/jal_rakshak_sensor.png'); }
+  .cinematic-block[data-image="img/jal_rakshak_dash.png"]::before { background-image: url('../img/jal_rakshak_dash.png'); }
+  .cinematic-block[data-image="img/shield_dashcam.png"]::before { background-image: url('../img/shield_dashcam.png'); }
+  .cinematic-block[data-image="img/shield_fleet.png"]::before { background-image: url('../img/shield_fleet.png'); }
+  .cinematic-block[data-image="img/energy_node.png"]::before { background-image: url('../img/energy_node.png'); }
+  .cinematic-block[data-image="img/energy_dash.png"]::before { background-image: url('../img/energy_dash.png'); }
 }
 
 .cinematic-block.active {
