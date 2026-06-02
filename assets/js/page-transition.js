@@ -109,10 +109,15 @@
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Define the exact easing used by Hadi Community (0.625, 0.05, 0, 1)
-    const osmoEase = "CustomEase" in window ? CustomEase.create("osmo", "0.625, 0.05, 0, 1") : "power4.inOut";
-    const expoOut = "CustomEase" in window ? CustomEase.create("osmo", "0.625, 0.05, 0, 1") : "expo.out";
-    const expoInOut = "CustomEase" in window ? CustomEase.create("osmo", "0.625, 0.05, 0, 1") : "expo.inOut";
+    // Define easing variables with fallbacks
+    let osmoEase = "power4.inOut";
+    let expoOut = "expo.out";
+    let expoInOut = "expo.inOut";
+
+    if (window.gsap && "CustomEase" in window) {
+        // Register exactly one CustomEase to avoid overwriting or conflicts
+        osmoEase = CustomEase.create("osmo", "0.625, 0.05, 0, 1");
+    }
 
     // Select the main content container to push it up/down (Parallax effect)
     const mainContainer = document.querySelector('main') || document.body;
@@ -133,10 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const panelBottom = wrap.querySelector(".skjal-curve-bottom");
                 const chars = wrap.querySelectorAll(".skjal-transition-char");
 
-                const tl = gsap.timeline();
+                const tl = window.gsap.timeline();
                 
                 // Set initial state of new page container
-                gsap.set(mainContainer, { opacity: 1 });
+                window.gsap.set(mainContainer, { opacity: 1 });
 
                 // Start entering
                 tl.add("startEnter", 0.4);
@@ -193,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 tl.add("pageReady");
                 tl.call(() => {
                     wrap.remove();
-                    gsap.set(mainContainer, { clearProps: "all" });
+                    window.gsap.set(mainContainer, { clearProps: "all" });
                 }, [], "pageReady");
 
             } catch (e) {
@@ -212,10 +217,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let isTransitioning = false;
+    let transitionTimeout;
 
     // --- 2. Handle WIPE OUT (Departure / runPageLeaveAnimation) ---
-    document.querySelectorAll("a").forEach(link => {
+    document.querySelectorAll("a:not([data-transition-bound])").forEach(link => {
+        link.dataset.transitionBound = 'true';
         link.addEventListener("click", function(e) {
+            // Respect preventDefault from other scripts (e.g. barba, custom tabs)
+            if (e.defaultPrevented) return;
+            
             if (isTransitioning) {
                 e.preventDefault();
                 return;
@@ -230,12 +240,36 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.ctrlKey || e.metaKey) return;
             if (this.hostname !== window.location.hostname) return;
             
+            // PREVENT SAME-PAGE HASH NAVIGATION FROM GETTING STUCK
+            const currentUrl = new URL(window.location.href);
+            const linkUrl = new URL(this.href);
+            if (currentUrl.pathname === linkUrl.pathname && currentUrl.search === linkUrl.search) {
+                // Only ignore if the link has a hash (anchor scroll)
+                if (linkUrl.hash || this.getAttribute("href").startsWith("#")) {
+                    return;
+                }
+                // If it's the exact same page with NO hash (e.g. clicking current product in navbar),
+                // we SHOULD do the transition because the browser is going to reload the page.
+            }
+            
             isTransitioning = true;
             e.preventDefault();
+            
+            // Failsafe timeout to prevent permanent lockups
+            clearTimeout(transitionTimeout);
+            transitionTimeout = setTimeout(() => {
+                if (isTransitioning) {
+                    window.location.href = href;
+                }
+            }, 2500);
+            
+            // Clean up any stale curtains before creating a new one
+            document.querySelectorAll('.skjal-transition-wrap').forEach(c => c.remove());
             
             // Create exit curtain DOM elements matching Hadi structure
             const exitWrap = document.createElement("div");
             exitWrap.className = "skjal-transition-wrap";
+            exitWrap.id = "skjal-exit-curtain";
             
             const exitPanel = document.createElement("div");
             exitPanel.className = "skjal-transition-panel";
@@ -271,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (window.gsap) {
                 try {
-                    const tl = gsap.timeline({
+                    const tl = window.gsap.timeline({
                         onComplete: () => {
                             sessionStorage.setItem('isPageTransition', 'true');
                             window.location.href = href;
@@ -333,9 +367,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Handle Back/Forward Cache (BFCache)
     window.addEventListener('pageshow', (event) => {
         if (event.persisted) {
+            isTransitioning = false;
             sessionStorage.removeItem('isPageTransition');
             document.querySelectorAll('.skjal-transition-wrap').forEach(c => c.remove());
-            gsap.set(mainContainer, { clearProps: "all" });
+            window.gsap.set(mainContainer, { clearProps: "all" });
+            if (window.gsap) window.gsap.globalTimeline.clear();
         }
     });
 });

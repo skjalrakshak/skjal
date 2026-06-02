@@ -56,7 +56,10 @@ const server = http.createServer((req, res) => {
                     'Content-Type': contentType.startsWith('text/') || contentType === 'application/json' 
                         ? `${contentType}; charset=utf-8` 
                         : contentType,
-                    'Cache-Control': 'no-cache'
+                    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0',
+                    'Surrogate-Control': 'no-store'
                 });
                 res.end(content, 'utf-8');
             }
