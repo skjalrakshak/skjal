@@ -211,142 +211,8 @@ document.getElementById('themeToggle')?.addEventListener('click', (e) => {
 // ═══════════════════════
 // 2. CINEMATIC PRELOADER (Intro Scene + Intro Reveal)
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-const preloaderEl = document.getElementById('preloader');
 
-if (preloaderEl && !hasGsap) {
-  if (typeof lenis.start === 'function') lenis.start();
-  preloaderEl.style.pointerEvents = 'none';
-  preloaderEl.style.display = 'none';
-  document.querySelectorAll('.hero-line').forEach((line) => {
-    line.style.transform = 'translateY(0)';
-    line.style.opacity = '1';
-  });
-  document.querySelectorAll('.hero-fade, .hero-app-mockup, .main-nav').forEach((el) => {
-    el.style.opacity = '1';
-    el.style.transform = 'none';
-  });
-} else if (preloaderEl) {
-  if (typeof lenis.stop === 'function') lenis.stop();
 
-  const preloaderTL = gsap.timeline({
-    onComplete: () => {
-      if (typeof lenis.start === 'function') lenis.start();
-      preloaderEl.style.pointerEvents = 'none';
-      requestAnimationFrame(() => { preloaderEl.style.display = 'none'; });
-      ScrollTrigger.refresh();
-    }
-  });
-
-  const counterObj = { val: 0 };
-  const counterEl = document.getElementById('preCounter');
-  const progressLine = document.querySelector('#preProgressLine');
-
-  preloaderTL
-    .to('.pre-logo-mark', {
-      opacity: 1, scale: 1, rotate: 0,
-      duration: 1.4,
-      ease: 'elastic.out(1.1, 0.45)',
-    }, 0.2)
-    .to('.pre-progress-line', {
-      opacity: 1, duration: 0.6, ease: 'power2.out',
-    }, 0.5)
-    .to('.pre-bottom', {
-      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-    }, 0.6)
-    .to(counterObj, {
-      val: 100, duration: 3.0,
-      ease: 'power2.inOut',
-      onUpdate: () => {
-        const pct = Math.floor(counterObj.val);
-        if (counterEl) counterEl.innerText = pct + '%';
-        if (progressLine) progressLine.style.setProperty('--pre-fill', pct + '%');
-      }
-    }, 0.5)
-    .to('.pre-char', {
-      opacity: 1, y: '0%', scale: 1, rotateX: 0,
-      duration: 1.4,
-      stagger: { each: 0.045, from: 'start' },
-      ease: 'elastic.out(1, 0.35)',
-    }, 0.7)
-    .to('#preTagline', {
-      opacity: 0.5, y: 0,
-      duration: 1.0, ease: 'power2.out',
-    }, 1.4)
-    .to('.pre-char', {
-      opacity: 0, y: '-130%', scale: 1.15,
-      duration: 0.5,
-      stagger: { each: 0.025, from: 'end' },
-      ease: 'power4.in',
-    }, 3.6)
-    .to('#preTagline', {
-      opacity: 0, y: -24,
-      duration: 0.4, ease: 'power4.in',
-    }, 3.6)
-    .to('.pre-logo-mark', {
-      scale: 0.05, opacity: 0, rotate: 200,
-      duration: 0.9, ease: 'power4.inOut',
-    }, 3.5)
-    .to('.pre-progress-line', {
-      opacity: 0, scaleX: 0, transformOrigin: 'center',
-      duration: 0.5, ease: 'power4.in',
-    }, 3.5)
-    .to('.pre-bottom', {
-      opacity: 0, y: -20, duration: 0.4, ease: 'power4.in',
-    }, 3.6)
-    .set('#preloader', {
-      transformOrigin: 'top center',
-      willChange: 'transform',
-    }, 3.9)
-    .to('#preloader', {
-      yPercent: -100,
-      duration: 1.4,
-      ease: 'power4.inOut',
-    }, 3.9);
-
-  // ─── FAST HERO REVEAL PREP ───
-  gsap.set('.main-nav', { y: '-100%', opacity: 0 });
-  gsap.set('.hero-line', { y: '100%', opacity: 0 });
-  gsap.set('.hero-fade', { opacity: 0, y: 20 });
-  gsap.set('.hero-app-mockup', { scale: 1.05, opacity: 0, y: 30 });
-
-  preloaderTL.to('.main-nav', { y: '0%', opacity: 1, duration: 0.6, ease: 'power2.out' }, 3.8)
-    .to('.hero-line', {
-      y: '0%', opacity: 1,
-      duration: 0.8, stagger: 0.1,
-      ease: 'power3.out'
-    }, 3.8)
-    .to('.hero-app-mockup', {
-      scale: 1, opacity: 1, y: 0,
-      duration: 1.0, ease: 'power3.out'
-    }, 3.9)
-    .to('.hero-fade', {
-      opacity: 1, y: 0,
-      duration: 0.8, ease: 'power3.out', stagger: 0.05
-    }, 4.0);
-} else {
-  if (typeof lenis !== 'undefined' && typeof lenis.start === 'function') lenis.start();
-  
-  gsap.set('.main-nav', { y: '-100%', opacity: 0 });
-  gsap.set('.hero-line', { y: '100%', opacity: 0 });
-  gsap.set('.hero-fade', { opacity: 0, y: 20 });
-  gsap.set('.hero-app-mockup', { scale: 1.05, opacity: 0, y: 30 });
-
-  const t = gsap.timeline({ delay: 0.1 });
-  t.to('.main-nav', { y: '0%', opacity: 1, duration: 0.6, ease: 'power2.out' }, 0)
-    .to('.hero-line', {
-      y: '0%', opacity: 1,
-      duration: 0.8, stagger: 0.1,
-      ease: 'power3.out'
-    }, 0)
-    .to('.hero-app-mockup', {
-      scale: 1, opacity: 1, y: 0,
-      duration: 1.0, ease: 'power3.out'
-    }, 0.1)
-    .to('.hero-fade', {
-      opacity: 1, y: 0,
-      duration: 0.8, ease: 'power3.out', stagger: 0.05
-    }, 0.2);
-}
 
 
 
@@ -381,14 +247,193 @@ function createTransitionOverlay() {
 // Global initialization function to run on page load AND barba enter
 window.SkjInitAll = function() {
 
+  // ─── Preloader & Hero Entrance ───
+  const preloaderEl = document.getElementById('preloader');
+  
+  if (preloaderEl && !hasGsap) {
+    if (typeof lenis.start === 'function') lenis.start();
+    preloaderEl.style.pointerEvents = 'none';
+    preloaderEl.style.display = 'none';
+    document.querySelectorAll('.hero-line').forEach((line) => {
+      line.style.transform = 'translateY(0)';
+      line.style.opacity = '1';
+    });
+    document.querySelectorAll('.hero-fade, .hero-app-mockup, .main-nav').forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+  } else if (preloaderEl) {
+    if (typeof lenis.stop === 'function') lenis.stop();
+
+    const preloaderTL = gsap.timeline({
+      onComplete: () => {
+        if (typeof lenis.start === 'function') lenis.start();
+        preloaderEl.style.pointerEvents = 'none';
+        requestAnimationFrame(() => { preloaderEl.style.display = 'none'; });
+        ScrollTrigger.refresh();
+      }
+    });
+
+    const counterObj = { val: 0 };
+    const counterEl = document.getElementById('preCounter');
+    const progressLine = document.querySelector('#preProgressLine');
+
+    preloaderTL
+      .to('.pre-logo-mark', {
+        opacity: 1, scale: 1, rotate: 0,
+        duration: 0.8,
+        ease: 'elastic.out(1.1, 0.45)',
+      }, 0.1)
+      .to('.pre-progress-line', {
+        opacity: 1, duration: 0.4, ease: 'power2.out',
+      }, 0.2)
+      .to('.pre-bottom', {
+        opacity: 1, y: 0, duration: 0.5, ease: 'power3.out',
+      }, 0.3)
+      .to(counterObj, {
+        val: 100, duration: 1.5,
+        ease: 'power2.inOut',
+        onUpdate: () => {
+          const pct = Math.floor(counterObj.val);
+          if (counterEl) counterEl.innerText = pct + '%';
+          if (progressLine) progressLine.style.setProperty('--pre-fill', pct + '%');
+        }
+      }, 0.2)
+      .to('.pre-char', {
+        opacity: 1, y: '0%', scale: 1, rotateX: 0,
+        duration: 0.8,
+        stagger: { each: 0.03, from: 'start' },
+        ease: 'elastic.out(1, 0.35)',
+      }, 0.3)
+      .to('#preTagline', {
+        opacity: 0.5, y: 0,
+        duration: 0.6, ease: 'power2.out',
+      }, 0.7)
+      .to('.pre-char', {
+        opacity: 0, y: '-130%', scale: 1.15,
+        duration: 0.35,
+        stagger: { each: 0.02, from: 'end' },
+        ease: 'power4.in',
+      }, 1.8)
+      .to('#preTagline', {
+        opacity: 0, y: -24,
+        duration: 0.3, ease: 'power4.in',
+      }, 1.8)
+      .to('.pre-logo-mark', {
+        scale: 0.05, opacity: 0, rotate: 200,
+        duration: 0.6, ease: 'power4.inOut',
+      }, 1.7)
+      .to('.pre-progress-line', {
+        opacity: 0, scaleX: 0, transformOrigin: 'center',
+        duration: 0.35, ease: 'power4.in',
+      }, 1.7)
+      .to('.pre-bottom', {
+        opacity: 0, y: -20, duration: 0.3, ease: 'power4.in',
+      }, 1.8)
+      .set('#preloader', {
+        transformOrigin: 'top center',
+        willChange: 'transform',
+      }, 2.0)
+      .to('#preloader', {
+        yPercent: -100,
+        duration: 0.8,
+        ease: 'power4.inOut',
+      }, 2.0);
+
+    // ─── FAST HERO REVEAL PREP ───
+    gsap.set('.main-nav', { y: '-100%', opacity: 0 });
+    gsap.set('.hero-line', { y: '100%', opacity: 0 });
+    gsap.set('.hero-fade', { opacity: 0, y: 20 });
+    gsap.set('.hero-app-mockup', { scale: 1.05, opacity: 0, y: 30 });
+
+    preloaderTL.to('.main-nav', { y: '0%', opacity: 1, duration: 0.5, ease: 'power2.out' }, 1.9)
+      .to('.hero-line', {
+        y: '0%', opacity: 1,
+        duration: 0.6, stagger: 0.08,
+        ease: 'power3.out'
+      }, 1.9)
+      .to('.hero-app-mockup', {
+        scale: 1, opacity: 1, y: 0,
+        duration: 0.7, ease: 'power3.out'
+      }, 2.0)
+      .to('.hero-fade', {
+        opacity: 1, y: 0,
+        duration: 0.6, ease: 'power3.out', stagger: 0.04
+      }, 2.1);
+  } else {
+    // No preloader: run cinematic hero animation directly if #hero is present
+    const heroEl = document.getElementById('hero');
+    const isHomePage = document.body.getAttribute('data-page') === 'home';
+
+    if (heroEl && isHomePage) {
+      // Home page: show everything instantly, no entrance animation
+      if (typeof lenis !== 'undefined' && typeof lenis.start === 'function') lenis.start();
+      gsap.set('.main-nav', { y: '0%', opacity: 1 });
+      gsap.set('.hero-bg-el', { opacity: 1 });
+      gsap.set('.hero-bg-svg', { opacity: 0.8 });
+      gsap.set('.hero-tag', { opacity: 1, y: 0 });
+      gsap.set('.hero-line', { y: '0%', opacity: 1 });
+      gsap.set('.hero-divider', { scaleX: 1, opacity: 1 });
+      gsap.set('.hero-bottom', { opacity: 1, y: 0 });
+      gsap.set('.hero-app-mockup', { scale: 1, opacity: 1, y: 0 });
+      gsap.set('.hero-fade', { opacity: 1, y: 0 });
+    } else if (heroEl) {
+      if (typeof lenis !== 'undefined' && typeof lenis.start === 'function') lenis.start();
+
+      // Set initial states via GSAP to avoid layout jumps / FOUC
+      gsap.set('.hero-bg-el', { opacity: 0 });
+      gsap.set('.hero-tag', { opacity: 0, y: -20 });
+      gsap.set('.hero-line', { y: '100%', opacity: 0 });
+      gsap.set('.hero-divider', { scaleX: 0, opacity: 0 });
+      gsap.set('.hero-bottom', { opacity: 0, y: 20 });
+      gsap.set('.hero-app-mockup', { scale: 1.05, opacity: 0, y: 30 });
+      gsap.set('.main-nav', { y: '-100%', opacity: 0 });
+
+      // Highly Cinematic Hero Entrance Timeline
+      const tl = gsap.timeline({ delay: 0.1, defaults: { ease: 'power3.out' } });
+
+      tl.to('.main-nav', { y: '0%', opacity: 1, duration: 0.6 }, 0)
+        .to('.hero-bg-el:not(.hero-bg-svg)', { opacity: 1, duration: 2.5 }, 0.2)
+        .to('.hero-bg-svg', { opacity: 0.8, duration: 2.5 }, 0.2)
+        .to('.hero-tag', { opacity: 1, y: 0, duration: 1.2 }, 0.5)
+        .to('.hero-line', {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          stagger: 0.2,
+          ease: 'power4.out'
+        }, 0.7)
+        .to('.hero-divider', {
+          opacity: 1,
+          scaleX: 1,
+          duration: 1,
+          ease: 'expo.out'
+        }, 1.2)
+        .to('.hero-app-mockup', {
+          scale: 1, opacity: 1, y: 0,
+          duration: 1.0, ease: 'power3.out'
+        }, 1.3)
+        .to('.hero-bottom', {
+          opacity: 1,
+          y: 0,
+          duration: 1.2
+        }, 1.4);
+    } else {
+      // If not on home/about page but has main-nav and other generic animated items
+      if (typeof lenis !== 'undefined' && typeof lenis.start === 'function') lenis.start();
+      gsap.set('.main-nav', { y: '0%', opacity: 1 });
+    }
+  }
+
   // ==========================================
   // GISI-Style Curtain Footer & Scroll Reveals
   // ==========================================
   (function initGisiAnimations() {
-    // 1. Scroll Reveal Animations
+    // 1. Scroll Reveal Animations (skip on home page — shown instantly via CSS)
     const revealElements = document.querySelectorAll('.reveal-up');
+    const isHome = document.body.getAttribute('data-page') === 'home';
     
-    if (revealElements.length > 0) {
+    if (revealElements.length > 0 && !isHome) {
       const revealOptions = {
         root: null,
         rootMargin: '0px 0px -10% 0px',
@@ -524,48 +569,54 @@ function wrapWords(el) {
   return el.querySelectorAll('span > span');
 }
 
-document.querySelectorAll('.gs-split').forEach(el => {
-  const words = wrapWords(el);
-  gsap.from(words, {
-    y: '150%',
-    skewY: 8,
-    opacity: 0,
-    duration: 1.4,
-    stagger: 0.05,
-    ease: 'expo.out',
-    scrollTrigger: {
-      trigger: el,
-      start: 'top 90%',
-      toggleActions: 'play none none none'
-    }
+if (document.body.getAttribute('data-page') !== 'home') {
+  document.querySelectorAll('.gs-split').forEach(el => {
+    const words = wrapWords(el);
+    gsap.from(words, {
+      y: '150%',
+      skewY: 8,
+      opacity: 0,
+      duration: 1.4,
+      stagger: 0.05,
+      ease: 'expo.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 90%',
+        toggleActions: 'play none none none'
+      }
+    });
   });
-});
+}
 
 // ═══════════════════════
 // 10B. SCROLL REVEAL ANIMATIONS (gs-reveal)
 // ═══════════════════════
-document.querySelectorAll('.gs-reveal').forEach((el, i) => {
-  gsap.from(el, {
-    opacity: 0, y: 40,
-    duration: 0.8,
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: el,
-      start: 'top 92%',
-      toggleActions: 'play none none none',
-    }
+if (document.body.getAttribute('data-page') !== 'home') {
+  document.querySelectorAll('.gs-reveal').forEach((el, i) => {
+    gsap.from(el, {
+      opacity: 0, y: 40,
+      duration: 0.5,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 92%',
+        toggleActions: 'play none none none',
+      }
+    });
   });
-});
+}
 
 // ═══════════════════════
 // 10. PARALLAX headings
 // ═══════════════════════
-document.querySelectorAll('.sec-title-lg').forEach(h => {
-  gsap.fromTo(h, { y:20 }, {
-    y:-15, ease:'none',
-    scrollTrigger: { trigger:h, start:'top bottom', end:'bottom top', scrub:0.6 }
+if (document.body.getAttribute('data-page') !== 'home') {
+  document.querySelectorAll('.sec-title-lg').forEach(h => {
+    gsap.fromTo(h, { y:20 }, {
+      y:-15, ease:'none',
+      scrollTrigger: { trigger:h, start:'top bottom', end:'bottom top', scrub:0.6 }
+    });
   });
-});
+}
 // 12. FLOATING HERO MEDIA
 // ═══════════════════════
 const hero = document.getElementById('hero');
