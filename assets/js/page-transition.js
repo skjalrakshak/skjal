@@ -434,6 +434,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     const tl = window.gsap.timeline({
                         onComplete: () => {
+                            // Cancel failsafe timeout — animation completed successfully
+                            clearTimeout(transitionTimeout);
                             // Lock everything dark BEFORE navigation
                             document.documentElement.style.backgroundColor = '#111823';
                             document.documentElement.style.visibility = 'hidden';

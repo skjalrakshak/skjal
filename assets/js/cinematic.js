@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         threshold: 0
     };
 
+    let imageFadeTimeout = null;
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -25,9 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const newSrc = block.getAttribute('data-image');
                 if (newSrc && stickyImage.getAttribute('src') !== newSrc) {
                     stickyImage.style.opacity = 0;
-                    setTimeout(() => {
+                    // Clear any pending crossfade to prevent race conditions
+                    if (imageFadeTimeout) clearTimeout(imageFadeTimeout);
+                    imageFadeTimeout = setTimeout(() => {
                         stickyImage.setAttribute('src', newSrc);
                         stickyImage.style.opacity = 1;
+                        imageFadeTimeout = null;
                     }, 300);
                 }
             }

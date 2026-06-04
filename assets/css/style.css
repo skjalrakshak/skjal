@@ -1,5 +1,4 @@
-/*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
-@layer properties;
+/* SK JALRAKSHAK — Global Design System */
 
 /* Anti-flash: hide page during transitions (class set by inline script before first paint) */
 html.page-transitioning {
@@ -304,7 +303,7 @@ main,
   z-index: 1100;
   background: transparent;
   border-bottom: none;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: transform 0.3s ease,
     background 0.3s ease,
     box-shadow 0.3s ease;
 }
@@ -355,7 +354,7 @@ main,
   font-family: var(--display);
   font-size: 1.1rem;
   font-weight: 700;
-  color: #000 !important;
+  color: var(--fg-head);
   letter-spacing: -0.01em;
   transition: color 0.3s ease;
 }
@@ -371,7 +370,7 @@ main,
   font-family: var(--sans);
   font-size: 0.88rem;
   font-weight: 500;
-  color: #000 !important;
+  color: var(--fg-head);
   padding: 8px 16px;
   border-radius: 8px;
   text-decoration: none;
@@ -387,7 +386,7 @@ main,
 
 .nav-link:hover,
 .nav-link.active {
-  color: #000 !important;
+  color: var(--fg-head);
   background: transparent;
 }
 
@@ -451,7 +450,7 @@ main,
   padding: 10px 16px;
   font-size: 0.88rem;
   font-weight: 500;
-  color: #000 !important;
+  color: var(--fg-head);
   text-decoration: none;
   border-radius: 8px;
   transition: background 0.2s ease, color 0.2s ease;
@@ -459,7 +458,7 @@ main,
 
 .nav-dropdown-item:hover {
   background: transparent;
-  color: #000 !important;
+  color: var(--fg-head);
 }
 
 /* Actions */
@@ -544,7 +543,6 @@ main,
   top: 0;
   right: -100%;
   width: 100%;
-  max-width: 320px;
   max-width: 85vw;
   height: 100vh;
   height: 100dvh;
@@ -5557,3 +5555,133 @@ body #footer {
     margin-bottom: 8px !important;
   }
 }
+
+/* Restored Global Footer Styles */
+#footer {
+        --foot-bg: #000000;
+        --foot-fg: #ffffff;
+        --foot-muted: rgba(255, 255, 255, 0.45);
+        --foot-dim: rgba(255, 255, 255, 0.3);
+        --foot-border: rgba(255, 255, 255, 0.08);
+        --foot-accent: #ff5500;
+        --mii-filter: invert(1);
+        position: relative;
+        padding: 16px 0 8px;
+        background: var(--foot-bg) !important;
+        color: var(--foot-fg) !important;
+        border-top: none;
+        overflow: hidden;
+        transition:
+          background 0.5s,
+          color 0.5s;
+      }
+      [data-theme="dark"] #footer {
+        --foot-bg: #ffffff;
+        --foot-fg: #000000;
+        --foot-muted: rgba(0, 0, 0, 0.45);
+        --foot-dim: rgba(0, 0, 0, 0.3);
+        --foot-border: rgba(0, 0, 0, 0.08);
+        --foot-accent: #ff5500;
+        --mii-filter: none;
+      }
+      .foot-mii-img {
+        filter: var(--mii-filter) !important;
+        transition: filter 0.5s;
+      }
+      .foot-col-title {
+        font-family: var(--display);
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: var(--foot-muted) !important;
+        margin-bottom: 8px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition: color 0.5s;
+      }
+      .foot-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .foot-links li a {
+        font-size: 0.78rem;
+        color: var(--foot-muted) !important;
+        text-decoration: none;
+        transition:
+          color 0.3s,
+          transform 0.3s;
+        display: inline-block;
+      }
+      .foot-links li a:hover {
+        color: var(--foot-fg) !important;
+        transform: translateX(4px);
+      }
+      .foot-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+        border-top: 1px solid var(--foot-border) !important;
+        gap: 12px;
+        flex-wrap: wrap;
+        transition: border-color 0.5s;
+      }
+      .foot-copy {
+        font-size: 0.75rem;
+        color: var(--foot-dim) !important;
+        letter-spacing: 0.02em;
+        transition: color 0.5s;
+      }
+      .foot-legal {
+        display: flex;
+        gap: 24px;
+      }
+      .foot-legal a {
+        font-size: 0.75rem;
+        color: var(--foot-dim) !important;
+        text-decoration: none;
+        transition: color 0.3s;
+        letter-spacing: 0.02em;
+      }
+      .foot-legal a:hover {
+        color: var(--foot-fg) !important;
+      }
+      .foot-back-top {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 14px;
+        border: 1px solid var(--foot-border);
+        border-radius: 100px;
+        font-size: 0.72rem !important;
+        color: var(--foot-muted) !important;
+        text-decoration: none !important;
+        transition: 0.3s;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .foot-back-top:hover {
+        border-color: var(--foot-muted);
+        color: var(--foot-fg) !important;
+        transform: translateY(-2px);
+      }
+      @media (max-width: 900px) {
+        .foot-brand-col {
+          grid-column: 1/-1;
+        }
+      }
+      @media (max-width: 600px) {
+        .foot-bottom {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        #footer {
+          padding: 16px 0 10px;
+        }
+        .foot-col-title {
+          margin-bottom: 6px;
+        }
+      }

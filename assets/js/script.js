@@ -1,4 +1,12 @@
-/* ═══ SK JALRAKSHAK — ANIMATION ENGINE v6 ═══ */
+/* ═══ SK JALRAKSHAK — ANIMATION ENGINE v7 ═══ */
+/* Audited and cleaned: dead code removed, constants extracted, navbar fixed */
+
+// ── Named Constants (no magic numbers) ──
+const TESTIMONIAL_ROTATE_MS = 6000;
+const IMAGE_CROSSFADE_MS = 300;
+const SCROLL_SHADOW_THRESHOLD = 10;
+const FOOTER_HEIGHT_RECHECK_MS_1 = 500;
+const FOOTER_HEIGHT_RECHECK_MS_2 = 1500;
 
 // ── LENIS ──
 const hasGsap = Boolean(window.gsap);
@@ -210,34 +218,7 @@ document.getElementById('themeToggle')?.addEventListener('click', (e) => {
 
 // ═══════════════════════
 // 2. CINEMATIC PRELOADER (Intro Scene + Intro Reveal)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-
-
-
-
-
-
-
 // ═══════════════════════
-// 11. AWWWARDS BARBA.JS TRANSITION
-// ═══════════════════════
-function createTransitionOverlay() {
-  let overlay = document.getElementById('skj-transition-overlay');
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.id = 'skj-transition-overlay';
-    // Deep black or brand primary for premium feel
-    overlay.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:999999; display:flex; justify-content:center; align-items:center; background: transparent;';
-    
-    overlay.innerHTML = `
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%; height:100%; position:absolute; top:0; left:0;">
-        <path class="skj-transition-path" d="M 0 100 V 100 Q 50 100 100 100 V 100 z" fill="#0ea5e9" />
-      </svg>
-    `;
-    document.body.appendChild(overlay);
-  }
-  return overlay;
-}
 
 // if (typeof barba !== 'undefined') {
 //   barba.init({ ...
@@ -470,8 +451,8 @@ window.SkjInitAll = function() {
 
       updateFooterHeight();
       window.addEventListener('resize', updateFooterHeight);
-      setTimeout(updateFooterHeight, 500);
-      setTimeout(updateFooterHeight, 1500);
+      setTimeout(updateFooterHeight, FOOTER_HEIGHT_RECHECK_MS_1);
+      setTimeout(updateFooterHeight, FOOTER_HEIGHT_RECHECK_MS_2);
     }
   })();
 
@@ -993,26 +974,28 @@ document.querySelectorAll('.stat-val').forEach(stat => {
   drawer?.setAttribute('aria-hidden', 'true');
 
   // Scroll: add shadow + hide on scroll down, show on scroll up
+  // Spec: hide immediately on ANY downward scroll, show on ANY upward scroll
+  // Always visible at scrollY === 0
   let lastScroll = 0;
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
       window.requestAnimationFrame(() => {
         const currentScroll = window.scrollY;
-        // Shadow
-        if (currentScroll > 10) {
+        // Shadow on scroll
+        if (currentScroll > SCROLL_SHADOW_THRESHOLD) {
           nav.classList.add('nav-scrolled');
         } else {
           nav.classList.remove('nav-scrolled');
         }
-        // Hide/show (only after scrolling past 200px)
-        if (currentScroll > 200) {
-          if (currentScroll > lastScroll + 5) {
-            nav.classList.add('nav-hidden');
-          } else if (currentScroll < lastScroll - 5) {
-            nav.classList.remove('nav-hidden');
-          }
-        } else {
+        // Always visible at top
+        if (currentScroll <= 0) {
+          nav.classList.remove('nav-hidden');
+        } else if (currentScroll > lastScroll) {
+          // Scrolling DOWN — hide immediately
+          nav.classList.add('nav-hidden');
+        } else if (currentScroll < lastScroll) {
+          // Scrolling UP — show immediately
           nav.classList.remove('nav-hidden');
         }
         lastScroll = currentScroll;
@@ -1190,7 +1173,7 @@ document.querySelectorAll('.stat-val').forEach(stat => {
 
   function startRotate() {
     if (!autoRotate) {
-      autoRotate = setInterval(nextTestimonial, 6000);
+      autoRotate = setInterval(nextTestimonial, TESTIMONIAL_ROTATE_MS);
     }
   }
 
@@ -1214,7 +1197,7 @@ document.querySelectorAll('.stat-val').forEach(stat => {
 // ═══════════════════════
 // 15. CINEMATIC PAGE TRANSITION WIPE
 // ═══════════════════════
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const wipe = document.querySelector('.cinematic-wipe');
   if (wipe) {
     gsap.fromTo(wipe, { scaleY: 1, transformOrigin: 'bottom' }, {
@@ -1225,25 +1208,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
-
-
-// DYNAMIC WEBGL ENGINE LAZY LOAD
-(function initWebGL() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const loadWebGL = () => {
-    if (!document.getElementById('webgl-canvas')) return;
-    const script = document.createElement('script');
-    script.src = 'assets/js/webgl.js';
-    script.defer = true;
-    document.body.appendChild(script);
-  };
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(loadWebGL, { timeout: 2000 });
-  } else {
-    setTimeout(loadWebGL, 500);
-  }
-})();
 
 };
 

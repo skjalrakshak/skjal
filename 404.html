@@ -1,6 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       if (sessionStorage.getItem('isPageTransition') === 'true') {
         document.documentElement.classList.add('page-transitioning');
@@ -11,140 +13,15 @@
 
     <title>Page Not Found Error - 404 Troubleshooting | SKJAL</title>
     <meta name="description" content="The requested page was not found on our server. Browse SKJAL Innovations to explore industrial IoT, smart energy meters, and water quality telemetry today." />
-    <link rel="canonical" href="https://skjal.in/404" />
-    
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Page Not Found Error - 404 Troubleshooting | SKJAL" />
-    <meta property="og:description" content="The requested page was not found on our server. Browse SKJAL Innovations to explore industrial IoT, smart energy meters, and water quality telemetry today." />
-    <meta property="og:url" content="https://skjal.in/404" />
-    <meta property="og:image" content="https://skjal.in/assets/img/heroes/skjal-hero-banner.webp" />
-    <meta property="og:locale" content="en_IN" />
-    <meta property="og:site_name" content="SKJAL - SK Jalrakshak Innovations" />
-    
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Page Not Found Error - 404 Troubleshooting | SKJAL" />
-    <meta name="twitter:description" content="The requested page was not found on our server. Browse SKJAL Innovations to explore industrial IoT, smart energy meters, and water quality telemetry today." />
-    <meta name="twitter:image" content="https://skjal.in/assets/img/heroes/skjal-hero-banner.webp" />
-    
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="geo.region" content="IN-AP" />
-    <meta name="geo.placename" content="Visakhapatnam" />
-    <meta name="geo.position" content="17.6868;83.2185" />
-    <meta name="ICBM" content="17.6868, 83.2185" />
-    <meta name="language" content="English" />
-    <meta name="revisit-after" content="7 days" />
-    <meta name="author" content="SK Jalrakshak Innovations" />
-    
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Page Not Found Error - 404 Troubleshooting | SKJAL",
-  "description": "The requested page was not found on our server. Browse SKJAL Innovations to explore industrial IoT, smart energy meters, and water quality telemetry.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "SKJAL Innovations"
-  }
-}
-    </script>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0a0a0a" />
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    <link rel="stylesheet" href="assets/css/style.css">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
     <style>
-      * {
+      *, *::before, *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -215,11 +92,11 @@
         transition: all 0.25s ease;
       }
 
-      .btn-primary {
+      .btn-primary-404 {
         color: #ffffff;
         background: #0ea5e9;
       }
-      .btn-primary:hover {
+      .btn-primary-404:hover {
         background: #0284c7;
         transform: translateY(-1px);
       }
@@ -255,333 +132,35 @@
           justify-content: center;
         }
       }
-    @media (max-width: 640px) {
-  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
-  .dir-icon { width: 96px !important; height: 96px !important; }
-}
-</style>
-  <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        min-height: 100svh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, sans-serif;
-        color: #ffffff;
-        background: #0a0a0a;
-      }
-
-      .container {
-        text-align: center;
-        padding: 2rem;
-        max-width: 600px;
-      }
-
-      .error-code {
-        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", serif;
-        font-size: clamp(7rem, 20vw, 12rem);
-        font-weight: 900;
-        line-height: 1;
-        letter-spacing: -0.03em;
-        color: #0ea5e9;
-        opacity: 0.15;
-        margin-bottom: -1.5rem;
-        position: relative;
-      }
-
-      h1 {
-        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", serif;
-        font-size: clamp(1.8rem, 4vw, 2.8rem);
-        font-weight: 800;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        margin-bottom: 1rem;
-      }
-
-      p {
-        font-size: 1rem;
-        line-height: 1.7;
-        color: rgba(255, 255, 255, 0.55);
-        max-width: 440px;
-        margin: 0 auto 2.5rem;
-      }
-
-      .actions {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
-      a {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 0.75rem 1.5rem;
-        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", sans-serif;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: all 0.25s ease;
-      }
-
-      .btn-primary {
-        color: #ffffff;
-        background: #0ea5e9;
-      }
-      .btn-primary:hover {
-        background: #0284c7;
-        transform: translateY(-1px);
-      }
-
-      .btn-secondary {
-        color: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: transparent;
-      }
-      .btn-secondary:hover {
-        border-color: rgba(255, 255, 255, 0.3);
-        color: #ffffff;
-      }
-
-      .divider {
-        width: 48px;
-        height: 2px;
-        background: rgba(14, 165, 233, 0.3);
-        margin: 0 auto 1.5rem;
-        border-radius: 2px;
-      }
-
-      @media (max-width: 480px) {
-        .container {
-          padding: 1.5rem;
-        }
-        .actions {
-          flex-direction: column;
-          align-items: center;
-        }
-        a {
-          width: 100%;
-          justify-content: center;
-        }
-      }
-    @media (max-width: 640px) {
-  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
-  .dir-icon { width: 96px !important; height: 96px !important; }
-}
-</style>
-
-<script defer="defer" src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
-
-<style id="gisi-animations-css">
-/* Reveal Animations */
-.reveal-up {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-.reveal-up.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Curtain Footer Structure */
-body.has-curtain-footer {
-  position: relative;
-  min-height: 100vh;
-}
-.curtain-main {
-  position: relative;
-  z-index: 2;
-  background-color: var(--bg) !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-}
-.curtain-footer-active {
-  position: fixed !important;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1 !important;
-}
-</style>
-
-    <script src="/assets/js/page-transition.js?v=1780420197089"></script>
-  <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script><style id='compact-footer-styles'>
-  #footer {
-    padding: 30px 0 20px !important;
-    background: #111823 !important;
-    color: #ffffff !important;
-    --foot-bg: #111823 !important;
-    --foot-fg: #ffffff !important;
-    --foot-muted: rgba(255, 255, 255, 0.6) !important;
-    --foot-dim: rgba(255, 255, 255, 0.45) !important;
-    --foot-border: rgba(255, 255, 255, 0.1) !important;
-    --foot-accent: #b46e0cc2 !important;
-    --mii-filter: invert(1) !important;
-  }
-  [data-theme=dark] #footer {
-    --foot-bg: #111823 !important;
-    --foot-fg: #ffffff !important;
-    --foot-muted: rgba(255, 255, 255, 0.6) !important;
-    --foot-dim: rgba(255, 255, 255, 0.45) !important;
-    --foot-border: rgba(255, 255, 255, 0.1) !important;
-    --foot-accent: #b46e0cc2 !important;
-    --mii-filter: invert(1) !important;
-  }
-  .foot-grid {
-    margin-bottom: 24px !important;
-    gap: 32px !important;
-  }
-  .foot-mii-img {
-    height: 150px !important;
-    width: auto !important;
-    margin-bottom: 12px !important;
-    object-fit: contain !important;
-  }
-  .foot-col-title {
-    margin-bottom: 12px !important;
-    font-size: 0.85rem !important;
-    color: #ffffff !important;
-  }
-  .foot-links {
-    gap: 10px !important;
-  }
-  .foot-links li a {
-    font-size: 0.88rem !important;
-    color: rgba(255, 255, 255, 0.6) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    perspective: 800px !important;
-    transform-style: preserve-3d !important;
-  }
-  .foot-links li a svg {
-    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95), color 0.3s !important;
-  }
-  .foot-links li a:hover svg {
-    transform: translateX(4px) !important;
-    color: #b46e0cc2 !important;
-  }
-  .roll-text-container {
-    display: inline-flex !important;
-    position: relative !important;
-    overflow: hidden !important;
-    vertical-align: middle !important;
-    line-height: 1.2 !important;
-    perspective: 800px !important;
-    transform-style: preserve-3d !important;
-  }
-  .roll-line-1 {
-    display: inline-block !important;
-    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95) !important;
-    will-change: transform !important;
-  }
-  .roll-line-2 {
-    display: inline-block !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 100% !important;
-    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95) !important;
-    will-change: transform !important;
-  }
-  .roll-char {
-    display: inline-block !important;
-    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95), color 0.3s !important;
-    will-change: transform !important;
-  }
-  .roll-line-2 .roll-char {
-    transform: rotateX(90deg) !important;
-    transform-origin: bottom center !important;
-  }
-  .roll-line-1 .roll-char {
-    transform-origin: top center !important;
-  }
-  #footer .foot-links li a:hover .roll-line-1 .roll-char {
-    transform: translateY(-100%) rotateX(-90deg) !important;
-    color: #b46e0cc2 !important;
-  }
-  #footer .foot-links li a:hover .roll-line-2 .roll-char {
-    transform: translateY(-100%) rotateX(0deg) !important;
-    color: #b46e0cc2 !important;
-  }
-  .foot-bottom {
-    padding-top: 16px !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  }
-  .foot-copy {
-    color: rgba(255, 255, 255, 0.45) !important;
-  }
-  @media (max-width: 600px) {
-    #footer {
-      padding: 24px 0 16px !important;
-    }
-    .foot-col-title {
-      margin-bottom: 10px !important;
-    }
-  }
-</style>
-
-    <meta name="robots" content="noindex" />
-</head>
+    </style>
+  </head>
   <body>
-    <div class="container">
-      <div class="error-code">404</div>
-      <h1 class=" reveal-up">Page Not Found</h1>
-      <div class="divider"></div>
-      <p>
-        The page you're looking for doesn't exist or has been moved. Head back
-        to the homepage or reach out to our team.
-      </p>
-      <div class="actions">
-        <a class="btn-primary" href="index.html">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-            <polyline points="9 22 9 12 15 12 15 22" />
-          </svg>
-          Return Home
-        </a>
-        <a class="btn-secondary" href="/#contact">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path
-              d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-            />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          Contact Team
-        </a>
+    <main>
+      <div class="container">
+        <div class="error-code">404</div>
+        <h1>Page Not Found</h1>
+        <div class="divider"></div>
+        <p>
+          The page you're looking for doesn't exist or has been moved. Head back
+          to the homepage or reach out to our team.
+        </p>
+        <div class="actions">
+          <a class="btn-primary-404" href="/">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Return Home
+          </a>
+          <a class="btn-secondary" href="/contact">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            Contact Team
+          </a>
+        </div>
       </div>
-    </div>
+    </main>
   </body>
 </html>
-
-
-
-
-
-
