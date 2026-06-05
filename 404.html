@@ -135,6 +135,31 @@
     </style>
   </head>
   <body>
+<!-- SKJAL Page Transition Curtain (Hardcoded for zero-flash) -->
+    <div class="skjal-transition-wrap" id="skjal-entry-curtain" style="display: none;">
+        <div class="skjal-transition-panel">
+            <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0,100 C50,0 100,100 100,100 Z"></path>
+            </svg>
+            <svg class="skjal-curve-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0,0 C50,100 100,0 100,0 Z"></path>
+            </svg>
+        </div>
+        <div class="skjal-transition-text-wrap">
+            <div class="skjal-transition-text">
+                <div class="skjal-transition-word">
+                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">S</span>
+                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">K</span>
+                </div>
+                <div class="skjal-transition-word">
+                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">J</span>
+                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">A</span>
+                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">L</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main>
       <div class="container">
         <div class="error-code">404</div>
@@ -162,5 +187,6 @@
         </div>
       </div>
     </main>
-  </body>
+  <script defer="defer" src="/assets/js/page-transition.js?v=20260605"></script>
+</body>
 </html>
