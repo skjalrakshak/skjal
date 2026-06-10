@@ -32,13 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // =============================================
     // 1. ENTRY ANIMATION (arriving on new page)
     // =============================================
-    if (sessionStorage.getItem('isPageTransition') === 'true') {
-        sessionStorage.removeItem('isPageTransition');
+    let gsapPollCount = 0;
+    const gsapPollMax = 50;
 
-        let gsapPollCount = 0;
-        const gsapPollMax = 50;
-
-        function forceRevealNoAnimation() {
+    function forceRevealNoAnimation() {
             document.documentElement.style.overflow = '';
             var f = document.getElementById('footer');
             if (f) { f.style.visibility = ''; f.style.opacity = ''; }
@@ -139,17 +136,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        function waitForGsapAndRun() {
-            if (window.gsap) {
-                runEntryAnimation();
-            } else if (gsapPollCount < gsapPollMax) {
-                gsapPollCount++;
-                setTimeout(waitForGsapAndRun, 50);
-            } else {
-                forceRevealNoAnimation();
-            }
+    function waitForGsapAndRun() {
+        if (window.gsap) {
+            runEntryAnimation();
+        } else if (gsapPollCount < gsapPollMax) {
+            gsapPollCount++;
+            setTimeout(waitForGsapAndRun, 50);
+        } else {
+            forceRevealNoAnimation();
         }
+    }
 
+    if (sessionStorage.getItem('isPageTransition') === 'true') {
+        sessionStorage.removeItem('isPageTransition');
         waitForGsapAndRun();
     }
 
@@ -157,6 +156,30 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. EXIT ANIMATION (leaving current page)
     // =============================================
     let isTransitioning = false;
+
+    // Handle BFCache (back/forward navigation)
+    window.addEventListener("pageshow", function(event) {
+        if (event.persisted) {
+            isTransitioning = false;
+            // Remove any stuck exit curtains
+            document.querySelectorAll('.skjal-transition-wrap').forEach(c => c.remove());
+            
+            // Re-create the entry curtain to simulate transition when going back
+            const entryCurtain = document.createElement('div');
+            entryCurtain.className = 'skjal-transition-wrap';
+            entryCurtain.id = 'skjal-entry-curtain';
+            entryCurtain.innerHTML = buildCurtainHTML('translateY(0%)', '1', 'translateY(0%)', '0');
+            entryCurtain.style.display = 'flex';
+            document.body.appendChild(entryCurtain);
+            
+            // Play the entry animation
+            if (window.gsap) {
+                runEntryAnimation();
+            } else {
+                forceRevealNoAnimation();
+            }
+        }
+    });
 
     function normalizePathname(p) {
         if (!p) return '/';
