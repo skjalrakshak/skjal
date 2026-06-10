@@ -974,10 +974,10 @@ document.querySelectorAll('.stat-val').forEach(stat => {
   drawer?.setAttribute('aria-hidden', 'true');
 
   // Scroll: add shadow + hide on scroll down, show on scroll up
-  // Spec: hide immediately on ANY downward scroll, show on ANY upward scroll
-  // Always visible at scrollY === 0
   let lastScroll = 0;
   let ticking = false;
+  const SCROLL_THRESHOLD = 15; // px threshold to prevent jitter
+
   window.addEventListener('scroll', () => {
     if (!ticking) {
       window.requestAnimationFrame(() => {
@@ -988,17 +988,25 @@ document.querySelectorAll('.stat-val').forEach(stat => {
         } else {
           nav.classList.remove('nav-scrolled');
         }
+        
         // Always visible at top
         if (currentScroll <= 0) {
           nav.classList.remove('nav-hidden');
-        } else if (currentScroll > lastScroll) {
-          // Scrolling DOWN — hide immediately
-          nav.classList.add('nav-hidden');
-        } else if (currentScroll < lastScroll) {
-          // Scrolling UP — show immediately
-          nav.classList.remove('nav-hidden');
+        } else {
+          // Determine scroll difference
+          const scrollDiff = currentScroll - lastScroll;
+          
+          if (Math.abs(scrollDiff) > SCROLL_THRESHOLD) {
+            if (scrollDiff > 0) {
+              // Scrolling DOWN
+              nav.classList.add('nav-hidden');
+            } else {
+              // Scrolling UP
+              nav.classList.remove('nav-hidden');
+            }
+            lastScroll = currentScroll;
+          }
         }
-        lastScroll = currentScroll;
         ticking = false;
       });
       ticking = true;
@@ -1222,7 +1230,7 @@ window.addEventListener('load', () => {
     try {
       target = (hash && hash !== '#') ? document.querySelector(hash) : null;
     } catch(err) {
-      console.warn("Invalid hash on load:", hash);
+      // Ignored
     }
     if (target) {
       setTimeout(() => {

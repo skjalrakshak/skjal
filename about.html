@@ -366,7 +366,7 @@ body.has-curtain-footer {
 }
 </style>
 
-    <script src="/assets/js/page-transition.js?v=20260605"></script>
+    <script defer="defer" src="/assets/js/page-transition.js?v=20260605"></script>
   <style id='compact-footer-styles'>
   #footer {
     padding: 30px 0 20px !important;
@@ -929,9 +929,7 @@ body.has-curtain-footer {
             updateScroll(); // initial state
 
             // Highly Cinematic GSAP ScrollTrigger Box Reveals
-            if(typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                gsap.registerPlugin(ScrollTrigger);
-
+            if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
                 const revealContainers = document.querySelectorAll('.scroll-reveal-container');
 
                 revealContainers.forEach((container, index) => {
@@ -995,7 +993,6 @@ body.has-curtain-footer {
                     });
                 });
             } else {
-                console.warn("GSAP or ScrollTrigger not loaded.");
                 // Fallback for native reveal
                 document.querySelectorAll('.scroll-reveal-container, .stagger-el').forEach(el => {
                     el.style.visibility = 'visible';
@@ -1244,10 +1241,7 @@ body.has-curtain-footer {
   
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        if(typeof gsap === 'undefined') {
-            console.warn("GSAP is not loaded.");
-            return;
-        }
+        // Highly Cinematic Hero Entrance Timeline
         
         // Highly Cinematic Hero Entrance Timeline
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
