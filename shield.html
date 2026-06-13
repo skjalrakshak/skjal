@@ -63,393 +63,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <style>
-      .product-hero {
-        padding: 130px 0 80px;
-        background: var(--bg);
-        overflow: hidden;
-      }
-      .product-hero-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
-        gap: 64px;
-        align-items: start;
-      }
-      .product-hero-image {
-        position: relative;
-        width: 100%;
-      }
-      .product-hero-img-inner {
-        position: relative;
-        border-radius: 24px;
-        overflow: hidden;
-        aspect-ratio: 1/1;
-        max-width: 95%;
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        margin-top: 12px;
-      }
-      .product-hero-img-inner img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .product-hero-content {
-        color: var(--fg);
-        max-width: 600px;
-      }
-      .product-hero-badge {
-        display: inline-block;
-        padding: 6px 16px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #fff;
-        background: #f50;
-        border-radius: 100px;
-        margin-bottom: 24px;
-      }
-      .product-hero-title {
-        font-family: var(--display);
-        font-size: clamp(2.5rem, 4.5vw, 4rem);
-        font-weight: 700;
-        line-height: 1.25;
-        letter-spacing: -0.02em;
-        margin-bottom: 20px;
-        color: var(--fg-head);
-      }
-      .product-hero-sub {
-        font-family: var(--sans);
-        font-size: 1.05rem;
-        line-height: 1.7;
-        font-weight: 400;
-        color: var(--fg);
-        opacity: 0.85;
-        margin-bottom: 32px;
-      }
-      .product-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px 28px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--fg);
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        border-radius: 100px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-      .product-back:hover {
-        background: var(--border);
-        transform: translateX(-4px);
-      }
-      .product-section {
-        padding: 55px 0;
-      }
-      .product-section + .product-section:not([style*="background"]) {
-        padding-top: 0;
-      }
-      .product-section-old {
-        padding: 80px 0;
-      }
-      .product-features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-        gap: 24px;
-        margin-top: 40px;
-      }
-      @media (max-width: 900px) {
-        .product-section {
-          padding: 35px 0;
-        }
-        .product-cta-section {
-          padding: 35px 0;
-        }
-        
-        .product-hero {
-          padding: 100px 20px 60px;
-          min-height: 50vh;
-        }
-      }
-      .product-feature-card {
-        padding: 32px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
-      }
-      .product-feature-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-      }
-      .product-feature-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        background: rgba(255, 85, 0, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        color: #f50;
-      }
-      .product-feature-card h3 {
-        font-family: var(--sans);
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--fg-head);
-        margin-bottom: 12px;
-        letter-spacing: -0.01em;
-      }
-      .product-feature-card p {
-        font-family: var(--sans);
-        font-weight: 400;
-        font-size: 0.92rem;
-        line-height: 1.75;
-        color: var(--fg-body);
-      }
-      .problem-solution {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        gap: 32px;
-        margin-top: 40px;
-      }
-      
-      .ps-card {
-        padding: 40px;
-        border-radius: 16px;
-        border: 1px solid var(--border);
-      }
-      .ps-card.problem {
-        background: rgba(220, 38, 38, 0.03);
-        border-color: rgba(220, 38, 38, 0.12);
-      }
-      .ps-card.solution {
-        background: rgba(0, 153, 255, 0.03);
-        border-color: rgba(0, 153, 255, 0.12);
-      }
-      .ps-card h3 {
-        font-family: var(--display);
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        color: var(--fg-head);
-        letter-spacing: -0.01em;
-      }
-      .ps-card ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-      }
-      .ps-card li {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        font-family: var(--sans);
-        font-weight: 400;
-        font-size: 0.92rem;
-        line-height: 1.6;
-        color: var(--fg-body);
-      }
-      .ps-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        flex-shrink: 0;
-        margin-top: 6px;
-      }
-      .ps-card.problem .ps-dot {
-        background: #dc2626;
-      }
-      .ps-card.solution .ps-dot {
-        background: #09f;
-      }
-      .target-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-        gap: 20px;
-        margin-top: 40px;
-      }
-      @media (max-width: 768px) {
-        .target-grid {
-          grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        }
-      }
-      .target-item {
-        text-align: center;
-        padding: 32px 16px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-      }
-      .target-icon {
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: rgba(255, 85, 0, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 16px;
-        color: #f50;
-      }
-      .target-item h4 {
-        font-family: var(--sans);
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--fg-head);
-      }
-      .status-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        gap: 24px;
-        margin-top: 40px;
-      }
-      
-      .status-card {
-        padding: 32px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-      }
-      .status-label {
-        display: inline-block;
-        padding: 4px 12px;
-        font-family: var(--sans);
-        font-size: 0.68rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        border-radius: 100px;
-        margin-bottom: 16px;
-      }
-      .status-now .status-label {
-        background: #dcfce7;
-        color: #166534;
-      }
-      .status-next .status-label {
-        background: #fef3c7;
-        color: #92400e;
-      }
-      .status-card ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-      .status-card li {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-family: var(--sans);
-        font-weight: 400;
-        font-size: 0.92rem;
-        color: var(--fg-body);
-      }
-      .check {
-        color: #22c55e;
-        font-weight: 700;
-      }
-      .arrow {
-        color: #f50;
-        font-weight: 700;
-      }
-      .product-cta-section {
-        padding: 55px 0;
-        background: var(--bg-alt);
-        text-align: center;
-      }
-      .product-cta-section-old {
-        padding: 80px 0;
-        background: var(--bg-alt);
-        text-align: center;
-      }
-      .product-cta-section p {
-        font-family: var(--sans);
-        font-size: 1.05rem;
-        line-height: 1.8;
-        color: var(--fg-body);
-      }
-      .product-cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 16px 40px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
-        background: #f50;
-        border-radius: 100px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        margin-top: 24px;
-      }
-      .product-cta-btn:hover {
-        background: #e04d00;
-        transform: translateY(-2px);
-      }
-      .showcase-container {
-        margin-top: -80px;
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
-        border: 1px solid var(--border);
-        position: relative;
-        z-index: 10;
-        background: var(--bg);
-        transition: transform 0.5s ease;
-      }
-      .showcase-container:hover {
-        transform: scale(1.01);
-      }
-      .showcase-img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
-      @media (max-width: 900px) {
-        .product-hero {
-          padding: 120px 0 60px;
-        }
-        .product-hero-img-inner {
-          position: relative;
-          border-radius: 24px;
-          overflow: hidden;
-          aspect-ratio: 1/1;
-          max-width: 100%;
-          margin: 0 auto 16px;
-          box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-          background: var(--bg-alt);
-          border: 1px solid var(--border);
-        }
-        .product-hero-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 32px;
-          align-items: start;
-        }
-        .product-hero-badge {
-          margin-bottom: 18px;
-          font-size: 0.68rem;
-        }
-        .product-hero-title {
-          font-size: clamp(2.2rem, 8vw, 3.2rem);
-        }
-      }
-    @media (max-width: 640px) {
-  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
-  .dir-icon { width: 96px !important; height: 96px !important; }
-}
-</style>
+    
     <link rel="preload" as="image" href="assets/img/products/shield-hero.webp?v=2" />
     <link
       rel="icon"
@@ -470,393 +84,7 @@
     />
     <link rel="stylesheet" href="assets/css/cinematic.css" />
   
-<style>
-      .product-hero {
-        padding: 130px 0 80px;
-        background: var(--bg);
-        overflow: hidden;
-      }
-      .product-hero-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
-        gap: 64px;
-        align-items: start;
-      }
-      .product-hero-image {
-        position: relative;
-        width: 100%;
-      }
-      .product-hero-img-inner {
-        position: relative;
-        border-radius: 24px;
-        overflow: hidden;
-        aspect-ratio: 1/1;
-        max-width: 95%;
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        margin-top: 12px;
-      }
-      .product-hero-img-inner img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .product-hero-content {
-        color: var(--fg);
-        max-width: 600px;
-      }
-      .product-hero-badge {
-        display: inline-block;
-        padding: 6px 16px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #fff;
-        background: #f50;
-        border-radius: 100px;
-        margin-bottom: 24px;
-      }
-      .product-hero-title {
-        font-family: var(--display);
-        font-size: clamp(2.5rem, 4.5vw, 4rem);
-        font-weight: 700;
-        line-height: 1.25;
-        letter-spacing: -0.02em;
-        margin-bottom: 20px;
-        color: var(--fg-head);
-      }
-      .product-hero-sub {
-        font-family: var(--sans);
-        font-size: 1.05rem;
-        line-height: 1.7;
-        font-weight: 400;
-        color: var(--fg);
-        opacity: 0.85;
-        margin-bottom: 32px;
-      }
-      .product-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px 28px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--fg);
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        border-radius: 100px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-      .product-back:hover {
-        background: var(--border);
-        transform: translateX(-4px);
-      }
-      .product-section {
-        padding: 55px 0;
-      }
-      .product-section + .product-section:not([style*="background"]) {
-        padding-top: 0;
-      }
-      .product-section-old {
-        padding: 80px 0;
-      }
-      .product-features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-        gap: 24px;
-        margin-top: 40px;
-      }
-      @media (max-width: 900px) {
-        .product-section {
-          padding: 35px 0;
-        }
-        .product-cta-section {
-          padding: 35px 0;
-        }
-        
-        .product-hero {
-          padding: 100px 20px 60px;
-          min-height: 50vh;
-        }
-      }
-      .product-feature-card {
-        padding: 32px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
-      }
-      .product-feature-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-      }
-      .product-feature-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        background: rgba(255, 85, 0, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        color: #f50;
-      }
-      .product-feature-card h3 {
-        font-family: var(--sans);
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--fg-head);
-        margin-bottom: 12px;
-        letter-spacing: -0.01em;
-      }
-      .product-feature-card p {
-        font-family: var(--sans);
-        font-weight: 400;
-        font-size: 0.92rem;
-        line-height: 1.75;
-        color: var(--fg-body);
-      }
-      .problem-solution {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        gap: 32px;
-        margin-top: 40px;
-      }
-      
-      .ps-card {
-        padding: 40px;
-        border-radius: 16px;
-        border: 1px solid var(--border);
-      }
-      .ps-card.problem {
-        background: rgba(220, 38, 38, 0.03);
-        border-color: rgba(220, 38, 38, 0.12);
-      }
-      .ps-card.solution {
-        background: rgba(0, 153, 255, 0.03);
-        border-color: rgba(0, 153, 255, 0.12);
-      }
-      .ps-card h3 {
-        font-family: var(--display);
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        color: var(--fg-head);
-        letter-spacing: -0.01em;
-      }
-      .ps-card ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-      }
-      .ps-card li {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        font-family: var(--sans);
-        font-weight: 400;
-        font-size: 0.92rem;
-        line-height: 1.6;
-        color: var(--fg-body);
-      }
-      .ps-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        flex-shrink: 0;
-        margin-top: 6px;
-      }
-      .ps-card.problem .ps-dot {
-        background: #dc2626;
-      }
-      .ps-card.solution .ps-dot {
-        background: #09f;
-      }
-      .target-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-        gap: 20px;
-        margin-top: 40px;
-      }
-      @media (max-width: 768px) {
-        .target-grid {
-          grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        }
-      }
-      .target-item {
-        text-align: center;
-        padding: 32px 16px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-      }
-      .target-icon {
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: rgba(255, 85, 0, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 16px;
-        color: #f50;
-      }
-      .target-item h4 {
-        font-family: var(--sans);
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--fg-head);
-      }
-      .status-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        gap: 24px;
-        margin-top: 40px;
-      }
-      
-      .status-card {
-        padding: 32px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-      }
-      .status-label {
-        display: inline-block;
-        padding: 4px 12px;
-        font-family: var(--sans);
-        font-size: 0.68rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        border-radius: 100px;
-        margin-bottom: 16px;
-      }
-      .status-now .status-label {
-        background: #dcfce7;
-        color: #166534;
-      }
-      .status-next .status-label {
-        background: #fef3c7;
-        color: #92400e;
-      }
-      .status-card ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-      .status-card li {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-family: var(--sans);
-        font-weight: 400;
-        font-size: 0.92rem;
-        color: var(--fg-body);
-      }
-      .check {
-        color: #22c55e;
-        font-weight: 700;
-      }
-      .arrow {
-        color: #f50;
-        font-weight: 700;
-      }
-      .product-cta-section {
-        padding: 55px 0;
-        background: var(--bg-alt);
-        text-align: center;
-      }
-      .product-cta-section-old {
-        padding: 80px 0;
-        background: var(--bg-alt);
-        text-align: center;
-      }
-      .product-cta-section p {
-        font-family: var(--sans);
-        font-size: 1.05rem;
-        line-height: 1.8;
-        color: var(--fg-body);
-      }
-      .product-cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 16px 40px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
-        background: #f50;
-        border-radius: 100px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        margin-top: 24px;
-      }
-      .product-cta-btn:hover {
-        background: #e04d00;
-        transform: translateY(-2px);
-      }
-      .showcase-container {
-        margin-top: -80px;
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
-        border: 1px solid var(--border);
-        position: relative;
-        z-index: 10;
-        background: var(--bg);
-        transition: transform 0.5s ease;
-      }
-      .showcase-container:hover {
-        transform: scale(1.01);
-      }
-      .showcase-img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
-      @media (max-width: 900px) {
-        .product-hero {
-          padding: 120px 0 60px;
-        }
-        .product-hero-img-inner {
-          position: relative;
-          border-radius: 24px;
-          overflow: hidden;
-          aspect-ratio: 1/1;
-          max-width: 100%;
-          margin: 0 auto 16px;
-          box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-          background: var(--bg-alt);
-          border: 1px solid var(--border);
-        }
-        .product-hero-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 32px;
-          align-items: start;
-        }
-        .product-hero-badge {
-          margin-bottom: 18px;
-          font-size: 0.68rem;
-        }
-        .product-hero-title {
-          font-size: clamp(2.2rem, 8vw, 3.2rem);
-        }
-      }
-    @media (max-width: 640px) {
-  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
-  .dir-icon { width: 96px !important; height: 96px !important; }
-}
-</style>
+
 
 <style id="gisi-animations-css">
 /* Reveal Animations */
@@ -1050,7 +278,7 @@ body.has-curtain-footer {
 }
 </style>
 </head>
-  <body>
+  <body  style="--theme-accent: #f50; --theme-accent-hover: #e04d00;">
 
     <!-- SKJAL Page Transition Curtain (Hardcoded for zero-flash) -->
     <div class="skjal-transition-wrap" id="skjal-entry-curtain" style="display: none;">
@@ -1199,117 +427,123 @@ body.has-curtain-footer {
       </div>
       <div class="nav-drawer-overlay" id="navOverlay"></div>
     </header>
+    
+    
     <main data-barba="container" data-barba-namespace="shield">
-    <section id="hero" class="product-hero">
-      <div class="wrap">
-        <div class="product-hero-grid">
-          <div class="product-hero-image gs-reveal">
-            <div class="product-hero-img-inner">
+      <article>
+        <header class="aww-hero">
+          <div class="aww-hero-inner">
+            <div class="aww-hero-text gs-reveal">
+              <span class="product-hero-badge" style="background: #f50; margin-bottom: 24px;">Patent Granted | Prototype Ready</span>
+              <h1 class="aww-text-huge">
+                <span class="aww-text-gradient">AI Driving</span><br />
+                Protection.
+              </h1>
+              <p class="aww-hero-sub">
+                Smart Health Intelligence for Ergonomic & Live Driving. An AI-driven safety, health, and speed intelligence ecosystem engineered to protect commercial fleets and two-wheeler riders.
+              </p>
+              <div style="display: flex; gap: 16px;">
+                <a href="/#contact" class="btn-primary">Get S.H.I.E.L.D.</a>
+                <a href="index.html" class="btn-secondary">Explore SKJAL</a>
+              </div>
+            </div>
+            <div class="aww-hero-visual gs-reveal" style="transition-delay: 0.2s;">
               <img
                 src="assets/img/products/shield-hero.webp?v=2"
                 alt="S.H.I.E.L.D. Platform"
                 fetchpriority="high"
-                decoding="sync"
               />
             </div>
           </div>
-          <div class="product-hero-content gs-reveal">
-            <span class="product-hero-badge" style="background: #f50"
-              >Patent Granted | Prototype Ready</span
-            >
-            <h1 class="product-hero-title reveal-up">
-              S.H.I.E.L.D. AI Driving Protection Vizag
-            </h1>
-            <p class="product-hero-sub">
-              Smart Health Intelligence for Ergonomic & Live Driving. As the
-              premier IoT auto safety manufacturer in Visakhapatnam, we've built
-              an AI-driven safety, health, and speed intelligence ecosystem
-              under the Bharat Safety Innovation Program. Engineered to protect
-              commercial fleets and two-wheeler riders across Andhra Pradesh,
-              S.H.I.E.L.D. mitigates road vibration exposure, guides real-time
-              safe speeds, and prevents long-term occupational health
-              deterioration.
-            </p>
-            <a href="index.html" class="product-back"
-              ><svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-              >
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
-              Back to Home</a
-            >
+        </header>
+
+        <section class="aww-bento-section">
+          <div class="aww-bento">
+            <div class="aww-card aww-span-2 aww-row-2 gs-reveal">
+              <div class="aww-card-icon" style="width: 72px; height: 72px;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              </div>
+              <h2 class="aww-card-title" style="font-size: 2.5rem;">Fleet & Rider Safety</h2>
+              <p class="aww-card-text" style="font-size: 1.1rem; max-width: 90%;">
+                S.H.I.E.L.D. is a revolutionary safety intelligence ecosystem. By utilizing predictive spatial tracking and deep AI analytics, the system actively monitors driver fatigue, distraction, and vehicle dynamics.
+              </p>
+            </div>
+
+            <div class="aww-card aww-span-2 gs-reveal" style="transition-delay: 0.1s;">
+              <div class="aww-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <h3 class="aww-card-title">Whole-Body Vibration Tracking</h3>
+              <p class="aww-card-text">Continuously tracks Whole-Body Vibration (WBV) exposure and road shock. Alerts drivers to extreme conditions to actively prevent long-term occupational health deterioration and spinal issues.</p>
+            </div>
+
+            <div class="aww-card aww-span-2 gs-reveal" style="transition-delay: 0.2s;">
+              <div class="aww-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <h3 class="aww-card-title">Real-Time Fatigue Alerts</h3>
+              <p class="aww-card-text">Leverages live biometric indicators and driving pattern anomalies to detect driver fatigue in real time, delivering immediate, personalized safety protocols and warnings to prevent collisions.</p>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
-    <section class="sec product-section">
-      <div class="wrap">
-        <div class="sec-showcase-split" style="margin-bottom: 60px;">
-          <h2 class="sec-title gs-split reveal-up">AI-Driven Fleet & Rider Safety</h2>
-          <p class="body-text gs-reveal" style="max-width: 800px; font-size: 1.1rem; line-height: 1.8;">
-            S.H.I.E.L.D. is a revolutionary safety intelligence ecosystem engineered for commercial fleets and two-wheeler riders. By utilizing predictive spatial tracking and deep AI analytics, the system actively monitors driver fatigue, distraction, and vehicle dynamics. It mitigates road vibration exposure, guides real-time safe speeds, and actively prevents occupational health deterioration.
-          </p>
-        </div>
+        </section>
+
         
-        <div class="product-features-grid">
-          <div class="product-feature-card gs-reveal">
-            <div class="product-feature-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-            </div>
-            <h3>AI Dashcam Vision</h3>
-            <p>Our advanced optical lenses use predictive spatial tracking to actively monitor driver fatigue, distraction, and unsafe driving behaviors in real-time.</p>
+        <section class="sticky-split" aria-labelledby="shield-arch-title">
+          <div class="sticky-split-left gs-reveal">
+            <h2 id="shield-arch-title" class="aww-text-huge">Intelligence Ecosystem</h2>
+            <p class="aww-hero-sub" style="margin-top: 24px;">How S.H.I.E.L.D. prevents occupational hazards and collisions in real-time.</p>
           </div>
-          <div class="product-feature-card gs-reveal" style="transition-delay: 0.1s">
-            <div class="product-feature-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          <div class="sticky-split-right">
+            <div class="sticky-card gs-reveal">
+              <span class="product-hero-badge" style="background: var(--theme-accent); margin-bottom: 16px;">The Edge</span>
+              <h3 class="aww-card-title">MEMS & Biometric Sensors</h3>
+              <p class="aww-card-text">Advanced 3-Axis MEMS accelerometers track high-frequency road shocks and Whole-Body Vibrations (WBV), while cabin sensors monitor driver posture and fatigue indicators.</p>
             </div>
-            <h3>Ergonomic Health Tracking</h3>
-            <p>Monitors prolonged vibrations and poor driving postures, alerting drivers to prevent long-term occupational health deterioration and spinal issues.</p>
-          </div>
-          <div class="product-feature-card gs-reveal" style="transition-delay: 0.2s">
-            <div class="product-feature-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div class="sticky-card gs-reveal">
+              <span class="product-hero-badge" style="background: var(--theme-accent); margin-bottom: 16px;">Telemetry</span>
+              <h3 class="aww-card-title">OBD-II & GPS Integration</h3>
+              <p class="aww-card-text">Spatial dynamics are correlated with vehicle telemetry (OBD-II data) and transmitted instantly via 4G/LTE, guaranteeing zero latency during critical safety events.</p>
             </div>
-            <h3>Fleet Command Center</h3>
-            <p>An ultra-premium dashboard for logistics managers to predict maintenance, optimize routes, and enforce safety protocols across thousands of vehicles.</p>
+            <div class="sticky-card gs-reveal">
+              <span class="product-hero-badge" style="background: var(--theme-accent); margin-bottom: 16px;">Analytics</span>
+              <h3 class="aww-card-title">ISO 2631 Compliance AI</h3>
+              <p class="aww-card-text">The system analyzes vibrations against global health standards (ISO 2631) to predict lumbar spinal damage, dispatching localized haptic alerts to the driver and reports to the fleet manager.</p>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="product-stats">
-          <div class="product-stat gs-reveal">
-            <div class="product-stat-value">95%</div>
-            <div class="product-stat-label">Accident Prevention</div>
-          </div>
-          <div class="product-stat gs-reveal" style="transition-delay: 0.1s">
-            <div class="product-stat-value">&lt; 0.5s</div>
-            <div class="product-stat-label">Alert Response Time</div>
-          </div>
-          <div class="product-stat gs-reveal" style="transition-delay: 0.2s">
-            <div class="product-stat-value">10k+</div>
-            <div class="product-stat-label">Fleet Scalability</div>
-          </div>
-          <div class="product-stat gs-reveal" style="transition-delay: 0.3s">
-            <div class="product-stat-value">100%</div>
-            <div class="product-stat-label">Data Security</div>
-          </div>
-        </div>
-      </div>
-    </section>
+        
 
-    <section class="sec product-cta-section">
-      <div class="wrap gs-reveal">
-        <h2 class="sec-title reveal-up" style="margin-bottom: 20px;">Protect Your Fleet & Drivers</h2>
-        <p>Integrate S.H.I.E.L.D. into your logistics operations and transform road safety with AI.</p>
-        <a href="/#contact" class="product-cta-btn">Get S.H.I.E.L.D.</a>
-      </div>
-    </section>
-                </main>
+        <section class="aww-applications gs-reveal">
+          <div class="aww-app-inner">
+            <div class="aww-app-header">
+              <h2>Target Applications</h2>
+            </div>
+            <div class="aww-app-grid">
+              <div class="aww-app-card">
+                <h3 class="aww-app-title">Commercial Logistics</h3>
+                <p class="aww-app-desc">Protecting long-haul truck drivers from chronic spinal injuries caused by continuous road vibrations.</p>
+              </div>
+              <div class="aww-app-card">
+                <h3 class="aww-app-title">Two-Wheeler Delivery Fleets</h3>
+                <p class="aww-app-desc">Real-time fatigue and posture monitoring for last-mile delivery riders exposed to constant urban shocks.</p>
+              </div>
+              <div class="aww-app-card">
+                <h3 class="aww-app-title">Mining & Construction</h3>
+                <p class="aww-app-desc">Tracking extreme multi-axis vibration exposure for operators of heavy excavation and earthmoving machinery.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="gs-reveal">
+          <div class="aww-cta">
+            <h2>Protect Your Fleet & Drivers</h2>
+            <p>Integrate S.H.I.E.L.D. into your logistics operations and transform road safety with AI.</p>
+            <a href="/#contact" class="btn-primary" style="position: relative; z-index: 2; padding: 16px 40px; font-size: 1.1rem; border-radius: 100px;">Get S.H.I.E.L.D.</a>
+          </div>
+        </section>
+      </article>
+    </main>
 <footer id="footer" style="background: var(--mag-bg); color: var(--mag-text); padding: clamp(40px, 5.0vw, 80px) 0 40px; border-top: 1px solid var(--mag-border);">
         <div class="wrap mag-grid" style="border: none; padding-bottom: 40px;">
           

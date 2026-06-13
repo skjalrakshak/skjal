@@ -70,304 +70,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <style>
-      .product-hero {
-        padding: 130px 0 80px;
-        background: var(--bg);
-        overflow: hidden;
-      }
-      .product-hero-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
-        gap: 64px;
-        align-items: start;
-      }
-      .product-hero-image {
-        position: relative;
-        width: 100%;
-      }
-      .product-hero-img-inner {
-        position: relative;
-        border-radius: 24px;
-        overflow: hidden;
-        aspect-ratio: 1/1;
-        max-width: 95%;
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        margin-top: 12px;
-      }
-      .product-hero-img-inner img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .product-hero-content {
-        color: var(--fg);
-        max-width: 600px;
-      }
-      .product-hero-badge {
-        display: inline-block;
-        padding: 6px 16px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #fff;
-        background: #09f;
-        border-radius: 100px;
-        margin-bottom: 24px;
-      }
-      .product-hero-title {
-        font-family: var(--display);
-        font-size: clamp(2.5rem, 4.5vw, 4rem);
-        font-weight: 700;
-        line-height: 1.25;
-        letter-spacing: -0.02em;
-        margin-bottom: 20px;
-        color: var(--fg-head);
-      }
-      .product-hero-sub {
-        font-family: var(--sans);
-        font-size: 1.05rem;
-        line-height: 1.7;
-        font-weight: 400;
-        color: var(--fg);
-        opacity: 0.85;
-        margin-bottom: 32px;
-      }
-      .product-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px 28px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--fg);
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        border-radius: 100px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-      .product-back:hover {
-        background: var(--border);
-        transform: translateX(-4px);
-      }
-      .product-section {
-        padding: 55px 0;
-      }
-      .product-section + .product-section:not([style*="background"]) {
-        padding-top: 0;
-      }
-      .product-section-old {
-        padding: 80px 0;
-      }
-      .product-features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-        gap: 24px;
-        margin-top: 40px;
-      }
-      @media (max-width: 900px) {
-        .product-section {
-          padding: 35px 0;
-        }
-        .product-cta-section {
-          padding: 35px 0;
-        }
-        
-      }
-      .product-feature-card {
-        padding: 32px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
-      }
-      .product-feature-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-      }
-      .product-feature-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        background: rgba(0, 153, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        color: #09f;
-      }
-      .product-feature-card h3 {
-        font-family: var(--sans);
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--fg-head);
-        margin-bottom: 12px;
-        letter-spacing: -0.01em;
-      }
-      .product-feature-card p {
-        font-family: var(--sans);
-        font-weight: 400;
-        font-size: 0.92rem;
-        line-height: 1.75;
-        color: var(--fg-body);
-      }
-      .product-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-        gap: 24px;
-        margin-top: 48px;
-      }
-      @media (max-width: 768px) {
-        .product-stats {
-          grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        }
-      }
-      .product-stat {
-        text-align: center;
-        padding: 32px 16px;
-        background: var(--bg-alt);
-        border-radius: 16px;
-        border: 1px solid var(--border);
-      }
-      .product-stat-value {
-        font-family: var(--display);
-        font-size: clamp(1.5rem, 5vw, 2.5rem);
-        font-weight: 700;
-        color: #09f;
-        margin-bottom: 4px;
-        letter-spacing: -0.02em;
-      }
-      .product-stat-label {
-        font-family: var(--sans);
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--fg-body);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-      .industries-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-        gap: 16px;
-        margin-top: 40px;
-      }
-      @media (max-width: 768px) {
-        .industries-grid {
-          grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        }
-      }
-      .industry-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 16px 20px;
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        font-size: 0.88rem;
-        font-weight: 500;
-        color: var(--fg-head);
-      }
-      .industry-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #09f;
-        flex-shrink: 0;
-      }
-      .product-cta-section {
-        padding: 55px 0;
-        background: var(--bg-alt);
-        text-align: center;
-      }
-      .product-cta-section-old {
-        padding: 80px 0;
-        background: var(--bg-alt);
-        text-align: center;
-      }
-      .product-cta-section p {
-        font-family: var(--sans);
-        font-size: 1.05rem;
-        line-height: 1.8;
-        color: var(--fg-body);
-      }
-      .product-cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 16px 40px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
-        background: #09f;
-        border-radius: 100px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        margin-top: 24px;
-      }
-      .product-cta-btn:hover {
-        background: #007acc;
-        transform: translateY(-2px);
-      }
-      .showcase-container {
-        margin-top: -80px;
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
-        border: 1px solid var(--border);
-        position: relative;
-        z-index: 10;
-        background: var(--bg);
-        transition: transform 0.5s ease;
-      }
-      .showcase-container:hover {
-        transform: scale(1.01);
-      }
-      .showcase-img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
-      @media (max-width: 900px) {
-        .product-hero {
-          padding: 120px 0 60px;
-        }
-        .product-hero-img-inner {
-          position: relative;
-          border-radius: 24px;
-          overflow: hidden;
-          aspect-ratio: 1/1;
-          max-width: 100%;
-          margin: 0 auto 16px;
-          box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-          background: var(--bg-alt);
-          border: 1px solid var(--border);
-        }
-        .product-hero-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 32px;
-          align-items: start;
-        }
-        .product-hero-badge {
-          margin-bottom: 18px;
-          font-size: 0.68rem;
-        }
-        .product-hero-title {
-          font-size: clamp(2.2rem, 8vw, 3.2rem);
-        }
-      }
-    @media (max-width: 640px) {
-  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
-  .dir-icon { width: 96px !important; height: 96px !important; }
-}
-</style>
+    
     <link rel="preload" as="image" href="assets/img/heroes/skjal-hero-banner.webp?v=2" />
     <link
       rel="icon"
@@ -388,304 +91,7 @@
     />
     <link rel="stylesheet" href="assets/css/cinematic.css" />
   
-<style>
-      .product-hero {
-        padding: 130px 0 80px;
-        background: var(--bg);
-        overflow: hidden;
-      }
-      .product-hero-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
-        gap: 64px;
-        align-items: start;
-      }
-      .product-hero-image {
-        position: relative;
-        width: 100%;
-      }
-      .product-hero-img-inner {
-        position: relative;
-        border-radius: 24px;
-        overflow: hidden;
-        aspect-ratio: 1/1;
-        max-width: 95%;
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        margin-top: 12px;
-      }
-      .product-hero-img-inner img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .product-hero-content {
-        color: var(--fg);
-        max-width: 600px;
-      }
-      .product-hero-badge {
-        display: inline-block;
-        padding: 6px 16px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #fff;
-        background: #09f;
-        border-radius: 100px;
-        margin-bottom: 24px;
-      }
-      .product-hero-title {
-        font-family: var(--display);
-        font-size: clamp(2.5rem, 4.5vw, 4rem);
-        font-weight: 700;
-        line-height: 1.25;
-        letter-spacing: -0.02em;
-        margin-bottom: 20px;
-        color: var(--fg-head);
-      }
-      .product-hero-sub {
-        font-family: var(--sans);
-        font-size: 1.05rem;
-        line-height: 1.7;
-        font-weight: 400;
-        color: var(--fg);
-        opacity: 0.85;
-        margin-bottom: 32px;
-      }
-      .product-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px 28px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--fg);
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        border-radius: 100px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-      .product-back:hover {
-        background: var(--border);
-        transform: translateX(-4px);
-      }
-      .product-section {
-        padding: 55px 0;
-      }
-      .product-section + .product-section:not([style*="background"]) {
-        padding-top: 0;
-      }
-      .product-section-old {
-        padding: 80px 0;
-      }
-      .product-features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-        gap: 24px;
-        margin-top: 40px;
-      }
-      @media (max-width: 900px) {
-        .product-section {
-          padding: 35px 0;
-        }
-        .product-cta-section {
-          padding: 35px 0;
-        }
-        
-      }
-      .product-feature-card {
-        padding: 32px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
-      }
-      .product-feature-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-      }
-      .product-feature-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        background: rgba(0, 153, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        color: #09f;
-      }
-      .product-feature-card h3 {
-        font-family: var(--sans);
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--fg-head);
-        margin-bottom: 12px;
-        letter-spacing: -0.01em;
-      }
-      .product-feature-card p {
-        font-family: var(--sans);
-        font-weight: 400;
-        font-size: 0.92rem;
-        line-height: 1.75;
-        color: var(--fg-body);
-      }
-      .product-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-        gap: 24px;
-        margin-top: 48px;
-      }
-      @media (max-width: 768px) {
-        .product-stats {
-          grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        }
-      }
-      .product-stat {
-        text-align: center;
-        padding: 32px 16px;
-        background: var(--bg-alt);
-        border-radius: 16px;
-        border: 1px solid var(--border);
-      }
-      .product-stat-value {
-        font-family: var(--display);
-        font-size: clamp(1.5rem, 5vw, 2.5rem);
-        font-weight: 700;
-        color: #09f;
-        margin-bottom: 4px;
-        letter-spacing: -0.02em;
-      }
-      .product-stat-label {
-        font-family: var(--sans);
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--fg-body);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-      .industries-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-        gap: 16px;
-        margin-top: 40px;
-      }
-      @media (max-width: 768px) {
-        .industries-grid {
-          grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-        }
-      }
-      .industry-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 16px 20px;
-        background: var(--bg-alt);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        font-size: 0.88rem;
-        font-weight: 500;
-        color: var(--fg-head);
-      }
-      .industry-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #09f;
-        flex-shrink: 0;
-      }
-      .product-cta-section {
-        padding: 55px 0;
-        background: var(--bg-alt);
-        text-align: center;
-      }
-      .product-cta-section-old {
-        padding: 80px 0;
-        background: var(--bg-alt);
-        text-align: center;
-      }
-      .product-cta-section p {
-        font-family: var(--sans);
-        font-size: 1.05rem;
-        line-height: 1.8;
-        color: var(--fg-body);
-      }
-      .product-cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 16px 40px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
-        background: #09f;
-        border-radius: 100px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        margin-top: 24px;
-      }
-      .product-cta-btn:hover {
-        background: #007acc;
-        transform: translateY(-2px);
-      }
-      .showcase-container {
-        margin-top: -80px;
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
-        border: 1px solid var(--border);
-        position: relative;
-        z-index: 10;
-        background: var(--bg);
-        transition: transform 0.5s ease;
-      }
-      .showcase-container:hover {
-        transform: scale(1.01);
-      }
-      .showcase-img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
-      @media (max-width: 900px) {
-        .product-hero {
-          padding: 120px 0 60px;
-        }
-        .product-hero-img-inner {
-          position: relative;
-          border-radius: 24px;
-          overflow: hidden;
-          aspect-ratio: 1/1;
-          max-width: 100%;
-          margin: 0 auto 16px;
-          box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-          background: var(--bg-alt);
-          border: 1px solid var(--border);
-        }
-        .product-hero-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 32px;
-          align-items: start;
-        }
-        .product-hero-badge {
-          margin-bottom: 18px;
-          font-size: 0.68rem;
-        }
-        .product-hero-title {
-          font-size: clamp(2.2rem, 8vw, 3.2rem);
-        }
-      }
-    @media (max-width: 640px) {
-  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
-  .dir-icon { width: 96px !important; height: 96px !important; }
-}
-</style>
+
 
 <style id="gisi-animations-css">
 /* Reveal Animations */
@@ -881,7 +287,7 @@ body.has-curtain-footer {
 }
 </style>
 </head>
-  <body>
+  <body  style="--theme-accent: #09f; --theme-accent-hover: #007acc;">
 
     <!-- SKJAL Page Transition Curtain (Hardcoded for zero-flash) -->
     <div class="skjal-transition-wrap" id="skjal-entry-curtain" style="display: none;">
@@ -1030,119 +436,127 @@ body.has-curtain-footer {
       </div>
       <div class="nav-drawer-overlay" id="navOverlay"></div>
     </header>
+    
+    
     <main data-barba="container" data-barba-namespace="jal-rakshak">
-    <section id="hero" class="product-hero">
-      <div class="wrap">
-        <div class="product-hero-grid">
-          <div class="product-hero-image gs-reveal">
-            <div class="product-hero-img-inner">
+      <article>
+        <header class="aww-hero">
+          <div class="aww-hero-inner">
+            <div class="aww-hero-text gs-reveal">
+              <span class="product-hero-badge" style="background: #09f; margin-bottom: 24px;">Flagship Product</span>
+              <h1 class="aww-text-huge">
+                <span class="aww-text-gradient">Water Quality</span><br />
+                Intelligence.
+              </h1>
+              <p class="aww-hero-sub">
+                Every Drop Counts. Jal Rakshak is an advanced IoT-enabled enterprise platform engineered in Visakhapatnam, designed to monitor water quality, flow, usage, and environmental conditions in real time using high-precision telemetry.
+              </p>
+              <div style="display: flex; gap: 16px;">
+                <a href="/#contact" class="btn-primary">Request Demo</a>
+                <a href="index.html" class="btn-secondary">Explore SKJAL</a>
+              </div>
+            </div>
+            <div class="aww-hero-visual gs-reveal" style="transition-delay: 0.2s;">
               <img
                 src="assets/img/products/jal-rakshak-new.webp"
                 alt="Jal Rakshak Platform"
                 fetchpriority="high"
-                decoding="sync"
-                loading="lazy"
-                decoding="async"
               />
             </div>
           </div>
-          <div class="product-hero-content gs-reveal">
-            <span class="product-hero-badge" style="background: #09f"
-              >Flagship Product</span
-            >
-            <h1 class="product-hero-title reveal-up">
-              Jal Rakshak IoT Water Quality Monitoring in Vizag
-            </h1>
-            <p class="product-hero-sub">
-              Every Drop Counts. Every Solution Matters. Jal Rakshak is an
-              advanced IoT-enabled enterprise platform engineered in
-              Visakhapatnam, designed to monitor water quality, flow, usage, and
-              environmental conditions in real time. As a leading smart city IoT
-              provider in Andhra Pradesh, we combine high-precision Make in
-              India telemetry sensors with cloud-based AI analytics. We empower
-              industries and municipalities to eliminate water waste, detect
-              leaks instantly, and ensure sustainable resource conservation.
-            </p>
-            <a href="index.html" class="product-back"
-              ><svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-              >
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
-              Back to Home</a
-            >
+        </header>
+
+        <section class="aww-bento-section">
+          <div class="aww-bento">
+            <div class="aww-card aww-span-2 aww-row-2 gs-reveal">
+              <div class="aww-card-icon" style="width: 72px; height: 72px;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <h2 class="aww-card-title" style="font-size: 2.5rem;">Comprehensive Water Intelligence</h2>
+              <p class="aww-card-text" style="font-size: 1.1rem; max-width: 90%;">
+                Jal Rakshak is an end-to-end autonomous water monitoring ecosystem that continuously analyzes vital parameters such as pH, dissolved oxygen, turbidity, and flow rates. Built specifically for municipal water bodies and industrial effluent tracking.
+              </p>
+            </div>
+
+            <div class="aww-card aww-span-2 gs-reveal" style="transition-delay: 0.1s;">
+              <div class="aww-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <h3 class="aww-card-title">IP67/IP68 Rugged Sensors</h3>
+              <p class="aww-card-text">Engineered for extreme environments. Our industrial-grade sensors are fully submersible and designed to withstand harsh weather, deep water deployment, and corrosive industrial conditions.</p>
+            </div>
+
+            <div class="aww-card aww-span-2 gs-reveal" style="transition-delay: 0.2s;">
+              <div class="aww-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              </div>
+              <h3 class="aww-card-title">Auto-Calibration Architecture</h3>
+              <p class="aww-card-text">Advanced auto-calibration algorithms run continuously on the edge to maintain sensor accuracy over long deployments, dramatically reducing manual maintenance requirements.</p>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
-    <section class="sec product-section">
-      <div class="wrap">
-        <div class="sec-showcase-split" style="margin-bottom: 60px;">
-          <h2 class="sec-title gs-split reveal-up">Comprehensive Water Intelligence</h2>
-          <p class="body-text gs-reveal" style="max-width: 800px; font-size: 1.1rem; line-height: 1.8;">
-            Jal Rakshak is an end-to-end autonomous water monitoring ecosystem that continuously analyzes vital parameters such as pH, dissolved oxygen, turbidity, and flow rates. Built specifically for municipal water bodies, industrial effluent tracking, and large-scale reservoirs across India, our platform offers unprecedented accuracy and real-time telemetry to prevent contamination and enforce compliance.
-          </p>
-        </div>
+        </section>
+
         
-        <div class="product-features-grid">
-          <div class="product-feature-card gs-reveal">
-            <div class="product-feature-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </div>
-            <h3>High-Precision Telemetry</h3>
-            <p>Deploy rugged, edge-computing sensors that operate flawlessly in extreme conditions, transmitting real-time analytics with 99.9% data reliability.</p>
+        <section class="sticky-split" aria-labelledby="jr-arch-title">
+          <div class="sticky-split-left gs-reveal">
+            <h2 id="jr-arch-title" class="aww-text-huge">Data Flow Architecture</h2>
+            <p class="aww-hero-sub" style="margin-top: 24px;">How Jal Rakshak acquires, transmits, and analyzes real-time aquatic data from extreme environments.</p>
           </div>
-          <div class="product-feature-card gs-reveal" style="transition-delay: 0.1s">
-            <div class="product-feature-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg>
+          <div class="sticky-split-right">
+            <div class="sticky-card gs-reveal">
+              <span class="product-hero-badge" style="background: var(--theme-accent); margin-bottom: 16px;">The Edge</span>
+              <h3 class="aww-card-title">Multiparameter Floating Buoys</h3>
+              <p class="aww-card-text">Self-sustainable floating nodes equipped with deep-water submersible sensors (up to 10 simultaneously). Integrated with solar power and battery backups to operate autonomously in lakes, rivers, and effluent tanks.</p>
             </div>
-            <h3>Predictive AI Alerts</h3>
-            <p>Harness the power of cloud-based AI to detect anomalies before they escalate. Receive instant SMS and email alerts for critical parameter deviations.</p>
-          </div>
-          <div class="product-feature-card gs-reveal" style="transition-delay: 0.2s">
-            <div class="product-feature-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <div class="sticky-card gs-reveal">
+              <span class="product-hero-badge" style="background: var(--theme-accent); margin-bottom: 16px;">Telemetry</span>
+              <h3 class="aww-card-title">Wi-SUN & 4G/5G Connectivity</h3>
+              <p class="aww-card-text">Data is transmitted seamlessly from remote water bodies via Wi-SUN Mesh Networking for long-range communication, backed by built-in GPS and an IoT gateway (4G/5G) to ensure zero data loss during transmission.</p>
             </div>
-            <h3>Regulatory Compliance</h3>
-            <p>Automate compliance reporting with customizable dashboards designed to meet Central Pollution Control Board (CPCB) and environmental guidelines.</p>
+            <div class="sticky-card gs-reveal">
+              <span class="product-hero-badge" style="background: var(--theme-accent); margin-bottom: 16px;">Analytics</span>
+              <h3 class="aww-card-title">Predictive Cloud Dashboards</h3>
+              <p class="aww-card-text">Data is processed via Edge Computing before being securely routed to a user-friendly cloud dashboard. Stakeholders receive instant SMS/Email alerts if critical parameters exceed safe thresholds.</p>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="product-stats">
-          <div class="product-stat gs-reveal">
-            <div class="product-stat-value">99.9%</div>
-            <div class="product-stat-label">Uptime & Accuracy</div>
-          </div>
-          <div class="product-stat gs-reveal" style="transition-delay: 0.1s">
-            <div class="product-stat-value">24/7</div>
-            <div class="product-stat-label">Real-time Monitoring</div>
-          </div>
-          <div class="product-stat gs-reveal" style="transition-delay: 0.2s">
-            <div class="product-stat-value">&lt; 1s</div>
-            <div class="product-stat-label">Alert Latency</div>
-          </div>
-          <div class="product-stat gs-reveal" style="transition-delay: 0.3s">
-            <div class="product-stat-value">10+</div>
-            <div class="product-stat-label">Parameters Tracked</div>
-          </div>
-        </div>
-      </div>
-    </section>
+        
 
-    <section class="sec product-cta-section">
-      <div class="wrap gs-reveal">
-        <h2 class="sec-title reveal-up" style="margin-bottom: 20px;">Secure Your Water Infrastructure Today</h2>
-        <p>Deploy our enterprise-grade IoT platform and experience unparalleled visibility into your water resources.</p>
-        <a href="/#contact" class="product-cta-btn">Request a Demo</a>
-      </div>
-    </section>
-                </main>
+        <section class="aww-applications gs-reveal">
+          <div class="aww-app-inner">
+            <div class="aww-app-header">
+              <h2>Target Applications</h2>
+            </div>
+            <div class="aww-app-grid">
+              <div class="aww-app-card">
+                <h3 class="aww-app-title">Municipal Governments</h3>
+                <p class="aww-app-desc">Ensuring safe drinking water supply and monitoring river pollution for urban authorities and NGOs.</p>
+              </div>
+              <div class="aww-app-card">
+                <h3 class="aww-app-title">Pharma & Manufacturing</h3>
+                <p class="aww-app-desc">Real-time effluent and wastewater tracking to comply with strict CPCB environmental regulations.</p>
+              </div>
+              <div class="aww-app-card">
+                <h3 class="aww-app-title">Smart Cities</h3>
+                <p class="aww-app-desc">Integrating water quality networks into massive smart-city infrastructure projects.</p>
+              </div>
+              <div class="aww-app-card">
+                <h3 class="aww-app-title">Agriculture</h3>
+                <p class="aww-app-desc">Monitoring irrigation water purity to maximize crop yields and prevent soil contamination.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="gs-reveal">
+          <div class="aww-cta">
+            <h2>Secure Your Water Infrastructure</h2>
+            <p>Deploy our enterprise-grade IoT platform and experience unparalleled visibility into your water resources.</p>
+            <a href="/#contact" class="btn-primary" style="position: relative; z-index: 2; padding: 16px 40px; font-size: 1.1rem; border-radius: 100px;">Request a Demo</a>
+          </div>
+        </section>
+      </article>
+    </main>
 <footer id="footer" style="background: var(--mag-bg); color: var(--mag-text); padding: clamp(40px, 5.0vw, 80px) 0 40px; border-top: 1px solid var(--mag-border);">
         <div class="wrap mag-grid" style="border: none; padding-bottom: 40px;">
           

@@ -46,6 +46,10 @@
     { "source": "/wp-admin/:path*", "destination": "/404.html", "statusCode": 404 },
     { "source": "/xmlrpc.php", "destination": "/404.html", "statusCode": 404 },
     { "source": "/wp-content/:path*", "destination": "/404.html", "statusCode": 404 },
-    { "source": "/wp-includes/:path*", "destination": "/404.html", "statusCode": 404 }
+    { "source": "/wp-includes/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/resources", "destination": "/#innovations", "statusCode": 301 },
+    { "source": "/resources.html", "destination": "/#innovations", "statusCode": 301 },
+    { "source": "/contact", "destination": "/#contact", "statusCode": 301 },
+    { "source": "/contact.html", "destination": "/#contact", "statusCode": 301 }
   ]
 }

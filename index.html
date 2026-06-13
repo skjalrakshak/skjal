@@ -147,10 +147,7 @@
     </script>
 
 <style>
-                  .hero-zoho-btn::before { display: none !important; }
-                  .hero-zoho-btn { transition: background 0.3s ease !important; }
-                  .hero-zoho-btn:hover { background: #128f5e !important; transform: translateY(-2px) !important; box-shadow: 0 4px 14px rgba(23, 174, 114, 0.4) !important; }
-                @media (max-width: 640px) {
+@media (max-width: 640px) {
   .dir-card { flex-direction: column; text-align: center; gap: 16px; }
   .dir-icon { width: 96px !important; height: 96px !important; }
 }
@@ -521,34 +518,44 @@ body.has-curtain-footer {
             <p class="hero-tag gs-reveal" style="color: #10b981; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; font-size: 12px;">
               AI-POWERED ENTERPRISE SOFTWARE
             </p>
-            <h1 class="hero-h1 reveal-up" style="line-height: 1.2; font-size: clamp(28px, 4vw, 44px); margin-bottom: 20px; color: #1a1a1a; font-weight: 400; letter-spacing: -0.5px; text-transform: none !important;">
+            <h1 class="hero-h1 reveal-up" style="line-height: 1.2; font-size: clamp(28px, 4vw, 44px); margin-bottom: 20px; color: var(--fg-head); font-weight: 400; letter-spacing: -0.5px; text-transform: none !important;">
               <span class="hero-line-wrap" style="text-align: center;">
-                <span class="hero-line" style="color: #1a1a1a;">Accelerate enterprise growth with</span>
+                <span class="hero-line" style="color: var(--fg-head);">Accelerate enterprise growth with</span>
               </span>
               <span class="hero-line-wrap" style="text-align: center;">
-                <span class="hero-line" style="color: #1a1a1a;">intelligent edge IoT solutions</span>
+                <span class="hero-line" style="color: var(--fg-head);">intelligent edge IoT solutions</span>
               </span>
             </h1>
             
             <div class="hero-divider" style="width: 28px; height: 2px; background-color: #ef4444; margin-bottom: 20px;"></div>
 
             <div class="hero-bottom hero-fade" style="align-items: center; text-align: center; width: 100%; display: flex; flex-direction: column;">
-              <p class="hero-sub" style="max-width: 600px; margin: 0 auto 36px auto; font-size: 16px; line-height: 1.6; color: #6b7280;">
+              <p class="hero-sub" style="max-width: 600px; margin: 0 auto 36px auto; font-size: 16px; line-height: 1.7; color: #4b5563;">
                 Deliver real-time water monitoring, collaborate seamlessly, and automate infrastructure safety - <strong style="font-weight: 500; color: #374151;">all</strong> on an IoT platform built in India.
               </p>
-              <div class="hero-actions" style="justify-content: center; margin-bottom: 0;">
-                <style>
-                  .hero-zoho-btn::before { display: none !important; }
-                  .hero-zoho-btn { transition: background 0.3s ease !important; }
-                  .hero-zoho-btn:hover { background: #128f5e !important; transform: translateY(-2px) !important; box-shadow: 0 4px 14px rgba(23, 174, 114, 0.4) !important; }
-                @media (max-width: 640px) {
-  .dir-card { flex-direction: column; text-align: center; gap: 16px; }
-  .dir-icon { width: 96px !important; height: 96px !important; }
-}
-</style>
-                <a href="/#contact" class="btn-primary hero-zoho-btn" style="background: #17ae72; color: #fff; border: none; font-weight: 600; padding: 13px 30px; font-size: 13px; text-transform: uppercase; border-radius: 4px; box-shadow: none; letter-spacing: 0.5px;">
-                  CONTACT US &nbsp;&gt;
+              <div class="hero-actions" style="justify-content: center; margin-bottom: 0; gap: 12px; flex-wrap: wrap;">
+                <a href="/#contact" class="btn-primary hero-cta-primary" id="heroPrimaryCta">
+                  Get a Free Consultation
                 </a>
+                <a href="#innovations" class="btn-secondary hero-cta-secondary" id="heroSecondaryCta">
+                  Explore Products
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+              </div>
+              <!-- Trust Indicators -->
+              <div class="hero-trust-row">
+                <span class="hero-trust-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Startup India Recognized
+                </span>
+                <span class="hero-trust-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Patent Granted
+                </span>
+                <span class="hero-trust-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Made in India
+                </span>
               </div>
             </div>
         </div>
@@ -567,7 +574,8 @@ body.has-curtain-footer {
                 healthier environment.
               </p>
               <a
-                href="resources.html"
+                href="#innovations"
+                onclick="document.getElementById('innovations').scrollIntoView({behavior: 'smooth'}); return false;"
                 class="btn-primary"
                 style="margin-top: 24px; display: inline-flex"
                 >Explore Solutions</a
@@ -1272,6 +1280,10 @@ body.has-curtain-footer {
             here to help! Reach out to us, and our team will respond promptly to
             address your concerns.
           </p>
+          <a href="mailto:sales@skjal.in?subject=Demo%20Request%20-%20SK%20Jalrakshak%20Innovations" class="contact-cta-btn" id="contactDemoCta">
+            Request a Free Demo
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
           <div class="contact-row">
             <a
               href="mailto:sales@skjal.in?subject=Enquiry%20-%20SK%20Jalrakshak%20Innovations"
@@ -1294,6 +1306,10 @@ body.has-curtain-footer {
         </div>
       </section>
     </main>
+    <!-- Mobile Sticky CTA Bar -->
+    <div class="mobile-sticky-cta" id="mobileStickyCtaBar">
+      <a href="/#contact">Get a Free Consultation</a>
+    </div>
             <footer id="footer" style="background: var(--mag-bg); color: var(--mag-text); padding: clamp(40px, 5.0vw, 80px) 0 40px; border-top: 1px solid var(--mag-border);">
         <div class="wrap mag-grid" style="border: none; padding-bottom: 40px;">
           
