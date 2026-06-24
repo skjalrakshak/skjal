@@ -76,7 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     var hash = window.location.hash;
                     if (hash && hash !== '#') {
                         try {
-                            var target = document.querySelector(hash);
+                            var rawId = decodeURIComponent(hash.slice(1));
+                            var target = rawId ? document.getElementById(rawId) : null;
                             if (target) {
                                 if (window.lenis) {
                                     window.lenis.scrollTo(target, { immediate: true });
@@ -213,7 +214,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const hash = linkUrl.hash || (href.startsWith("#") ? href : '');
                 if (hash) {
                     try {
-                        const targetEl = document.querySelector(hash);
+                        var rawId = hash.startsWith('#') ? decodeURIComponent(hash.slice(1)) : null;
+                        var targetEl = rawId ? document.getElementById(rawId) : null;
                         if (targetEl) {
                             e.preventDefault();
                             if (window.lenis) {

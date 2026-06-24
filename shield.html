@@ -680,7 +680,7 @@ body.has-curtain-footer {
                     );
                   })(i.pathname) === t(o.pathname) &&
                   (i.hash
-                    ? (n = document.querySelector(i.hash)) &&
+                    ? (n = (function(h) { try { var id = decodeURIComponent(h.slice(1)); return id ? document.getElementById(id) : null; } catch(ex) { return null; } })(i.hash)) &&
                       (e.preventDefault(), lenis.scrollTo(n, { offset: -80 }))
                     : (e.preventDefault(), lenis.scrollTo(0)));
               } catch (e) {
@@ -690,11 +690,18 @@ body.has-curtain-footer {
         }),
         window.addEventListener("load", () => {
           if (window.location.hash) {
-            let e = document.querySelector(window.location.hash);
-            e &&
+            let e = null;
+            try {
+              let rawId = decodeURIComponent(window.location.hash.slice(1));
+              e = rawId ? document.getElementById(rawId) : null;
+            } catch (ex) {
+              e = null;
+            }
+            if (e) {
               setTimeout(() => {
                 lenis.scrollTo(e, { offset: -80, immediate: !0 });
               }, 350);
+            }
           }
         }));
     </script>

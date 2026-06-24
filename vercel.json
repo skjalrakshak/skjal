@@ -6,38 +6,72 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
-        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin-allow-popups" },
-        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" },
-        { "key": "X-DNS-Prefetch-Control", "value": "on" },
-        { "key": "Vary", "value": "Accept-Encoding" },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://randomuser.me https://images.unsplash.com https://res.cloudinary.com https://i.pravatar.cc; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' mailto:; upgrade-insecure-requests"
-        }
+          "value": "default-src 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://randomuser.me https://images.unsplash.com https://res.cloudinary.com https://i.pravatar.cc; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-src 'none'; frame-ancestors 'none'; form-action 'self' mailto:; upgrade-insecure-requests; block-all-mixed-content"
+        },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "same-site" },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), web-share=(), xr-spatial-tracking=(), interest-cohort=()"
+        },
+        { "key": "X-DNS-Prefetch-Control", "value": "on" },
+        { "key": "X-Permitted-Cross-Domain-Policies", "value": "none" },
+        { "key": "Vary", "value": "Accept-Encoding" }
       ]
     },
     {
-      "source": "/(.*)\\.(html|json|xml)",
+      "source": "/(.*)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, no-cache, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.json",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
     },
     {
-      "source": "/(.*)\\.(png|jpg|jpeg|webp|svg|gif|ico|mp4|webm|woff|woff2|ttf|eot|css|js)",
+      "source": "/(.*)\\.xml",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.txt",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
       ]
     },
     {
       "source": "/(.*)\\.apk",
       "headers": [
-        { "key": "Content-Disposition", "value": "attachment" }
+        { "key": "Content-Disposition", "value": "attachment" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(?:png|jpg|jpeg|webp|svg|gif|ico|mp4|webm|woff|woff2|ttf|eot)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     }
   ],
@@ -47,6 +81,40 @@
     { "source": "/xmlrpc.php", "destination": "/404.html", "statusCode": 404 },
     { "source": "/wp-content/:path*", "destination": "/404.html", "statusCode": 404 },
     { "source": "/wp-includes/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/wp-json/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/wp-cron.php", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/wp-config.php", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/wp-settings.php", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/wp-load.php", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/wp-signup.php", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/readme.html", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/license.txt", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/.env", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/.env.local", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/.env.production", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/.git/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/.gitignore", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/.htaccess", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/.htpasswd", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/server-status", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/server-info", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/phpmyadmin/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/pma/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/adminer.php", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/administrator/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/admin/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/cgi-bin/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/cpanel", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/backup/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/debug/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/test/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/tmp/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/temp/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/config/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/install/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/setup/:path*", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/console", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/api/:path*", "destination": "/404.html", "statusCode": 404 },
     { "source": "/resources", "destination": "/#innovations", "statusCode": 301 },
     { "source": "/resources.html", "destination": "/#innovations", "statusCode": 301 },
     { "source": "/contact", "destination": "/#contact", "statusCode": 301 },

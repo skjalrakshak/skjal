@@ -103,14 +103,34 @@ function setTheme(t) {
   }
 }
 
-function getHashTarget(hash) {
+/**
+ * Safely resolve a URL hash fragment to a DOM element.
+ * Uses getElementById (never throws) as the primary lookup.
+ * Falls back to querySelector ONLY after CSS-escaping the selector.
+ * This prevents SyntaxError crashes from special characters in URLs.
+ */
+function safeQueryHash(hash) {
   if (!hash || hash === '#') return null;
   try {
-    const id = decodeURIComponent(hash.slice(1));
-    return document.getElementById(id) || document.querySelector(hash);
+    // Extract the raw ID (after the '#'), decoding percent-encoded characters
+    const rawId = decodeURIComponent(hash.slice(1));
+    if (!rawId) return null;
+    // getElementById is the safest lookup — it never throws on special characters
+    const byId = document.getElementById(rawId);
+    if (byId) return byId;
+    // Fallback: use CSS.escape to safely build a selector
+    if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') {
+      return document.querySelector('#' + CSS.escape(rawId));
+    }
+    return null;
   } catch (err) {
+    // decodeURIComponent can throw on malformed percent-encoding
     return null;
   }
+}
+
+function getHashTarget(hash) {
+  return safeQueryHash(hash);
 }
 
 // Restore saved theme before paint
@@ -1226,12 +1246,7 @@ window.SkjInitAll();
 window.addEventListener('load', () => {
   const hash = window.location.hash;
   if (hash) {
-    let target = null;
-    try {
-      target = (hash && hash !== '#') ? document.querySelector(hash) : null;
-    } catch(err) {
-      // Ignored
-    }
+    const target = safeQueryHash(hash);
     if (target) {
       setTimeout(() => {
         if (window.lenis) {
