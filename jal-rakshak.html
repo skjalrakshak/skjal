@@ -181,50 +181,12 @@ body.has-curtain-footer {
   .foot-links li a svg {
     transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95), color 0.3s !important;
   }
+  .foot-links li a:hover {
+    transform: translateX(6px) !important;
+    color: #b46e0cc2 !important;
+  }
   .foot-links li a:hover svg {
     transform: translateX(4px) !important;
-    color: #b46e0cc2 !important;
-  }
-  .roll-text-container {
-    display: inline-flex !important;
-    position: relative !important;
-    overflow: hidden !important;
-    vertical-align: middle !important;
-    line-height: 1.2 !important;
-    perspective: 800px !important;
-    transform-style: preserve-3d !important;
-  }
-  .roll-line-1 {
-    display: inline-block !important;
-    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95) !important;
-    will-change: transform !important;
-  }
-  .roll-line-2 {
-    display: inline-block !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 100% !important;
-    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95) !important;
-    will-change: transform !important;
-  }
-  .roll-char {
-    display: inline-block !important;
-    transition: transform 0.4s cubic-bezier(0.6, 0.01, 0.05, 0.95), color 0.3s !important;
-    will-change: transform !important;
-  }
-  .roll-line-2 .roll-char {
-    transform: rotateX(90deg) !important;
-    transform-origin: bottom center !important;
-  }
-  .roll-line-1 .roll-char {
-    transform-origin: top center !important;
-  }
-  #footer .foot-links li a:hover .roll-line-1 .roll-char {
-    transform: translateY(-100%) rotateX(-90deg) !important;
-    color: #b46e0cc2 !important;
-  }
-  #footer .foot-links li a:hover .roll-line-2 .roll-char {
-    transform: translateY(-100%) rotateX(0deg) !important;
     color: #b46e0cc2 !important;
   }
   .foot-bottom {
@@ -445,7 +407,7 @@ body.has-curtain-footer {
             <div class="aww-hero-text gs-reveal">
               <span class="product-hero-badge" style="background: #09f; margin-bottom: 24px;">Flagship Product</span>
               <h1 class="aww-text-huge">
-                <span class="aww-text-gradient">Water Quality</span><br />
+                <span>Water Quality</span><br />
                 Intelligence.
               </h1>
               <p class="aww-hero-sub">
@@ -472,8 +434,8 @@ body.has-curtain-footer {
               <div class="aww-card-icon" style="width: 72px; height: 72px;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
               </div>
-              <h2 class="aww-card-title" style="font-size: 2.5rem;">Comprehensive Water Intelligence</h2>
-              <p class="aww-card-text" style="font-size: 1.1rem; max-width: 90%;">
+              <h2 class="aww-card-title" style="font-size: 1.5rem;">Comprehensive Water Intelligence</h2>
+              <p class="aww-card-text" style="font-size: 0.95rem; max-width: 90%;">
                 Jal Rakshak is an end-to-end autonomous water monitoring ecosystem that continuously analyzes vital parameters such as pH, dissolved oxygen, turbidity, and flow rates. Built specifically for municipal water bodies and industrial effluent tracking.
               </p>
             </div>
