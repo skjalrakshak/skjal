@@ -17,8 +17,8 @@ body[data-page="home"] .reveal-up {
   transform: none !important;
   transition: none !important;
 }
-body[data-page="home"] .gs-reveal,
-body[data-page="home"] .gs-split {
+body[data-page="home"] .gs-reveal:not(:hover),
+body[data-page="home"] .gs-split:not(:hover) {
   opacity: 1 !important;
   transform: none !important;
 }
@@ -4624,13 +4624,12 @@ main,
 }
 
 .innovation-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
-  border-color: var(--card-hover-border);
+  transform: translateY(-12px);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.12);
 }
 
 [data-theme="dark"] .innovation-card:hover {
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
 }
 
 .innovation-card-img {
@@ -4725,20 +4724,21 @@ main,
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #0099ff;
-  background: rgba(0, 153, 255, 0.08);
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: #0ea5e9;
   border-radius: 100px;
-  transition: gap 0.3s ease, background 0.3s ease, transform 0.3s ease;
+  transition: gap 0.3s ease, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   margin-top: auto;
 }
 
 .innovation-card:hover .innovation-card-cta {
   gap: 14px;
-  background: rgba(0, 153, 255, 0.14);
+  background: #0284c7;
   transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
 }
 
 /* 4. ENTRANCE REVEALS (Split Text & Cascade) */
@@ -6077,7 +6077,20 @@ body #footer {
   }
   
   .innovation-card-body {
-    padding: 24px;
+    padding: 20px;
+  }
+  .innovation-card-title {
+    font-size: 1.25rem !important;
+  }
+  .innovation-card-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+  }
+  .innovation-card-img {
+    aspect-ratio: 16/9;
+  }
+  .innovation-card {
+    border-radius: 16px;
   }
 }
 
@@ -7103,3 +7116,24 @@ body #footer {
     height: 32px;
   }
 }
+
+/* --- USER REQUESTED OVERRIDES (FLAT DESIGN, HIGH CONTRAST) --- */
+.cbox, .innovation-card, .why-card, .aww-card, .sticky-card, .aww-app-card, .contact-cta-btn, .hero-cta-primary, .hero-cta-secondary, .btn-primary, .btn-secondary, .innovation-card-cta, .aww-cta {
+  box-shadow: none !important;
+  background-image: none !important;
+}
+.innovation-card:hover, .why-card:hover, .aww-card:hover, .sticky-card:hover, .aww-app-card:hover {
+  box-shadow: none !important;
+  background-image: none !important;
+}
+.aww-cta {
+  background: var(--bg-alt) !important;
+}
+.contact-cta-btn, .hero-cta-primary, .btn-primary {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+.contact-cta-btn:hover, .hero-cta-primary:hover, .btn-primary:hover {
+  background: #000000 !important;
+}
+
