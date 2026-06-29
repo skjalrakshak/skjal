@@ -7137,3 +7137,24 @@ body #footer {
   background: #000000 !important;
 }
 
+
+/* --- MOBILE LAYOUT FIXES --- */
+@media (max-width: 991px) {
+  .why-grid, .contact-row, .product-hero-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 768px) {
+  .why-grid, .contact-row, .product-hero-grid, .aww-bento {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .hero-trust-row {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .sec {
+    padding: clamp(32px, 5vw, 48px) 0 !important;
+  }
+}
+
