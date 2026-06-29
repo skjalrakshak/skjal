@@ -91,6 +91,48 @@ body[data-page="home"] .gs-split {
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../fonts/ppneuemontreal-thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../fonts/ppneuemontreal-book.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../fonts/ppneuemontreal-italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../fonts/ppneuemontreal-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../fonts/ppneuemontreal-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../fonts/ppneuemontreal-semibolditalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
 
 :root {
   --sky-blue: #ffffff;
@@ -98,7 +140,8 @@ body[data-page="home"] .gs-split {
   --accent: #d4af37;
   /* Premium Gold accent instead of blue */
   --green: #34d399;
-  --sans: "Quffer", "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --sans: "PP Neue Montreal", "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --nav-font: "Cormorant", serif;
   --display: var(--sans);
   --r: 12px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -310,8 +353,8 @@ main,
   left: 0;
   right: 0;
   z-index: 1100;
-  background: transparent;
-  border-bottom: none;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
   transition: transform 0.3s ease,
     background 0.3s ease,
     box-shadow 0.3s ease;
@@ -360,8 +403,8 @@ main,
 }
 
 .nav-logo-text {
-  font-family: var(--display);
-  font-size: 1.1rem;
+  font-family: var(--nav-font);
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--fg-head);
   letter-spacing: -0.01em;
@@ -376,8 +419,8 @@ main,
 }
 
 .nav-link {
-  font-family: var(--sans);
-  font-size: 0.88rem;
+  font-family: var(--nav-font);
+  font-size: 1.2rem;
   font-weight: 500;
   color: var(--fg-head);
   padding: 8px 16px;
@@ -457,7 +500,8 @@ main,
 .nav-dropdown-item {
   display: block;
   padding: 10px 16px;
-  font-size: 0.88rem;
+  font-family: var(--nav-font);
+  font-size: 1.2rem;
   font-weight: 500;
   color: var(--fg-head);
   text-decoration: none;
@@ -3967,7 +4011,7 @@ main,
   background: var(--foot-bg) !important;
   color: var(--foot-fg) !important;
   border-top: none;
-  font-family: var(--font-primary, 'Plus Jakarta Sans', sans-serif);
+  font-family: var(--sans);
 }
 
 .foot-grid {
@@ -6518,7 +6562,30 @@ body #footer {
   justify-content: center;
   padding: 120px 20px 60px;
   overflow: hidden;
-  background: radial-gradient(circle at center, color-mix(in srgb, var(--theme-accent) 8%, transparent) 0%, var(--bg) 70%);
+  background: #111111;
+}
+
+.aww-hero .aww-text-huge {
+  color: #f4f4f4;
+}
+
+.aww-hero .aww-hero-sub {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.aww-hero .btn-primary {
+  background: #ffffff;
+  color: #000000;
+}
+
+.aww-hero .btn-secondary {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.aww-hero .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
 }
 
 .aww-hero-inner {
