@@ -1862,8 +1862,8 @@ main,
 
 .directors-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
 }
 
 .dir-card {
@@ -6881,7 +6881,7 @@ body #footer {
   }
 }
 @media (max-width: 768px) {
-  .why-grid, .contact-row, .product-hero-grid, .aww-bento {
+  .why-grid, .contact-row, .product-hero-grid, .aww-bento, .directors-row {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }
