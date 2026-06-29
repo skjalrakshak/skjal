@@ -71,7 +71,7 @@
 
 @media (max-width: 899px) {
   .cinematic-block {
-    min-height: auto;
+    min-height: 320px;
     opacity: 1 !important; /* Force visible on mobile */
     transform: translateY(0) !important;
     margin-bottom: 80px;
