@@ -6428,14 +6428,14 @@ body #footer {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
 .aww-card {
   background: #0ea5e9;
   border: 1px solid rgba(14, 165, 233, 0.4);
-  border-radius: 0;
+  border-radius: 24px;
   padding: 48px 40px;
   position: relative;
   overflow: hidden;
@@ -6885,6 +6885,8 @@ body #footer {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }
+  .aww-span-2, .aww-span-3 { grid-column: span 1 !important; }
+  .aww-row-2 { grid-row: span 1 !important; }
   .hero-trust-row {
     flex-wrap: wrap;
     justify-content: center;
