@@ -5619,11 +5619,7 @@ body #footer {
 
 /* ——— UX/UI OVERHAUL ADDITIONS ——— */
 
-/* Hero CTA Glow Pulse */
-@keyframes ctaPulse {
-  0%, 100% { box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3); }
-  50% { box-shadow: 0 8px 36px rgba(16, 185, 129, 0.55); }
-}
+/* Hero CTA Glow Pulse — removed */
 
 .hero-cta-primary {
   background: linear-gradient(135deg, #10b981, #059669) !important;
@@ -5635,8 +5631,8 @@ body #footer {
   text-transform: uppercase !important;
   border-radius: 8px !important;
   letter-spacing: 0.5px !important;
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3) !important;
-  animation: ctaPulse 3s ease-in-out infinite !important;
+  box-shadow: none !important;
+  animation: none !important;
   transition: all 0.3s ease !important;
   min-height: 52px !important;
 }
@@ -5648,7 +5644,7 @@ body #footer {
 .hero-cta-primary:hover {
   background: linear-gradient(135deg, #059669, #047857) !important;
   transform: translateY(-3px) !important;
-  box-shadow: 0 12px 36px rgba(16, 185, 129, 0.5) !important;
+  box-shadow: none !important;
   animation: none !important;
 }
 
