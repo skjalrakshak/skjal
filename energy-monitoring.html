@@ -44,7 +44,7 @@
   }
 }
     </script>
-<link rel="stylesheet" href="assets/css/style.css?v=202606300041">
+<link rel="stylesheet" href="assets/css/style.css?v=20260716">
     
     <meta name="view-transition" content="same-origin" />
 
@@ -89,41 +89,14 @@
       sizes="180x180"
       href="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_180,h_180,c_pad/skjal/logo.png"
     />
-    <link rel="stylesheet" href="assets/css/cinematic.css" />
   
 
 
-<style id="gisi-animations-css">
-/* Reveal Animations */
-.reveal-up {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-.reveal-up.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
 
-/* Curtain Footer Structure */
-body.has-curtain-footer {
-  position: relative;
-  min-height: 100vh;
-}
-.curtain-main {
-  position: relative;
-  z-index: 2;
-  background-color: var(--bg) !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-}
-.curtain-footer-active { position: relative !important; z-index: 10 !important; }
-</style>
 
-    <script defer="defer" src="/assets/js/page-transition.js?v=20260614"></script>
+    <script defer="defer" src="/assets/js/page-transition.js?v=20260716"></script>
   <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script defer="defer" src="assets/js/script.js?v=20260614"></script>
-    <script defer="defer" src="assets/js/init.js?v=20260614"></script><style id='compact-footer-styles'>
+    <script defer="defer" src="assets/js/main.js?v=20260716"></script><style id='compact-footer-styles'>
   #footer {
     padding: 30px 0 20px !important;
     background: #111823 !important;
@@ -267,7 +240,6 @@ body.has-curtain-footer {
     <div class="page-transition-overlay" aria-hidden="true"></div>
     <header id="mainNav" class="main-nav">
 
-    <link rel="stylesheet" href="assets/css/style.css?v=202606300041">
       <div class="nav-inner">
         <div class="nav-left" style="display: flex; align-items: center; gap: 32px;">
           <a href="index.html" class="nav-logo" id="navLogo"
@@ -402,7 +374,7 @@ body.has-curtain-footer {
                 Empower your enterprise with local intelligence. As Vizag's top IoT provider, our real-time energy monitoring platform delivers deep insights into power quality and consumption patterns, minimizing power waste across Andhra Pradesh.
               </p>
               <div style="display: flex; gap: 16px;">
-                <a href="/#contact" class="btn-primary">Request Demo</a>
+                <a href="/#contact" class="btn-primary" data-contact-modal data-product="Energy Monitoring">Request Demo</a>
                 <a href="index.html" class="btn-secondary">Explore SKJAL</a>
               </div>
             </div>
@@ -498,7 +470,7 @@ body.has-curtain-footer {
           <div class="aww-cta">
             <h2>Optimize Your Energy Usage</h2>
             <p>Deploy our smart energy meters and take control of your industrial power consumption today.</p>
-            <a href="/#contact" class="btn-primary" style="position: relative; z-index: 2; padding: 16px 40px; font-size: 1.1rem; border-radius: 100px;">Request a Quote</a>
+            <a href="/#contact" class="btn-primary" data-contact-modal data-product="Energy Monitoring" style="position: relative; z-index: 2; padding: 16px 40px; font-size: 1.1rem; border-radius: 100px;">Request a Quote</a>
           </div>
         </section>
       </article>
@@ -553,7 +525,7 @@ body.has-curtain-footer {
           &copy; 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.
         </div>
       </footer>
-    <script defer src="assets/js/cinematic.js"></script>
+    <script defer src="assets/js/product.js?v=20260716"></script>
   </body>
 </html>
 

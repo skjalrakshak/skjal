@@ -44,7 +44,7 @@
   }
 }
     </script>
-<link rel="stylesheet" href="assets/css/style.css?v=202606300041">
+<link rel="stylesheet" href="assets/css/style.css?v=20260716">
     
     <meta name="view-transition" content="same-origin" />
 
@@ -82,38 +82,12 @@
       sizes="180x180"
       href="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_180,h_180,c_pad/skjal/logo.png"
     />
-    <link rel="stylesheet" href="assets/css/cinematic.css" />
   
 
 
-<style id="gisi-animations-css">
-/* Reveal Animations */
-.reveal-up {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-.reveal-up.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
 
-/* Curtain Footer Structure */
-body.has-curtain-footer {
-  position: relative;
-  min-height: 100vh;
-}
-.curtain-main {
-  position: relative;
-  z-index: 2;
-  background-color: var(--bg) !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-}
-.curtain-footer-active { position: relative !important; z-index: 10 !important; }
-</style>
 
-    <script defer="defer" src="/assets/js/page-transition.js?v=20260614"></script>
+    <script defer="defer" src="/assets/js/page-transition.js?v=20260716"></script>
   <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script><style id='compact-footer-styles'>
   #footer {
     padding: 30px 0 20px !important;
@@ -258,7 +232,6 @@ body.has-curtain-footer {
     <div class="page-transition-overlay" aria-hidden="true"></div>
     <header id="mainNav" class="main-nav">
 
-    <link rel="stylesheet" href="assets/css/style.css?v=202606300041">
       <div class="nav-inner">
         <div class="nav-left" style="display: flex; align-items: center; gap: 32px;">
           <a href="index.html" class="nav-logo" id="navLogo"
@@ -393,7 +366,7 @@ body.has-curtain-footer {
                 Smart Health Intelligence for Ergonomic & Live Driving. An AI-driven safety, health, and speed intelligence ecosystem engineered to protect commercial fleets and two-wheeler riders.
               </p>
               <div style="display: flex; gap: 16px;">
-                <a href="/#contact" class="btn-primary">Get S.H.I.E.L.D.</a>
+                <a href="/#contact" class="btn-primary" data-contact-modal data-product="S.H.I.E.L.D.">Get S.H.I.E.L.D.</a>
                 <a href="index.html" class="btn-secondary">Explore SKJAL</a>
               </div>
             </div>
@@ -489,7 +462,7 @@ body.has-curtain-footer {
           <div class="aww-cta">
             <h2>Protect Your Fleet & Drivers</h2>
             <p>Integrate S.H.I.E.L.D. into your logistics operations and transform road safety with AI.</p>
-            <a href="/#contact" class="btn-primary" style="position: relative; z-index: 2; padding: 16px 40px; font-size: 1.1rem; border-radius: 100px;">Get S.H.I.E.L.D.</a>
+            <a href="/#contact" class="btn-primary" data-contact-modal data-product="S.H.I.E.L.D." style="position: relative; z-index: 2; padding: 16px 40px; font-size: 1.1rem; border-radius: 100px;">Get S.H.I.E.L.D.</a>
           </div>
         </section>
       </article>
@@ -655,7 +628,7 @@ body.has-curtain-footer {
           }
         }));
     </script>
-    <script defer src="assets/js/cinematic.js"></script>
+    <script defer src="assets/js/product.js?v=20260716"></script>
   </body>
 </html>
 

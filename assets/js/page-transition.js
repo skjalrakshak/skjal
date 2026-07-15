@@ -35,12 +35,34 @@ document.addEventListener("DOMContentLoaded", () => {
     let gsapPollCount = 0;
     const gsapPollMax = 50;
 
+    // Scroll to the URL hash target. Must run AFTER overflow:hidden is lifted —
+    // window.scrollTo is a no-op while the document is unscrollable.
+    function scrollToHashTarget(immediate) {
+            var hash = window.location.hash;
+            if (!hash || hash === '#') return;
+            try {
+                var rawId = decodeURIComponent(hash.slice(1));
+                var target = rawId ? document.getElementById(rawId) : null;
+                if (!target) return;
+                if (window.lenis) {
+                    // Lenis inited under the curtain's overflow:hidden has limit=0 and
+                    // clamps every scrollTo to the top — recompute before scrolling.
+                    if (typeof window.lenis.resize === 'function') window.lenis.resize();
+                    // force: Lenis ignores scrollTo while stopped (preloader stops it)
+                    window.lenis.scrollTo(target, { immediate: !!immediate, force: true });
+                }
+                // Native guarantee — lenis syncs to external scrolls
+                window.scrollTo(0, target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset));
+            } catch (err) {}
+        }
+
     function forceRevealNoAnimation() {
             document.documentElement.style.overflow = '';
             var f = document.getElementById('footer');
             if (f) { f.style.visibility = ''; f.style.opacity = ''; }
             var w = document.getElementById('skjal-entry-curtain');
             if (w) w.remove();
+            scrollToHashTarget(true);
         }
 
         function runEntryAnimation() {
@@ -68,26 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             footer.style.opacity = '';
                         }
                         document.documentElement.style.overflow = '';
+                        scrollToHashTarget(true);
                     }
                 });
 
-                // Handle hash scrolling
-                tl.call(function() {
-                    var hash = window.location.hash;
-                    if (hash && hash !== '#') {
-                        try {
-                            var rawId = decodeURIComponent(hash.slice(1));
-                            var target = rawId ? document.getElementById(rawId) : null;
-                            if (target) {
-                                if (window.lenis) {
-                                    window.lenis.scrollTo(target, { immediate: true });
-                                } else {
-                                    window.scrollTo(0, target.offsetTop);
-                                }
-                            }
-                        } catch (err) {}
-                    }
-                }, [], 0);
+                // Early attempt while the curtain still covers the page (works when
+                // overflow isn't locked); the onComplete call above is the guarantee.
+                tl.call(function() { scrollToHashTarget(true); }, [], 0);
 
                 // Text exits UPWARD
                 tl.to(chars, {
@@ -219,7 +228,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (targetEl) {
                             e.preventDefault();
                             if (window.lenis) {
-                                window.lenis.scrollTo(targetEl, { immediate: false, duration: 1.2 });
+                                if (typeof window.lenis.resize === 'function') window.lenis.resize();
+                                window.lenis.scrollTo(targetEl, { immediate: false, duration: 1.2, force: true });
                             } else {
                                 targetEl.scrollIntoView({ behavior: 'smooth' });
                             }

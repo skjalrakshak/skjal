@@ -1,3 +1,14 @@
+/* ============================================================
+   SKJAL — global site behavior (all pages)
+   Scroll restoration + everything that was script.js
+   ============================================================ */
+
+// Reset scroll position on page load to prevent GSAP/Lenis from getting stuck
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 /* ═══ SK JALRAKSHAK — ANIMATION ENGINE v7 ═══ */
 /* Audited and cleaned: dead code removed, constants extracted, navbar fixed */
 
@@ -271,6 +282,9 @@ window.SkjInitAll = function() {
         preloaderEl.style.pointerEvents = 'none';
         requestAnimationFrame(() => { preloaderEl.style.display = 'none'; });
         ScrollTrigger.refresh();
+        // Earlier hash scrolls were ignored while lenis was stopped — land on the section now
+        const target = getHashTarget(window.location.hash);
+        if (target) lenis.scrollTo(target, { immediate: true, force: true });
       }
     });
 
@@ -1107,7 +1121,8 @@ window.addEventListener('load', () => {
     if (target) {
       setTimeout(() => {
         if (window.lenis) {
-          window.lenis.scrollTo(target, { immediate: true });
+          // force: Lenis ignores scrollTo while stopped (preloader stops it)
+          window.lenis.scrollTo(target, { immediate: true, force: true });
         } else {
           target.scrollIntoView();
         }

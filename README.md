@@ -63,18 +63,14 @@ This platform has been rigorously audited and optimized to achieve the highest s
 To run the platform locally and see your changes instantly:
 
 1. Clone the repository and navigate to the root directory.
-2. Ensure you have Node.js installed.
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Boot the custom local development server:
+2. Ensure you have Node.js installed — the site has **zero npm dependencies**, so there is nothing to install.
+3. Boot the custom local development server:
    ```bash
    npm run dev
    ```
-5. Open your browser to `http://localhost:5173`.
+4. Open your browser to `http://localhost:5173`.
 
-> **Note:** If you make changes to the routing logic in `server.js`, you must restart the dev server to see the changes.
+> **Note:** If you make changes to the routing logic in `tools/dev-server.js`, you must restart the dev server to see the changes.
 
 ---
 
@@ -96,23 +92,32 @@ git push
 ## 📁 Repository Structure
 
 ```text
-├── index.html                  # Landing Page
+├── index.html                  # Landing page (hero, products, FAQ, contact)
+├── about.html                  # Company page (team, story)
 ├── jal-rakshak.html            # Product: Water Intelligence
 ├── shield.html                 # Product: Driver Safety
 ├── energy-monitoring.html      # Product: Energy Management
-├── assets/                     # Organized static assets
+├── 404.html                    # Not-found page
+├── assets/
 │   ├── css/
-│   │   └── style.css           # Global Design System (Typography, Grid, Colors)
-│   └── js/
-│       ├── script.js           # GSAP Animations & Motion Logic
-│       ├── webgl.js            # Three.js 3D Interactive Backgrounds
-│       └── init.js             # Early execution script (Scroll position reset)
-├── server.js                   # Custom Local Node.js Server (Port 5173)
-├── vercel.json                 # Production Routing & Security Headers
-├── sitemap.xml                 # SEO Sitemap
+│   │   └── style.css           # THE stylesheet — design system + all page styles
+│   ├── js/
+│   │   ├── main.js             # Global behavior: scroll reset, Lenis, GSAP animations,
+│   │   │                       #   theme, nav, preloader (all pages except 404)
+│   │   ├── page-transition.js  # Cross-page curtain transitions + hash-scroll handling
+│   │   │                       #   (every page)
+│   │   └── product.js          # Product pages only: cinematic scroll + contact modal
+│   ├── fonts/                  # PP Neue Montreal (self-hosted)
+│   └── img/                    # brand/ gallery/ heroes/ products/ team/
+├── tools/
+│   └── dev-server.js           # Local dev server, zero dependencies (port 5173)
+├── vercel.json                 # Production routing, redirects & security headers
+├── sitemap.xml                 # SEO sitemap
 ├── robots.txt                  # Bot access control & AI scraper blocks
-└── img/                        # High-fidelity Assets & Photography
+└── package.json                # npm run dev — no dependencies
 ```
+
+**Script loading contract:** every page loads `page-transition.js`; `index`, `about`, `jal-rakshak` and `energy-monitoring` load `main.js` (`shield` and `404` run on inline scripts + GSAP alone); the three product pages additionally load `product.js`. CSS is a single file (`style.css`) — bump its `?v=` query when editing, since production caches it as immutable.
 
 ---
 <div align="center">
