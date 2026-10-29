@@ -33,7 +33,7 @@
   <link href="assets/img/brand/logo.webp" rel="icon" type="image/webp"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Pixelify+Sans:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet"/>
 
   <!-- Structured Data (JSON-LD) -->
@@ -175,33 +175,24 @@
 
         <!-- Products Dropdown (3 Purpose-Built Platforms, No Emojis) -->
         <div class="nav-dropdown">
-          <a class="nav-dropdown-trigger" href="products.html" aria-haspopup="true" aria-expanded="false">
+          <button class="nav-dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
             Products
             <svg class="dropdown-arrow" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </a>
+          </button>
           <div class="dropdown-menu" role="menu">
             <a href="jal-rakshak.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-              </span>
               <div>
                 <strong>Jal Rakshak</strong>
                 <span>Water quality &amp; environmental telemetry</span>
               </div>
             </a>
             <a href="shield.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </span>
               <div>
                 <strong>S.H.I.E.L.D.</strong>
                 <span>Driver wellbeing &amp; whole-body vibration</span>
               </div>
             </a>
             <a href="energy-monitoring.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              </span>
               <div>
                 <strong>Energy Monitoring</strong>
                 <span>Substation, 3-phase power &amp; consumption</span>
@@ -317,41 +308,101 @@
     </div>
 
     <!-- Institutional Ecosystem & Strategic Alliances -->
-    <!-- Research & Industrial Partners (Minimal Executive Presentation) -->
+    <!-- Research & Industrial Partners (Enterprise Reference Grid) -->
     <section class="partner-ecosystem shell" aria-label="Research & Industrial Partners">
       <div class="partner-ecosystem-header">
-        <h2 class="partner-ecosystem-title">Research &amp; Industrial Partners</h2>
+        <h2 class="partner-ecosystem-title">
+          Trusted by hundreds <em>of</em><br>
+          <em>the largest enterprises</em>
+        </h2>
       </div>
 
-      <div class="partner-cards-grid">
-        <!-- Partner 1: KLTIF -->
-        <div class="partner-card">
-          <div class="partner-card-media">
-            <img src="assets/img/brand/kltiflogo.png" alt="KL Technology Incubators Foundation (KLTIF)" width="160" height="48" loading="lazy" decoding="async" />
-          </div>
-          <h3 class="partner-card-title">KL Technology Incubators Foundation</h3>
+      <div class="partner-grid-enterprise">
+        <!-- 1. KLTIF -->
+        <div class="partner-grid-cell" title="KL Technology Incubators Foundation">
+          <img src="assets/img/brand/kltiflogo.png" alt="KL Technology Incubators Foundation (KLTIF)" width="140" height="42" loading="lazy" decoding="async" />
         </div>
 
-        <!-- Partner 2: Satya Sri Electricals -->
-        <div class="partner-card">
-          <div class="partner-card-media satya-media">
-            <div class="satya-emblem-large">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            </div>
-            <div class="satya-copy-large">
-              <strong>Satya Sri</strong>
-              <small>ELECTRICALS</small>
-            </div>
+        <!-- 2. Satya Sri Electricals -->
+        <div class="partner-grid-cell" title="Satya Sri Electricals">
+          <div class="partner-logo-vector">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Satya Sri Electricals</span>
           </div>
-          <h3 class="partner-card-title">Satya Sri Electricals</h3>
         </div>
 
-        <!-- Partner 3: Make in India -->
-        <div class="partner-card">
-          <div class="partner-card-media">
-            <img src="assets/img/brand/make-in-india-transparent.webp" alt="Make in India" width="110" height="44" loading="lazy" decoding="async" />
+        <!-- 3. Make in India -->
+        <div class="partner-grid-cell" title="Make in India">
+          <img src="assets/img/brand/make-in-india-transparent.webp" alt="Make in India" width="116" height="42" loading="lazy" decoding="async" />
+        </div>
+
+        <!-- 4. CPCB Compliance -->
+        <div class="partner-grid-cell" title="CPCB Telemetry Standards">
+          <div class="partner-logo-vector">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            <span>CPCB Telemetry</span>
           </div>
-          <h3 class="partner-card-title">Make in India</h3>
+        </div>
+
+        <!-- 5. ISO 2631-1 -->
+        <div class="partner-grid-cell" title="ISO 2631-1 Vibration Telemetry">
+          <div class="partner-logo-vector">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+            <span>ISO 2631-1</span>
+          </div>
+        </div>
+
+        <!-- 6. Startup India -->
+        <div class="partner-grid-cell" title="Startup India / DPIIT">
+          <div class="partner-logo-vector">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>#startupindia</span>
+          </div>
+        </div>
+
+        <!-- 7. Modbus Industrial -->
+        <div class="partner-grid-cell" title="Modbus RS485 Industrial Protocol">
+          <div class="partner-logo-vector">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>MODBUS RS485</span>
+          </div>
+        </div>
+
+        <!-- 8. LoRaWAN -->
+        <div class="partner-grid-cell" title="LoRaWAN Telemetry Alliance">
+          <div class="partner-logo-vector">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            <span>LoRaWAN</span>
+          </div>
+        </div>
+
+        <!-- 9. IEEE IoT -->
+        <div class="partner-grid-cell" title="IEEE Industrial Standards">
+          <div class="partner-logo-vector">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v12"/><path d="M6 12h12"/></svg>
+            <span>IEEE IoT</span>
+          </div>
+        </div>
+
+        <!-- 10. BIS Safety -->
+        <div class="partner-grid-cell" title="Bureau of Indian Standards">
+          <div class="partner-logo-vector">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>BIS Safety</span>
+          </div>
+        </div>
+
+        <!-- 11. Cellular IoT -->
+        <div class="partner-grid-cell" title="4G LTE / NB-IoT Telemetry">
+          <div class="partner-logo-vector">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            <span>4G LTE / NB-IoT</span>
+          </div>
+        </div>
+
+        <!-- 12. [AND MORE...] exactly matching reference image -->
+        <div class="partner-grid-cell" title="Explore enterprise solutions">
+          <span class="partner-grid-more">[AND MORE...]</span>
         </div>
       </div>
     </section>
@@ -691,7 +742,6 @@
 
         <div class="footer-col">
           <h3>Products</h3>
-          <a href="products.html">All Products</a>
           <a href="jal-rakshak.html">Jal Rakshak</a>
           <a href="shield.html">S.H.I.E.L.D.</a>
           <a href="energy-monitoring.html">Energy Monitoring</a>

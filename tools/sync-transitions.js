@@ -5,7 +5,6 @@ const files = [
   'index.html',
   'about.html',
   'contact.html',
-  'products.html',
   'services.html',
   'industries.html',
   'jal-rakshak.html',

@@ -5,8 +5,6 @@ const PORT = 5173;
 const routesToTest = [
   '/',
   '/index.html',
-  '/products',
-  '/products.html',
   '/jal-rakshak',
   '/jal-rakshak.html',
   '/shield',

@@ -76,7 +76,9 @@
     }
   ],
   "redirects": [
-    { "source": "/resources", "destination": "/products.html", "statusCode": 301 },
-    { "source": "/resources.html", "destination": "/products.html", "statusCode": 301 }
+    { "source": "/products", "destination": "/jal-rakshak.html", "statusCode": 301 },
+    { "source": "/products.html", "destination": "/jal-rakshak.html", "statusCode": 301 },
+    { "source": "/resources", "destination": "/jal-rakshak.html", "statusCode": 301 },
+    { "source": "/resources.html", "destination": "/jal-rakshak.html", "statusCode": 301 }
   ]
 }

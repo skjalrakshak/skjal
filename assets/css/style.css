@@ -590,24 +590,18 @@ a:hover .arrow-circle {
 
 .nav a:not(.nav-cta):hover,
 .nav a:not(.nav-cta).active {
-  color: var(--ink);
+  color: var(--blue) !important;
 }
 
+.nav a,
+.nav-dropdown-trigger,
+.dropdown-item {
+  text-decoration: none !important;
+}
+
+/* Underlines in navbar removed for clean editorial typography */
 .nav a:not(.nav-cta)::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 100%;
-  bottom: 0;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--blue);
-  transition: right 0.22s ease;
-}
-
-.nav a:not(.nav-cta):hover::after,
-.nav a.active::after {
-  right: 0;
+  display: none !important;
 }
 
 /* Products Dropdown Menu (Seamless Hover + Click Bridge + Dark Theme) */
@@ -635,7 +629,7 @@ a:hover .arrow-circle {
 
 .nav-dropdown-trigger:hover,
 .nav-dropdown.is-open .nav-dropdown-trigger {
-  color: var(--ink);
+  color: var(--blue) !important;
 }
 
 .nav-dropdown-trigger .dropdown-arrow {
@@ -708,15 +702,7 @@ a:hover .arrow-circle {
 }
 
 .dropdown-item .dropdown-icon {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  background: var(--surface-soft);
-  color: var(--blue);
-  flex: none;
-  transition: background 0.15s ease, color 0.15s ease;
+  display: none !important;
 }
 
 .dropdown-item:hover .dropdown-icon {
@@ -1076,6 +1062,17 @@ a:hover .arrow-circle {
   font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--ink);
+  transition: color 0.2s ease;
+}
+
+.mobile-menu > a:not(.btn):not(.mobile-nav-sub):hover,
+.mobile-menu > a:not(.btn):not(.mobile-nav-sub).active {
+  color: var(--blue) !important;
+}
+
+.mobile-menu > a:not(.btn):not(.mobile-nav-sub):hover span,
+.mobile-nav-sub:hover span {
+  color: var(--blue) !important;
 }
 
 .mobile-menu .btn {
@@ -1380,114 +1377,133 @@ a:hover .arrow-circle {
    Partner & Incubator Ecosystem (Minimal, Executive Logo Cards)
    ========================================================================== */
 .partner-ecosystem {
-  padding: clamp(32px, 4vw, 48px) 0;
+  padding: clamp(48px, 6vw, 84px) 0;
   border-bottom: 1px solid var(--line);
 }
 
 .partner-ecosystem-header {
-  margin-bottom: clamp(20px, 3vw, 28px);
-  text-align: center;
+  margin-bottom: clamp(28px, 3.5vw, 44px);
+  text-align: left;
 }
 
 .partner-ecosystem-title {
-  font-family: var(--font-display);
-  font-size: clamp(22px, 2.6vw, 32px);
+  font-family: var(--sans);
+  font-size: clamp(30px, 4vw, 52px);
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
   color: var(--ink);
   margin: 0;
 }
 
-.partner-cards-grid {
+.partner-ecosystem-title em {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.partner-grid-enterprise {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.partner-card {
-  background: #FFFFFF;
+  grid-template-columns: repeat(6, 1fr);
   border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 22px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+  background: var(--surface);
 }
 
-.partner-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-  border-color: rgba(10, 10, 10, 0.18);
-}
-
-.partner-card-media {
-  height: 52px;
+.partner-grid-cell {
+  height: clamp(86px, 9.5vw, 114px);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px 22px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  transition: background 0.2s ease;
+  position: relative;
 }
 
-.partner-card-media img {
-  max-height: 44px;
-  max-width: 160px;
+.partner-grid-cell:nth-child(6n) {
+  border-right: none;
+}
+
+.partner-grid-cell:nth-last-child(-n+6) {
+  border-bottom: none;
+}
+
+.partner-grid-cell:hover {
+  background: #F9FAF8;
+}
+
+.partner-grid-cell img,
+.partner-grid-cell svg {
+  max-height: 40px;
+  max-width: 140px;
   width: auto;
   height: auto;
   object-fit: contain;
+  filter: grayscale(100%) contrast(1.1);
+  opacity: 0.72;
+  transition: filter 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
 }
 
-.partner-card-media.satya-media {
+.partner-grid-cell:hover img,
+.partner-grid-cell:hover svg {
+  filter: grayscale(0%) contrast(1);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.partner-logo-vector {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.satya-emblem-large {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: #1A243F;
-  display: grid;
-  place-items: center;
-  color: #F8B44A;
-}
-
-.satya-copy-large strong {
-  display: block;
-  font-size: 15px;
-  font-weight: 800;
-  color: #1A243F;
-  line-height: 1.1;
-  text-align: left;
-}
-
-.satya-copy-large small {
-  display: block;
-  font-size: 8px;
+  gap: 8px;
+  color: #1A1A1A;
+  font-family: var(--sans);
   font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-  text-align: left;
-  margin-top: 1px;
+  letter-spacing: 0.04em;
+  font-size: 14px;
 }
 
-.partner-card-title {
-  font-size: 14.5px;
+.partner-grid-more {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
   font-weight: 600;
-  color: var(--ink);
-  margin: 0;
-  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+  user-select: none;
 }
 
-@media (max-width: 900px) {
-  .partner-cards-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+@media (max-width: 1024px) {
+  .partner-grid-enterprise {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .partner-grid-cell {
+    border-right: 1px solid var(--line) !important;
+    border-bottom: 1px solid var(--line) !important;
+  }
+  .partner-grid-cell:nth-child(3n) {
+    border-right: none !important;
+  }
+  .partner-grid-cell:nth-last-child(-n+3) {
+    border-bottom: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .partner-grid-enterprise {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .partner-grid-cell {
+    border-right: 1px solid var(--line) !important;
+    border-bottom: 1px solid var(--line) !important;
+  }
+  .partner-grid-cell:nth-child(even) {
+    border-right: none !important;
+  }
+  .partner-grid-cell:nth-last-child(-n+2) {
+    border-bottom: none !important;
   }
 }
 
@@ -2208,18 +2224,7 @@ a:hover .arrow-circle {
 }
 
 .product-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 11px;
-  background: var(--blue-soft);
-  color: var(--blue);
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
+  display: none !important;
 }
 
 .product-specs-grid {
@@ -2703,7 +2708,7 @@ a:hover .arrow-circle {
     -webkit-backdrop-filter: none !important;
     box-shadow: none !important;
     display: flex !important;
-    justify-content: flex-end !important;
+    justify-content: space-between !important; /* Logo at top-left, menu at top-right */
     align-items: center !important;
     pointer-events: none !important;
   }
@@ -2711,11 +2716,47 @@ a:hover .arrow-circle {
   .header::before {
     display: none !important;
   }
-  /* Remove logo completely in mobile view as requested */
-  .header .brand,
-  .brand-logo,
+  /* Logo and SKJAL name placed at top left with inspired PP Neue Montreal typography */
+  .header .brand {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    pointer-events: auto !important;
+    text-decoration: none !important;
+  }
+  .brand-logo {
+    display: block !important;
+    width: 34px !important;
+    height: 34px !important;
+    object-fit: contain !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    flex: 0 0 34px !important;
+  }
   .brand-wording {
-    display: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1px !important;
+  }
+  .brand-wording strong {
+    font-family: var(--font-display) !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--ink) !important;
+    line-height: 1 !important;
+  }
+  .brand-wording span {
+    font-family: var(--sans) !important;
+    font-size: 8px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: var(--muted) !important;
   }
   .nav {
     display: none !important;
@@ -2730,7 +2771,7 @@ a:hover .arrow-circle {
     border-radius: 0 !important;
     width: 44px !important;
     height: 44px !important;
-    margin-left: auto !important;
+    margin-left: 0 !important;
     padding: 0 !important;
   }
   .menu-toggle:hover,
@@ -3017,17 +3058,7 @@ html.lenis body {
 }
 
 .service-badge {
-  display: inline-flex;
-  align-items: center;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--blue);
-  background: rgba(255, 92, 41, 0.08);
-  padding: 5px 12px;
-  border-radius: 999px;
-  margin-bottom: 18px;
+  display: none !important;
 }
 
 .service-card-deep h3 {
@@ -3179,16 +3210,7 @@ html.lenis body {
 }
 
 .contact-meta-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #065F46;
-  background: #D1FAE5;
-  padding: 6px 12px;
-  border-radius: 999px;
-  width: fit-content;
+  display: none !important;
 }
 
 @media (max-width: 900px) {

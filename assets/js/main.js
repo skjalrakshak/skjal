@@ -901,6 +901,12 @@
     }
   }
 
+  // Expose global animation re-init for blink-free transitions
+  window.initPageAnimations = function() {
+    initStaggeredTextRoll();
+    initGSAP();
+  };
+
   // Initialize once DOM is ready or after GSAP scripts load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initGSAP);
