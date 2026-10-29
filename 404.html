@@ -1,194 +1,269 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script>
-      if (sessionStorage.getItem('isPageTransition') === 'true') {
-        document.documentElement.classList.add('page-transitioning');
-        document.documentElement.style.backgroundColor = '#111823';
-        document.documentElement.style.visibility = 'hidden';
-      }
-    </script>
-
-    <title>Page Not Found Error - 404 Troubleshooting | SKJAL</title>
-    <meta name="description" content="The requested page was not found on our server. Browse SKJAL Innovations to explore industrial IoT, smart energy meters, and water quality telemetry today." />
-    <meta name="robots" content="noindex" />
-    <meta name="theme-color" content="#0a0a0a" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-
-    <style>
-      *, *::before, *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        min-height: 100svh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, sans-serif;
-        color: #ffffff;
-        background: #0a0a0a;
-      }
-
-      .container {
-        text-align: center;
-        padding: 2rem;
-        max-width: 600px;
-      }
-
-      .error-code {
-        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", serif;
-        font-size: clamp(7rem, 20vw, 12rem);
-        font-weight: 900;
-        line-height: 1;
-        letter-spacing: -0.03em;
-        color: #0ea5e9;
-        opacity: 0.15;
-        margin-bottom: -1.5rem;
-        position: relative;
-      }
-
-      h1 {
-        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", serif;
-        font-size: clamp(1.8rem, 4vw, 2.8rem);
-        font-weight: 800;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        margin-bottom: 1rem;
-      }
-
-      p {
-        font-size: 1rem;
-        line-height: 1.7;
-        color: rgba(255, 255, 255, 0.55);
-        max-width: 440px;
-        margin: 0 auto 2.5rem;
-      }
-
-      .actions {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
-      a {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 0.75rem 1.5rem;
-        font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", sans-serif;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: all 0.25s ease;
-      }
-
-      .btn-primary-404 {
-        color: #ffffff;
-        background: #0ea5e9;
-      }
-      .btn-primary-404:hover {
-        background: #0284c7;
-        transform: translateY(-1px);
-      }
-
-      .btn-secondary {
-        color: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: transparent;
-      }
-      .btn-secondary:hover {
-        border-color: rgba(255, 255, 255, 0.3);
-        color: #ffffff;
-      }
-
-      .divider {
-        width: 48px;
-        height: 2px;
-        background: rgba(14, 165, 233, 0.3);
-        margin: 0 auto 1.5rem;
-        border-radius: 2px;
-      }
-
-      @media (max-width: 480px) {
-        .container {
-          padding: 1.5rem;
-        }
-        .actions {
-          flex-direction: column;
-          align-items: center;
-        }
-        a {
-          width: 100%;
-          justify-content: center;
-        }
-      }
-    </style>
-  </head>
-  <body>
-<!-- SKJAL Page Transition Curtain (Hardcoded for zero-flash) -->
-    <div class="skjal-transition-wrap" id="skjal-entry-curtain" style="display: none;">
-        <div class="skjal-transition-panel">
-            <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M0,100 C50,0 100,100 100,100 Z"></path>
-            </svg>
-            <svg class="skjal-curve-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M0,0 C50,100 100,0 100,0 Z"></path>
-            </svg>
-        </div>
-        <div class="skjal-transition-text-wrap">
-            <div class="skjal-transition-text">
-                <div class="skjal-transition-word">
-                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">S</span>
-                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">K</span>
-                </div>
-                <div class="skjal-transition-word">
-                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">J</span>
-                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">A</span>
-                    <span class="skjal-transition-char" style="transform:translateY(0%) rotateZ(0deg)">L</span>
-                </div>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+  <meta content="#FFFDF4" name="theme-color"/>
+  <title>404 — Page Not Found | SKJAL</title>
+  <meta content="The page you are looking for does not exist on SKJAL. Explore our industrial IoT, water quality telemetry, and energy monitoring systems." name="description"/>
+  <meta content="noindex, follow" name="robots"/>
+  <link href="assets/img/brand/logo.webp" rel="icon" type="image/webp"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet"/>
+  <script>
+    if (sessionStorage.getItem('isPageTransition') === 'true') {
+      document.write('<style>#skjal-entry-curtain { display: flex !important; } #skjal-preloader { display: none !important; }</style>');
+      document.documentElement.style.overflow = 'hidden';
+    }
+  </script>
+</head>
+<body id="top">
+  <!-- SKJAL Page Transition Curtain (Hardcoded for zero-flash) -->
+  <div class="skjal-transition-wrap" id="skjal-entry-curtain" style="display: none;">
+    <div class="skjal-transition-panel">
+      <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0,100 C50,0 100,100 100,100 Z"></path>
+      </svg>
+      <svg class="skjal-curve-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0,0 C50,100 100,0 100,0 Z"></path>
+      </svg>
     </div>
-
-    <main>
-      <div class="container">
-        <div class="error-code">404</div>
-        <h1>Page Not Found</h1>
-        <div class="divider"></div>
-        <p>
-          The page you're looking for doesn't exist or has been moved. Head back
-          to the homepage or reach out to our team.
-        </p>
-        <div class="actions">
-          <a class="btn-primary-404" href="/">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-            Return Home
-          </a>
-          <a class="btn-secondary" href="/#contact">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-              <polyline points="22,6 12,13 2,6" />
-            </svg>
-            Contact Team
-          </a>
+    <div class="skjal-transition-text-wrap">
+      <div class="skjal-transition-text">
+        <div class="skjal-transition-word">
+          <span class="skjal-transition-char">S</span>
+          <span class="skjal-transition-char">K</span>
+        </div>
+        <div class="skjal-transition-word">
+          <span class="skjal-transition-char">J</span>
+          <span class="skjal-transition-char">A</span>
+          <span class="skjal-transition-char">L</span>
         </div>
       </div>
-    </main>
-  <script defer="defer" src="/assets/js/page-transition.js?v=20260716"></script>
+    </div>
+  </div>
+
+  <!-- Preloader - nrkportfolio.in Design with Pixelify Sans & Smooth GSAP Morph -->
+    <div id="skjal-preloader" class="preloader-container" role="status" aria-live="polite">
+    <div class="preloader-brand-wrapper">
+      <img src="assets/img/brand/logo.webp" alt="SKJAL" class="preloader-logo" id="preloader-logo" width="60" height="60" fetchpriority="high" decoding="sync" />
+      <span class="preloader-brand-name" id="preloader-brand-name">SKJAL</span>
+    </div>
+    <div class="preloader-counter" id="preloader-counter">0</div>
+  </div>
+  <noscript><style>#skjal-preloader { display: none !important; }</style></noscript>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Header (Apple Liquid Glass) -->
+  <div class="header-wrap main-nav">
+    <header aria-label="Main header" class="header shell">
+      <a aria-label="SKJAL home" class="brand" href="/">
+        <img alt="SKJAL logo" class="brand-logo" decoding="async" height="44" src="assets/img/brand/logo.webp" width="44"/>
+        <span class="brand-wording">
+          <strong>SKJAL</strong>
+          <span>Connected monitoring</span>
+        </span>
+      </a>
+
+      <nav aria-label="Main navigation" class="nav">
+        <a class="nav-link nav-link-home" href="/">Home</a>
+
+        <!-- Products Dropdown -->
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-trigger" href="products.html" aria-haspopup="true" aria-expanded="false">
+            Products
+            <svg class="dropdown-arrow" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+                    <div class="dropdown-menu" role="menu">
+            <a href="jal-rakshak.html" class="dropdown-item" role="menuitem">
+              <span class="dropdown-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              </span>
+              <div>
+                <strong>Jal Rakshak</strong>
+                <span>Water quality &amp; environmental telemetry</span>
+              </div>
+            </a>
+            <a href="shield.html" class="dropdown-item" role="menuitem">
+              <span class="dropdown-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </span>
+              <div>
+                <strong>S.H.I.E.L.D.</strong>
+                <span>Driver wellbeing &amp; whole-body vibration</span>
+              </div>
+            </a>
+            <a href="energy-monitoring.html" class="dropdown-item" role="menuitem">
+              <span class="dropdown-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </span>
+              <div>
+                <strong>Energy Monitoring</strong>
+                <span>Substation, 3-phase power &amp; consumption</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link" href="industries.html">Industries</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+        <a class="nav-cta" href="/">Return Home</a>
+      </nav>
+
+      <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu" class="menu-toggle" id="menu-toggle" type="button">
+        <span class="hamburger-icon" aria-hidden="true">
+          <span class="hamburger-line line-1"></span>
+          <span class="hamburger-line line-2"></span>
+          <span class="hamburger-line line-3"></span>
+        </span>
+      </button>
+    </header>
+  </div>
+
+  <!-- Mobile Menu -->
+  <nav aria-label="Mobile navigation" class="mobile-menu" id="mobile-menu">
+    <a href="/" class="mobile-nav-link">Home <span>→</span></a>
+
+    <!-- Mobile Products Accordion -->
+    <div class="mobile-accordion">
+      <button class="mobile-accordion-toggle" id="mobile-products-toggle" type="button" aria-expanded="false" aria-controls="mobile-products-menu">
+        <span>Products</span>
+        <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+            <div class="mobile-accordion-content" id="mobile-products-menu" role="region" aria-labelledby="mobile-products-toggle">
+        <a href="jal-rakshak.html" class="mobile-nav-sub">Jal Rakshak (Water Telemetry) <span>→</span></a>
+        <a href="shield.html" class="mobile-nav-sub">S.H.I.E.L.D. (Driver Safety) <span>→</span></a>
+        <a href="energy-monitoring.html" class="mobile-nav-sub">Energy Monitoring (Power) <span>→</span></a>
+      </div>
+    </div>
+
+    <a href="services.html">Services <span>→</span></a>
+    <a href="industries.html">Industries <span>→</span></a>
+    <a href="about.html">About <span>→</span></a>
+    <a href="contact.html">Contact <span>→</span></a>
+    <a class="btn btn-primary" href="/">Return Home</a>
+  </nav>
+
+  <main id="main">
+    <section class="error-hero shell">
+      <div class="error-code">404</div>
+      <h1 class="section-heading" style="font-size: clamp(28px, 3.5vw, 42px); margin-bottom: 16px;">
+        Page not found.
+      </h1>
+      <p class="body-copy" style="max-width: 480px; margin-bottom: 32px;">
+        The link you followed may have been updated, moved, or is temporarily offline. Explore our products or return to the main dashboard.
+      </p>
+      <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+        <a class="btn btn-primary" href="/">
+          Return to Homepage
+          <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <a class="btn btn-secondary" href="products.html">Explore Products</a>
+        <a class="btn btn-secondary" href="mailto:sales@skjal.in">Contact support</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="shell">
+      <div class="footer-cta" id="footer-contact">
+        <div class="footer-cta-copy">
+          <h2>Looking for specific telemetry solutions?</h2>
+          <p>
+            Contact our engineering team directly for inquiries about custom embedded systems, IoT gateways, or pilot trials in Visakhapatnam.
+          </p>
+        </div>
+        <div class="footer-cta-actions">
+          <a class="footer-cta-button" href="mailto:sales@skjal.in?subject=Website%20Enquiry%20%E2%80%94%20SKJAL">
+            Contact engineering team
+            <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a class="footer-phone" href="tel:+918978859246">+91 89788 59246</a>
+        </div>
+      </div>
+
+            <div class="footer-main">
+        <div class="footer-brand">
+          <a aria-label="SKJAL home" class="brand" href="/">
+            <img alt="SKJAL logo" class="brand-logo" decoding="async" height="44" loading="lazy" src="assets/img/brand/logo.webp" width="44"/>
+            <span class="brand-wording">
+              <strong>SKJAL</strong>
+              <span>Connected monitoring</span>
+            </span>
+          </a>
+          <p>
+            Custom electronics, embedded firmware, Industrial IoT telemetry and automation engineering from Visakhapatnam, India.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Solutions</h3>
+          <a href="services.html">All Engineering Services</a>
+          <a href="services.html#pcb">Electronics &amp; PCB Design</a>
+          <a href="services.html#firmware">Embedded RTOS Firmware</a>
+          <a href="services.html#telemetry">Cloud &amp; IoT Pipelines</a>
+        </div>
+
+        <div class="footer-col">
+          <h3>Sectors</h3>
+          <a href="industries.html">All Industries</a>
+          <a href="industries.html#water">Water &amp; Environment</a>
+          <a href="industries.html#fleets">Commercial Fleets</a>
+          <a href="industries.html#manufacturing">Manufacturing &amp; Power</a>
+        </div>
+
+        <div class="footer-col">
+          <h3>Products</h3>
+          <a href="products.html">All Products</a>
+          <a href="jal-rakshak.html">Jal Rakshak</a>
+          <a href="shield.html">S.H.I.E.L.D.</a>
+          <a href="energy-monitoring.html">Energy Monitoring</a>
+        </div>
+
+        <div class="footer-col">
+          <h3>Company</h3>
+          <a href="about.html">About SKJAL</a>
+          <a href="about.html#leadership">Leadership</a>
+          <a href="contact.html">Contact Us</a>
+          <a href="mailto:sales@skjal.in">Careers</a>
+        </div>
+
+        <div class="footer-col">
+          <h3>Connect</h3>
+          <a href="mailto:sales@skjal.in">sales@skjal.in</a>
+          <a href="tel:+918978859246">+91 89788 59246</a>
+          <a href="https://www.linkedin.com/company/sk-jalrakshak-innovations-pvt-ltd/" rel="noopener noreferrer" target="_blank">LinkedIn ↗</a>
+          <span style="display:block; margin-top:8px; font-size:11px; color:rgba(255,255,255,0.45); line-height:1.4;">Visakhapatnam, Andhra Pradesh, India</span>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> SK Jalrakshak Innovations Private Limited &bull; CIN U26517AP2025PTC119413</span>
+        <div class="legal">
+          <span>Proudly Engineered in India</span>
+          <a href="#top">Back to top ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    <!-- Scripts: Local Vendor Libraries (Zero-latency GSAP + ScrollTrigger + Lenis) -->
+  <script defer src="assets/js/vendor/gsap.min.js"></script>
+  <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="assets/js/vendor/lenis.min.js"></script>
+  <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/page-transition.js"></script>
 </body>
 </html>
-
-

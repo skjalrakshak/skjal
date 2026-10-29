@@ -76,9 +76,7 @@
     }
   ],
   "redirects": [
-    { "source": "/resources", "destination": "/#innovations", "statusCode": 301 },
-    { "source": "/resources.html", "destination": "/#innovations", "statusCode": 301 },
-    { "source": "/contact", "destination": "/#contact", "statusCode": 301 },
-    { "source": "/contact.html", "destination": "/#contact", "statusCode": 301 }
+    { "source": "/resources", "destination": "/products.html", "statusCode": 301 },
+    { "source": "/resources.html", "destination": "/products.html", "statusCode": 301 }
   ]
 }
