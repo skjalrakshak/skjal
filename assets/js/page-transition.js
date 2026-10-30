@@ -10,7 +10,8 @@
  */
 
 // Global curtain builder
-function buildCurtainHTML(panelTransform, curveBottomScale, charsTransform, curveTopScale = '0') {
+function buildCurtainHTML(panelTransform, curveBottomScale, charsTransform = '', curveTopScale = '0') {
+    const charStyle = charsTransform ? ` style="transform:${charsTransform}"` : '';
     return `
         <div class="skjal-transition-panel" style="transform:${panelTransform}">
             <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none" style="transform:scaleY(${curveTopScale})">
@@ -20,16 +21,16 @@ function buildCurtainHTML(panelTransform, curveBottomScale, charsTransform, curv
                 <path d="M0,0 C50,100 100,0 100,0 Z"></path>
             </svg>
         </div>
-        <div class="skjal-transition-text-wrap" style="visibility:visible;opacity:1">
+        <div class="skjal-transition-text-wrap">
             <div class="skjal-transition-text">
                 <div class="skjal-transition-word">
-                    <span class="skjal-transition-char" style="transform:${charsTransform}">S</span>
-                    <span class="skjal-transition-char" style="transform:${charsTransform}">K</span>
+                    <span class="skjal-transition-char"${charStyle}>S</span>
+                    <span class="skjal-transition-char"${charStyle}>K</span>
                 </div>
                 <div class="skjal-transition-word">
-                    <span class="skjal-transition-char" style="transform:${charsTransform}">J</span>
-                    <span class="skjal-transition-char" style="transform:${charsTransform}">A</span>
-                    <span class="skjal-transition-char" style="transform:${charsTransform}">L</span>
+                    <span class="skjal-transition-char"${charStyle}>J</span>
+                    <span class="skjal-transition-char"${charStyle}>A</span>
+                    <span class="skjal-transition-char"${charStyle}>L</span>
                 </div>
             </div>
         </div>`;
@@ -60,10 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!target) return;
             if (window.lenis) {
                 if (typeof window.lenis.resize === 'function') window.lenis.resize();
-                window.lenis.scrollTo(target, { immediate: !!immediate, force: true, offset: -40 });
+                window.lenis.scrollTo(target, { immediate: !!immediate, force: true, offset: -70 });
             }
             window.scrollTo({
-                top: target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - 40,
+                top: target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - 70,
                 behavior: immediate ? 'auto' : 'smooth'
             });
         } catch (err) {}
@@ -75,14 +76,25 @@ document.addEventListener("DOMContentLoaded", () => {
             const targetUrl = new URL(targetHref, window.location.origin);
             const targetPath = normalizePathname(targetUrl.pathname);
 
-            document.querySelectorAll('.nav-link, .nav a:not(.nav-cta), .mobile-menu > a').forEach(link => {
+            // Update top-level desktop nav links only
+            document.querySelectorAll('.nav-link, .nav a:not(.nav-cta)').forEach(link => {
                 const linkUrl = new URL(link.href, window.location.origin);
+                // Hash/anchor jumps to on-page sections should never have .active
+                if (linkUrl.hash && (linkUrl.pathname === '/' || linkUrl.pathname === window.location.pathname)) {
+                    link.classList.remove('active');
+                    return;
+                }
                 const linkPath = normalizePathname(linkUrl.pathname);
                 if (linkPath === targetPath) {
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');
                 }
+            });
+
+            // Prevent any mobile menu drawer links from holding rogue .active classes
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.classList.remove('active');
             });
         } catch (e) {}
     }
@@ -116,6 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const panel = wrap.querySelector(".skjal-transition-panel");
             const panelBottom = wrap.querySelector(".skjal-curve-bottom");
             const chars = wrap.querySelectorAll(".skjal-transition-char");
+            const textWrap = wrap.querySelector(".skjal-transition-text-wrap");
             const sweepOffset = window.innerHeight + (window.innerWidth * 0.15);
             const mainNav = document.querySelector('.main-nav') || document.querySelector('.header-wrap');
 
@@ -141,14 +154,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 tl.call(() => scrollToHashTarget(window.location.hash, true), [], 0);
 
-                // Text exits UPWARD
+                // Text exits UPWARD and fades out while screen is fully black
                 tl.to(chars, {
-                    yPercent: -120,
-                    rotationZ: -10,
-                    duration: 0.6,
-                    ease: "power4.inOut",
-                    stagger: 0.03
-                }, 0.1);
+                    yPercent: -140,
+                    opacity: 0,
+                    rotationZ: -8,
+                    duration: 0.45,
+                    ease: "power3.in",
+                    stagger: 0.025
+                }, 0.05);
+
+                // Text wrapper sweeps up with panel so it never lingers in viewport
+                if (textWrap) {
+                    tl.to(textWrap, {
+                        y: -sweepOffset,
+                        opacity: 0,
+                        duration: 0.85,
+                        ease: "power3.inOut"
+                    }, 0.18);
+                }
 
                 // Curtain panel sweeps UP
                 tl.to(panel, {
@@ -156,23 +180,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     duration: 0.95,
                     ease: "power4.inOut",
                     overwrite: "auto"
-                }, 0.25);
+                }, 0.2);
 
                 // Bottom curve flattens
                 tl.to(panelBottom, {
                     scaleY: 0,
                     duration: 0.95,
                     ease: "power4.inOut"
-                }, 0.25);
+                }, 0.2);
 
                 // Parallax page content
                 if (mainContainer) {
-                    tl.fromTo(mainContainer, { y: "12dvh" }, { y: "0dvh", duration: 0.95, ease: "power4.inOut" }, 0.25);
+                    tl.fromTo(mainContainer, { y: "12dvh" }, { y: "0dvh", duration: 0.95, ease: "power4.inOut" }, 0.2);
                 }
 
                 // Slide navbar down
                 if (mainNav) {
-                    tl.fromTo(mainNav, { yPercent: -100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.95, ease: "power4.inOut" }, 0.25);
+                    tl.fromTo(mainNav, { yPercent: -100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.95, ease: "power4.inOut" }, 0.2);
                 }
 
                 if (footer) {
@@ -225,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Inject Exit Curtain
         const exitCurtain = document.createElement('div');
         exitCurtain.className = 'skjal-transition-wrap';
-        exitCurtain.innerHTML = buildCurtainHTML('translateY(100%)', '0', 'translateY(100%)', '1');
+        exitCurtain.innerHTML = buildCurtainHTML('translateY(100%)', '0', '', '1');
         exitCurtain.style.display = 'flex';
         document.body.appendChild(exitCurtain);
 
@@ -234,19 +258,25 @@ document.addEventListener("DOMContentLoaded", () => {
         const chars = exitCurtain.querySelectorAll(".skjal-transition-char");
         const panelBottom = exitCurtain.querySelector(".skjal-curve-bottom");
         const mainNav = document.querySelector('.main-nav') || document.querySelector('.header-wrap');
+        const textWrap = exitCurtain.querySelector(".skjal-transition-text-wrap");
+
+        // Set initial positions cleanly via GSAP (avoids conflicting inline transforms)
+        window.gsap.set(chars, { yPercent: 120, opacity: 0 });
+        window.gsap.set(textWrap, { opacity: 1, y: 0 });
 
         // Play Exit Timeline (Panel sweeps UP to 0%, covering screen in rich black)
         const exitTl = window.gsap.timeline();
         if (mainNav) {
-            exitTl.to(mainNav, { yPercent: -100, opacity: 0, duration: 0.5, ease: "power4.inOut" }, 0);
+            exitTl.to(mainNav, { yPercent: -100, opacity: 0, duration: 0.65, ease: "power3.inOut" }, 0);
         }
-        exitTl.to(panel, { y: "0%", duration: 0.85, ease: "power4.inOut" }, 0.05);
-        exitTl.to(curveTop, { scaleY: 1, duration: 0.85, ease: "power4.inOut" }, 0.05);
+        exitTl.to(panel, { y: "0%", duration: 1.05, ease: "power3.inOut" }, 0.05);
+        exitTl.to(curveTop, { scaleY: 1, duration: 1.05, ease: "power3.inOut" }, 0.05);
         exitTl.to(chars, {
-            yPercent: -100,
-            duration: 0.7,
-            ease: "power4.inOut",
-            stagger: 0.025
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.75,
+            ease: "power3.out",
+            stagger: 0.035
         }, 0.25);
 
         // Wait for both exit animation AND page fetch
@@ -268,6 +298,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentMain && incomingMain) {
             currentMain.innerHTML = incomingMain.innerHTML;
             currentMain.className = incomingMain.className;
+        }
+
+        const currentMobileMenu = document.getElementById('mobile-menu');
+        const incomingMobileMenu = newDoc.getElementById('mobile-menu');
+        if (currentMobileMenu && incomingMobileMenu) {
+            currentMobileMenu.innerHTML = incomingMobileMenu.innerHTML;
         }
 
         // Update Document Title
@@ -309,43 +345,57 @@ document.addEventListener("DOMContentLoaded", () => {
             onComplete: () => {
                 exitCurtain.remove();
                 isTransitioning = false;
+                if (mainNav) {
+                    mainNav.style.position = 'absolute';
+                    mainNav.style.top = '0px';
+                    mainNav.style.transform = 'none';
+                }
                 if (targetHash) {
                     scrollToHashTarget(targetHash, false);
                 }
             }
         });
 
-        // Letters exit UPWARD
+        // 1. Letters exit UPWARD and FADE OUT completely while screen is still fully black
         entryTl.to(chars, {
-            yPercent: -120,
-            rotationZ: -10,
-            duration: 0.55,
-            ease: "power4.inOut",
+            yPercent: -140,
+            opacity: 0,
+            rotationZ: -8,
+            duration: 0.45,
+            ease: "power3.in",
             stagger: 0.025
-        }, 0.05);
+        }, 0);
 
-        // Curtain panel sweeps UP to top
+        // 2. Text wrapper sweeps up with the panel and fades to 0 so it never lingers
+        entryTl.to(textWrap, {
+            y: -sweepOffset,
+            opacity: 0,
+            duration: 0.85,
+            ease: "power3.inOut"
+        }, 0.18);
+
+        // 3. Curtain panel sweeps UP to top, cleanly revealing the newly loaded page
         entryTl.to(panel, {
             y: -sweepOffset,
-            duration: 0.9,
-            ease: "power4.inOut"
+            duration: 1.05,
+            ease: "power3.inOut"
         }, 0.2);
 
-        // Bottom curve flattens
+        // 4. Bottom curve flattens
         entryTl.to(panelBottom, {
             scaleY: 0,
-            duration: 0.9,
-            ease: "power4.inOut"
+            duration: 1.05,
+            ease: "power3.inOut"
         }, 0.2);
 
-        // Parallax content up
+        // 5. Parallax content up
         if (currentMain) {
-            entryTl.fromTo(currentMain, { y: "10dvh" }, { y: "0dvh", duration: 0.9, ease: "power4.inOut", clearProps: "y" }, 0.2);
+            entryTl.fromTo(currentMain, { y: "8dvh" }, { y: "0dvh", duration: 1.05, ease: "power3.inOut", clearProps: "y" }, 0.2);
         }
 
-        // Header slides down
+        // 6. Header slides down
         if (mainNav) {
-            entryTl.fromTo(mainNav, { yPercent: -100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.9, ease: "power4.inOut", clearProps: "all" }, 0.2);
+            entryTl.fromTo(mainNav, { yPercent: -100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1.05, ease: "power3.inOut", clearProps: "all" }, 0.2);
         }
     }
 

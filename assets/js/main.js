@@ -7,20 +7,34 @@
 (function () {
   'use strict';
 
-  // 0. Initialize Lenis Smooth Inertial Scrolling Engine
+  // 0a. Register Service Worker for Instant Return Visits & Cache Acceleration
+  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
+
+  // 0b. Initialize Lenis Smooth Inertial Scrolling Engine (Desktop & Mobile Touch Sync)
   let lenisInstance = null;
   if (typeof window.Lenis !== 'undefined') {
     lenisInstance = new window.Lenis({
       duration: 1.25,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
       smoothWheel: true,
-      smoothTouch: false,
-      touchMultiplier: 1.5,
+      syncTouch: true,
+      syncTouchLerp: 0.08,
+      touchMultiplier: 1.15,
+      touchInertiaMultiplier: 42,
     });
     window.lenis = lenisInstance;
 
-    if (window.ScrollTrigger) {
+    if (window.gsap && window.ScrollTrigger) {
+      window.gsap.registerPlugin(window.ScrollTrigger);
+      window.ScrollTrigger.config({ ignoreMobileResize: true });
       lenisInstance.on('scroll', window.ScrollTrigger.update);
+
     }
 
     if (window.gsap) {
@@ -45,7 +59,8 @@
       window.lenis.resize();
     }
     if (window.ScrollTrigger) {
-      window.ScrollTrigger.refresh();
+      requestAnimationFrame(() => window.ScrollTrigger.refresh());
+      setTimeout(() => window.ScrollTrigger.refresh(), 120);
     }
   }
 
@@ -69,8 +84,10 @@
       let isFinished = false;
       let morphStarted = false;
       const startTime = Date.now();
-      const minDisplayTime = 850;
-      const counterVal = { val: 0 };
+      const isReturnVisitor = !!localStorage.getItem('skjal_visited');
+      const minDisplayTime = isReturnVisitor ? 180 : 850;
+      const counterVal = { val: isReturnVisitor ? 75 : 0 };
+      try { localStorage.setItem('skjal_visited', 'true'); } catch (e) {}
 
       const gatingImages = () =>
         Array.from(document.images).filter(
@@ -97,7 +114,7 @@
         if (window.gsap) {
           gsap.to(counterVal, {
             val: target,
-            duration: 0.35,
+            duration: 0.55,
             ease: 'power2.out',
             onUpdate: () => {
               if (counterEl) counterEl.textContent = Math.min(100, Math.floor(counterVal.val));
@@ -114,8 +131,8 @@
 
       const morphLogoToLanding = () => {
         const logoEl = preloaderLogo;
-        const destinationLogo = document.querySelector('.brand-logo');
-        const destinationText = document.querySelector('.brand-wording strong');
+        const destinationLogo = document.querySelector('.header .brand-logo') || document.querySelector('.brand-logo');
+        const destinationText = document.querySelector('.header .brand-wording strong') || document.querySelector('.brand-wording strong');
         if (!logoEl || !destinationLogo || !window.gsap) return false;
 
         const from = logoEl.getBoundingClientRect();
@@ -133,66 +150,94 @@
           width: `${from.width}px`,
           height: `${from.height}px`,
           margin: '0',
-          zIndex: '1000000',
+          padding: '0',
+          zIndex: '1000002',
           pointerEvents: 'none',
-          willChange: 'transform',
+          willChange: 'transform, opacity',
           transformOrigin: 'top left',
         });
         document.body.appendChild(clone);
         logoEl.style.visibility = 'hidden';
-        destinationLogo.style.visibility = 'hidden';
+        destinationLogo.style.opacity = '0';
+
+        const morphDuration = 1.15;
 
         gsap.to(clone, {
           x: to.left - from.left,
           y: to.top - from.top,
           scaleX: to.width / from.width,
           scaleY: to.height / from.height,
-          duration: 0.95,
-          ease: 'power3.inOut',
-          onComplete: () => {
-            destinationLogo.style.visibility = '';
-            clone.remove();
-            enablePageScroll();
-          }
+          duration: morphDuration,
+          ease: 'power3.inOut'
         });
 
-        // Also animate brand name if present
+        // Also animate brand name "SKJAL" with exact matching typography
+        let cloneT = null;
         if (preloaderBrandText && destinationText) {
           const fromT = preloaderBrandText.getBoundingClientRect();
           const toT = destinationText.getBoundingClientRect();
           if (fromT.width && toT.width) {
-            const cloneT = document.createElement('span');
+            cloneT = document.createElement('span');
             cloneT.textContent = preloaderBrandText.textContent;
+            const destComputed = window.getComputedStyle(destinationText);
             Object.assign(cloneT.style, {
               position: 'fixed',
               top: `${fromT.top}px`,
               left: `${fromT.left}px`,
-              fontFamily: 'var(--sans)',
+              fontFamily: destComputed.fontFamily || 'var(--font-display)',
               fontSize: window.getComputedStyle(preloaderBrandText).fontSize,
-              fontWeight: '700',
-              color: '#0b0d10',
+              fontWeight: destComputed.fontWeight || '700',
+              letterSpacing: destComputed.letterSpacing || '0.08em',
+              textTransform: 'uppercase',
+              lineHeight: '1',
+              color: destComputed.color || '#0b0d10',
               margin: '0',
-              zIndex: '1000000',
+              padding: '0',
+              zIndex: '1000002',
               pointerEvents: 'none',
+              willChange: 'transform, opacity',
               transformOrigin: 'top left',
             });
             document.body.appendChild(cloneT);
             preloaderBrandText.style.visibility = 'hidden';
-            destinationText.style.visibility = 'hidden';
+            destinationText.style.opacity = '0';
 
+            const scaleT = toT.height / fromT.height;
             gsap.to(cloneT, {
               x: toT.left - fromT.left,
               y: toT.top - fromT.top,
-              scale: toT.height / fromT.height,
-              duration: 0.95,
-              ease: 'power3.inOut',
-              onComplete: () => {
-                destinationText.style.visibility = '';
-                cloneT.remove();
-              }
+              scale: scaleT,
+              duration: morphDuration,
+              ease: 'power3.inOut'
             });
           }
         }
+
+        // Glitch-free optical merge: smoothly crossfade clones into destination elements
+        const crossfadeDelay = morphDuration - 0.22;
+        const crossfadeDuration = 0.24;
+
+        gsap.to([destinationLogo, destinationText].filter(Boolean), {
+          opacity: 1,
+          duration: crossfadeDuration,
+          delay: crossfadeDelay,
+          ease: 'power2.out'
+        });
+
+        gsap.to([clone, cloneT].filter(Boolean), {
+          opacity: 0,
+          duration: crossfadeDuration,
+          delay: crossfadeDelay,
+          ease: 'power2.out',
+          onComplete: () => {
+            clone.remove();
+            if (cloneT) cloneT.remove();
+            destinationLogo.style.opacity = '';
+            if (destinationText) destinationText.style.opacity = '';
+            enablePageScroll();
+          }
+        });
+
         return true;
       };
 
@@ -203,7 +248,7 @@
         if (window.gsap) {
           gsap.to(counterVal, {
             val: 100,
-            duration: 0.35,
+            duration: 0.45,
             ease: 'power3.out',
             onUpdate: () => {
               if (counterEl) counterEl.textContent = Math.min(100, Math.floor(counterVal.val));
@@ -213,18 +258,29 @@
               window.dispatchEvent(new Event('preloader:done'));
               gsap.to(preloader, {
                 yPercent: -100,
-                duration: 0.82,
+                duration: 1.15,
                 ease: 'power3.inOut',
                 onComplete: () => {
                   preloader.style.display = 'none';
+                  const dl = document.querySelector('.header .brand-logo');
+                  const dt = document.querySelector('.header .brand-wording strong');
+                  if (dl) dl.style.opacity = '1';
+                  if (dt) dt.style.opacity = '1';
                   enablePageScroll();
                 }
               });
+              if (counterEl) {
+                gsap.to(counterEl, { opacity: 0, y: 15, duration: 0.45, ease: 'power2.in' });
+              }
             }
           });
         } else {
           counterEl.textContent = 100;
           preloader.style.display = 'none';
+          const dl = document.querySelector('.header .brand-logo');
+          const dt = document.querySelector('.header .brand-wording strong');
+          if (dl) dl.style.opacity = '1';
+          if (dt) dt.style.opacity = '1';
           enablePageScroll();
         }
       };
@@ -245,6 +301,10 @@
       setTimeout(() => {
         clearInterval(interval);
         finishPreloader();
+        const dl = document.querySelector('.header .brand-logo');
+        const dt = document.querySelector('.header .brand-wording strong');
+        if (dl) dl.style.opacity = '1';
+        if (dt) dt.style.opacity = '1';
       }, 2200);
 
       updateProgress();
@@ -290,9 +350,32 @@
       }
     });
 
-    // Close when tapping links (excluding accordion toggle)
-    menu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', closeMenu);
+    // Event delegation on mobile menu: handle link clicks & accordion toggling
+    menu.addEventListener('click', function (e) {
+      // Check if accordion toggle button was clicked
+      const accordionBtn = e.target.closest('#mobile-products-toggle');
+      if (accordionBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const accordionContainer = accordionBtn.closest('.mobile-accordion');
+        if (accordionContainer) {
+          const isOpen = accordionContainer.classList.contains('open');
+          if (isOpen) {
+            accordionContainer.classList.remove('open');
+            accordionBtn.setAttribute('aria-expanded', 'false');
+          } else {
+            accordionContainer.classList.add('open');
+            accordionBtn.setAttribute('aria-expanded', 'true');
+          }
+        }
+        return;
+      }
+
+      // If any navigation link was tapped, close drawer
+      const link = e.target.closest('a');
+      if (link) {
+        closeMenu();
+      }
     });
 
     document.addEventListener('keydown', e => {
@@ -300,45 +383,31 @@
         closeMenu();
       }
     });
-
-    // Mobile Products Accordion Toggle ("in mobile version, if i tap on the products it should expand or else dont show")
-    const accordionToggle = document.getElementById('mobile-products-toggle');
-    const accordionContainer = document.querySelector('.mobile-accordion');
-    if (accordionToggle && accordionContainer) {
-      accordionToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const isOpen = accordionContainer.classList.contains('open');
-        if (isOpen) {
-          accordionContainer.classList.remove('open');
-          accordionToggle.setAttribute('aria-expanded', 'false');
-        } else {
-          accordionContainer.classList.add('open');
-          accordionToggle.setAttribute('aria-expanded', 'true');
-        }
-      });
-    }
   }
 
   // 3b. Staggered Character Spin/Roll Animation Initializer
   // Letters spin one-by-one with cascading delays on hover. Button background stays solid.
   function initStaggeredTextRoll() {
-    const targets = document.querySelectorAll('.btn, .nav-cta, .footer-cta-button, .product-link, .service-discuss');
+    const targets = document.querySelectorAll('.btn, .btn-buy-now, .footer-cta-button, .product-link, [data-roll]');
     targets.forEach(el => {
       if (el.querySelector('.char-roll')) return; // already transformed
 
-      const svg = el.querySelector('svg');
       let text = '';
       Array.from(el.childNodes).forEach(node => {
         if (node.nodeType === Node.TEXT_NODE) {
-          text += node.textContent.trim() + ' ';
+          text += node.textContent;
         }
       });
-      text = text.trim();
+      text = text.replace(/\s+/g, ' ').trim();
       if (!text) return;
+
+      if (!el.getAttribute('aria-label')) {
+        el.setAttribute('aria-label', text);
+      }
 
       const rollWrapper = document.createElement('span');
       rollWrapper.className = 'roll-text';
+      rollWrapper.setAttribute('aria-hidden', 'true');
 
       let charIdx = 0;
       for (let i = 0; i < text.length; i++) {
@@ -352,13 +421,12 @@
           const charSpan = document.createElement('span');
           charSpan.className = 'char-roll';
           charSpan.style.setProperty('--char-idx', charIdx++);
-          charSpan.innerHTML = `
-            <span class="char-primary">${char}</span>
-            <span class="char-clone" aria-hidden="true">${char}</span>
-          `;
+          charSpan.innerHTML = `<span class="char-primary">${char}</span><span class="char-clone" aria-hidden="true">${char}</span>`;
           rollWrapper.appendChild(charSpan);
         }
       }
+
+      const svg = el.querySelector('svg');
 
       Array.from(el.childNodes).forEach(node => {
         if (node.nodeType === Node.TEXT_NODE) {
@@ -380,78 +448,80 @@
     initStaggeredTextRoll();
   }
 
-  // 4. Smart Header on Scroll (Abatable Pattern: Hide on scroll down, reveal on scroll up, theme-adaptive)
+  // 4. Mobile Smart Scroll Header (Hides on scroll down, reveals on scroll up; stationary on desktop)
   const headerWrap = document.querySelector('.header-wrap');
-  function updateHeaderTheme() {
-    if (!headerWrap) return;
-    const darkSections = document.querySelectorAll('.theme-dark, .footer');
-    const headerRect = headerWrap.getBoundingClientRect();
-    const headerCenter = headerRect.top + (headerRect.height || 64) / 2;
-    let isOverDark = false;
+  const mobileMenu = document.getElementById('mobile-menu');
 
-    for (const sec of darkSections) {
-      const rect = sec.getBoundingClientRect();
-      if (rect.top <= headerCenter && rect.bottom >= headerCenter) {
-        isOverDark = true;
-        break;
+  if (headerWrap) {
+    headerWrap.style.position = '';
+    headerWrap.style.top = '';
+    headerWrap.style.transform = '';
+
+    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    let isTicking = false;
+    const scrollDeltaThreshold = 8;
+
+    function handleHeaderScroll(currentY) {
+      const isMobile = window.innerWidth <= 860;
+      if (!isMobile) {
+        headerWrap.classList.remove('header-hidden');
+        headerWrap.classList.remove('header-scrolled');
+        return;
+      }
+
+      if (document.body.classList.contains('menu-open') || (mobileMenu && mobileMenu.classList.contains('open'))) {
+        headerWrap.classList.remove('header-hidden');
+        return;
+      }
+
+      const deltaY = currentY - lastScrollY;
+
+      if (currentY <= 15) {
+        headerWrap.classList.remove('header-hidden');
+        headerWrap.classList.remove('header-scrolled');
+      } else {
+        headerWrap.classList.add('header-scrolled');
+
+        if (deltaY > scrollDeltaThreshold && currentY > 60) {
+          headerWrap.classList.add('header-hidden');
+        } else if (deltaY < -scrollDeltaThreshold) {
+          headerWrap.classList.remove('header-hidden');
+        }
+      }
+
+      lastScrollY = Math.max(0, currentY);
+    }
+
+    function onScrollTick() {
+      const currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          handleHeaderScroll(currentY);
+          isTicking = false;
+        });
+        isTicking = true;
       }
     }
 
-    if (isOverDark) {
-      headerWrap.classList.add('header-dark');
-    } else {
-      headerWrap.classList.remove('header-dark');
+    window.addEventListener('scroll', onScrollTick, { passive: true });
+
+    if (window.lenis && typeof window.lenis.on === 'function') {
+      window.lenis.on('scroll', (e) => {
+        const scrollY = typeof e.scroll === 'number' ? e.scroll : (window.pageYOffset || 0);
+        handleHeaderScroll(scrollY);
+      });
     }
-  }
 
-  if (lenisInstance) {
-    lenisInstance.on('scroll', updateHeaderTheme);
-  }
-
-  if (headerWrap) {
-    let lastScrollTop = 0;
-    const delta = 8;
-    let ticking = false;
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const st = window.pageYOffset || document.documentElement.scrollTop;
-
-          // Add shadow if scrolled past 20px
-          if (st > 20) {
-            headerWrap.classList.add('header-scrolled');
-          } else {
-            headerWrap.classList.remove('header-scrolled');
-          }
-
-          // Dynamic theme switching (light vs dark)
-          updateHeaderTheme();
-
-          // Abatable-style scroll-direction behavior (only on desktop > 860px)
-          // On mobile view, the navbar and logo remain strictly fixed and visible at the top
-          if (window.innerWidth > 860) {
-            if (Math.abs(lastScrollTop - st) > delta) {
-              if (st > 120 && st > lastScrollTop && (!menu || !menu.classList.contains('open'))) {
-                headerWrap.classList.add('header-hidden');
-              } else {
-                headerWrap.classList.remove('header-hidden');
-              }
-              lastScrollTop = st <= 0 ? 0 : st;
-            }
-          } else {
-            headerWrap.classList.remove('header-hidden');
-          }
-
-          ticking = false;
-        });
-        ticking = true;
+    window.addEventListener('resize', () => {
+      const isMobile = window.innerWidth <= 860;
+      if (!isMobile) {
+        headerWrap.classList.remove('header-hidden');
+        headerWrap.classList.remove('header-scrolled');
       }
     }, { passive: true });
 
-    window.addEventListener('resize', updateHeaderTheme, { passive: true });
-    window.addEventListener('load', updateHeaderTheme);
-    updateHeaderTheme();
+    // Initialize state
+    handleHeaderScroll(window.pageYOffset || document.documentElement.scrollTop || 0);
   }
 
   // 5. Robust Navbar Dropdown (Hover + Click/Touch Toggle + Keyboard + Click-Outside)
@@ -521,35 +591,79 @@
     });
   });
 
-  // 5b. Smooth Scroll for Anchor Links (with Lenis and Native Fallback)
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      if (!href || href === '#') return;
-      if (href === '#top') {
-        e.preventDefault();
-        if (window.lenis) {
-          window.lenis.scrollTo(0, { duration: 1.2 });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        if (history.pushState) history.pushState(null, null, ' ');
-        return;
+  // 5b. Smooth Scroll for Anchor Links & In-Page Section Redirections
+  function scrollToTargetSection(targetSelector, updateHistory = true) {
+    if (!targetSelector || targetSelector === '#') return;
+    if (targetSelector === '#top') {
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { duration: 1.0 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      try {
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          if (window.lenis) {
-            window.lenis.scrollTo(target, { offset: -70, duration: 1.2 });
-          } else {
-            target.scrollIntoView({ behavior: 'smooth' });
+      if (updateHistory && history.pushState) history.pushState(null, null, window.location.pathname);
+      return;
+    }
+
+    try {
+      const target = document.querySelector(targetSelector);
+      if (target) {
+        // Close mobile drawer if currently open
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuToggle = document.getElementById('menu-toggle');
+        if (mobileMenu && mobileMenu.classList.contains('open')) {
+          mobileMenu.classList.remove('open');
+          if (menuToggle) {
+            menuToggle.classList.remove('is-active');
+            menuToggle.setAttribute('aria-expanded', 'false');
           }
-          if (history.pushState) history.pushState(null, null, href);
+          document.body.classList.remove('menu-open');
         }
-      } catch (err) {}
+
+        if (window.lenis) {
+          window.lenis.scrollTo(target, { offset: -70, duration: 1.1 });
+        } else {
+          const top = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - 70;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+        if (updateHistory && history.pushState) history.pushState(null, null, targetSelector);
+      }
+    } catch (err) {}
+  }
+
+  // Handle all same-page anchor clicks (both #section and /#section when on home)
+  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const rawHref = this.getAttribute('href');
+      if (!rawHref) return;
+
+      const isHome = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '';
+      let targetSelector = '';
+
+      if (rawHref.startsWith('#')) {
+        targetSelector = rawHref;
+      } else if (rawHref.startsWith('/#') && isHome) {
+        targetSelector = rawHref.substring(1); // e.g. "/#services" -> "#services"
+      }
+
+      if (targetSelector) {
+        const el = document.querySelector(targetSelector);
+        if (el) {
+          e.preventDefault();
+          scrollToTargetSection(targetSelector, true);
+        }
+      }
     });
   });
+
+  // Automatically scroll to section if URL was opened with a hash (e.g. from redirect or direct link)
+  if (window.location.hash) {
+    const initialHash = window.location.hash;
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        scrollToTargetSection(initialHash, false);
+      }, 350);
+    });
+  }
 
   // 6. GSAP Animations Initialization - Fast, Non-blocking, Zero-Latency
   function initGSAP() {
@@ -569,20 +683,20 @@
     const heroVisual = document.querySelector('.hero-visual');
 
     if (heroTitle) {
-      const heroTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+      const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       heroTl.fromTo(
         heroTitle,
         { y: 22, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.62 }
+        { y: 0, opacity: 1, duration: 0.95 }
       );
 
       if (heroLede) {
         heroTl.fromTo(
           heroLede,
           { y: 14, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.48 },
-          '-=0.4'
+          { y: 0, opacity: 1, duration: 0.82 },
+          '-=0.6'
         );
       }
 
@@ -590,8 +704,8 @@
         heroTl.fromTo(
           heroActions,
           { y: 12, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.42 },
-          '-=0.35'
+          { y: 0, opacity: 1, duration: 0.72 },
+          '-=0.55'
         );
       }
 
@@ -599,26 +713,26 @@
         heroTl.fromTo(
           heroVisual,
           { scale: 0.96, opacity: 0, y: 14 },
-          { scale: 1, opacity: 1, y: 0, duration: 0.68, ease: 'power2.out' },
-          '-=0.52'
+          { scale: 1, opacity: 1, y: 0, duration: 1.05, ease: 'power3.out' },
+          '-=0.65'
         );
       }
     }
 
-    // B. Fast, Natural ScrollTrigger Reveals (start: 'top 94%', subtle displacement, no delay gaps)
+    // B. Smooth, Rich ScrollTrigger Reveals
     if (window.ScrollTrigger) {
       // Capability Band Stagger
       const domainItems = document.querySelectorAll('.domain-item');
       if (domainItems.length > 0) {
         gsap.fromTo(
           domainItems,
-          { y: 14, opacity: 0 },
+          { y: 16, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.42,
-            stagger: 0.07,
-            ease: 'power2.out',
+            duration: 0.75,
+            stagger: 0.1,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: '.domain-band',
               start: 'top 94%',
@@ -637,9 +751,9 @@
           {
             scale: 1,
             opacity: 1,
-            duration: 0.38,
-            stagger: 0.05,
-            ease: 'power2.out',
+            duration: 0.68,
+            stagger: 0.08,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: '.partner-strip',
               start: 'top 95%',
@@ -654,13 +768,13 @@
       if (serviceRows.length > 0) {
         gsap.fromTo(
           serviceRows,
-          { y: 16, opacity: 0 },
+          { y: 18, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.45,
-            stagger: 0.07,
-            ease: 'power2.out',
+            duration: 0.78,
+            stagger: 0.1,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: '.service-list',
               start: 'top 93%',
@@ -696,18 +810,18 @@
         }
       }
 
-      // Products Cards (Completely stable - NO cursor tilt)
+      // Products Cards
       const productCards = document.querySelectorAll('.product-card');
       if (productCards.length > 0) {
         gsap.fromTo(
           productCards,
-          { y: 18, opacity: 0 },
+          { y: 20, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.48,
-            stagger: 0.08,
-            ease: 'power2.out',
+            duration: 0.82,
+            stagger: 0.12,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: '.product-grid',
               start: 'top 92%',
@@ -722,13 +836,13 @@
       if (industryCards.length > 0) {
         gsap.fromTo(
           industryCards,
-          { y: 16, opacity: 0 },
+          { y: 18, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.42,
-            stagger: 0.07,
-            ease: 'power2.out',
+            duration: 0.75,
+            stagger: 0.1,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: '.industry-grid',
               start: 'top 93%',
@@ -743,13 +857,13 @@
       if (people.length > 0) {
         gsap.fromTo(
           people,
-          { y: 14, opacity: 0 },
+          { y: 16, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.42,
-            stagger: 0.07,
-            ease: 'power2.out',
+            duration: 0.75,
+            stagger: 0.1,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: '.people-grid',
               start: 'top 94%',
@@ -765,12 +879,12 @@
         genericReveals.forEach(el => {
           gsap.fromTo(
             el,
-            { y: 15, opacity: 0 },
+            { y: 18, opacity: 0 },
             {
               y: 0,
               opacity: 1,
-              duration: 0.42,
-              ease: 'power2.out',
+              duration: 0.75,
+              ease: 'power3.out',
               scrollTrigger: {
                 trigger: el,
                 start: 'top 94%',
@@ -791,12 +905,12 @@
             trigger: '.hero',
             start: 'top top',
             end: 'bottom top',
-            scrub: 1
+            scrub: 1.2
           }
         });
       }
 
-      // Masked Banner Reveal (Abatable Section 3 Pattern)
+      // Masked Banner Reveal
       const maskedBannerTitle = document.querySelector('.masked-banner-title');
       const maskedBannerDesc = document.querySelector('.masked-banner-desc');
       const maskedEyebrow = document.querySelector('.masked-banner .section-eyebrow');
@@ -811,30 +925,30 @@
         });
 
         if (maskedEyebrow) {
-          mbTl.fromTo(maskedEyebrow, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
+          mbTl.fromTo(maskedEyebrow, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.65, ease: 'power3.out' });
         }
 
         mbTl.fromTo(maskedBannerTitle,
           { y: 24, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
-          '-=0.2'
+          { y: 0, opacity: 1, duration: 0.85, ease: 'power3.out' },
+          '-=0.35'
         );
 
         if (maskedBannerDesc) {
           mbTl.fromTo(maskedBannerDesc,
             { y: 14, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.45, ease: 'power2.out' },
-            '-=0.35'
+            { y: 0, opacity: 1, duration: 0.75, ease: 'power3.out' },
+            '-=0.5'
           );
         }
       }
 
-      // Section Headings Scroll Reveal (generic for all section-top blocks)
-      const sectionTops = document.querySelectorAll('.section-top');
+      // Section Headings Scroll Reveal
+      const sectionTops = document.querySelectorAll('.section-top, .contact-header');
       sectionTops.forEach(st => {
         const heading = st.querySelector('.section-heading');
         const eyebrow = st.querySelector('.section-eyebrow');
-        const bodyCopy = st.querySelector('.body-copy');
+        const bodyCopy = st.querySelector('.body-copy, .contact-desc');
 
         if (heading) {
           const stTl = gsap.timeline({
@@ -846,20 +960,20 @@
           });
 
           if (eyebrow) {
-            stTl.fromTo(eyebrow, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: 'power2.out' });
+            stTl.fromTo(eyebrow, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out' });
           }
 
           stTl.fromTo(heading,
             { y: 20, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out' },
-            eyebrow ? '-=0.15' : 0
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
+            eyebrow ? '-=0.25' : 0
           );
 
           if (bodyCopy) {
             stTl.fromTo(bodyCopy,
               { y: 12, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
-              '-=0.3'
+              { y: 0, opacity: 1, duration: 0.65, ease: 'power3.out' },
+              '-=0.45'
             );
           }
         }
@@ -872,7 +986,7 @@
           { y: 18, opacity: 0, scale: 0.98 },
           {
             y: 0, opacity: 1, scale: 1,
-            duration: 0.55, ease: 'power2.out',
+            duration: 0.85, ease: 'power3.out',
             scrollTrigger: {
               trigger: companyNote,
               start: 'top 92%',
@@ -889,7 +1003,7 @@
           { y: 20, opacity: 0 },
           {
             y: 0, opacity: 1,
-            duration: 0.55, ease: 'power2.out',
+            duration: 0.85, ease: 'power3.out',
             scrollTrigger: {
               trigger: footerCta,
               start: 'top 92%',
@@ -898,6 +1012,10 @@
           }
         );
       }
+    }
+
+    if (window.ScrollTrigger) {
+      ScrollTrigger.refresh();
     }
   }
 

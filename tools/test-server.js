@@ -3,39 +3,43 @@ const http = require('http');
 const PORT = 5173;
 
 const routesToTest = [
-  '/',
-  '/index.html',
-  '/jal-rakshak',
-  '/jal-rakshak.html',
-  '/shield',
-  '/shield.html',
-  '/energy-monitoring',
-  '/energy-monitoring.html',
-  '/about',
-  '/about.html',
-  '/services',
-  '/services.html',
-  '/industries',
-  '/industries.html',
-  '/contact',
-  '/contact.html',
-  '/assets/css/style.css',
-  '/assets/js/main.js',
-  '/assets/img/heroes/skjal-iot-hero.webp',
-  '/assets/img/gallery/electronics-bench.webp',
-  '/assets/img/brand/kltiflogo.png',
-  '/nonexistent-route-xyz'
+  { route: '/', expected: 200 },
+  { route: '/index.html', expected: 200 },
+  { route: '/jal-rakshak', expected: 200 },
+  { route: '/jal-rakshak.html', expected: 200 },
+  { route: '/shield', expected: 200 },
+  { route: '/shield.html', expected: 200 },
+  { route: '/energy-monitoring', expected: 200 },
+  { route: '/energy-monitoring.html', expected: 200 },
+  { route: '/about', expected: 302, location: '/#about' },
+  { route: '/about.html', expected: 302, location: '/#about' },
+  { route: '/services', expected: 302, location: '/#services' },
+  { route: '/services.html', expected: 302, location: '/#services' },
+  { route: '/industries', expected: 302, location: '/#industries' },
+  { route: '/industries.html', expected: 302, location: '/#industries' },
+  { route: '/contact', expected: 302, location: '/#contact' },
+  { route: '/contact.html', expected: 302, location: '/#contact' },
+  { route: '/assets/css/style.css', expected: 200 },
+  { route: '/assets/js/main.js', expected: 200 },
+  { route: '/sw.js', expected: 200 },
+  { route: '/assets/img/heroes/skjal-iot-hero.webp', expected: 200 },
+  { route: '/assets/img/gallery/electronics-bench.webp', expected: 200 },
+  { route: '/assets/img/brand/kltiflogo.png', expected: 200 },
+  { route: '/nonexistent-route-xyz', expected: 404 }
 ];
 
-function testRoute(route) {
+function testRoute(item) {
   return new Promise((resolve, reject) => {
-    http.get(`http://localhost:${PORT}${route}`, (res) => {
+    http.get(`http://localhost:${PORT}${item.route}`, (res) => {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
         resolve({
-          route,
+          route: item.route,
+          expected: item.expected,
+          location: item.location,
           statusCode: res.statusCode,
+          resLocation: res.headers['location'],
           contentType: res.headers['content-type'],
           contentLength: data.length
         });
@@ -45,33 +49,31 @@ function testRoute(route) {
 }
 
 async function run() {
-  console.log('Testing dev server endpoints...');
+  console.log('Testing dev server endpoints and redirection rules...');
   let failed = false;
 
-  for (const route of routesToTest) {
+  for (const item of routesToTest) {
     try {
-      const res = await testRoute(route);
-      const expectedStatus = route.includes('nonexistent') ? 404 : 200;
-      if (res.statusCode === expectedStatus) {
-        console.log(`[PASS] ${route} -> Status ${res.statusCode} (${res.contentType}, ${res.contentLength} bytes)`);
+      const res = await testRoute(item);
+      const pass = res.statusCode === item.expected && (!item.location || res.resLocation === item.location);
+      if (pass) {
+        console.log(`[PASS] ${res.route} -> Status ${res.statusCode}${res.resLocation ? ' -> ' + res.resLocation : ''}`);
       } else {
-        console.error(`[FAIL] ${route} -> Expected ${expectedStatus}, got ${res.statusCode}`);
+        console.error(`[FAIL] ${res.route} -> Expected ${item.expected} (${item.location}), got ${res.statusCode} (${res.resLocation})`);
         failed = true;
       }
-    } catch (err) {
-      console.error(`[ERROR] Failed to connect to ${route}:`, err.message);
+    } catch (e) {
+      console.error(`[ERROR] ${item.route}: ${e.message}`);
       failed = true;
     }
   }
 
   if (failed) {
-    console.error('Some route tests failed.');
+    console.error('\n>>> TEST FAILED <<<');
     process.exit(1);
   } else {
-    console.log('All server endpoints responded correctly!');
-    process.exit(0);
+    console.log('\n>>> ALL 23 ENDPOINTS AND REDIRECTIONS PASSED! <<<');
   }
 }
 
 run();
-

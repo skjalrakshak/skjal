@@ -25,40 +25,40 @@ const MIME_TYPES = {
     '.apk': 'application/vnd.android.package-archive'
 };
 
-// Security headers applied to every dev response
+const REDIRECTS = {
+    '/services': '/#services',
+    '/services.html': '/#services',
+    '/industries': '/#industries',
+    '/industries.html': '/#industries',
+    '/about': '/#about',
+    '/about.html': '/#about',
+    '/contact': '/#contact',
+    '/contact.html': '/#contact',
+    '/products': '/jal-rakshak.html',
+    '/products.html': '/jal-rakshak.html',
+    '/resources': '/jal-rakshak.html',
+    '/resources.html': '/jal-rakshak.html'
+};
+
 const SECURITY_HEADERS = {
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': 'DENY',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-    'Pragma': 'no-cache',
-    'Expires': '0',
-    'Surrogate-Control': 'no-store'
+    'Vary': 'Accept-Encoding'
 };
 
-/**
- * Validates and resolves a URL path to a safe filesystem path.
- * Prevents path traversal attacks by ensuring the resolved path
- * stays within the project root directory.
- * Returns null if the path is invalid or attempts traversal.
- */
 function resolveSafePath(urlPath) {
-    // Decode percent-encoded characters, then normalize
     let decoded;
     try {
         decoded = decodeURIComponent(urlPath);
     } catch (err) {
-        return null; // Malformed percent-encoding
+        return null;
     }
 
-    // Block null bytes (path truncation attack)
     if (decoded.indexOf('\0') !== -1) return null;
 
-    // Resolve to absolute path
     const resolved = path.resolve(ROOT_DIR, '.' + decoded);
-
-    // Ensure the resolved path is within the project root (jail)
     if (!resolved.startsWith(ROOT_DIR + path.sep) && resolved !== ROOT_DIR) {
         return null;
     }
@@ -67,8 +67,6 @@ function resolveSafePath(urlPath) {
 }
 
 const server = http.createServer((req, res) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-
     // Only allow GET and HEAD methods
     if (req.method !== 'GET' && req.method !== 'HEAD') {
         res.writeHead(405, SECURITY_HEADERS);
@@ -78,13 +76,24 @@ const server = http.createServer((req, res) => {
 
     // Normalize URL — strip query string and hash
     let urlPath = req.url.split('?')[0].split('#')[0];
+
+    // Check automatic section & page redirections
+    if (REDIRECTS[urlPath]) {
+        console.log(`[302 Redirect] ${urlPath} -> ${REDIRECTS[urlPath]}`);
+        res.writeHead(302, {
+            'Location': REDIRECTS[urlPath],
+            'Cache-Control': 'public, max-age=3600'
+        });
+        res.end();
+        return;
+    }
+
     if (urlPath === '/') {
         urlPath = '/index.html';
     }
 
     let filePath = resolveSafePath(urlPath);
 
-    // If path validation failed, return 400
     if (!filePath) {
         res.writeHead(400, { ...SECURITY_HEADERS, 'Content-Type': 'text/plain' });
         res.end('Bad Request');
@@ -109,14 +118,31 @@ const server = http.createServer((req, res) => {
         const ext = String(path.extname(filePath)).toLowerCase();
         const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
+        // High-Performance Browser Caching Headers
+        let cacheHeader = 'public, max-age=3600, stale-while-revalidate=86400';
+        if (['.css', '.js', '.webp', '.png', '.jpg', '.jpeg', '.svg', '.woff', '.woff2', '.ttf'].includes(ext)) {
+            cacheHeader = 'public, max-age=31536000, immutable';
+        }
+
+        const etag = `"${stats.size.toString(16)}-${stats.mtime.getTime().toString(16)}"`;
+        if (req.headers['if-none-match'] === etag) {
+            res.writeHead(304, {
+                'ETag': etag,
+                'Cache-Control': cacheHeader
+            });
+            res.end();
+            return;
+        }
+
         fs.readFile(filePath, (readErr, content) => {
             if (readErr) {
-                // Generic error — never expose internal details
                 res.writeHead(500, { ...SECURITY_HEADERS, 'Content-Type': 'text/plain' });
                 res.end('Internal Server Error');
             } else {
                 res.writeHead(200, {
                     ...SECURITY_HEADERS,
+                    'ETag': etag,
+                    'Cache-Control': cacheHeader,
                     'Content-Type': contentType.startsWith('text/') || contentType === 'application/json' 
                         ? `${contentType}; charset=utf-8` 
                         : contentType

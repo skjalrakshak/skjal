@@ -34,7 +34,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Pixelify+Sans:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="assets/css/style.css" rel="stylesheet"/>
+  <link href="assets/css/style.css?v=20261030_v16" rel="stylesheet"/>
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -170,7 +170,7 @@
       </a>
 
       <nav aria-label="Main navigation" class="nav">
-        <a class="nav-link nav-link-home active" href="/">Home</a>
+        <a class="nav-link nav-link-home" href="/">Home</a>
 
         <!-- Products Dropdown (3 Purpose-Built Platforms, No Emojis) -->
         <div class="nav-dropdown">
@@ -197,14 +197,20 @@
                 <span>Substation, 3-phase power &amp; consumption</span>
               </div>
             </a>
+            <a href="/#products-custom" class="dropdown-item" role="menuitem">
+              <div>
+                <strong>Custom Engineering</strong>
+                <span>Tailored IoT hardware, PCB design &amp; firmware</span>
+              </div>
+            </a>
           </div>
         </div>
 
-        <a class="nav-link" href="services.html">Services</a>
-        <a class="nav-link" href="industries.html">Industries</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="contact.html">Contact</a>
-        <a class="nav-cta" href="contact.html">
+        <a class="nav-link" href="#services">Services</a>
+        <a class="nav-link" href="#industries">Industries</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <a class="nav-cta" href="#contact">
           Discuss your project
           <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -224,8 +230,8 @@
   </div>
 
   <!-- Mobile Navigation Drawer -->
-  <nav aria-label="Mobile navigation" class="mobile-menu" id="mobile-menu">
-    <a href="/" class="mobile-nav-link active">Home <span>→</span></a>
+  <nav aria-label="Mobile navigation" class="mobile-menu" id="mobile-menu" data-lenis-prevent>
+    <a href="/" class="mobile-nav-link">Home <span>→</span></a>
 
     <!-- Mobile Products Accordion -->
     <div class="mobile-accordion">
@@ -237,14 +243,15 @@
         <a href="jal-rakshak.html" class="mobile-nav-sub">Jal Rakshak (Water Telemetry) <span>→</span></a>
         <a href="shield.html" class="mobile-nav-sub">S.H.I.E.L.D. (Driver Safety) <span>→</span></a>
         <a href="energy-monitoring.html" class="mobile-nav-sub">Energy Monitoring (Power) <span>→</span></a>
+        <a href="/#products-custom" class="mobile-nav-sub">Custom Engineering (Hardware) <span>→</span></a>
       </div>
     </div>
 
-    <a href="services.html">Services <span>→</span></a>
-    <a href="industries.html">Industries <span>→</span></a>
-    <a href="about.html">About <span>→</span></a>
-    <a href="contact.html">Contact <span>→</span></a>
-    <a class="btn btn-primary" href="contact.html">
+    <a href="#services" class="mobile-nav-link">Services <span>→</span></a>
+    <a href="#industries" class="mobile-nav-link">Industries <span>→</span></a>
+    <a href="#about" class="mobile-nav-link">About <span>→</span></a>
+    <a href="#contact" class="mobile-nav-link">Contact <span>→</span></a>
+    <a class="btn btn-primary" href="#contact">
       Discuss your project
       <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
         <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -267,7 +274,7 @@
             We design, develop and integrate custom electronics, embedded systems, connected devices and industrial software—bringing hardware and software together for real operating environments.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#footer-contact">
+            <a class="btn btn-primary" href="#contact">
               Discuss your project
               <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -308,100 +315,42 @@
 
     <!-- Institutional Ecosystem & Strategic Alliances -->
     <!-- Research & Industrial Partners (Enterprise Reference Grid) -->
-    <section class="partner-ecosystem shell" aria-label="Research & Industrial Partners">
+    <section class="partner-ecosystem shell" aria-label="Trusted by Enterprises">
       <div class="partner-ecosystem-header">
         <h2 class="partner-ecosystem-title">
-          Trusted by hundreds <em>of</em><br>
-          <em>the largest enterprises</em>
+          Trusted by <em>enterprises</em>
         </h2>
       </div>
 
-      <div class="partner-grid-enterprise">
-        <!-- 1. KLTIF -->
-        <div class="partner-grid-cell" title="KL Technology Incubators Foundation">
-          <img src="assets/img/brand/kltiflogo.png" alt="KL Technology Incubators Foundation (KLTIF)" width="140" height="42" loading="lazy" decoding="async" />
-        </div>
-
-        <!-- 2. Satya Sri Electricals -->
-        <div class="partner-grid-cell" title="Satya Sri Electricals">
-          <div class="partner-logo-vector">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            <span>Satya Sri Electricals</span>
+      <div class="partner-cards-grid">
+        <!-- Partner 1: KLTIF -->
+        <div class="partner-card">
+          <div class="partner-card-media">
+            <img src="assets/img/brand/kltiflogo.png" alt="KL Technology Incubators Foundation (KLTIF)" width="140" height="40" loading="lazy" decoding="async" />
           </div>
+          <h3 class="partner-card-title">KL Technology Incubators Foundation</h3>
         </div>
 
-        <!-- 3. Make in India -->
-        <div class="partner-grid-cell" title="Make in India">
-          <img src="assets/img/brand/make-in-india-transparent.webp" alt="Make in India" width="116" height="42" loading="lazy" decoding="async" />
-        </div>
-
-        <!-- 4. CPCB Compliance -->
-        <div class="partner-grid-cell" title="CPCB Telemetry Standards">
-          <div class="partner-logo-vector">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-            <span>CPCB Telemetry</span>
+        <!-- Partner 2: Satya Sri Electricals -->
+        <div class="partner-card">
+          <div class="partner-card-media satya-media">
+            <div class="satya-emblem-large">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="satya-copy-large">
+              <strong>Satya Sri</strong>
+              <small>ELECTRICALS</small>
+            </div>
           </div>
+          <h3 class="partner-card-title">Satya Sri Electricals</h3>
         </div>
 
-        <!-- 5. ISO 2631-1 -->
-        <div class="partner-grid-cell" title="ISO 2631-1 Vibration Telemetry">
-          <div class="partner-logo-vector">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
-            <span>ISO 2631-1</span>
+        <!-- Partner 3: Make in India -->
+        <div class="partner-card">
+          <div class="partner-card-media">
+            <img src="assets/img/brand/make-in-india-transparent.webp" alt="Make in India" width="110" height="40" loading="lazy" decoding="async" />
           </div>
-        </div>
-
-        <!-- 6. Startup India -->
-        <div class="partner-grid-cell" title="Startup India / DPIIT">
-          <div class="partner-logo-vector">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <span>#startupindia</span>
-          </div>
-        </div>
-
-        <!-- 7. Modbus Industrial -->
-        <div class="partner-grid-cell" title="Modbus RS485 Industrial Protocol">
-          <div class="partner-logo-vector">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            <span>MODBUS RS485</span>
-          </div>
-        </div>
-
-        <!-- 8. LoRaWAN -->
-        <div class="partner-grid-cell" title="LoRaWAN Telemetry Alliance">
-          <div class="partner-logo-vector">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-            <span>LoRaWAN</span>
-          </div>
-        </div>
-
-        <!-- 9. IEEE IoT -->
-        <div class="partner-grid-cell" title="IEEE Industrial Standards">
-          <div class="partner-logo-vector">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v12"/><path d="M6 12h12"/></svg>
-            <span>IEEE IoT</span>
-          </div>
-        </div>
-
-        <!-- 10. BIS Safety -->
-        <div class="partner-grid-cell" title="Bureau of Indian Standards">
-          <div class="partner-logo-vector">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>BIS Safety</span>
-          </div>
-        </div>
-
-        <!-- 11. Cellular IoT -->
-        <div class="partner-grid-cell" title="4G LTE / NB-IoT Telemetry">
-          <div class="partner-logo-vector">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-            <span>4G LTE / NB-IoT</span>
-          </div>
-        </div>
-
-        <!-- 12. [AND MORE...] exactly matching reference image -->
-        <div class="partner-grid-cell" title="Explore enterprise solutions">
-          <span class="partner-grid-more">[AND MORE...]</span>
+          <h3 class="partner-card-title">Make in India</h3>
         </div>
       </div>
     </section>
@@ -442,7 +391,7 @@
                 <p>Schematic capture, multi-layer PCB layout, component selection, BOM review and precision prototype bring-up.</p>
                 <small>Boards &bull; Components &bull; Prototype testing</small>
               </div>
-              <a aria-label="Discuss electronics and PCB engineering" class="service-discuss" href="#footer-contact">Discuss</a>
+              <a aria-label="Discuss electronics and PCB engineering" class="service-discuss" href="#contact">Discuss <span class="discuss-arrow" aria-hidden="true">→</span></a>
             </article>
 
             <article class="service-row">
@@ -451,7 +400,7 @@
                 <p>Microcontroller firmware, peripheral drivers, hardware interfaces, and ultra-low-power edge design where required.</p>
                 <small>MCU firmware &bull; Drivers &bull; Device control</small>
               </div>
-              <a aria-label="Discuss embedded systems and firmware" class="service-discuss" href="#footer-contact">Discuss</a>
+              <a aria-label="Discuss embedded systems and firmware" class="service-discuss" href="#contact">Discuss <span class="discuss-arrow" aria-hidden="true">→</span></a>
             </article>
 
             <article class="service-row">
@@ -460,7 +409,7 @@
                 <p>Custom telemetry units, rugged sensor nodes, enclosure considerations, RS485/Modbus, 4G, and LoRa communications.</p>
                 <small>Field hardware &bull; Sensors &bull; Edge logic</small>
               </div>
-              <a aria-label="Discuss industrial IoT and edge hardware" class="service-discuss" href="#footer-contact">Discuss</a>
+              <a aria-label="Discuss industrial IoT and edge hardware" class="service-discuss" href="#contact">Discuss <span class="discuss-arrow" aria-hidden="true">→</span></a>
             </article>
 
             <article class="service-row">
@@ -469,7 +418,7 @@
                 <p>Secure device-to-cloud data pipelines, live dashboards, historical analytics, alerts and seamless third-party API integration.</p>
                 <small>Data ingest &bull; Dashboards &bull; System APIs</small>
               </div>
-              <a aria-label="Discuss software, cloud and telemetry" class="service-discuss" href="#footer-contact">Discuss</a>
+              <a aria-label="Discuss software, cloud and telemetry" class="service-discuss" href="#contact">Discuss <span class="discuss-arrow" aria-hidden="true">→</span></a>
             </article>
           </div>
         </div>
@@ -494,86 +443,93 @@
           <!-- 1. Jal Rakshak -->
           <article class="product-card">
             <div aria-label="Jal Rakshak product photography" class="product-media">
-              <span class="product-pill">Water &bull; Telemetry</span>
               <img alt="Water-quality sampling beside a natural water body with submerged measurement probe" class="product-photo" decoding="async" height="853" loading="lazy" src="assets/img/products/jal-rakshak-new.webp" width="1280"/>
             </div>
             <div class="product-copy">
               <p class="product-meta">WATER QUALITY &bull; TELEMETRY</p>
-              <h3>Jal Rakshak</h3>
+              <h3><a href="jal-rakshak.html" class="product-title-link">Jal Rakshak</a></h3>
               <p>Autonomous monitoring for pH, TDS, dissolved oxygen, turbidity, and environmental metrics with solar-assisted battery telemetry.</p>
-              <ul class="spec-list" style="margin-bottom: 20px;">
+              <ul class="spec-list">
                 <li><span>Sampling</span><strong>Multiparameter Probes</strong></li>
                 <li><span>Connectivity</span><strong>4G LTE / NB-IoT / LoRa</strong></li>
                 <li><span>Ingress</span><strong>IP68 Probe / IP67 Body</strong></li>
               </ul>
-              <a class="product-link" href="jal-rakshak.html">
-                Explore Jal Rakshak
-                <span class="arrow-circle">
-                  <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </span>
-              </a>
+              <div class="product-actions">
+                <a class="btn-buy-now" href="https://wa.me/918978859246?text=hey%2C%20i%20would%20like%20to%20enquire%20about%20Jal%20Rakshak%20could%20we%20plese%20discuss%20about%20it%3F" target="_blank" rel="noopener noreferrer" aria-label="Buy now or enquire about Jal Rakshak via WhatsApp">
+                  Buy now
+                </a>
+              </div>
             </div>
           </article>
 
           <!-- 2. SHIELD -->
           <article class="product-card">
             <div aria-label="S.H.I.E.L.D. product photography" class="product-media">
-              <span class="product-pill">Safety &bull; Health</span>
               <img alt="Commercial vehicle cabin interior on the highway" class="product-photo" decoding="async" height="1350" loading="lazy" src="assets/img/products/shield-hero.webp" width="900"/>
             </div>
             <div class="product-copy">
               <p class="product-meta">DRIVER HEALTH &bull; ROAD SAFETY</p>
-              <h3>S.H.I.E.L.D.</h3>
+              <h3><a href="shield.html" class="product-title-link">S.H.I.E.L.D.</a></h3>
               <p>Vehicle telemetry and ergonomic health system monitoring whole-body vibration (ISO 2631), driver fatigue, and speed intelligence.</p>
-              <ul class="spec-list" style="margin-bottom: 20px;">
-                <li><span>Standards</span><strong>ISO 2631-1 &amp; ISO 5349</strong></li>
+              <ul class="spec-list">
+                <li><span>Vibration</span><strong>ISO 2631-1 &amp; ISO 5349</strong></li>
                 <li><span>Sensors</span><strong>Tri-Axial MEMS &amp; CAN-Bus</strong></li>
-                <li><span>Alerts</span><strong>Real-time In-Cabin Audio</strong></li>
+                <li><span>Tracking</span><strong>Multi-GNSS / Real-Time GPS</strong></li>
               </ul>
-              <a class="product-link" href="shield.html">
-                Explore S.H.I.E.L.D.
-                <span class="arrow-circle">
-                  <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </span>
-              </a>
+              <div class="product-actions">
+                <a class="btn-buy-now" href="https://wa.me/918978859246?text=hey%2C%20i%20would%20like%20to%20enquire%20about%20S.H.I.E.L.D.%20could%20we%20plese%20discuss%20about%20it%3F" target="_blank" rel="noopener noreferrer" aria-label="Buy now or enquire about S.H.I.E.L.D. via WhatsApp">
+                  Buy now
+                </a>
+              </div>
             </div>
           </article>
 
           <!-- 3. Energy Monitoring -->
           <article class="product-card">
             <div aria-label="Energy Monitoring product photography" class="product-media">
-              <span class="product-pill">Power &bull; Efficiency</span>
               <img alt="Industrial electrical monitoring switchgear and panel equipment" class="product-photo" decoding="async" height="853" loading="lazy" src="assets/img/products/energy-monitoring.webp" width="1280"/>
             </div>
             <div class="product-copy">
               <p class="product-meta">ELECTRICAL HEALTH &bull; CONSUMPTION</p>
-              <h3>Energy Monitoring</h3>
+              <h3><a href="energy-monitoring.html" class="product-title-link">Energy Monitoring</a></h3>
               <p>Continuous 3-phase True-RMS power diagnostics, harmonic distortion analysis, and automated peak load penalty prevention.</p>
-              <ul class="spec-list" style="margin-bottom: 20px;">
+              <ul class="spec-list">
                 <li><span>Precision</span><strong>Class 0.5S / Class 1.0 True-RMS</strong></li>
                 <li><span>Gateway</span><strong>Modbus RTU / TCP to MQTT</strong></li>
-                <li><span>Protection</span><strong>Peak Demand Surge Alarms</strong></li>
+                <li><span>Protection</span><strong>Peak Surge Alarms</strong></li>
               </ul>
-              <a class="product-link" href="energy-monitoring.html">
-                Explore Energy Monitoring
-                <span class="arrow-circle">
-                  <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </span>
-              </a>
+              <div class="product-actions">
+                <a class="btn-buy-now" href="https://wa.me/918978859246?text=hey%2C%20i%20would%20like%20to%20enquire%20about%20Energy%20Monitoring%20could%20we%20plese%20discuss%20about%20it%3F" target="_blank" rel="noopener noreferrer" aria-label="Buy now or enquire about Energy Monitoring via WhatsApp">
+                  Buy now
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4. Custom Engineering / Custom Product -->
+          <article class="product-card" id="products-custom">
+            <div aria-label="Custom electronics and hardware engineering bench" class="product-media">
+              <img alt="Electronics engineering bench with prototype circuit boards, microcontrollers and test instrumentation" class="product-photo" decoding="async" height="853" loading="lazy" src="assets/img/gallery/electronics-bench.webp" width="1280"/>
+            </div>
+            <div class="product-copy">
+              <p class="product-meta">TAILORED HARDWARE &bull; FIRMWARE</p>
+              <h3><a href="#contact" class="product-title-link">Custom Engineering</a></h3>
+              <p>Tailored embedded electronics, multi-layer PCB design, low-power MCU firmware, and turnkey IIoT gateways engineered for your exact operational requirements.</p>
+              <ul class="spec-list">
+                <li><span>Hardware</span><strong>Multi-Layer PCB &amp; Casing</strong></li>
+                <li><span>Firmware</span><strong>STM32 / ESP32 / RTOS</strong></li>
+                <li><span>Protocols</span><strong>RS485 Modbus / CAN / 4G</strong></li>
+              </ul>
+              <div class="product-actions">
+                <a class="btn-buy-now" href="https://wa.me/918978859246?text=hey%2C%20i%20would%20like%20to%20enquire%20about%20Custom%20Engineering%20could%20we%20plese%20discuss%20about%20it%3F" target="_blank" rel="noopener noreferrer" aria-label="Buy now or enquire about Custom Engineering via WhatsApp">
+                  Buy now
+                </a>
+              </div>
             </div>
           </article>
         </div>
 
-        <p class="product-note" style="margin-top: 36px; text-align: center; color: var(--muted); font-size: 13px;">Available telemetry metrics, certifications, and casing ingress ratings are configured per project requirements.</p>
+        <p class="product-note" style="margin-top: 36px; text-align: center; color: #475569; font-size: 13.5px; font-weight: 500;">Available telemetry metrics, certifications, and casing ingress ratings are configured per project requirements.</p>
       </div>
     </section>
 
@@ -601,7 +557,7 @@
           <article class="industry-card">
             <h3>Aquaculture &amp; Farms</h3>
             <p>Dissolved oxygen, pH, salinity, and automated aerator controls for shrimp and fish hatcheries, built to operate continuously outdoors.</p>
-            <a href="#footer-contact">Discuss a site requirement <span></span></a>
+            <a href="#contact">Discuss a site requirement <span></span></a>
           </article>
 
           <article class="industry-card">
@@ -620,7 +576,7 @@
     </section>
 
     <!-- Company / About Section -->
-    <section aria-labelledby="company-title" class="company" id="company">
+    <section aria-labelledby="company-title" class="company" id="about">
       <div class="shell">
         <div class="company-main">
           <div class="company-note">
@@ -664,50 +620,131 @@
           <div class="people-grid">
             <article class="person">
               <span class="person-photo-wrap">
-                <img alt="Kamesh Sharma" class="person-photo" decoding="async" height="64" loading="lazy" src="assets/img/team/kamesh_sharma.webp" width="64"/>
+                <img alt="Kamesh Sharma" class="person-photo" decoding="async" height="72" loading="lazy" src="assets/img/team/kamesh_sharma.webp" width="72"/>
               </span>
-              <div>
+              <div class="person-info">
                 <h4>Kamesh Sharma</h4>
-                <p>Managing Director &bull; IIoT, Embedded Systems &amp; Hardware</p>
+                <p class="person-role">Managing Director &bull; IIoT, Embedded Systems &amp; Hardware</p>
+                <p class="person-credentials">Hardware Architecture &bull; Embedded Firmware</p>
+                <p class="person-bio">Directs industrial hardware architecture, multi-layer PCB bring-up, and field deployments across plants and fleets.</p>
               </div>
             </article>
 
             <article class="person">
               <span class="person-photo-wrap">
-                <img alt="Dr. P. Sirish Kumar" class="person-photo" decoding="async" height="64" loading="lazy" src="assets/img/team/dr_sirish_kumar.webp" width="64"/>
+                <img alt="Dr. P. Sirish Kumar" class="person-photo" decoding="async" height="72" loading="lazy" src="assets/img/team/dr_sirish_kumar.webp" width="72"/>
               </span>
-              <div>
+              <div class="person-info">
                 <h4>Dr. P. Sirish Kumar</h4>
-                <p>Director &bull; IoT, Satellite Navigation (GNSS) &amp; Strategy</p>
+                <p class="person-role">Director &bull; IoT, Satellite Navigation (GNSS) &amp; R&amp;D Strategy</p>
+                <p class="person-credentials">Ph.D. &bull; 100+ Publications &bull; 6 Patents</p>
+                <p class="person-bio">Advises SKJAL's core sensing methodologies, institutional collaborations, and advanced research roadmap.</p>
               </div>
             </article>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Contact & Consultation Section -->
+    <section aria-labelledby="contact-title" class="contact-section" id="contact">
+      <div class="shell">
+        <div class="contact-header">
+          <span class="section-eyebrow">Direct Engineering Consultation</span>
+          <h2 class="section-heading" id="contact-title">
+            Let’s discuss your <em>technical requirement.</em>
+          </h2>
+          <p class="contact-desc">
+            Connect directly with our engineering lab in Visakhapatnam for custom IoT hardware development, firmware sprints, product demonstrations, or pilot rollouts.
+          </p>
+          <div class="contact-channels">
+            <a class="btn btn-primary" href="https://wa.me/918978859246?text=Hi%20SKJAL%20Team%2C%20I%20would%20like%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer">
+              WhatsApp Us Directly
+              <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+            </a>
+            <a class="btn btn-secondary" href="mailto:sales@skjal.in?subject=Technical%20Requirement%20Discussion%20-%20SKJAL">
+              Email Engineering Lead
+              <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </a>
+            <a class="btn btn-secondary" href="tel:+918978859246">
+              Call Lab: +91 89788 59246
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-layout">
+          <!-- Inquiry Form -->
+          <div class="contact-form-card">
+            <h3 style="font-size: 22px; font-weight: 700; color: var(--ink); margin: 0 0 8px;">Project Inquiry Form</h3>
+            <p style="font-size: 14px; color: var(--muted); margin: 0 0 28px;">Fill in your details and our technical lead will respond within 24 hours.</p>
+
+            <form id="contact-form" onsubmit="event.preventDefault(); document.getElementById('form-feedback').classList.add('success'); this.reset();">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="contact-name">Full Name *</label>
+                  <input class="form-input" id="contact-name" name="name" required placeholder="Your full name" type="text" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="contact-email">Email Address *</label>
+                  <input class="form-input" id="contact-email" name="email" required placeholder="name@company.com" type="email" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="contact-phone">Phone / WhatsApp</label>
+                  <input class="form-input" id="contact-phone" name="phone" placeholder="+91 89788 59246" type="tel" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="contact-domain">Project Focus Area *</label>
+                  <select class="form-select" id="contact-domain" name="domain" required>
+                    <option value="">Select an engineering area</option>
+                    <option value="water">Jal Rakshak — Water Quality Telemetry</option>
+                    <option value="fleet">S.H.I.E.L.D. — Fleet Safety &amp; Vibration</option>
+                    <option value="energy">Energy Monitoring &amp; Power Analytics</option>
+                    <option value="pcb">Custom Electronics &amp; Multi-Layer PCB</option>
+                    <option value="firmware">Embedded RTOS &amp; Gateway Firmware</option>
+                    <option value="other">Other Turnkey Hardware Engineering</option>
+                  </select>
+                </div>
+
+                <div class="form-group full-width">
+                  <label class="form-label" for="contact-message">Technical Requirement Summary *</label>
+                  <textarea class="form-textarea" id="contact-message" name="message" required placeholder="Describe your operating environment, sensor interfaces, wireless connectivity needs, and target deployment schedule..."></textarea>
+                </div>
+              </div>
+
+              <div style="margin-top: 24px;">
+                <button class="btn btn-primary" type="submit" style="width: 100%;">
+                  Submit Technical Inquiry
+                  <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="form-feedback" id="form-feedback">
+                ✓ Thank you! Your technical inquiry has been submitted. Our engineering team in Visakhapatnam will review your specifications and contact you shortly.
+              </div>
+            </form>
+          </div>
+
+          
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Footer -->
-  <footer class="footer" id="contact">
+  <footer class="footer">
     <div class="shell">
-      <div class="footer-cta" id="footer-contact">
-        <div class="footer-cta-copy">
-          <h2>Deploy Industrial Telemetry at Your Facility.</h2>
-          <p>
-            Partner with SKJAL for custom IoT gateway engineering, edge firmware development, or enterprise telemetry pilots in Visakhapatnam and pan-India.
-          </p>
-        </div>
-        <div class="footer-cta-actions">
-          <a class="footer-cta-button" href="mailto:sales@skjal.in?subject=Engineering%20Project%20Enquiry%20%E2%80%94%20SKJAL">
-            Email technical requirements
-            <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
-          <a class="footer-phone" href="tel:+918978859246">+91 89788 59246</a>
-        </div>
-      </div>
+      
 
       <div class="footer-main">
         <div class="footer-brand">
@@ -724,18 +761,18 @@
 
         <div class="footer-col">
           <h3>Solutions</h3>
-          <a href="services.html">All Engineering Services</a>
-          <a href="services.html#pcb">Electronics &amp; PCB Design</a>
-          <a href="services.html#firmware">Embedded RTOS Firmware</a>
-          <a href="services.html#telemetry">Cloud &amp; IoT Pipelines</a>
+          <a href="#services">All Engineering Services</a>
+          <a href="#services">Electronics &amp; PCB Design</a>
+          <a href="#services">Embedded RTOS Firmware</a>
+          <a href="#services">Cloud &amp; IoT Pipelines</a>
         </div>
 
         <div class="footer-col">
           <h3>Sectors</h3>
-          <a href="industries.html">All Industries</a>
-          <a href="industries.html#water">Water &amp; Environment</a>
-          <a href="industries.html#fleets">Commercial Fleets</a>
-          <a href="industries.html#manufacturing">Manufacturing &amp; Power</a>
+          <a href="#industries">All Industries</a>
+          <a href="#industries">Water &amp; Environment</a>
+          <a href="#industries">Commercial Fleets</a>
+          <a href="#industries">Manufacturing &amp; Power</a>
         </div>
 
         <div class="footer-col">
@@ -747,16 +784,17 @@
 
         <div class="footer-col">
           <h3>Company</h3>
-          <a href="about.html">About SKJAL</a>
-          <a href="about.html#leadership">Leadership</a>
-          <a href="contact.html">Contact Us</a>
+          <a href="#about">About SKJAL</a>
+          <a href="#about">Leadership</a>
+          <a href="tel:+918978859246" title="Call SKJAL Lab">Contact Us (+91 89788 59246)</a>
           <a href="mailto:sales@skjal.in">Careers</a>
         </div>
 
         <div class="footer-col">
           <h3>Connect</h3>
           <a href="mailto:sales@skjal.in">sales@skjal.in</a>
-          <a href="tel:+918978859246">+91 89788 59246</a>
+          <a href="tel:+918978859246" title="Call directly">+91 89788 59246 (Call)</a>
+          <a href="https://wa.me/918978859246?text=Hi%20SKJAL%20Team%2C%20I%20would%20like%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp">WhatsApp (+91 89788 59246) ↗</a>
           <a href="https://www.linkedin.com/company/sk-jalrakshak-innovations-pvt-ltd/" rel="noopener noreferrer" target="_blank">LinkedIn ↗</a>
           <span style="display:block; margin-top:8px; font-size:11px; color:rgba(255,255,255,0.45); line-height:1.4;">Visakhapatnam, Andhra Pradesh, India</span>
         </div>
@@ -776,7 +814,7 @@
   <script defer src="assets/js/vendor/gsap.min.js"></script>
   <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/vendor/lenis.min.js"></script>
-  <script defer src="assets/js/main.js"></script>
-  <script defer src="assets/js/page-transition.js"></script>
+  <script defer src="assets/js/main.js?v=20261030_v14"></script>
+  <script defer src="assets/js/page-transition.js?v=20261030_v14"></script>
 </body>
 </html>

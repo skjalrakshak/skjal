@@ -15,8 +15,9 @@ htmlFiles.forEach(file => {
       continue;
     }
     
-    // Parse target file and anchor
-    let [targetPath, hash] = href.split('#');
+    // Parse target file and anchor (strip query parameters first)
+    const cleanHref = href.split('?')[0];
+    let [targetPath, hash] = cleanHref.split('#');
     if (!targetPath && hash) {
       // Anchor on same page
       targetPath = file;
