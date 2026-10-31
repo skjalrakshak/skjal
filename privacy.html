@@ -100,20 +100,23 @@
     <div class="preloader-counter" id="preloader-counter">0</div>
   </div>
   <noscript><style>#skjal-preloader { display: none !important; }</style></noscript>
-  <!-- Stationary Site Brand Logo (Top Left Anchor) -->
-  <div class="site-brand" id="stationary-brand">
-    <a aria-label="SKJAL Home" class="brand" href="/">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Stationary Site Brand Logo (Top Left of Page, Unlinked from Floating Navbar) -->
+  <div class="site-logo-wrap shell">
+    <a aria-label="SKJAL home" class="brand site-brand" href="/">
       <img alt="SKJAL logo" class="brand-logo" decoding="async" height="44" src="assets/img/brand/logo.webp" width="44"/>
-      <div class="brand-wording">
+      <span class="brand-wording">
         <strong>SKJAL</strong>
-      </div>
+      </span>
     </a>
   </div>
 
-  <!-- Main Navigation -->
+  <!-- Header (Smart Scroll Navigation) -->
   <div class="header-wrap main-nav">
     <header aria-label="Main header" class="header shell">
-      <div class="navbar-backdrop" aria-hidden="true"></div>
+      <div class="navbar-brand-spacer" aria-hidden="true"></div>
+
       <nav aria-label="Main navigation" class="nav">
         <a class="nav-link nav-link-home" href="/">
           <span class="navbar__bracket">[</span>
@@ -185,8 +188,47 @@
           </svg>
         </a>
       </nav>
+
+      <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu" class="menu-toggle" id="menu-toggle" type="button">
+        <span class="hamburger-icon" aria-hidden="true">
+          <span class="hamburger-line line-1"></span>
+          <span class="hamburger-line line-2"></span>
+          <span class="hamburger-line line-3"></span>
+        </span>
+      </button>
     </header>
   </div>
+
+  <!-- Mobile Menu -->
+  <nav aria-label="Mobile navigation" class="mobile-menu" id="mobile-menu" data-lenis-prevent>
+    <a href="/" class="mobile-nav-link">Home <span>→</span></a>
+
+    <!-- Mobile Products Accordion -->
+    <div class="mobile-accordion">
+      <button class="mobile-accordion-toggle" id="mobile-products-toggle" type="button" aria-expanded="false" aria-controls="mobile-products-menu">
+        <span>Products</span>
+        <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="mobile-accordion-content" id="mobile-products-menu" role="region" aria-labelledby="mobile-products-toggle">
+        <a href="/water-monitoring" class="mobile-nav-sub">Water Monitoring (Telemetry) <span>→</span></a>
+        <a href="/shield" class="mobile-nav-sub">S.H.I.E.L.D. (Driver Safety) <span>→</span></a>
+        <a href="/energy-monitoring" class="mobile-nav-sub">Energy Monitoring (Power) <span>→</span></a>
+        <a href="/custom-engineering" class="mobile-nav-sub">Custom Engineering (Hardware) <span>→</span></a>
+      </div>
+    </div>
+
+    <a href="/#services" class="mobile-nav-link">Services <span>→</span></a>
+    <a href="/#industries" class="mobile-nav-link">Industries <span>→</span></a>
+    <a href="/#about" class="mobile-nav-link">About <span>→</span></a>
+    <a href="/#contact" class="mobile-nav-link">Contact <span>→</span></a>
+    <a class="btn btn-primary" href="/#contact">
+      Discuss your project
+      <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    </a>
+  </nav>
 
   <main id="main">
     <section class="privacy-hero">
