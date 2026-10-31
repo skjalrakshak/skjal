@@ -3,7 +3,7 @@
  * Precaches core critical assets for instantaneous reload and offline resiliency.
  */
 
-const CACHE_NAME = 'skjal-cache-v37';
+const CACHE_NAME = 'skjal-cache-v38';
 
 const PRECACHE_ASSETS = [
   '/',
