@@ -10,8 +10,7 @@
  */
 
 // Global curtain builder
-function buildCurtainHTML(panelTransform, curveBottomScale, charsTransform = 'translateY(120%)', curveTopScale = '0') {
-    const charStyle = ` style="transform:${charsTransform}; opacity:0;"`;
+function buildCurtainHTML(panelTransform, curveBottomScale, curveTopScale = '0') {
     return `
         <div class="skjal-transition-panel" style="transform:${panelTransform}">
             <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none" style="transform:scaleY(${curveTopScale})">
@@ -21,16 +20,14 @@ function buildCurtainHTML(panelTransform, curveBottomScale, charsTransform = 'tr
                 <path d="M0,0 C50,100 100,0 100,0 Z"></path>
             </svg>
         </div>
-        <div class="skjal-transition-text-wrap" style="opacity:0;">
+        <div class="skjal-transition-text-wrap" style="opacity:0;" aria-hidden="true">
             <div class="skjal-transition-text">
                 <div class="skjal-transition-word">
-                    <span class="skjal-transition-char"${charStyle}>S</span>
-                    <span class="skjal-transition-char"${charStyle}>K</span>
-                </div>
-                <div class="skjal-transition-word">
-                    <span class="skjal-transition-char"${charStyle}>J</span>
-                    <span class="skjal-transition-char"${charStyle}>A</span>
-                    <span class="skjal-transition-char"${charStyle}>L</span>
+                    <span class="skjal-transition-char">S</span>
+                    <span class="skjal-transition-char">K</span>
+                    <span class="skjal-transition-char">J</span>
+                    <span class="skjal-transition-char">A</span>
+                    <span class="skjal-transition-char">L</span>
                 </div>
             </div>
         </div>`;
@@ -119,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const chars = wrap.querySelectorAll(".skjal-transition-char");
             const textWrap = wrap.querySelector(".skjal-transition-text-wrap");
             const sweepOffset = window.innerHeight + (window.innerWidth * 0.15);
-            const mainNav = document.querySelector('.main-nav') || document.querySelector('.header-wrap');
+            const headerElements = document.querySelectorAll('.site-logo-wrap, .main-nav, .header-wrap');
 
             if (window.gsap) {
                 window.gsap.set(mainContainer, { opacity: 1 });
@@ -138,6 +135,12 @@ document.addEventListener("DOMContentLoaded", () => {
                             footer.style.visibility = '';
                             footer.style.opacity = '';
                         }
+                        if (headerElements.length) {
+                            headerElements.forEach(el => {
+                                el.style.transform = '';
+                                el.style.opacity = '';
+                            });
+                        }
                         document.documentElement.style.overflow = '';
                         scrollToHashTarget(window.location.hash, true);
                     }
@@ -145,49 +148,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 tl.call(() => scrollToHashTarget(window.location.hash, true), [], 0);
 
-                // Text exits UPWARD and fades out while screen is fully black
+                // SKJAL name glides UP smoothly into the sweep
                 tl.to(chars, {
-                    yPercent: -130,
+                    yPercent: -100,
                     opacity: 0,
-                    rotationZ: -6,
-                    duration: 0.35,
+                    duration: 0.38,
                     ease: "power3.in",
                     stagger: 0.02
-                }, 0.02);
+                }, 0.08);
 
                 // Text wrapper sweeps up with panel so it never lingers in viewport
                 if (textWrap) {
                     tl.to(textWrap, {
                         y: -sweepOffset,
                         opacity: 0,
-                        duration: 0.85,
+                        duration: 0.75,
                         ease: "power3.inOut"
-                    }, 0.16);
+                    }, 0.15);
                 }
 
                 // Curtain panel sweeps UP
                 tl.to(panel, {
                     y: -sweepOffset,
-                    duration: 0.85,
+                    duration: 0.75,
                     ease: "power4.inOut",
                     overwrite: "auto"
-                }, 0.16);
+                }, 0.15);
 
                 // Bottom curve flattens
                 tl.to(panelBottom, {
                     scaleY: 0,
-                    duration: 0.85,
+                    duration: 0.75,
                     ease: "power4.inOut"
-                }, 0.16);
+                }, 0.15);
 
                 // Parallax page content
                 if (mainContainer) {
-                    tl.fromTo(mainContainer, { y: "10dvh" }, { y: "0dvh", duration: 0.85, ease: "power4.inOut" }, 0.16);
+                    tl.fromTo(mainContainer, { y: "6dvh" }, { y: "0dvh", duration: 0.75, ease: "power4.inOut", clearProps: "y" }, 0.15);
                 }
 
-                // Slide navbar down
-                if (mainNav) {
-                    tl.fromTo(mainNav, { yPercent: -100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.75, ease: "power4.out" }, 0.28);
+                // Slide header (stationary brand logo + name AND navbar) down together in unison
+                if (headerElements.length) {
+                    tl.fromTo(headerElements, 
+                        { yPercent: -100, opacity: 0 }, 
+                        { yPercent: 0, opacity: 1, duration: 0.65, ease: "power4.out", clearProps: "all" }, 
+                        0.25
+                    );
                 }
 
                 if (footer) {
@@ -240,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Inject Exit Curtain with text hidden by default
         const exitCurtain = document.createElement('div');
         exitCurtain.className = 'skjal-transition-wrap';
-        exitCurtain.innerHTML = buildCurtainHTML('translateY(100%)', '0', 'translateY(120%)', '1');
+        exitCurtain.innerHTML = buildCurtainHTML('translateY(100%)', '0', '1');
         exitCurtain.style.display = 'flex';
         document.body.appendChild(exitCurtain);
 
@@ -248,33 +254,40 @@ document.addEventListener("DOMContentLoaded", () => {
         const curveTop = exitCurtain.querySelector(".skjal-curve-top");
         const chars = exitCurtain.querySelectorAll(".skjal-transition-char");
         const panelBottom = exitCurtain.querySelector(".skjal-curve-bottom");
-        const mainNav = document.querySelector('.main-nav') || document.querySelector('.header-wrap');
         const textWrap = exitCurtain.querySelector(".skjal-transition-text-wrap");
+        const headerElements = document.querySelectorAll('.site-logo-wrap, .main-nav, .header-wrap');
 
-        // Set initial positions cleanly via GSAP (avoids any split-second text flash)
-        window.gsap.set(chars, { yPercent: 120, opacity: 0 });
+        // Set initial positions cleanly via GSAP: characters start positioned below their line box
+        window.gsap.set(chars, { yPercent: 110, opacity: 0 });
         window.gsap.set(textWrap, { opacity: 0, y: 0 });
 
         // Play Exit Timeline:
-        // 1. Curtain sweeps UP from bottom to cover the screen (duration 0.85s)
-        // 2. Only after curtain covers the screen (at 0.48s), the SKJAL letters animate in!
+        // 1. Header elements (both stationary brand name & navbar) glide up and fade out
+        // 2. Curtain sweeps UP from bottom to cover the screen (duration 0.75s)
+        // 3. Top curve expands
+        // 4. Once curtain covers the screen (at 0.38s), the SKJAL letters rise up smoothly into place
+        // 5. Deliberate hold beat so the brand name rests cleanly and stably in the center
         const exitTl = window.gsap.timeline();
-        if (mainNav) {
-            exitTl.to(mainNav, { yPercent: -100, opacity: 0, duration: 0.45, ease: "power3.inOut" }, 0);
+        if (headerElements.length) {
+            exitTl.to(headerElements, { yPercent: -100, opacity: 0, duration: 0.4, ease: "power3.inOut" }, 0);
         }
-        exitTl.to(panel, { y: "0%", duration: 0.85, ease: "power3.inOut" }, 0);
-        exitTl.to(curveTop, { scaleY: 1, duration: 0.85, ease: "power3.inOut" }, 0);
+        exitTl.to(panel, { y: "0%", duration: 0.75, ease: "power3.inOut" }, 0);
+        exitTl.to(curveTop, { scaleY: 1, duration: 0.75, ease: "power3.inOut" }, 0);
 
         // Make text wrapper active on the dark curtain
-        exitTl.set(textWrap, { opacity: 1 }, 0.45);
-        // Animate characters up ONLY after curtain is already covering the center!
+        exitTl.set(textWrap, { opacity: 1 }, 0.38);
+
+        // Animate characters up into view
         exitTl.to(chars, {
             yPercent: 0,
             opacity: 1,
-            duration: 0.42,
+            duration: 0.45,
             ease: "power3.out",
-            stagger: 0.03
-        }, 0.48);
+            stagger: 0.04
+        }, 0.42);
+
+        // Hold beat: gives SKJAL brand name a calm, premium pause in the center of the dark curtain
+        exitTl.to({}, { duration: 0.28 });
 
         // Wait for both exit animation AND page fetch
         await Promise.all([exitTl, fetchPromise]);
@@ -342,6 +355,13 @@ document.addEventListener("DOMContentLoaded", () => {
             onComplete: () => {
                 exitCurtain.remove();
                 isTransitioning = false;
+                if (headerElements.length) {
+                    headerElements.forEach(el => {
+                        el.style.transform = '';
+                        el.style.opacity = '';
+                    });
+                }
+                const mainNav = document.querySelector('.main-nav') || document.querySelector('.header-wrap');
                 if (mainNav) {
                     mainNav.style.position = 'absolute';
                     mainNav.style.top = '0px';
@@ -353,46 +373,50 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // 1. Letters exit UPWARD and FADE OUT completely while screen is still fully black
+        // 1. Letters glide UPWARD and fade out gracefully into the upward sweep (no jarring rotation)
         entryTl.to(chars, {
-            yPercent: -130,
+            yPercent: -100,
             opacity: 0,
-            rotationZ: -6,
-            duration: 0.35,
+            duration: 0.38,
             ease: "power3.in",
             stagger: 0.02
         }, 0);
 
-        // 2. Text wrapper sweeps up with the panel and fades to 0 so it never lingers
+        // 2. Text wrapper sweeps up with the panel and fades to 0
         entryTl.to(textWrap, {
             y: -sweepOffset,
             opacity: 0,
-            duration: 0.85,
+            duration: 0.75,
             ease: "power3.inOut"
-        }, 0.16);
+        }, 0.12);
 
         // 3. Curtain panel sweeps UP to top, cleanly revealing the newly loaded page
         entryTl.to(panel, {
             y: -sweepOffset,
-            duration: 0.85,
+            duration: 0.75,
             ease: "power4.inOut"
-        }, 0.16);
+        }, 0.12);
 
         // 4. Bottom curve flattens
         entryTl.to(panelBottom, {
             scaleY: 0,
-            duration: 0.85,
+            duration: 0.75,
             ease: "power4.inOut"
-        }, 0.16);
+        }, 0.12);
 
         // 5. Parallax content up
         if (currentMain) {
-            entryTl.fromTo(currentMain, { y: "8dvh" }, { y: "0dvh", duration: 0.85, ease: "power4.inOut", clearProps: "y" }, 0.16);
+            entryTl.fromTo(currentMain, { y: "6dvh" }, { y: "0dvh", duration: 0.75, ease: "power4.inOut", clearProps: "y" }, 0.12);
         }
 
-        // 6. Header slides down
-        if (mainNav) {
-            entryTl.fromTo(mainNav, { yPercent: -100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.75, ease: "power4.out", clearProps: "all" }, 0.28);
+        // 6. Header (stationary brand logo + name AND navbar) slide down into place in unison
+        if (headerElements.length) {
+            entryTl.fromTo(headerElements, 
+                { yPercent: -100, opacity: 0 }, 
+                { yPercent: 0, opacity: 1, duration: 0.65, ease: "power4.out", clearProps: "all" }, 
+                0.22
+            );
+        }
         }
     }
 

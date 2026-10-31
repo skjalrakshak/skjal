@@ -3582,13 +3582,15 @@ a:hover .arrow-circle {
 }
 
 .skjal-transition-text {
-  font-family: var(--font-sans);
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 700;
   color: #FFFFFF;
-  letter-spacing: 4px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   display: flex;
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .skjal-transition-word {
@@ -3600,7 +3602,6 @@ a:hover .arrow-circle {
   display: inline-block;
   will-change: transform, opacity;
   opacity: 0;
-  transform: translateY(120%);
 }
 
 /* Lenis Smooth Scroll Engine */
