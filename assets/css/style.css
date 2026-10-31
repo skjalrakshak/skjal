@@ -420,8 +420,8 @@ a:hover .arrow-circle {
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  transform: translateY(0) !important;
-  opacity: 1 !important;
+  transform: translateY(0);
+  opacity: 1;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   will-change: transform, opacity;
 }
@@ -460,6 +460,36 @@ a:hover .arrow-circle {
   .header-wrap.header-scrolled {
     padding: 16px 20px 0 !important;
   }
+}
+
+/* ==========================================================================
+   Stationary Site Brand Logo (Top Left of Page, Unlinked from Floating Navbar)
+   ========================================================================== */
+.site-logo-wrap {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  height: 64px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  pointer-events: none;
+  z-index: 1001;
+}
+
+.site-logo-wrap .brand,
+.site-logo-wrap .site-brand {
+  pointer-events: auto;
+}
+
+.navbar-brand-spacer {
+  width: 140px;
+  height: 44px;
+  flex: none;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .header {
@@ -1293,7 +1323,7 @@ a:hover .arrow-circle {
    Hero Section (Compact, Confident, Editorial)
    ========================================================================== */
 .hero {
-  padding: clamp(100px, 14vh, 140px) 0 clamp(40px, 5vw, 64px);
+  padding: clamp(116px, 15vh, 150px) 0 clamp(40px, 5vw, 64px);
   overflow: hidden;
 }
 
@@ -1312,7 +1342,7 @@ a:hover .arrow-circle {
 .hero h1 {
   font-family: var(--font-display);
   font-size: clamp(42px, 5.2vw, 74px);
-  line-height: 1.05;
+  line-height: 1.12;
   letter-spacing: -0.035em;
   font-weight: 700;
   margin: 0;
@@ -1333,10 +1363,10 @@ a:hover .arrow-circle {
 .hero-line {
   display: block;
   overflow: hidden;
-  padding-top: 0.22em;
-  margin-top: -0.22em;
-  padding-bottom: 0.12em;
-  margin-bottom: -0.12em;
+  padding-top: 0.32em;
+  margin-top: -0.32em;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
 }
 
 .hero-line-inner {
@@ -3122,9 +3152,37 @@ a:hover .arrow-circle {
     -webkit-backdrop-filter: none !important;
     box-shadow: none !important;
     display: flex !important;
-    justify-content: space-between !important; /* Logo at top-left, menu at top-right */
+    justify-content: flex-end !important; /* Menu toggle at top-right */
     align-items: center !important;
     pointer-events: none !important;
+  }
+  .navbar-brand-spacer {
+    display: none !important;
+  }
+  .site-logo-wrap {
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 60px !important;
+    padding: 0 var(--gutter) !important;
+    margin: 0 !important;
+    position: absolute !important;
+    display: flex !important;
+    align-items: center !important;
+    pointer-events: none !important;
+    z-index: 99 !important;
+  }
+  .site-logo-wrap .brand,
+  .site-logo-wrap .site-brand {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    pointer-events: auto !important;
+    text-decoration: none !important;
+    position: relative !important;
+    z-index: 1002 !important;
   }
   /* Remove desktop specular light curve oval on mobile */
   .header::before {

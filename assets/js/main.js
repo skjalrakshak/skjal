@@ -87,6 +87,8 @@
       const isReturnVisitor = !!localStorage.getItem('skjal_visited');
       const minDisplayTime = isReturnVisitor ? 180 : 850;
       const counterVal = { val: isReturnVisitor ? 75 : 0 };
+      let displayedVal = counterVal.val;
+      if (counterEl) counterEl.textContent = displayedVal;
       try { localStorage.setItem('skjal_visited', 'true'); } catch (e) {}
 
       const gatingImages = () =>
@@ -114,14 +116,24 @@
         if (window.gsap) {
           gsap.to(counterVal, {
             val: target,
-            duration: 0.55,
+            duration: 0.4,
             ease: 'power2.out',
+            overwrite: 'auto',
             onUpdate: () => {
-              if (counterEl) counterEl.textContent = Math.min(100, Math.floor(counterVal.val));
+              if (counterEl) {
+                const nextVal = Math.min(100, Math.floor(counterVal.val));
+                if (nextVal > displayedVal) {
+                  displayedVal = nextVal;
+                  counterEl.textContent = displayedVal;
+                }
+              }
             }
           });
         } else {
-          counterEl.textContent = target;
+          if (target > displayedVal) {
+            displayedVal = target;
+            counterEl.textContent = displayedVal;
+          }
         }
 
         if ((loaded === images.length || elapsed >= minDisplayTime) && !isFinished) {
@@ -131,8 +143,8 @@
 
       const morphLogoToLanding = () => {
         const logoEl = preloaderLogo;
-        const destinationLogo = document.querySelector('.header .brand-logo') || document.querySelector('.brand-logo');
-        const destinationText = document.querySelector('.header .brand-wording strong') || document.querySelector('.brand-wording strong');
+        const destinationLogo = document.querySelector('.site-brand .brand-logo') || document.querySelector('.header .brand-logo') || document.querySelector('.brand-logo');
+        const destinationText = document.querySelector('.site-brand .brand-wording strong') || document.querySelector('.header .brand-wording strong') || document.querySelector('.brand-wording strong');
         if (!logoEl || !destinationLogo || !window.gsap) return false;
 
         const from = logoEl.getBoundingClientRect();
@@ -244,16 +256,27 @@
       const finishPreloader = () => {
         if (isFinished) return;
         isFinished = true;
+        clearInterval(interval);
 
         if (window.gsap) {
+          gsap.killTweensOf(counterVal);
           gsap.to(counterVal, {
             val: 100,
-            duration: 0.45,
-            ease: 'power3.out',
+            duration: 0.35,
+            ease: 'power2.out',
+            overwrite: true,
             onUpdate: () => {
-              if (counterEl) counterEl.textContent = Math.min(100, Math.floor(counterVal.val));
+              if (counterEl) {
+                const nextVal = Math.min(100, Math.floor(counterVal.val));
+                if (nextVal > displayedVal) {
+                  displayedVal = nextVal;
+                  counterEl.textContent = displayedVal;
+                }
+              }
             },
             onComplete: () => {
+              displayedVal = 100;
+              if (counterEl) counterEl.textContent = 100;
               morphStarted = morphLogoToLanding();
               window.dispatchEvent(new Event('preloader:done'));
               gsap.to(preloader, {
@@ -262,8 +285,8 @@
                 ease: 'power4.inOut',
                 onComplete: () => {
                   preloader.style.display = 'none';
-                  const dl = document.querySelector('.header .brand-logo');
-                  const dt = document.querySelector('.header .brand-wording strong');
+                  const dl = document.querySelector('.site-brand .brand-logo') || document.querySelector('.brand-logo');
+                  const dt = document.querySelector('.site-brand .brand-wording strong') || document.querySelector('.brand-wording strong');
                   if (dl) dl.style.opacity = '1';
                   if (dt) dt.style.opacity = '1';
                   enablePageScroll();
@@ -275,10 +298,11 @@
             }
           });
         } else {
+          displayedVal = 100;
           counterEl.textContent = 100;
           preloader.style.display = 'none';
-          const dl = document.querySelector('.header .brand-logo');
-          const dt = document.querySelector('.header .brand-wording strong');
+          const dl = document.querySelector('.site-brand .brand-logo') || document.querySelector('.brand-logo');
+          const dt = document.querySelector('.site-brand .brand-wording strong') || document.querySelector('.brand-wording strong');
           if (dl) dl.style.opacity = '1';
           if (dt) dt.style.opacity = '1';
           enablePageScroll();
@@ -301,8 +325,8 @@
       setTimeout(() => {
         clearInterval(interval);
         finishPreloader();
-        const dl = document.querySelector('.header .brand-logo');
-        const dt = document.querySelector('.header .brand-wording strong');
+        const dl = document.querySelector('.site-brand .brand-logo') || document.querySelector('.brand-logo');
+        const dt = document.querySelector('.site-brand .brand-wording strong') || document.querySelector('.brand-wording strong');
         if (dl) dl.style.opacity = '1';
         if (dt) dt.style.opacity = '1';
       }, 2200);
@@ -313,7 +337,7 @@
     enablePageScroll();
   }
 
-  // 1b. Landing Page Curtain Reveal Animation (nrkportfolio.in Luxury Standard)
+  // 1b. Landing Page Curtain Reveal Animation (nrkportfolio.in Luxury Standard - Crisp, Immediate)
   function initLandingReveal() {
     if (!window.gsap) return;
 
@@ -335,24 +359,24 @@
       if (prefersReducedMotion) return;
     }
 
-    // Set initial hidden states before entrance
+    // Set initial hidden states before entrance (low displacement for swift, crisp emergence)
     if (headerWrap && !isTransition) {
-      gsap.set(headerWrap, { y: -60, opacity: 0 });
+      gsap.set(headerWrap, { y: -45, opacity: 0 });
     }
     if (heroTitleLines.length && !isTransition) {
-      gsap.set(heroTitleLines, { yPercent: 125 });
+      gsap.set(heroTitleLines, { yPercent: 118 });
     }
     if (heroLede && !isTransition) {
-      gsap.set(heroLede, { y: 35, opacity: 0 });
+      gsap.set(heroLede, { y: 22, opacity: 0 });
     }
     if (heroActions && !isTransition) {
-      gsap.set(heroActions, { y: 30, opacity: 0 });
+      gsap.set(heroActions, { y: 18, opacity: 0 });
     }
     if (heroVisual && !isTransition) {
-      gsap.set(heroVisual, { y: 50, scale: 0.94, opacity: 0 });
+      gsap.set(heroVisual, { y: 30, scale: 0.96, opacity: 0 });
     }
     if (domainItems.length && !isTransition) {
-      gsap.set(domainItems, { y: 25, opacity: 0 });
+      gsap.set(domainItems, { y: 18, opacity: 0 });
     }
 
     const startReveal = () => {
@@ -373,18 +397,18 @@
         tl.to(headerWrap, {
           y: 0,
           opacity: 1,
-          duration: 1.4,
+          duration: 0.85,
           ease: 'power4.out',
           clearProps: 'transform,opacity'
-        }, 0.1);
+        }, 0.04);
       }
 
       // 2. Headline typography lines reveal smoothly from overflow mask
       if (heroTitleLines.length && !isTransition) {
         tl.to(heroTitleLines, {
           yPercent: 0,
-          duration: 1.3,
-          stagger: 0.12,
+          duration: 0.85,
+          stagger: 0.08,
           ease: 'power4.out',
           onComplete: () => {
             document.querySelectorAll('.hero-line').forEach(el => {
@@ -392,7 +416,7 @@
             });
             gsap.set(heroTitleLines, { clearProps: 'transform,willChange' });
           }
-        }, 0.15);
+        }, 0.06);
       }
 
       // 3. Hero Visual expands with rich scale and glide
@@ -401,10 +425,10 @@
           y: 0,
           scale: 1,
           opacity: 1,
-          duration: 1.45,
+          duration: 0.88,
           ease: 'power3.out',
           clearProps: 'transform'
-        }, 0.25);
+        }, 0.12);
       }
 
       // 4. Hero description paragraph fades and glides up
@@ -412,10 +436,10 @@
         tl.to(heroLede, {
           y: 0,
           opacity: 1,
-          duration: 1.1,
+          duration: 0.68,
           ease: 'power3.out',
           clearProps: 'transform'
-        }, 0.4);
+        }, 0.18);
       }
 
       // 5. Action CTA buttons slide in
@@ -423,10 +447,10 @@
         tl.to(heroActions, {
           y: 0,
           opacity: 1,
-          duration: 1.0,
+          duration: 0.62,
           ease: 'power3.out',
           clearProps: 'transform'
-        }, 0.52);
+        }, 0.25);
       }
 
       // 6. Domain capabilities band items stagger in
@@ -434,11 +458,11 @@
         tl.to(domainItems, {
           y: 0,
           opacity: 1,
-          duration: 0.9,
-          stagger: 0.08,
+          duration: 0.62,
+          stagger: 0.05,
           ease: 'power3.out',
           clearProps: 'transform'
-        }, 0.62);
+        }, 0.32);
       }
     };
 
@@ -618,8 +642,7 @@
   if (headerWrap) {
     let lastScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
     let isTicking = false;
-    const SCROLL_DOWN_THRESHOLD = 15; // Past 15px, scrolling down hides the header
-    const SCROLL_UP_DELTA = 8;        // Require 8px upward movement to reveal (prevents iOS rubber-band jitter)
+    const SCROLL_DOWN_THRESHOLD = 20; // Matches nrkportfolio.in standard (> 20px)
 
     function updateHeader() {
       // Keep header visible if mobile drawer is open
@@ -644,10 +667,8 @@
         return;
       }
 
-      const diff = currentScrollY - lastScrollY;
-
-      // Scrolling DOWN -> hide header immediately so it does not follow along with the scroll
-      if (diff > 2) {
+      // Scrolling DOWN -> hide header immediately so it does NOT follow along with the scroll
+      if (currentScrollY > lastScrollY) {
         if (window.gsap && gsap.isTweening(headerWrap)) {
           gsap.killTweensOf(headerWrap);
           headerWrap.style.transform = '';
@@ -655,8 +676,8 @@
         }
         headerWrap.classList.add('header-hidden');
       }
-      // Scrolling UP deliberately (not micro-jitter or rubber-band rebound) -> reveal header
-      else if (diff < -SCROLL_UP_DELTA) {
+      // Scrolling UP -> reveal header instantly
+      else if (currentScrollY < lastScrollY) {
         if (window.gsap && gsap.isTweening(headerWrap)) {
           gsap.killTweensOf(headerWrap);
           headerWrap.style.transform = '';
@@ -680,6 +701,11 @@
 
     // Native scroll event listener (matches nrkportfolio.in architecture)
     window.addEventListener('scroll', onScrollTick, { passive: true });
+
+    // Also sync with Lenis scroll if available so inertial scrolling is instantaneous
+    if (window.lenis) {
+      window.lenis.on('scroll', onScrollTick);
+    }
 
     // Initialize state
     updateHeader();
@@ -860,7 +886,7 @@
     });
   }
 
-  // 6. GSAP ScrollTrigger Reveals - Award-Winning Luxury Standard (Awwwards / FWA Grade)
+  // 6. GSAP ScrollTrigger Reveals - Award-Winning Luxury Standard (Awwwards / FWA Grade - Low Latency, Immediate)
   function initGSAP() {
     if (!window.gsap) return;
 
@@ -884,18 +910,18 @@
     if (domainItems.length > 0) {
       gsap.fromTo(
         domainItems,
-        { y: 32, autoAlpha: 0, scale: 0.96 },
+        { y: 20, autoAlpha: 0, scale: 0.98 },
         {
           y: 0,
           autoAlpha: 1,
           scale: 1,
-          duration: 1.05,
-          stagger: 0.08,
+          duration: 0.65,
+          stagger: 0.05,
           ease: 'power4.out',
           clearProps: 'transform',
           scrollTrigger: {
             trigger: '.domain-band',
-            start: 'top 93%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         }
@@ -910,15 +936,15 @@
     if (partnerTitle) {
       gsap.fromTo(
         partnerTitle,
-        { y: 24, autoAlpha: 0 },
+        { y: 16, autoAlpha: 0 },
         {
           y: 0,
           autoAlpha: 1,
-          duration: 0.85,
+          duration: 0.65,
           ease: 'power4.out',
           scrollTrigger: {
             trigger: '.partner-ecosystem-header',
-            start: 'top 92%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         }
@@ -928,18 +954,18 @@
     if (partnerCards.length > 0) {
       gsap.fromTo(
         partnerCards,
-        { y: 38, autoAlpha: 0, scale: 0.95 },
+        { y: 24, autoAlpha: 0, scale: 0.98 },
         {
           y: 0,
           autoAlpha: 1,
           scale: 1,
-          duration: 1.15,
-          stagger: 0.11,
+          duration: 0.75,
+          stagger: 0.06,
           ease: 'power4.out',
           clearProps: 'transform',
           scrollTrigger: {
             trigger: '.partner-cards-grid',
-            start: 'top 92%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         }
@@ -947,18 +973,18 @@
     } else if (partnerMarks.length > 0) {
       gsap.fromTo(
         partnerMarks,
-        { scale: 0.95, autoAlpha: 0, y: 20 },
+        { scale: 0.97, autoAlpha: 0, y: 16 },
         {
           scale: 1,
           autoAlpha: 1,
           y: 0,
-          duration: 0.85,
-          stagger: 0.08,
+          duration: 0.65,
+          stagger: 0.05,
           ease: 'power4.out',
           clearProps: 'transform',
           scrollTrigger: {
             trigger: '.partner-strip',
-            start: 'top 95%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         }
@@ -975,19 +1001,19 @@
       const mbTl = gsap.timeline({
         scrollTrigger: {
           trigger: maskedBanner,
-          start: 'top 85%',
+          start: 'top 96%',
           toggleActions: 'play none none none'
         }
       });
 
       if (mbEyebrow) {
-        mbTl.fromTo(mbEyebrow, { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' });
+        mbTl.fromTo(mbEyebrow, { y: 10, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' });
       }
       if (mbTitle) {
-        mbTl.fromTo(mbTitle, { y: 36, scale: 0.97, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 1.25, ease: 'power4.out' }, '-=0.45');
+        mbTl.fromTo(mbTitle, { y: 22, scale: 0.98, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 0.8, ease: 'power4.out' }, '-=0.35');
       }
       if (mbDesc) {
-        mbTl.fromTo(mbDesc, { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, ease: 'power3.out' }, '-=0.6');
+        mbTl.fromTo(mbDesc, { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out' }, '-=0.55');
       }
     }
 
@@ -1002,27 +1028,27 @@
         const stTl = gsap.timeline({
           scrollTrigger: {
             trigger: st,
-            start: 'top 87%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         });
 
         if (eyebrow) {
-          stTl.fromTo(eyebrow, { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out' });
+          stTl.fromTo(eyebrow, { y: 10, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' });
         }
 
         stTl.fromTo(
           heading,
-          { y: 35, autoAlpha: 0, rotateX: -6, transformOrigin: '0% 50% -20px' },
-          { y: 0, autoAlpha: 1, rotateX: 0, duration: 1.15, ease: 'power4.out', clearProps: 'transform' },
+          { y: 20, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.75, ease: 'power4.out', clearProps: 'transform' },
           eyebrow ? '-=0.35' : 0
         );
 
         if (bodyCopy) {
           stTl.fromTo(
             bodyCopy,
-            { y: 18, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.85, ease: 'power3.out', clearProps: 'transform' },
+            { y: 14, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out', clearProps: 'transform' },
             '-=0.55'
           );
         }
@@ -1037,23 +1063,23 @@
         const rTl = gsap.timeline({
           scrollTrigger: {
             trigger: row,
-            start: 'top 92%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         });
 
         rTl.fromTo(
           row,
-          { y: 36, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 1.05, ease: 'power4.out', clearProps: 'transform' }
+          { y: 22, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.75, ease: 'power4.out', clearProps: 'transform' }
         );
 
         if (rowTags.length > 0) {
           rTl.fromTo(
             rowTags,
-            { y: 10, scale: 0.92, autoAlpha: 0 },
-            { y: 0, scale: 1, autoAlpha: 1, stagger: 0.035, duration: 0.6, ease: 'back.out(1.4)', clearProps: 'transform' },
-            '-=0.6'
+            { y: 6, scale: 0.95, autoAlpha: 0 },
+            { y: 0, scale: 1, autoAlpha: 1, stagger: 0.025, duration: 0.45, ease: 'back.out(1.2)', clearProps: 'transform' },
+            '-=0.55'
           );
         }
       });
@@ -1095,7 +1121,7 @@
       const pTl = gsap.timeline({
         scrollTrigger: {
           trigger: productGrid || productCards[0],
-          start: 'top 87%',
+          start: 'top 96%',
           toggleActions: 'play none none none'
         }
       });
@@ -1103,13 +1129,13 @@
       // Card physical lift & emergence
       pTl.fromTo(
         productCards,
-        { y: 52, autoAlpha: 0, scale: 0.95 },
+        { y: 24, autoAlpha: 0, scale: 0.98 },
         {
           y: 0,
           autoAlpha: 1,
           scale: 1,
-          duration: 1.25,
-          stagger: 0.14,
+          duration: 0.78,
+          stagger: 0.06,
           ease: 'power4.out',
           clearProps: 'transform'
         }
@@ -1119,8 +1145,8 @@
       if (productPhotos.length > 0) {
         pTl.fromTo(
           productPhotos,
-          { scale: 1.12 },
-          { scale: 1.0, duration: 1.6, ease: 'power3.out', clearProps: 'transform' },
+          { scale: 1.06 },
+          { scale: 1.0, duration: 0.9, ease: 'power3.out', clearProps: 'transform' },
           0.05
         );
       }
@@ -1131,9 +1157,9 @@
         if (specItems.length > 0) {
           pTl.fromTo(
             specItems,
-            { y: 10, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, stagger: 0.035, duration: 0.7, ease: 'power3.out', clearProps: 'transform' },
-            0.4 + cIdx * 0.12
+            { y: 8, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, stagger: 0.02, duration: 0.45, ease: 'power3.out', clearProps: 'transform' },
+            0.2 + cIdx * 0.06
           );
         }
       });
@@ -1141,9 +1167,9 @@
       if (productNote) {
         pTl.fromTo(
           productNote,
-          { y: 18, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.85, ease: 'power3.out' },
-          '-=0.5'
+          { y: 14, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out' },
+          '-=0.45'
         );
       }
     }
@@ -1154,18 +1180,18 @@
     if (industryCards.length > 0) {
       gsap.fromTo(
         industryCards,
-        { y: 44, autoAlpha: 0, scale: 0.95 },
+        { y: 24, autoAlpha: 0, scale: 0.98 },
         {
           y: 0,
           autoAlpha: 1,
           scale: 1,
-          duration: 1.15,
-          stagger: 0.11,
+          duration: 0.75,
+          stagger: 0.06,
           ease: 'power4.out',
           clearProps: 'transform',
           scrollTrigger: {
             trigger: industryGrid || industryCards[0],
-            start: 'top 89%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         }
@@ -1182,7 +1208,7 @@
       const cTl = gsap.timeline({
         scrollTrigger: {
           trigger: companyMain,
-          start: 'top 87%',
+          start: 'top 96%',
           toggleActions: 'play none none none'
         }
       });
@@ -1190,26 +1216,26 @@
       if (companyNote) {
         cTl.fromTo(
           companyNote,
-          { x: -36, y: 14, rotation: -1.5, autoAlpha: 0, scale: 0.96 },
-          { x: 0, y: 0, rotation: 0, autoAlpha: 1, scale: 1, duration: 1.25, ease: 'power4.out', clearProps: 'transform' }
+          { x: -20, y: 10, rotation: -0.8, autoAlpha: 0, scale: 0.98 },
+          { x: 0, y: 0, rotation: 0, autoAlpha: 1, scale: 1, duration: 0.78, ease: 'power4.out', clearProps: 'transform' }
         );
       }
 
       if (companyCopyParas.length > 0) {
         cTl.fromTo(
           companyCopyParas,
-          { y: 24, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.1, ease: 'power4.out', clearProps: 'transform' },
-          companyNote ? '-=0.75' : 0
+          { y: 16, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.68, stagger: 0.05, ease: 'power4.out', clearProps: 'transform' },
+          companyNote ? '-=0.6' : 0
         );
       }
 
       if (companyTags.length > 0) {
         cTl.fromTo(
           companyTags,
-          { scale: 0.82, y: 12, autoAlpha: 0 },
-          { scale: 1, y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.045, ease: 'back.out(1.7)', clearProps: 'transform' },
-          '-=0.5'
+          { scale: 0.92, y: 8, autoAlpha: 0 },
+          { scale: 1, y: 0, autoAlpha: 1, duration: 0.45, stagger: 0.025, ease: 'back.out(1.4)', clearProps: 'transform' },
+          '-=0.45'
         );
       }
     }
@@ -1220,20 +1246,20 @@
       const pTeamTl = gsap.timeline({
         scrollTrigger: {
           trigger: '.people-grid',
-          start: 'top 90%',
+          start: 'top 96%',
           toggleActions: 'play none none none'
         }
       });
 
       pTeamTl.fromTo(
         people,
-        { y: 38, autoAlpha: 0, scale: 0.96 },
+        { y: 22, autoAlpha: 0, scale: 0.98 },
         {
           y: 0,
           autoAlpha: 1,
           scale: 1,
-          duration: 1.1,
-          stagger: 0.13,
+          duration: 0.75,
+          stagger: 0.06,
           ease: 'power4.out',
           clearProps: 'transform'
         }
@@ -1243,9 +1269,9 @@
       if (personPhotos.length > 0) {
         pTeamTl.fromTo(
           personPhotos,
-          { scale: 1.1 },
-          { scale: 1.0, duration: 1.2, ease: 'power3.out', clearProps: 'transform' },
-          0.1
+          { scale: 1.05 },
+          { scale: 1.0, duration: 0.85, ease: 'power3.out', clearProps: 'transform' },
+          0.06
         );
       }
     }
@@ -1257,18 +1283,18 @@
       if (channelBtns.length > 0) {
         gsap.fromTo(
           channelBtns,
-          { y: 28, autoAlpha: 0, scale: 0.92 },
+          { y: 16, autoAlpha: 0, scale: 0.96 },
           {
             y: 0,
             autoAlpha: 1,
             scale: 1,
-            duration: 0.8,
-            stagger: 0.09,
-            ease: 'back.out(1.4)',
+            duration: 0.6,
+            stagger: 0.05,
+            ease: 'back.out(1.2)',
             clearProps: 'transform',
             scrollTrigger: {
               trigger: contactChannels,
-              start: 'top 92%',
+              start: 'top 96%',
               toggleActions: 'play none none none'
             }
           }
@@ -1281,18 +1307,18 @@
     if (specCards.length > 0) {
       gsap.fromTo(
         specCards,
-        { y: 42, autoAlpha: 0, scale: 0.95 },
+        { y: 22, autoAlpha: 0, scale: 0.98 },
         {
           y: 0,
           autoAlpha: 1,
           scale: 1,
-          duration: 1.15,
-          stagger: 0.1,
+          duration: 0.75,
+          stagger: 0.06,
           ease: 'power4.out',
           clearProps: 'transform',
           scrollTrigger: {
             trigger: '.product-specs-grid',
-            start: 'top 89%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         }
@@ -1303,18 +1329,18 @@
     if (archSteps.length > 0) {
       gsap.fromTo(
         archSteps,
-        { y: 36, autoAlpha: 0, scale: 0.96 },
+        { y: 20, autoAlpha: 0, scale: 0.98 },
         {
           y: 0,
           autoAlpha: 1,
           scale: 1,
-          duration: 1.05,
-          stagger: 0.11,
+          duration: 0.75,
+          stagger: 0.06,
           ease: 'power4.out',
           clearProps: 'transform',
           scrollTrigger: {
             trigger: '.arch-flow',
-            start: 'top 89%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         }
@@ -1330,15 +1356,15 @@
       if (phCopyElements.length > 0) {
         gsap.fromTo(
           phCopyElements,
-          { y: 26, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 1.05, stagger: 0.08, ease: 'power4.out', clearProps: 'transform' }
+          { y: 16, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.05, ease: 'power4.out', clearProps: 'transform' }
         );
       }
       if (phVisual) {
         gsap.fromTo(
           phVisual,
-          { y: 42, autoAlpha: 0, scale: 0.94 },
-          { y: 0, autoAlpha: 1, scale: 1, duration: 1.35, ease: 'power4.out', clearProps: 'transform' }
+          { y: 24, autoAlpha: 0, scale: 0.96 },
+          { y: 0, autoAlpha: 1, scale: 1, duration: 0.85, ease: 'power4.out', clearProps: 'transform' }
         );
       }
     }
@@ -1368,28 +1394,28 @@
       const fTl = gsap.timeline({
         scrollTrigger: {
           trigger: footer,
-          start: 'top 90%',
+          start: 'top 96%',
           toggleActions: 'play none none none'
         }
       });
 
       if (footerBrand) {
-        fTl.fromTo(footerBrand, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85, ease: 'power4.out', clearProps: 'transform' });
+        fTl.fromTo(footerBrand, { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power4.out', clearProps: 'transform' });
       }
       if (footerCols.length > 0) {
         fTl.fromTo(
           footerCols,
-          { y: 32, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.95, stagger: 0.08, ease: 'power4.out', clearProps: 'transform' },
-          footerBrand ? '-=0.6' : 0
+          { y: 20, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.05, ease: 'power4.out', clearProps: 'transform' },
+          footerBrand ? '-=0.45' : 0
         );
       }
       if (footerBottom) {
         fTl.fromTo(
           footerBottom,
-          { y: 16, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.75, ease: 'power3.out', clearProps: 'transform' },
-          '-=0.45'
+          { y: 12, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.55, ease: 'power3.out', clearProps: 'transform' },
+          '-=0.4'
         );
       }
     }
@@ -1399,17 +1425,17 @@
     ctaBanners.forEach(banner => {
       gsap.fromTo(
         banner,
-        { y: 32, autoAlpha: 0, scale: 0.97 },
+        { y: 22, autoAlpha: 0, scale: 0.98 },
         {
           y: 0,
           autoAlpha: 1,
           scale: 1,
-          duration: 1.05,
+          duration: 0.75,
           ease: 'power4.out',
           clearProps: 'transform',
           scrollTrigger: {
             trigger: banner,
-            start: 'top 92%',
+            start: 'top 96%',
             toggleActions: 'play none none none'
           }
         }
