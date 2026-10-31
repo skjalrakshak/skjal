@@ -4,9 +4,8 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
   <meta content="#FFFDF4" name="theme-color"/>
-  <title>S.H.I.E.L.D. — Driving Safety &amp; Driver Health Technology | SKJAL</title>
-  <meta content="S.H.I.E.L.D. by SKJAL is an advanced vehicle safety and driver health telemetry platform monitoring vibration exposure, fatigue, vitals, and speed intelligence." name="description"/>
-  <meta content="shield, driver safety, whole body vibration, iso 2631, fleet telemetry, commercial vehicle safety, skjal" name="keywords"/>
+  <title>Driver Monitoring &amp; Fleet Safety Technology | SKJAL</title>
+  <meta content="Commercial vehicle telemetry and ergonomics platform in India. Whole-body vibration (ISO 2631-1 guidelines), road shock events, and fleet safety analytics." name="description"/>
   <meta content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" name="robots"/>
   <link href="https://www.skjal.in/shield" rel="canonical"/>
 
@@ -17,19 +16,22 @@
   <meta name="ICBM" content="17.7833, 83.3667"/>
 
   <!-- Open Graph -->
-  <meta content="article" property="og:type"/>
+  <!-- Open Graph -->
+  <meta content="website" property="og:type"/>
   <meta content="en_IN" property="og:locale"/>
   <meta content="SKJAL" property="og:site_name"/>
-  <meta content="S.H.I.E.L.D. — Driving Safety &amp; Driver Health Technology | SKJAL" property="og:title"/>
-  <meta content="Driving-safety technology focused on driver wellbeing, vibration exposure and real-time safety guidance." property="og:description"/>
+  <meta content="Driver Monitoring &amp; Fleet Safety Technology | SKJAL" property="og:title"/>
+  <meta content="S.H.I.E.L.D. by SKJAL: Commercial fleet safety system tracking whole-body vibration (ISO 2631), driver alertness, road shock, and vehicle kinematics." property="og:description"/>
   <meta content="https://www.skjal.in/shield" property="og:url"/>
   <meta content="https://www.skjal.in/assets/img/products/shield-hero.webp" property="og:image"/>
+  <meta content="S.H.I.E.L.D. Driver Safety and Fleet Telemetry Platform" property="og:image:alt"/>
 
   <!-- Twitter -->
   <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="S.H.I.E.L.D. — Driving Safety &amp; Driver Health Technology | SKJAL" name="twitter:title"/>
-  <meta content="Driving-safety technology focused on driver wellbeing, vibration exposure and real-time safety guidance." name="twitter:description"/>
+  <meta content="Driver Monitoring &amp; Fleet Safety Technology | SKJAL" name="twitter:title"/>
+  <meta content="Commercial vehicle safety and driver ergonomics platform by SK Jalrakshak Innovations. Real-time vibration dose values and fleet safety analytics." name="twitter:description"/>
   <meta content="https://www.skjal.in/assets/img/products/shield-hero.webp" name="twitter:image"/>
+  <meta content="S.H.I.E.L.D. Driver Safety and Fleet Telemetry Platform" name="twitter:image:alt"/>
 
   <!-- Favicon & Search Engine Site Identity -->
   <link href="/favicon.ico" rel="icon" sizes="48x48"/>
@@ -42,22 +44,107 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="preload" href="assets/fonts/pixelify-sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link href="assets/css/style.css?v=20261031_v41_learnmore" rel="stylesheet"/>
+  <link href="assets/css/style.css?v=20261031_v42_fontfix" rel="stylesheet"/>
 
-  <!-- Product Schema JSON-LD -->
+  <!-- Structured Data JSON-LD (@graph) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "S.H.I.E.L.D.",
-    "image": "https://www.skjal.in/assets/img/products/shield-hero.webp",
-    "description": "Driving-safety technology focused on driver health and speed intelligence, vibration exposure and personalised safety guidance for commercial drivers and two-wheeler users.",
-    "brand": {
-      "@type": "Organization",
-      "name": "SKJAL"
-    },
-    "category": "Driving safety and driver wellbeing technology",
-    "url": "https://www.skjal.in/shield"
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://www.skjal.in/shield#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.skjal.in/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "S.H.I.E.L.D. Driver Safety",
+            "item": "https://www.skjal.in/shield"
+          }
+        ]
+      },
+      {
+        "@type": "Product",
+        "@id": "https://www.skjal.in/shield#product",
+        "name": "S.H.I.E.L.D. Fleet Safety & Driver Monitoring System",
+        "alternateName": [
+          "S.H.I.E.L.D.",
+          "Smart Health Intelligence for Ergonomic & Live Driving",
+          "Driver Monitoring System India",
+          "Fleet Safety Telematics System"
+        ],
+        "image": "https://www.skjal.in/assets/img/products/shield-hero.webp",
+        "description": "Vehicle telemetry and driver ergonomics system monitoring continuous whole-body vibration (ISO 2631), driver fatigue, road shocks, and speed intelligence for commercial transport fleets.",
+        "brand": {
+          "@type": "Organization",
+          "name": "SK Jalrakshak Innovations Private Limited",
+          "url": "https://www.skjal.in/"
+        },
+        "manufacturer": {
+          "@type": "Organization",
+          "name": "SK Jalrakshak Innovations Private Limited",
+          "url": "https://www.skjal.in/"
+        },
+        "category": "Vehicle Telematics and Driver Safety System",
+        "url": "https://www.skjal.in/shield"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.skjal.in/shield#webpage",
+        "url": "https://www.skjal.in/shield",
+        "name": "Driver Monitoring & Fleet Safety Technology | SKJAL",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://www.skjal.in/#website",
+          "url": "https://www.skjal.in/",
+          "name": "SKJAL"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.skjal.in/shield#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does the S.H.I.E.L.D. driver safety system monitor?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "S.H.I.E.L.D. monitors continuous whole-body vibration (WBV) according to ISO 2631-1 and ISO 5349 standards, road shock events, driving duration indicators, cabin environmental conditions (temperature, CO2, VOCs), and driving kinematics via CAN bus and high-precision multi-GNSS positioning."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which vehicles and fleets can use S.H.I.E.L.D.?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The platform is designed for commercial heavy transport fleets, mining and quarry dumpers, construction equipment, intercity passenger buses, logistics delivery vehicles, and utility utility fleets operating on demanding highways and rough terrain."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What information can fleet operators access?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Fleet supervisors access a cloud-based dashboard displaying real-time vibration dose values (VDV), cumulative daily exposure A(8), harsh braking and aggressive lane change alerts, continuous driving duration tracking, speed compliance, and trip replay with pre-crash black-box incident logs."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is the device integrated into a commercial vehicle?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "S.H.I.E.L.D. installs non-invasively without altering vehicle warranty. Hardware comprises a thin piezo-resistive sensor mat positioned on the driver's seat base, an in-cabin edge controller with audible voice guidance, an optional OBD-II/J1939 CAN harness, and an encrypted 4G cellular uplink."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
   <script>
@@ -240,10 +327,10 @@
         <div class="hero-grid">
           <div class="hero-copy">
             <h1 id="product-title" class="section-heading">
-              Intelligent safety telemetry for <em>commercial fleets &amp; riders.</em>
+              Driver Monitoring &amp; Fleet Safety: <em>Ergonomic Telemetry for Commercial Vehicles.</em>
             </h1>
             <p class="hero-lede">
-              S.H.I.E.L.D. monitors in-cabin ergonomics, continuous whole-body vibration (WBV) exposure, driver alertness, and speed context to prevent road incidents and protect driver health.
+              Developed by <strong>SK Jalrakshak Innovations Private Limited</strong>, <strong>S.H.I.E.L.D.</strong> (Smart Health Intelligence for Ergonomic &amp; Live Driving) is an advanced vehicle safety and driver health telemetry platform engineered for commercial fleets in India. By measuring continuous whole-body vibration (WBV) exposure according to ISO 2631-1 standards, road shock events, and driving kinematics, S.H.I.E.L.D. provides in-cabin alerts and fleet management analytics to assist fleet safety managers in monitoring mechanical road shock and occupational cabin ergonomics.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="mailto:sales@skjal.in?subject=S.H.I.E.L.D.%20Pilot%20Deployment">
@@ -258,7 +345,7 @@
           </div>
 
           <div class="hero-visual" style="height: 380px;">
-            <img alt="Commercial vehicle cabin interior on the highway" class="hero-device" decoding="async" fetchpriority="high" height="1350" src="assets/img/products/shield-hero.webp" style="object-fit:cover; border-radius:12px;" width="900"/>
+            <img alt="Commercial vehicle cabin interior with S.H.I.E.L.D. driver safety and vibration telemetry instrumentation" class="hero-device" decoding="async" fetchpriority="high" height="1350" src="assets/img/products/shield-hero.webp" style="object-fit:cover; border-radius:12px;" width="900"/>
           </div>
         </div>
       </div>
@@ -281,25 +368,25 @@
         <div class="product-specs-grid">
           <article class="spec-card">
             <h3>Whole-Body Vibration (WBV)</h3>
-            <p>Tri-axial MEMS accelerometers calibrated to ISO 2631-1 calculate Cumulative Daily Exposure A(8) to safeguard long-haul drivers against spinal trauma.</p>
+            <p>Triaxial MEMS accelerometers measure continuous vehicle vibration acceleration in accordance with ISO 2631-1 guidelines, calculating Daily Exposure A(8) and Vibration Dose Values (VDV) to monitor road shock.</p>
             <ul class="spec-list">
-              <li><span>Standard</span><strong>ISO 2631-1 &amp; ISO 5349 Compliant</strong></li>
-              <li><span>Measurement Axis</span><strong>Tri-Axial (X, Y, Z) Dynamic</strong></li>
+              <li><span>Evaluation Standard</span><strong>ISO 2631-1 Guidelines</strong></li>
+              <li><span>Measurement Axis</span><strong>Triaxial (X, Y, Z) Dynamic</strong></li>
               <li><span>Frequency Range</span><strong>0.5 Hz – 100 Hz Filtered</strong></li>
-              <li><span>Threshold Alarms</span><strong>Action Value (EAV) Warnings</strong></li>
-              <li><span>Seat Sensor</span><strong>Thin Piezo-Resistive Mat</strong></li>
+              <li><span>Threshold Alerts</span><strong>Exposure Action Value (EAV)</strong></li>
+              <li><span>Mounting Options</span><strong>Chassis &amp; Cabin Floor Mount</strong></li>
             </ul>
           </article>
 
           <article class="spec-card">
-            <h3>Driver Alertness &amp; Vitals</h3>
-            <p>Edge vision and non-invasive sensors detect microsleep episodes, prolonged eyelid closure, heart rate variability, and dangerous cabin thermal levels.</p>
+            <h3>Driving Duration &amp; Cabin Telemetry</h3>
+            <p>Continuous trip tracking monitors cumulative driving hours, shift duration, cabin temperature, and severe shock events to alert drivers when scheduled rest intervals are recommended.</p>
             <ul class="spec-list">
-              <li><span>Fatigue Detection</span><strong>PERCLOS Eye-Closure Analytics</strong></li>
-              <li><span>Posture Tracking</span><strong>Slump &amp; Spinal Misalignment</strong></li>
-              <li><span>Audio Alerts</span><strong>Real-time Spoken In-Cabin Voice</strong></li>
-              <li><span>Environmental</span><strong>Cabin CO2, VOC &amp; Temp Sensing</strong></li>
-              <li><span>Driver ID</span><strong>RFID / BLE Automated Driver Tag</strong></li>
+              <li><span>Duration Monitoring</span><strong>Continuous Shift Tracking</strong></li>
+              <li><span>Motion Analytics</span><strong>Harsh Braking &amp; Swerve Alerts</strong></li>
+              <li><span>Audible Warnings</span><strong>In-Cabin Audio Buzzer / Voice</strong></li>
+              <li><span>Environmental</span><strong>Cabin Temperature &amp; Humidity</strong></li>
+              <li><span>Operator Logging</span><strong>Trip Session &amp; Event Timestamps</strong></li>
             </ul>
           </article>
 
@@ -342,13 +429,13 @@
           <div class="arch-step">
             <div class="arch-step-num">STEP 02</div>
             <h4>Edge Ergonomic Engine</h4>
-            <p>The on-board processor computes vibration dose values (VDV) and fatigue risk indexes locally in real time.</p>
+            <p>The on-board processor computes vibration dose values (VDV) and ergonomic exposure indicators locally in real time.</p>
           </div>
 
           <div class="arch-step">
             <div class="arch-step-num">STEP 03</div>
             <h4>Immediate Driver Audio</h4>
-            <p>If fatigue or cumulative vibration thresholds are breached, the unit delivers clear audible prompts advising a rest break.</p>
+            <p>If continuous driving duration or cumulative vibration thresholds are breached, the unit delivers clear audible prompts advising a rest break.</p>
           </div>
 
           <div class="arch-step">
@@ -375,14 +462,14 @@
         <div class="industry-grid">
           <article class="industry-card">
             <h3>Interstate Logistics &amp; Trucking</h3>
-            <p>Protect drivers operating continuous 10-hour highway shifts from micro-sleep crashes and cumulative spinal disc degradation.</p>
+            <p>Monitor continuous highway shifts, tracking road shock severity and supporting scheduled driver rest intervals.</p>
             <a href="mailto:sales@skjal.in?subject=Trucking%20Fleet%20S.H.I.E.L.D.">Discuss fleet trial <span></span></a>
           </article>
 
           <article class="industry-card">
-            <h3>Two-Wheeler Delivery Couriers</h3>
-            <p>Specialized handlebar vibration dampers and helmet telemetry tailored for quick-commerce delivery riders on urban roads.</p>
-            <a href="mailto:sales@skjal.in?subject=Two-Wheeler%20Safety%20S.H.I.E.L.D.">Discuss fleet trial <span></span></a>
+            <h3>Commercial Fleet Vans &amp; Logistics</h3>
+            <p>Telemetry and vibration tracking tailored for commercial urban and regional courier and freight delivery vehicles.</p>
+            <a href="mailto:sales@skjal.in?subject=Commercial%20Fleet%20S.H.I.E.L.D.">Discuss fleet trial <span></span></a>
           </article>
 
           <article class="industry-card">
@@ -396,6 +483,140 @@
             <p>Real-time passenger safety assurance, driver shift rotation compliance, and automated incident documentation.</p>
             <a href="mailto:sales@skjal.in?subject=Public%20Transit%20S.H.I.E.L.D.">Discuss fleet trial <span></span></a>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Engineering & Integration Linkage -->
+    <div class="shell" style="padding: 24px 0 8px;">
+      <p style="font-size: 14.5px; color: var(--muted); line-height: 1.6; margin: 0;">
+        Interested in custom vehicle telematics, CAN-bus hardware, or embedded firmware development? Explore our <a href="/custom-engineering" style="color:var(--ink); font-weight:600; text-decoration:underline;">Custom PCB Design &amp; Embedded Systems</a> engineering services.
+      </p>
+    </div>
+
+    <!-- Frequently Asked Questions -->
+    <section aria-labelledby="faq-title" class="faq-section" id="faq">
+      <div class="shell faq-layout">
+        <div class="faq-left">
+          <h2 class="section-heading faq-heading" id="faq-title">
+            Frequently Asked <em>Questions</em>
+          </h2>
+          <p class="body-copy faq-desc">
+            Technical answers regarding driver vibration monitoring, ISO 2631 compliance, fleet portal capabilities, and vehicle hardware integration.
+          </p>
+        </div>
+
+        <div class="faq-right">
+          <div class="faq-accordion-group">
+            <details class="faq-item">
+              <summary class="faq-summary">
+                <span class="faq-question-text">1. What does the S.H.I.E.L.D. driver safety system monitor?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <line x1="6" y1="1.5" x2="6" y2="10.5"></line>
+                    <line x1="1.5" y1="6" x2="10.5" y2="6"></line>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-collapse">
+                <div class="faq-body">
+                  <p>
+                    S.H.I.E.L.D. monitors continuous whole-body vibration (WBV) according to ISO 2631-1 and ISO 5349 standards, road shock events, driving duration indicators, cabin environmental conditions (temperature, CO2, VOCs), and driving kinematics via CAN bus and high-precision multi-GNSS positioning.
+                  </p>
+                </div>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-summary">
+                <span class="faq-question-text">2. Which vehicles and fleets can use S.H.I.E.L.D.?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <line x1="6" y1="1.5" x2="6" y2="10.5"></line>
+                    <line x1="1.5" y1="6" x2="10.5" y2="6"></line>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-collapse">
+                <div class="faq-body">
+                  <p>
+                    The platform is designed for commercial heavy transport fleets, mining and quarry dumpers, construction equipment, intercity passenger buses, logistics delivery vehicles, and utility fleets operating on demanding highways and rough terrain.
+                  </p>
+                </div>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-summary">
+                <span class="faq-question-text">3. What information can fleet operators access?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <line x1="6" y1="1.5" x2="6" y2="10.5"></line>
+                    <line x1="1.5" y1="6" x2="10.5" y2="6"></line>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-collapse">
+                <div class="faq-body">
+                  <p>
+                    Fleet supervisors access a cloud-based dashboard displaying real-time vibration dose values (VDV), cumulative daily exposure A(8), harsh braking and aggressive lane change alerts, continuous driving duration tracking, speed compliance, and trip replay with pre-crash black-box incident logs.
+                  </p>
+                </div>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-summary">
+                <span class="faq-question-text">4. How is the device integrated into a commercial vehicle?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <line x1="6" y1="1.5" x2="6" y2="10.5"></line>
+                    <line x1="1.5" y1="6" x2="10.5" y2="6"></line>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-collapse">
+                <div class="faq-body">
+                  <p>
+                    S.H.I.E.L.D. installs non-invasively without altering vehicle warranty. Hardware comprises a thin piezo-resistive sensor mat positioned on the driver's seat base, an in-cabin edge controller with audible voice guidance, an optional OBD-II/J1939 CAN harness, and an encrypted 4G cellular uplink.
+                  </p>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Direct Engineering Consultation Section -->
+    <section aria-labelledby="contact-title" class="contact-section" id="contact">
+      <div class="shell">
+        <div class="contact-header">
+          <span class="section-eyebrow">Commercial Fleet Safety &amp; Telemetry</span>
+          <h2 class="section-heading" id="contact-title">
+            Deploy whole-body vibration &amp; driver safety <em>telemetry across your fleet.</em>
+          </h2>
+          <p class="contact-desc">
+            Managing heavy transport, mining machinery, or commercial logistics? Connect with our engineering team in Visakhapatnam to schedule a live pilot installation, evaluate ISO 2631 vibration telemetry, or integrate our edge hardware with your fleet management platform.
+          </p>
+          <div class="contact-channels">
+            <a class="btn btn-primary" href="https://wa.me/918978859246?text=Hi%20SKJAL%20Team%2C%20I%20would%20like%20to%20discuss%20a%20SHIELD%20Fleet%20Safety%20Pilot" target="_blank" rel="noopener noreferrer">
+              Request Fleet Pilot on WhatsApp
+              <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+            </a>
+            <a class="btn btn-secondary" href="mailto:sales@skjal.in?subject=SHIELD%20Fleet%20Safety%20Inquiry%20-%20SKJAL">
+              Email Fleet Telemetry Lead
+              <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </a>
+            <a class="btn btn-secondary" href="tel:+918978859246">
+              Call Lab: +91 89788 59246
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -469,6 +690,8 @@
           <a href="/#about">About SKJAL</a>
           <a href="/#about">Leadership</a>
           <a href="tel:+918978859246" title="Call SKJAL Lab">Contact Us (+91 89788 59246)</a>
+          <a href="/privacy">Privacy Notice</a>
+          <a href="/privacy#manage-cookies" onclick="window.openCookieSettings(); return false;" onclick="window.openCookieSettings()">Cookie Settings</a>
           <a href="mailto:sales@skjal.in">Careers</a>
         </div>
 
@@ -483,20 +706,22 @@
       </div>
 
       <div class="footer-bottom">
-        <span>© <span id="year">2026</span> SK Jalrakshak Innovations Private Limited &bull; CIN U26517AP2025PTC119413</span>
+        <span>&copy; <span id="year">2026</span> SK Jalrakshak Innovations Private Limited &bull; CIN U26517AP2025PTC119413</span>
         <div class="legal">
+          <a href="/privacy">Privacy Notice</a>
+          <a href="/privacy#manage-cookies" onclick="window.openCookieSettings(); return false;" onclick="window.openCookieSettings()">Cookie Settings</a>
           <span>Proudly Engineered in India</span>
-          <a href="#top">Back to top ↑</a>
+          <a href="#top">Back to top &uarr;</a>
         </div>
       </div>
     </div>
   </footer>
 
-    <!-- Scripts: Local Vendor Libraries (Zero-latency GSAP + ScrollTrigger + Lenis) -->
+    <!-- Scripts: Local Vendor Libraries (Locally bundled GSAP + ScrollTrigger + Lenis) -->
   <script defer src="assets/js/vendor/gsap.min.js"></script>
   <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/vendor/lenis.min.js"></script>
-  <script defer src="assets/js/main.js?v=20261031_v40_cachefix"></script>
+  <script defer src="assets/js/main.js?v=20261031_v42_fontfix"></script>
   <script defer src="assets/js/page-transition.js?v=20261031_v40_cachefix"></script>
 </body>
 </html>

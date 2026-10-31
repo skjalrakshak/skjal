@@ -646,7 +646,7 @@
   // 3b. Staggered Character Spin/Roll Animation Initializer
   // Letters spin one-by-one with cascading delays on hover. Button background stays solid.
   function initStaggeredTextRoll() {
-    const targets = document.querySelectorAll('.btn, .btn-buy-now, .footer-cta-button, .product-link, [data-roll]');
+    const targets = document.querySelectorAll('.btn, .btn-buy-now, .footer-cta-button, [data-roll]');
     targets.forEach(el => {
       if (el.querySelector('.char-roll')) return; // already transformed
 
@@ -706,7 +706,7 @@
     initStaggeredTextRoll();
   }
 
-  // 4. Global Smart Scroll Header (Direct from nrkportfolio.in: Instant response, zero latency, rock-solid mobile stability)
+  // 4. Global Smart Scroll Header (Direct from nrkportfolio.in: Instant response, low latency, rock-solid mobile stability)
   const headerWrap = document.querySelector('.header-wrap');
   const mobileMenu = document.getElementById('mobile-menu');
 
@@ -1518,11 +1518,134 @@
     ScrollTrigger.refresh();
   }
 
+
+  /* ==========================================================================
+     Cookie Consent & Privacy Management (India DPDPA & Enterprise Compliant)
+     ========================================================================== */
+  function initCookieConsent() {
+    const STORAGE_KEY = 'skjal_cookie_consent';
+    
+    // Create banner element if not present in DOM
+    let banner = document.getElementById('skjal-cookie-banner');
+    if (!banner && document.body) {
+      banner = document.createElement('div');
+      banner.id = 'skjal-cookie-banner';
+      banner.className = 'skjal-cookie-banner';
+      banner.setAttribute('role', 'dialog');
+      banner.setAttribute('aria-live', 'polite');
+      banner.setAttribute('aria-labelledby', 'cookie-banner-title');
+      banner.innerHTML = `
+        <div class="cookie-banner-header">
+          <h3 id="cookie-banner-title" class="cookie-banner-title">Cookie &amp; Privacy Preferences</h3>
+        </div>
+        <p class="cookie-banner-text">
+          We use strictly essential cookies for secure site operation. Non-essential performance and analytics cookies are only activated with your affirmative consent. Learn more in our <a href="/privacy">Privacy Notice</a>.
+        </p>
+        <div class="cookie-banner-actions">
+          <button type="button" class="btn-cookie-accept" id="cookie-accept-all">Accept All</button>
+          <button type="button" class="btn-cookie-reject" id="cookie-reject-all">Reject Non-Essential</button>
+        </div>
+      `;
+      document.body.appendChild(banner);
+    }
+
+    const acceptBtn = document.getElementById('cookie-accept-all');
+    const rejectBtn = document.getElementById('cookie-reject-all');
+    
+    function setConsent(choice) {
+      try {
+        localStorage.setItem(STORAGE_KEY, choice);
+      } catch (e) {}
+      if (banner) banner.classList.remove('active');
+      updatePrivacyPageStatus();
+      if (choice === 'all') {
+        runConsentedAnalytics();
+      }
+    }
+
+    function runConsentedAnalytics() {
+      // Analytics initialization only after affirmative consent
+      window.__SKJAL_ANALYTICS_ENABLED__ = true;
+      window.dispatchEvent(new CustomEvent('skjal:consent:accepted'));
+    }
+
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', () => setConsent('all'));
+    }
+    if (rejectBtn) {
+      rejectBtn.addEventListener('click', () => setConsent('essential'));
+    }
+
+    // Check existing consent
+    let currentConsent = null;
+    try {
+      currentConsent = localStorage.getItem(STORAGE_KEY);
+    } catch (e) {}
+
+    if (!currentConsent) {
+      setTimeout(() => {
+        if (banner) banner.classList.add('active');
+      }, 1000);
+    } else if (currentConsent === 'all') {
+      runConsentedAnalytics();
+    }
+
+    // Global opener for footer & privacy links
+    window.openCookieSettings = function() {
+      if (!banner) {
+        initCookieConsent();
+        banner = document.getElementById('skjal-cookie-banner');
+      }
+      if (banner) {
+        banner.classList.add('active');
+      }
+    };
+
+    // Update privacy page status widget if on /privacy
+    function updatePrivacyPageStatus() {
+      const statusLabel = document.getElementById('cookie-status-label');
+      if (!statusLabel) return;
+      let consent = 'essential';
+      try {
+        consent = localStorage.getItem(STORAGE_KEY);
+      } catch (e) {}
+
+      if (consent === 'all') {
+        statusLabel.textContent = 'All Cookies Enabled (Essential + Performance Analytics)';
+        statusLabel.style.color = '#10b981';
+      } else if (consent === 'essential') {
+        statusLabel.textContent = 'Essential Cookies Only (Non-Essential Analytics Disabled)';
+        statusLabel.style.color = 'var(--ink)';
+      } else {
+        statusLabel.textContent = 'Not Configured (Defaulting to Essential Only)';
+        statusLabel.style.color = 'var(--muted)';
+      }
+    }
+
+    updatePrivacyPageStatus();
+
+    const reopenBtn = document.getElementById('btn-reopen-cookie-banner');
+    if (reopenBtn) {
+      reopenBtn.addEventListener('click', () => {
+        window.openCookieSettings();
+      });
+    }
+
+    const withdrawBtn = document.getElementById('btn-withdraw-cookies');
+    if (withdrawBtn) {
+      withdrawBtn.addEventListener('click', () => {
+        setConsent('essential');
+        alert('All non-essential cookies and analytics tracking have been successfully withdrawn.');
+      });
+    }
+  }
+
   // Expose global animation re-init for blink-free transitions
   window.initPageAnimations = function() {
     initStaggeredTextRoll();
     initFAQAccordion();
     initGSAP();
+    initCookieConsent();
   };
 
   // Initialize once DOM is ready or after GSAP scripts load

@@ -5,60 +5,72 @@
   <!-- Homepage / Primary Hub -->
   <url>
     <loc>https://www.skjal.in/</loc>
-    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
+    <lastmod>2026-10-31T16:00:00+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://www.skjal.in/assets/img/heroes/skjal-iot-hero.webp</image:loc>
-      <image:title>Best IoT and OT Company in Vizag - SK Jalrakshak Hardware</image:title>
-      <image:caption>SKJAL custom electronics, embedded systems, and industrial edge computing devices in Visakhapatnam</image:caption>
+      <image:title>SKJAL Industrial IoT Hardware and Telemetry Station</image:title>
+      <image:caption>Industrial IoT hardware, custom electronics, and edge computing telemetry station engineered by SK Jalrakshak Innovations in Visakhapatnam, India</image:caption>
     </image:image>
   </url>
 
   <!-- Water Monitoring (Smart Water Intelligence) -->
   <url>
     <loc>https://www.skjal.in/water-monitoring</loc>
-    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
+    <lastmod>2026-10-31T16:00:00+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://www.skjal.in/assets/img/products/jal-rakshak-new.webp</image:loc>
-      <image:title>Water Monitoring in Vizag - Smart IoT Telemetry</image:title>
-      <image:caption>Solar-powered continuous industrial water quality analyzer deployed in Visakhapatnam</image:caption>
+      <image:title>IoT Water Quality Monitoring Station - Jal Rakshak</image:title>
+      <image:caption>Autonomous multiparameter water telemetry station with solar-assisted battery power and IP68 submersible sensor probes</image:caption>
     </image:image>
   </url>
 
   <!-- Energy Monitoring -->
   <url>
     <loc>https://www.skjal.in/energy-monitoring</loc>
-    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
+    <lastmod>2026-10-31T16:00:00+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://www.skjal.in/assets/img/heroes/skjal-iot-hero.webp</image:loc>
-      <image:title>Energy Monitoring Companies in Vizag - AI Power Quality Meter</image:title>
-      <image:caption>Three-phase harmonic distortion and power factor tracking analyzer by SKJAL</image:caption>
+      <image:loc>https://www.skjal.in/assets/img/products/energy-monitoring.webp</image:loc>
+      <image:title>Industrial Energy Monitoring and Power Quality Equipment</image:title>
+      <image:caption>Three-phase power quality analysis, harmonic distortion measurement, and DIN-rail Modbus gateway instrumentation</image:caption>
     </image:image>
   </url>
 
   <!-- Custom PCB Design, Firmware & Turnkey Gateways -->
   <url>
     <loc>https://www.skjal.in/custom-engineering</loc>
-    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
+    <lastmod>2026-10-31T16:00:00+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://www.skjal.in/assets/img/gallery/electronics-bench.webp</image:loc>
-      <image:title>Custom PCB Design Company in Vizag - Turnkey IIoT Gateways</image:title>
-      <image:caption>Multilayer circuit board layout, firmware debugging, and industrial gateway testing lab</image:caption>
+      <image:title>Electronics Engineering and PCB Design Laboratory - SKJAL</image:title>
+      <image:caption>Multilayer circuit board layout, embedded firmware development, and industrial IoT gateway prototyping bench</image:caption>
     </image:image>
   </url>
 
   <!-- S.H.I.E.L.D. Vehicle & Ergonomic Safety -->
   <url>
     <loc>https://www.skjal.in/shield</loc>
-    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
+    <lastmod>2026-10-31T16:00:00+05:30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.skjal.in/assets/img/products/shield-hero.webp</image:loc>
+      <image:title>S.H.I.E.L.D. Commercial Vehicle Safety and Driver Health System</image:title>
+      <image:caption>Driver whole-body vibration and ergonomic safety telemetry system for commercial transport fleets</image:caption>
+    </image:image>
+  </url>
+  <!-- Privacy Notice & Cookie Policy -->
+  <url>
+    <loc>https://www.skjal.in/privacy</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

@@ -1,20 +1,17 @@
 # ===========================================================
 # SK Jalrakshak Innovations — robots.txt
 # Enterprise SEO & Generative AI Indexing Policy
-# Website: https://skjal.in/
+# Website: https://www.skjal.in/
 # ===========================================================
 
 User-agent: *
 
 # ── Allow: Real user-facing pages and assets ──
 Allow: /
-Allow: /about
 Allow: /water-monitoring
-Allow: /shield
 Allow: /energy-monitoring
 Allow: /custom-engineering
-Allow: /water-monitoring-vizag
-Allow: /energy-monitoring-vizag
+Allow: /shield
 Allow: /assets/
 Allow: /sitemap.xml
 
@@ -187,8 +184,5 @@ Disallow: /license.txt
 Disallow: /CHANGELOG
 Disallow: /CHANGELOG.md
 
-# ── Crawl Delay ──
-Crawl-delay: 2
-
 # ── Sitemap ──
-Sitemap: https://skjal.in/sitemap.xml
+Sitemap: https://www.skjal.in/sitemap.xml
