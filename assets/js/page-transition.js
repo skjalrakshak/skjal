@@ -349,7 +349,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 0.15
             );
         }
-        }
     }
 
     // Handle browser Back / Forward buttons without any blink
