@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600;700&display=swap');
 
+/* Typography: Local Instant-Load Pixelify Sans (Zero network latency on mobile & desktop) */
+@font-face {
+  font-family: "Pixelify Sans";
+  src: url("../fonts/pixelify-sans.woff2") format("woff2"),
+       url("../fonts/pixelify-sans.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: block;
+}
+
 /* ==========================================================================
    SKJAL - Modern Industrial Telemetry & Embedded Systems
    Abatable-Inspired Production Design System
@@ -223,8 +233,9 @@ button, a {
   display: block;
 }
 
-.preloader-brand-name {
-  font-family: var(--font-display);
+.preloader-brand-name,
+#preloader-brand-name {
+  font-family: 'Pixelify Sans', monospace, sans-serif !important;
   font-size: clamp(1.8rem, 4vw, 3rem);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -233,7 +244,8 @@ button, a {
   line-height: 1;
 }
 
-.preloader-counter {
+.preloader-counter,
+#preloader-counter {
   position: absolute;
   bottom: clamp(45px, 8vh, 60px);
   right: clamp(24px, 5vw, 60px);
@@ -257,11 +269,14 @@ button, a {
   .preloader-logo {
     height: 48px;
   }
-  .preloader-brand-name {
+  .preloader-brand-name,
+  #preloader-brand-name {
+    font-family: 'Pixelify Sans', monospace, sans-serif !important;
     font-size: 1.8rem;
     font-weight: 700;
   }
-  .preloader-counter {
+  .preloader-counter,
+  #preloader-counter {
     bottom: clamp(55px, 10vh, 85px) !important;
     right: 24px !important;
     font-size: clamp(5.5rem, 20vw, 7.5rem) !important;
@@ -269,6 +284,7 @@ button, a {
     font-weight: 600 !important;
     line-height: 0.85 !important;
     letter-spacing: -0.03em !important;
+    font-variant-numeric: tabular-nums !important;
   }
 }
 

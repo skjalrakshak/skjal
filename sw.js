@@ -3,7 +3,7 @@
  * Precaches core critical assets for instantaneous reload and offline resiliency.
  */
 
-const CACHE_NAME = 'skjal-cache-v39';
+const CACHE_NAME = 'skjal-cache-v40';
 
 const PRECACHE_ASSETS = [
   '/',
@@ -18,6 +18,7 @@ const PRECACHE_ASSETS = [
   '/custom-engineering.html',
   '/404.html',
   '/favicon.ico',
+  '/assets/fonts/pixelify-sans.woff2',
   '/assets/img/brand/logo.png',
   '/assets/img/brand/logo.webp',
   '/assets/img/brand/favicon-48x48.png',
