@@ -15,15 +15,15 @@
     </image:image>
   </url>
 
-  <!-- Water Monitoring / Jal Rakshak -->
+  <!-- Water Monitoring (Smart Water Intelligence) -->
   <url>
-    <loc>https://www.skjal.in/jal-rakshak.html</loc>
+    <loc>https://www.skjal.in/water-monitoring.html</loc>
     <lastmod>2026-10-31T06:00:00+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://www.skjal.in/assets/img/products/jal-rakshak-new.webp</image:loc>
-      <image:title>Water Monitoring in Vizag - Jal Rakshak IoT Telemetry</image:title>
+      <image:title>Water Monitoring in Vizag - Smart IoT Telemetry</image:title>
       <image:caption>Solar-powered continuous industrial water quality analyzer deployed in Visakhapatnam</image:caption>
     </image:image>
   </url>

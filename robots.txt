@@ -9,6 +9,8 @@ User-agent: *
 # ── Allow: Real user-facing pages and assets ──
 Allow: /
 Allow: /about
+Allow: /water-monitoring
+Allow: /water-monitoring.html
 Allow: /jal-rakshak
 Allow: /shield
 Allow: /energy-monitoring

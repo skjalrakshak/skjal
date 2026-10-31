@@ -34,14 +34,16 @@ const REDIRECTS = {
     '/about.html': '/#about',
     '/contact': '/#contact',
     '/contact.html': '/#contact',
-    '/water-monitoring-vizag': '/jal-rakshak.html',
-    '/water-monitoring-vizag.html': '/jal-rakshak.html',
+    '/jal-rakshak': '/water-monitoring.html',
+    '/jal-rakshak.html': '/water-monitoring.html',
+    '/water-monitoring-vizag': '/water-monitoring.html',
+    '/water-monitoring-vizag.html': '/water-monitoring.html',
     '/energy-monitoring-vizag': '/energy-monitoring.html',
     '/energy-monitoring-vizag.html': '/energy-monitoring.html',
-    '/products': '/jal-rakshak.html',
-    '/products.html': '/jal-rakshak.html',
-    '/resources': '/jal-rakshak.html',
-    '/resources.html': '/jal-rakshak.html'
+    '/products': '/water-monitoring.html',
+    '/products.html': '/water-monitoring.html',
+    '/resources': '/water-monitoring.html',
+    '/resources.html': '/water-monitoring.html'
 };
 
 const SECURITY_HEADERS = {
