@@ -56,5 +56,10 @@ build/
 .next/
 out/
 
-# Local automated backup snapshots
+# Local automated backup snapshots & artifacts
 backups/
+backup/
+*.bak
+*.backup
+*.old
+*.orig

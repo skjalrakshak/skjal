@@ -108,6 +108,11 @@
     { "source": "/products.html", "destination": "/water-monitoring", "statusCode": 301 },
     { "source": "/resources", "destination": "/water-monitoring", "statusCode": 301 },
     { "source": "/resources.html", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/index.html", "destination": "/", "statusCode": 301 },
+    { "source": "/water-monitoring.html", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/shield.html", "destination": "/shield", "statusCode": 301 },
+    { "source": "/energy-monitoring.html", "destination": "/energy-monitoring", "statusCode": 301 },
+    { "source": "/custom-engineering.html", "destination": "/custom-engineering", "statusCode": 301 },
     { "source": "/privacy.html", "destination": "/privacy", "statusCode": 301 }
   ]
 }

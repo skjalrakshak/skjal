@@ -12,6 +12,7 @@ Allow: /water-monitoring
 Allow: /energy-monitoring
 Allow: /custom-engineering
 Allow: /shield
+Allow: /privacy
 Allow: /assets/
 Allow: /sitemap.xml
 

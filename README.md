@@ -1,125 +1,182 @@
-<div align="center">
-  <img src="https://res.cloudinary.com/dv8ruocdg/image/upload/f_auto,q_auto,w_200/skjal/logo.png" alt="SK Jalrakshak Logo" width="150" />
-  <h1>SK Jalrakshak Innovations Pvt Ltd</h1>
-  <p><strong>Deep Tech IoT & AI Analytics Platform for Water, Energy & Driver Safety</strong></p>
+# SK Jalrakshak Innovations Private Limited (SKJAL)
 
-  [![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)](https://www.skjal.in/)
-  [![ImmuniWeb Security Grade](https://img.shields.io/badge/Security_Score-Grade_A+-success?style=for-the-badge&logo=shield)](https://www.skjal.in/)
-  [![Tech Stack](https://img.shields.io/badge/Tech_Stack-HTML5_|_CSS3_|_GSAP_|_Three.js-blue?style=for-the-badge)]()
-  [![SEO Optimized](https://img.shields.io/badge/SEO-Optimized-brightgreen?style=for-the-badge&logo=google)]()
+> **Enterprise Industrial IoT, Edge Telemetry & Hardware Engineering Platform**  
+> Visakhapatnam, Andhra Pradesh, India &bull; CIN: U26517AP2025PTC119413 &bull; [https://www.skjal.in](https://www.skjal.in)
 
-</div>
+[![Vercel Production](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)](https://www.skjal.in/)
+[![Security Grade](https://img.shields.io/badge/Security_Score-Grade_A+-success?style=for-the-badge&logo=shield)](https://www.skjal.in/)
+[![Tech Stack](https://img.shields.io/badge/Tech_Stack-Vanilla_HTML5_|_CSS3_|_GSAP_|_Lenis-0A0A0A?style=for-the-badge)](https://www.skjal.in/)
+[![Zero NPM Dependencies](https://img.shields.io/badge/Dependencies-Zero_NPM_Runtime-brightgreen?style=for-the-badge)](https://www.skjal.in/)
 
 ---
 
-An enterprise-grade, high-performance web platform for **SK Jalrakshak Innovations**. We build advanced AI & IoT systems that monitor energy consumption, protect water infrastructure, and ensure human safety in real-time. The digital platform is engineered for **absolute maximum performance, elite security (A+ rating), and cinematic UX**.
+## 1. Project Overview
 
-## 🚀 Our Core Ecosystem
+SKJAL is the official digital engineering and product showcase platform for **SK Jalrakshak Innovations Private Limited**. The website serves as a high-precision, production-grade showcase for industrial telemetry products, environmental sensing, commercial vehicle fleet safety systems, and custom embedded engineering.
 
-### 💧 1. Jal Rakshak (Water Intelligence)
-Our flagship AI-driven water intelligence platform. Deploying advanced IoT sensors across India to monitor water quality, detect leaks, and optimize usage in real-time with predictive cloud analytics.
-
-### 🛡️ 2. S.H.I.E.L.D. (Driver Health & Safety)
-**S**mart **H**ealth **I**ntelligence for **E**rgonomic & **L**ive **D**riving. A patent-granted AI-powered hardware ecosystem that continuously tracks whole-body vibration exposure, road shock, and driver fatigue to deliver real-time, personalized safety protocols for commercial fleets.
-
-### ⚡ 3. Energy Meter Monitoring
-Offering detailed insights into energy consumption patterns across industrial facilities. By identifying inefficiencies and optimizing usage, organizations can significantly reduce energy costs, achieve predictive maintenance, and enhance sustainability.
+The platform is engineered with a **zero-framework, zero-runtime-dependency** vanilla architecture that delivers instantaneous initial paint times, buttery-smooth inertial scrolling, and a signature cinematic curved curtain page transition engine.
 
 ---
 
-## 🔒 Enterprise Security & Performance
+## 2. Technology Stack & Architectural Principles
 
-This platform has been rigorously audited and optimized to achieve the highest standards of web performance and security:
-
-* **Security (ImmuniWeb Grade A+)**:
-  * Strict Content-Security-Policy (CSP) & Subresource Integrity (SRI) enforcement.
-  * HSTS Preload (`max-age=63072000`) & X-Frame-Options configured to block clickjacking.
-  * Robust `Cross-Origin-Resource-Policy` setup protecting against cross-site data leaks.
-  * Comprehensive `robots.txt` blocking AI scrapers (GPTBot, ClaudeBot, Bytespider, etc.).
-* **Performance**:
-  * Advanced CSS GPU compositing (`will-change: transform`).
-  * Deferred/Async JavaScript execution (Three.js & GSAP) to prevent main-thread blocking.
-  * Adaptive reduced-motion (`prefers-reduced-motion`) support for accessibility.
-  * Immutable caching headers via Vercel Edge network.
-* **SEO Mastery**:
-  * Fully instrumented with Open Graph, Twitter Cards, Canonical URLs, and JSON-LD Schema.org structured data.
-  * Dynamic `sitemap.xml` properly linked for maximum indexation.
+- **Markup & Semantics**: Pure HTML5 with strict semantic hierarchy, Schema.org JSON-LD structured data (`Organization`, `Product`, `Service`, `BreadcrumbList`, `FAQPage`), and complete Open Graph / Twitter Card instrumentation.
+- **Styling**: Single production CSS bundle ([style.css](file:///c:/Users/koush/OneDrive/Desktop/skjal/assets/css/style.css)) utilizing standard CSS Custom Properties, disciplined modular scaling, and hardware-accelerated GPU transitions (`will-change: transform`).
+- **Motion & Interaction**: [GSAP 3](https://greensock.com/gsap/) with [ScrollTrigger](https://greensock.com/scrolltrigger/) for high-performance scroll-driven entrance reveals.
+- **Inertial Scrolling Engine**: [Lenis](https://lenis.studiofreight.com/) mathematical inertial smooth scrolling synchronized with ScrollTrigger.
+- **Global Page Transition Engine**: Custom self-contained continuous transition controller ([page-transition.js](file:///c:/Users/koush/OneDrive/Desktop/skjal/assets/js/page-transition.js)) featuring dynamic curtain overlays, curved SVG sweeps, centered animated brand typography, in-memory HTML prefetching, and zero document unload (zero white blink).
+- **Navigation Resilience**: Document-level event delegation across all mobile hamburger menus, accordion panels, and desktop navigation dropdowns, ensuring uninterrupted functionality across unlimited page transitions.
+- **Edge Deployment**: Optimized for Vercel Edge with clean extensionless routing (`cleanUrls`), immutable static asset caching, and strict HTTP response headers.
 
 ---
 
-## 🛠 Tech Stack & Architecture
+## 3. Directory Structure
 
-- **Frontend:** Vanilla HTML5 & CSS3 (Zero heavy frameworks for instant loading & zero CLS).
-- **Motion Engine:** [GSAP 3](https://greensock.com/gsap/) (GreenSock Animation Platform) paired with ScrollTrigger.
-- **Smooth Scrolling:** [Lenis](https://lenis.studiofreight.com/) mathematical smooth scroll injected across all pages.
-- **3D Rendering:** Three.js for interactive WebGL backgrounds.
-- **Routing:** Vercel Clean URLs (extensionless paths).
-- **Asset Delivery:** Cloudinary CDN optimized imagery with preload headers and high-fetch priority for zero-lag hero images.
+```text
+skjal/
+├── index.html                  # Primary hub (industrial IoT, products overview, services, FAQ)
+├── water-monitoring.html       # Product: Water Quality & Environmental Telemetry (Jal Rakshak)
+├── energy-monitoring.html      # Product: Industrial Energy Monitoring & 3-Phase Power Quality
+├── custom-engineering.html     # Service: Custom PCB Design, Firmware & Turnkey Gateways
+├── shield.html                 # Product: S.H.I.E.L.D. Commercial Fleet Driver Safety & Telemetry
+├── privacy.html                # Privacy Notice, Cookie Policy & Consent Preference Center
+├── 404.html                    # Custom 404 Error Handler with navigation recovery
+├── favicon.ico                 # Standard multi-resolution favicon
+├── robots.txt                  # Search engine and generative AI indexing rules
+├── sitemap.xml                 # XML sitemap with image metadata and canonical URLs
+├── sw.js                       # Service Worker for offline resilience & network-first caching
+├── vercel.json                 # Vercel Edge configuration (cleanUrls, headers, 301 redirects)
+├── _headers                    # Static edge server headers (Cloudflare Pages / Netlify compatible)
+├── .htaccess                   # Apache server configuration (HTTPS enforcement, clean URLs, CSP)
+├── .gitignore                  # Git exclusion rules for backups, logs, and environments
+├── .vercelignore               # Vercel deployment exclusions for tools, docs, and backups
+├── package.json                # Project manifest and developer command scripts
+├── README.md                   # Authoritative engineering documentation
+├── assets/
+│   ├── css/
+│   │   └── style.css           # Core stylesheet (design system, layouts, responsive rules)
+│   ├── fonts/                  # Self-hosted web fonts (Pixelify Sans, PP Neue Montreal)
+│   ├── img/                    # High-efficiency WebP imagery, brand assets, and product photos
+│   └── js/
+│       ├── main.js             # UI controllers, mobile menu delegation, Lenis, and GSAP
+│       ├── page-transition.js  # Global self-contained curved curtain transition engine
+│       └── vendor/             # Locally bundled vendor libraries (GSAP, ScrollTrigger, Lenis)
+├── docs/
+│   └── SECURITY_AND_BACKUP_PROCEDURES.md # Security policy and snapshot procedures
+└── tools/
+    ├── audit.js                # Deep audit suite (DOM structure, images, links, sitemap)
+    ├── backup.js               # Automated backup snapshot engine
+    ├── restore.js              # Snapshot verification and restore tool
+    ├── check-links.js          # Internal anchor and link integrity checker
+    ├── clean-urls.js           # URL normalization verification script
+    ├── dev-server.js           # Zero-dependency local Node.js development server
+    ├── test-server.js          # Route, redirection, and HTTP header test harness
+    └── validate-seo.js         # Comprehensive SEO, meta tag, and JSON-LD validator
+```
 
 ---
 
-## 💻 Local Development
+## 4. Canonical Routing & Redirection Matrix
 
-To run the platform locally and see your changes instantly:
+All public endpoints are strictly extensionless and served over HTTPS:
 
-1. Clone the repository and navigate to the root directory.
-2. Ensure you have Node.js installed — the site has **zero npm dependencies**, so there is nothing to install.
-3. Boot the custom local development server:
-   ```bash
-   npm run dev
-   ```
-4. Open your browser to `http://localhost:5173`.
-
-> **Note:** If you make changes to the routing logic in `tools/dev-server.js`, you must restart the dev server to see the changes.
+| Requested Path | HTTP Status | Canonical Destination | Description |
+| :--- | :---: | :--- | :--- |
+| `https://skjal.in/*` | 301 | `https://www.skjal.in/*` | Single-hop non-www to www redirect |
+| `http://*` | 301 | `https://www.skjal.in/*` | Single-hop HTTP to HTTPS enforcement |
+| `/index.html` | 301 | `/` | Clean homepage URL normalization |
+| `/water-monitoring.html` | 301 | `/water-monitoring` | Clean URL enforcement |
+| `/shield.html` | 301 | `/shield` | Clean URL enforcement |
+| `/energy-monitoring.html` | 301 | `/energy-monitoring` | Clean URL enforcement |
+| `/custom-engineering.html` | 301 | `/custom-engineering` | Clean URL enforcement |
+| `/privacy.html` | 301 | `/privacy` | Clean URL enforcement |
+| `/services`, `/services.html` | 301 | `/#services` | Deep-link hash shortcut |
+| `/industries`, `/industries.html`| 301 | `/#industries` | Deep-link hash shortcut |
+| `/about`, `/about.html` | 301 | `/#about` | Deep-link hash shortcut |
+| `/contact`, `/contact.html` | 301 | `/#contact` | Deep-link hash shortcut |
+| `/jal-rakshak` | 301 | `/water-monitoring` | Legacy product alias redirect |
+| `/water-monitoring-vizag` | 301 | `/water-monitoring` | Geo-targeted legacy alias redirect |
+| `/energy-monitoring-vizag` | 301 | `/energy-monitoring` | Geo-targeted legacy alias redirect |
 
 ---
 
-## ☁️ Deployment (Vercel)
+## 5. Security & HTTP Header Strategy
 
-This project is perfectly tuned for **Vercel** edge deployment.
-- **Clean URLs:** Extensionless routing (`/shield` instead of `/shield.html`) is strictly enforced via the custom `vercel.json` configuration.
-- **Security Headers:** All CSP, HSTS, and CORS policies are aggressively applied at the Vercel Edge.
-- **Deployment:** Pushing to the `main` branch on GitHub automatically triggers a production deployment.
+The website achieves an **ImmuniWeb Grade A+** security rating through strict header enforcement in [vercel.json](file:///c:/Users/koush/OneDrive/Desktop/skjal/vercel.json), [_headers](file:///c:/Users/koush/OneDrive/Desktop/skjal/_headers), and [.htaccess](file:///c:/Users/koush/OneDrive/Desktop/skjal/.htaccess):
+
+- **Content-Security-Policy (CSP Level 3)**:
+  `default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.skjal.in; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' mailto: https://wa.me; upgrade-insecure-requests`
+- **HTTP Strict Transport Security (HSTS)**: `max-age=63072000; includeSubDomains; preload`
+- **Anti-Clickjacking**: `X-Frame-Options: DENY` paired with inline JavaScript frame-busting on all pages.
+- **MIME Sniffing Prevention**: `X-Content-Type-Options: nosniff`
+- **Referrer Policy**: `strict-origin-when-cross-origin`
+- **Cross-Origin Protection**: `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Resource-Policy: same-site`
+- **Permissions Policy**: Camera, microphone, geolocation, and invasive APIs explicitly disabled (`=()`).
+
+---
+
+## 6. Caching & Persistence Architecture
+
+- **HTML Pages & Dynamic Routes**: `public, max-age=0, must-revalidate` (guarantees fresh content on every direct load or revalidation).
+- **Service Worker (`sw.js`)**: Strictly network-first for HTML, CSS, and JS navigation; bypasses `localhost` in development to prevent stale caches during editing. Cache store: `skjal-cache-v54-live`.
+- **Static Assets (`assets/img/*`, `assets/fonts/*`)**: `public, max-age=31536000, immutable`.
+- **Styles & Scripts**: Version-queried query strings (`?v=...`) combined with `public, max-age=86400, stale-while-revalidate=604800`.
+- **Application Storage**: Zero tracking cookies set by JavaScript; `localStorage` strictly utilized for `skjal_visited` (preloader state) and `skjal_cookie_consent` with complete error handling.
+
+---
+
+## 7. Local Development & Operational Commands
+
+### Prerequisites
+- Node.js installed (v16+ recommended).
+- Zero external package installation required (`npm install` is not necessary).
+
+### Boot Local Development Server
+```bash
+npm run dev
+# Starts zero-dependency HTTP dev server on http://localhost:5173
+```
+
+### Run Quality Assurance & Audit Suites
+```bash
+# 1. Syntax check JavaScript
+node -c assets/js/page-transition.js assets/js/main.js
+
+# 2. Deep DOM, image, and link audit
+node tools/audit.js
+
+# 3. Comprehensive SEO and structured data verification
+node tools/validate-seo.js
+
+# 4. Internal anchor and route checker
+node tools/check-links.js
+```
+
+### Create Automated Backup Snapshot
+```bash
+node tools/backup.js
+# Generates timestamped snapshot in backups/ (ignored by Git and Vercel)
+```
+
+---
+
+## 8. Deployment Workflow
+
+Deployments are triggered automatically upon pushing to the `main` branch:
 
 ```bash
 git add .
-git commit -m "feat: new updates"
-git push
+git commit -m "feat: description of changes"
+git push origin main
 ```
 
 ---
 
-## 📁 Repository Structure
+## 9. Contact & Enterprise Details
 
-```text
-├── index.html                  # Landing page (hero, products, FAQ, contact)
-├── about.html                  # Company page (team, story)
-├── jal-rakshak.html            # Product: Water Intelligence
-├── shield.html                 # Product: Driver Safety
-├── energy-monitoring.html      # Product: Energy Management
-├── 404.html                    # Not-found page
-├── assets/
-│   ├── css/
-│   │   └── style.css           # THE stylesheet — design system + all page styles
-│   ├── js/
-│   │   ├── main.js             # Global behavior: scroll reset, Lenis, GSAP animations,
-│   │   │                       #   theme, nav, preloader (all pages except 404)
-│   │   ├── page-transition.js  # Cross-page curtain transitions + hash-scroll handling
-│   │   │                       #   (every page)
-│   │   └── product.js          # Product pages only: cinematic scroll + contact modal
-│   ├── fonts/                  # PP Neue Montreal (self-hosted)
-│   └── img/                    # brand/ gallery/ heroes/ products/ team/
-├── tools/
-│   └── dev-server.js           # Local dev server, zero dependencies (port 5173)
-├── vercel.json                 # Production routing, redirects & security headers
-├── sitemap.xml                 # SEO sitemap
-├── robots.txt                  # Bot access control & AI scraper blocks
-└── package.json                # npm run dev — no dependencies
-```
-
-**Script loading contract:** every page loads `page-transition.js`; `index`, `about`, `jal-rakshak` and `energy-monitoring` load `main.js` (`shield` and `404` run on inline scripts + GSAP alone); the three product pages additionally load `product.js`. CSS is a single file (`style.css`) — bump its `?v=` query when editing, since production caches it as immutable.
-
----
-<div align="center">
-  <i>© 2026 SK Jalrakshak Innovations Pvt Ltd. All rights reserved.</i>
-</div>
+- **Company**: SK Jalrakshak Innovations Private Limited
+- **CIN**: U26517AP2025PTC119413
+- **Registered Lab**: Visakhapatnam, Andhra Pradesh, India
+- **Sales & Engineering**: [sales@skjal.in](mailto:sales@skjal.in)
+- **WhatsApp Support**: [+91 89788 59246](https://wa.me/918978859246)
+- **Official Website**: [https://www.skjal.in](https://www.skjal.in)

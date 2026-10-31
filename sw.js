@@ -4,23 +4,19 @@
  * Employs strictly Network-First for HTML, CSS, and JS to prevent stale state or cache mismatches.
  */
 
-const CACHE_NAME = 'skjal-cache-v41-live';
+const CACHE_NAME = 'skjal-cache-v54-live';
 
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html',
   '/water-monitoring',
-  '/water-monitoring.html',
   '/shield',
-  '/shield.html',
   '/energy-monitoring',
-  '/energy-monitoring.html',
   '/custom-engineering',
   '/privacy',
-  '/custom-engineering.html',
   '/404.html',
   '/favicon.ico',
   '/assets/fonts/pixelify-sans.woff2',
+  '/assets/fonts/pixelify-sans.ttf',
   '/assets/img/brand/logo.png',
   '/assets/img/brand/logo.webp',
   '/assets/img/brand/favicon-48x48.png',

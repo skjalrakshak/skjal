@@ -37,3 +37,9 @@ Thumbs.db
 # Environment Variables
 .env
 .env.*
+
+# Backups & Archives
+backups/
+backup/
+*.bak
+*.old
