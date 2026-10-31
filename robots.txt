@@ -1,6 +1,7 @@
 # ===========================================================
 # SK Jalrakshak Innovations — robots.txt
-# Hardened for security reconnaissance prevention
+# Enterprise SEO & Generative AI Indexing Policy
+# Website: https://skjal.in/
 # ===========================================================
 
 User-agent: *
@@ -11,10 +12,41 @@ Allow: /about
 Allow: /jal-rakshak
 Allow: /shield
 Allow: /energy-monitoring
+Allow: /custom-engineering
+Allow: /water-monitoring-vizag
+Allow: /energy-monitoring-vizag
 Allow: /assets/
 Allow: /sitemap.xml
 
-# ── Disallow: Administrative paths ──
+# ── Explicit AI & Search Engine Crawlers ──
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# ── Disallow: Administrative & sensitive paths ──
+Disallow: /tools/
+Disallow: /scratch/
+Disallow: /brain/
 Disallow: /admin/
 Disallow: /admin
 Disallow: /administrator/

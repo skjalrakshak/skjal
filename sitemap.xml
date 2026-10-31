@@ -1,27 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Homepage / Primary Hub -->
   <url>
     <loc>https://www.skjal.in/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.skjal.in/assets/img/heroes/skjal-iot-hero.webp</image:loc>
+      <image:title>Best IoT and OT Company in Vizag - SK Jalrakshak Hardware</image:title>
+      <image:caption>SKJAL custom electronics, embedded systems, and industrial edge computing devices in Visakhapatnam</image:caption>
+    </image:image>
   </url>
+
+  <!-- Water Monitoring / Jal Rakshak -->
   <url>
     <loc>https://www.skjal.in/jal-rakshak.html</loc>
-    <lastmod>2026-10-30</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.skjal.in/assets/img/products/jal-rakshak-new.webp</image:loc>
+      <image:title>Water Monitoring in Vizag - Jal Rakshak IoT Telemetry</image:title>
+      <image:caption>Solar-powered continuous industrial water quality analyzer deployed in Visakhapatnam</image:caption>
+    </image:image>
   </url>
-  <url>
-    <loc>https://www.skjal.in/shield.html</loc>
-    <lastmod>2026-10-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
+
+  <!-- Energy Monitoring -->
   <url>
     <loc>https://www.skjal.in/energy-monitoring.html</loc>
-    <lastmod>2026-10-30</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.skjal.in/assets/img/heroes/skjal-iot-hero.webp</image:loc>
+      <image:title>Energy Monitoring Companies in Vizag - AI Power Quality Meter</image:title>
+      <image:caption>Three-phase harmonic distortion and power factor tracking analyzer by SKJAL</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Custom PCB Design, Firmware & Turnkey Gateways -->
+  <url>
+    <loc>https://www.skjal.in/custom-engineering.html</loc>
+    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.skjal.in/assets/img/gallery/electronics-bench.webp</image:loc>
+      <image:title>Custom PCB Design Company in Vizag - Turnkey IIoT Gateways</image:title>
+      <image:caption>Multilayer circuit board layout, firmware debugging, and industrial gateway testing lab</image:caption>
+    </image:image>
+  </url>
+
+  <!-- S.H.I.E.L.D. Vehicle & Ergonomic Safety -->
+  <url>
+    <loc>https://www.skjal.in/shield.html</loc>
+    <lastmod>2026-10-31T06:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
