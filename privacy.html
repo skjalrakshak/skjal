@@ -55,7 +55,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet">
-  <link href="assets/css/style.css?v=20261031_v45_herospacing" rel="stylesheet" />
+  <link href="assets/css/style.css?v=20261031_v46_curtain_timing" rel="stylesheet" />
 
   <!-- Structured Data JSON-LD -->
   <script type="application/ld+json">
@@ -93,12 +93,38 @@
     ]
   }
   </script>
+  <script>
+    if (sessionStorage.getItem('isPageTransition') === 'true') {
+      document.write('<style>#skjal-entry-curtain { display: flex !important; } #skjal-preloader { display: none !important; }</style>');
+      document.documentElement.style.overflow = 'hidden';
+    }
+  </script>
 </head>
 
 <body id="top">
-  <!-- SKJAL Page Transition Curtain -->
+  <!-- SKJAL Page Transition Curtain (Hardcoded for zero-flash) -->
   <div class="skjal-transition-wrap" id="skjal-entry-curtain" style="display: none;">
-    <div class="skjal-transition-curtain"></div>
+    <div class="skjal-transition-panel">
+      <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0,100 C50,0 100,100 100,100 Z"></path>
+      </svg>
+      <svg class="skjal-curve-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0,0 C50,100 100,0 100,0 Z"></path>
+      </svg>
+    </div>
+    <div class="skjal-transition-text-wrap">
+      <div class="skjal-transition-text">
+        <div class="skjal-transition-word">
+          <span class="skjal-transition-char">S</span>
+          <span class="skjal-transition-char">K</span>
+        </div>
+        <div class="skjal-transition-word">
+          <span class="skjal-transition-char">J</span>
+          <span class="skjal-transition-char">A</span>
+          <span class="skjal-transition-char">L</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Preloader -->
@@ -595,7 +621,7 @@
   <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/vendor/lenis.min.js"></script>
   <script defer src="assets/js/main.js?v=20261031_v43_privacy"></script>
-  <script defer src="assets/js/page-transition.js?v=20261031_v40_cachefix"></script>
+  <script defer src="assets/js/page-transition.js?v=20261031_v46_curtain_timing"></script>
 </body>
 
 </html>

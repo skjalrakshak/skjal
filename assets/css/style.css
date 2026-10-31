@@ -3578,6 +3578,7 @@ a:hover .arrow-circle {
   overflow: hidden;
   pointer-events: none;
   will-change: transform, opacity;
+  opacity: 0;
 }
 
 .skjal-transition-text {
@@ -3598,6 +3599,8 @@ a:hover .arrow-circle {
 .skjal-transition-char {
   display: inline-block;
   will-change: transform, opacity;
+  opacity: 0;
+  transform: translateY(120%);
 }
 
 /* Lenis Smooth Scroll Engine */
