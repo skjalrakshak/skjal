@@ -201,6 +201,7 @@ button, a {
   pointer-events: none;
   user-select: none;
   will-change: transform;
+  box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
 }
 
 .preloader-brand-wrapper,
@@ -1325,6 +1326,19 @@ a:hover .arrow-circle {
   display: block;
   color: var(--blue);
   font-style: normal;
+}
+
+/* Cinematic Line Mask Reveal (nrkportfolio.in Hero Standard) */
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.05em;
+  margin-bottom: -0.05em;
+}
+
+.hero-line-inner {
+  display: block;
+  will-change: transform;
 }
 
 .hero-lede {

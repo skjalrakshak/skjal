@@ -259,7 +259,7 @@
               gsap.to(preloader, {
                 yPercent: -100,
                 duration: 1.15,
-                ease: 'power3.inOut',
+                ease: 'power4.inOut',
                 onComplete: () => {
                   preloader.style.display = 'none';
                   const dl = document.querySelector('.header .brand-logo');
@@ -312,6 +312,121 @@
   } else {
     enablePageScroll();
   }
+
+  // 1b. Landing Page Curtain Reveal Animation (nrkportfolio.in Luxury Standard)
+  function initLandingReveal() {
+    if (!window.gsap) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const heroTitleLines = document.querySelectorAll('.hero-line-inner');
+    const heroLede = document.querySelector('.hero-lede');
+    const heroActions = document.querySelector('.hero-actions');
+    const heroVisual = document.querySelector('.hero-visual');
+    const domainItems = document.querySelectorAll('.domain-band .domain-item');
+    const headerWrap = document.querySelector('.header-wrap');
+    const isTransition = sessionStorage.getItem('isPageTransition') === 'true';
+
+    if (prefersReducedMotion) {
+      if (headerWrap) gsap.set(headerWrap, { opacity: 1, y: 0 });
+      return;
+    }
+
+    // Set initial hidden states before entrance
+    if (headerWrap && !isTransition) {
+      gsap.set(headerWrap, { y: -60, opacity: 0 });
+    }
+    if (heroTitleLines.length && !isTransition) {
+      gsap.set(heroTitleLines, { yPercent: 125 });
+    }
+    if (heroLede && !isTransition) {
+      gsap.set(heroLede, { y: 35, opacity: 0 });
+    }
+    if (heroActions && !isTransition) {
+      gsap.set(heroActions, { y: 30, opacity: 0 });
+    }
+    if (heroVisual && !isTransition) {
+      gsap.set(heroVisual, { y: 50, scale: 0.94, opacity: 0 });
+    }
+    if (domainItems.length && !isTransition) {
+      gsap.set(domainItems, { y: 25, opacity: 0 });
+    }
+
+    const startReveal = () => {
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+      // 1. Header slides smoothly into place (from portfolio Navbar drop)
+      if (headerWrap && !isTransition) {
+        tl.to(headerWrap, {
+          y: 0,
+          opacity: 1,
+          duration: 1.4,
+          ease: 'power4.out',
+          clearProps: 'transform,opacity'
+        }, 0.1);
+      }
+
+      // 2. Headline typography lines reveal smoothly from overflow mask
+      if (heroTitleLines.length && !isTransition) {
+        tl.to(heroTitleLines, {
+          yPercent: 0,
+          duration: 1.3,
+          stagger: 0.12,
+          ease: 'power4.out'
+        }, 0.15);
+      }
+
+      // 3. Hero Visual expands with rich scale and glide
+      if (heroVisual && !isTransition) {
+        tl.to(heroVisual, {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 1.45,
+          ease: 'power3.out'
+        }, 0.25);
+      }
+
+      // 4. Hero description paragraph fades and glides up
+      if (heroLede && !isTransition) {
+        tl.to(heroLede, {
+          y: 0,
+          opacity: 1,
+          duration: 1.1,
+          ease: 'power3.out'
+        }, 0.4);
+      }
+
+      // 5. Action CTA buttons slide in
+      if (heroActions && !isTransition) {
+        tl.to(heroActions, {
+          y: 0,
+          opacity: 1,
+          duration: 1.0,
+          ease: 'power3.out'
+        }, 0.52);
+      }
+
+      // 6. Domain capabilities band items stagger in
+      if (domainItems.length && !isTransition) {
+        tl.to(domainItems, {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          stagger: 0.08,
+          ease: 'power3.out'
+        }, 0.62);
+      }
+    };
+
+    const preloaderEl = document.getElementById('skjal-preloader');
+    if (preloaderEl && preloaderEl.style.display !== 'none' && !isTransition) {
+      window.addEventListener('preloader:done', startReveal, { once: true });
+    } else {
+      startReveal();
+    }
+  }
+
+  initLandingReveal();
 
   // 2. Dynamic Year
   const yearEl = document.getElementById('year');
