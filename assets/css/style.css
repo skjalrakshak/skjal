@@ -2587,7 +2587,7 @@ a:hover .arrow-circle {
    Product Detail & Inner Pages
    ========================================================================== */
 .product-hero {
-  padding: clamp(64px, 8.5vh, 96px) 0 clamp(36px, 4.5vw, 56px);
+  padding: clamp(104px, 13vh, 136px) 0 clamp(36px, 4.5vw, 56px);
   background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
@@ -3350,7 +3350,7 @@ a:hover .arrow-circle {
     padding-top: 56px;
   }
   .product-hero {
-    padding-top: 76px !important;
+    padding-top: 92px !important;
     padding-bottom: 36px !important;
   }
   .product-hero .section-heading {
