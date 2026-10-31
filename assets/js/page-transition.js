@@ -15,9 +15,8 @@
 
 // Global curtain builder with Animated SKJAL Typography
 function buildCurtainHTML(panelTransform, curveBottomScale = '0', curveTopScale = '0') {
-    const charStyle = 'style="transform:translateY(120%); opacity:0;"';
     return `
-        <div class="skjal-transition-panel" style="transform:${panelTransform}">
+        <div class="skjal-transition-panel" style="transform:${panelTransform}; z-index: 1;">
             <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none" style="transform:scaleY(${curveTopScale})">
                 <path d="M0,100 C50,0 100,100 100,100 Z"></path>
             </svg>
@@ -25,14 +24,16 @@ function buildCurtainHTML(panelTransform, curveBottomScale = '0', curveTopScale 
                 <path d="M0,0 C50,100 100,0 100,0 Z"></path>
             </svg>
         </div>
-        <div class="skjal-transition-text-wrap" style="opacity:0;" aria-hidden="true">
+        <div class="skjal-transition-text-wrap" style="z-index: 100; opacity: 0;" aria-hidden="true">
             <div class="skjal-transition-text">
                 <div class="skjal-transition-word">
-                    <span class="skjal-transition-char" ${charStyle}>S</span>
-                    <span class="skjal-transition-char" ${charStyle}>K</span>
-                    <span class="skjal-transition-char" ${charStyle}>J</span>
-                    <span class="skjal-transition-char" ${charStyle}>A</span>
-                    <span class="skjal-transition-char" ${charStyle}>L</span>
+                    <span class="skjal-transition-char">S</span>
+                    <span class="skjal-transition-char">K</span>
+                </div>
+                <div class="skjal-transition-word" style="margin-left: 0.28em;">
+                    <span class="skjal-transition-char">J</span>
+                    <span class="skjal-transition-char">A</span>
+                    <span class="skjal-transition-char">L</span>
                 </div>
             </div>
         </div>`;
@@ -190,36 +191,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Play Exit Timeline (Slowed down by ~30% for luxury cinematic tempo):
-        // 1. Header slides up softly (0.5s)
-        // 2. Curtain sweeps UP from bottom covering screen (0.9s)
-        // 3. SKJAL letters animate gracefully up into the exact center of the curtain (0.55s)
-        // 4. Elegant hold beat in the dark center (0.35s)
+        // 1. Header slides up softly (0.45s)
+        // 2. Curtain sweeps UP from bottom covering screen (0.85s)
+        // 3. SKJAL letters animate gracefully up into the exact center of the curtain (0.5s)
+        // 4. Elegant hold beat in the dark center (0.45s)
         let exitTl;
         if (window.gsap) {
             exitTl = window.gsap.timeline();
             if (headerWrap) {
-                exitTl.to(headerWrap, { yPercent: -100, opacity: 0, duration: 0.5, ease: "power3.inOut" }, 0);
+                exitTl.to(headerWrap, { yPercent: -100, opacity: 0, duration: 0.45, ease: "power3.inOut" }, 0);
             }
             if (currentMain) {
-                exitTl.to(currentMain, { y: "-6dvh", duration: 0.9, ease: "power3.inOut" }, 0);
+                exitTl.to(currentMain, { y: "-6dvh", duration: 0.85, ease: "power3.inOut" }, 0);
             }
-            exitTl.to(panel, { y: "0%", duration: 0.9, ease: "power3.inOut" }, 0);
-            exitTl.to(curveTop, { scaleY: 1, duration: 0.9, ease: "power3.inOut" }, 0);
+            exitTl.to(panel, { y: "0%", duration: 0.85, ease: "power3.inOut" }, 0);
+            exitTl.to(curveTop, { scaleY: 1, duration: 0.85, ease: "power3.inOut" }, 0);
 
-            // Make text wrapper active on dark curtain
-            exitTl.set(textWrap, { opacity: 1 }, 0.45);
+            // Make text wrapper active on dark curtain smoothly as panel sweeps over center
+            exitTl.to(textWrap, { opacity: 1, duration: 0.25, ease: "power2.out" }, 0.35);
 
             // Letters rise up gracefully into view
             exitTl.to(chars, {
                 yPercent: 0,
                 opacity: 1,
-                duration: 0.55,
+                duration: 0.5,
                 ease: "power3.out",
                 stagger: 0.04
-            }, 0.48);
+            }, 0.38);
 
-            // Calm hold beat
-            exitTl.to({}, { duration: 0.35 });
+            // Calm hold beat: SKJAL held proudly in center of dark curtain
+            exitTl.to({}, { duration: 0.45 });
         }
 
         // Wait for both exit animation AND page fetch
@@ -332,9 +333,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 1. Letters glide UPWARD and fade out gracefully into the upward sweep
             entryTl.to(chars, {
-                yPercent: -100,
+                yPercent: -120,
                 opacity: 0,
-                duration: 0.45,
+                duration: 0.4,
                 ease: "power3.in",
                 stagger: 0.02
             }, 0);
@@ -343,35 +344,35 @@ document.addEventListener("DOMContentLoaded", () => {
             entryTl.to(textWrap, {
                 y: -sweepOffset,
                 opacity: 0,
-                duration: 0.95,
+                duration: 0.85,
                 ease: "power3.inOut"
-            }, 0.15);
+            }, 0.12);
 
             // 3. Curtain panel sweeps UP to top, cleanly revealing the newly loaded page
             entryTl.to(panel, {
                 y: -sweepOffset,
-                duration: 0.95,
+                duration: 0.85,
                 ease: "power4.inOut"
-            }, 0.15);
+            }, 0.12);
 
             // 4. Bottom curve flattens
             entryTl.to(panelBottom, {
                 scaleY: 0,
-                duration: 0.95,
+                duration: 0.85,
                 ease: "power4.inOut"
-            }, 0.15);
+            }, 0.12);
 
             // 5. Parallax content up
             if (currentMain) {
-                entryTl.fromTo(currentMain, { y: "6dvh" }, { y: "0dvh", duration: 0.95, ease: "power4.inOut", clearProps: "y" }, 0.15);
+                entryTl.fromTo(currentMain, { y: "6dvh" }, { y: "0dvh", duration: 0.85, ease: "power4.inOut", clearProps: "y" }, 0.12);
             }
 
             // 6. Header container drops down into place cleanly
             if (headerWrap) {
                 entryTl.fromTo(headerWrap, 
                     { yPercent: -100, opacity: 0 }, 
-                    { yPercent: 0, opacity: 1, duration: 0.8, ease: "power4.out", clearProps: "all" }, 
-                    0.25
+                    { yPercent: 0, opacity: 1, duration: 0.75, ease: "power4.out", clearProps: "all" }, 
+                    0.22
                 );
             }
         } else {
@@ -393,59 +394,57 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Bind all navigation links to the seamless transition controller
-    function bindTransitionLinks() {
-        document.querySelectorAll("a:not([data-transition-bound])").forEach(link => {
-            link.dataset.transitionBound = 'true';
+    // Global document-level event delegation for seamless internal navigation
+    document.addEventListener("click", function(e) {
+        const link = e.target.closest("a");
+        if (!link) return;
 
-            // Prefetch destination page on hover/touch for instantaneous response
-            link.addEventListener("mouseenter", function() {
-                prefetchPage(this.href);
-            }, { passive: true });
-            link.addEventListener("touchstart", function() {
-                prefetchPage(this.href);
-            }, { passive: true });
+        const href = link.getAttribute("href");
+        const target = link.getAttribute("target");
 
-            link.addEventListener("click", function(e) {
-                if (e.defaultPrevented) return;
-                if (isTransitioning) { e.preventDefault(); return; }
+        if (!href || href.startsWith("mailto:") || href.startsWith("tel:") || target === "_blank") return;
+        if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+        if (link.hostname !== window.location.hostname) return;
 
-                const href = this.getAttribute("href");
-                const target = this.getAttribute("target");
+        const currentUrl = new URL(window.location.href);
+        const linkUrl = new URL(link.href);
+        const currentPath = normalizePathname(currentUrl.pathname);
+        const linkPath = normalizePathname(linkUrl.pathname);
 
-                if (!href || href.startsWith("mailto:") || href.startsWith("tel:") || target === "_blank") return;
-                if (e.ctrlKey || e.metaKey || e.shiftKey) return;
-                if (this.hostname !== window.location.hostname) return;
-
-                const currentUrl = new URL(window.location.href);
-                const linkUrl = new URL(this.href);
-                const currentPath = normalizePathname(currentUrl.pathname);
-                const linkPath = normalizePathname(linkUrl.pathname);
-
-                // If link is on the same page (hash jump)
-                if (currentPath === linkPath && currentUrl.search === linkUrl.search) {
-                    const hash = linkUrl.hash || (href.startsWith("#") ? href : '');
-                    if (hash) {
-                        e.preventDefault();
-                        closeMenus();
-                        scrollToHashTarget(hash, false);
-                        history.pushState(null, null, hash);
-                    }
-                    return;
-                }
-
-                // Internal page transition
+        // If link is on the same page (hash jump)
+        if (currentPath === linkPath && currentUrl.search === linkUrl.search) {
+            const hash = linkUrl.hash || (href.startsWith("#") ? href : '');
+            if (hash) {
                 e.preventDefault();
-                if (!window.gsap) {
-                    window.location.href = href;
-                    return;
-                }
+                closeMenus();
+                scrollToHashTarget(hash, false);
+                history.pushState(null, null, hash);
+            }
+            return;
+        }
 
-                const targetHash = linkUrl.hash || '';
-                executeSeamlessTransition(this.href, targetHash, true);
-            });
-        });
-    }
+        // Internal page transition
+        e.preventDefault();
+        if (isTransitioning) return;
+        if (!window.gsap) {
+            window.location.href = href;
+            return;
+        }
+
+        const targetHash = linkUrl.hash || '';
+        executeSeamlessTransition(link.href, targetHash, true);
+    });
+
+    // In-memory prefetching on hover & touch via event delegation
+    document.addEventListener("mouseover", function(e) {
+        const link = e.target.closest("a");
+        if (link && link.href) prefetchPage(link.href);
+    }, { passive: true });
+
+    document.addEventListener("touchstart", function(e) {
+        const link = e.target.closest("a");
+        if (link && link.href) prefetchPage(link.href);
+    }, { passive: true });
 
     // Clean up any lingering transition elements
     document.querySelectorAll('.skjal-transition-wrap').forEach(c => c.remove());
@@ -454,6 +453,4 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.location.hash) {
         scrollToHashTarget(window.location.hash, true);
     }
-
-    bindTransitionLinks();
 });

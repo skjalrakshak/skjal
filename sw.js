@@ -4,7 +4,7 @@
  * Employs strictly Network-First for HTML, CSS, and JS to prevent stale state or cache mismatches.
  */
 
-const CACHE_NAME = 'skjal-cache-v54-live';
+const CACHE_NAME = 'skjal-cache-v55-live';
 
 const PRECACHE_ASSETS = [
   '/',

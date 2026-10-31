@@ -3545,6 +3545,7 @@ a:hover .arrow-circle {
   background: #0A0A0A;
   position: absolute;
   inset: 0;
+  z-index: 1;
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -3575,9 +3576,12 @@ a:hover .arrow-circle {
 }
 
 .skjal-transition-text-wrap {
-  position: relative;
-  z-index: 2;
-  overflow: hidden;
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   pointer-events: none;
   will-change: transform, opacity;
   opacity: 0;
@@ -3607,7 +3611,6 @@ a:hover .arrow-circle {
   display: inline-block;
   will-change: transform, opacity;
   opacity: 0;
-  transform: translateY(120%);
 }
 
 /* Lenis Smooth Scroll Engine */
