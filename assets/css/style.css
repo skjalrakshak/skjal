@@ -2070,16 +2070,15 @@ a:hover .arrow-circle {
 }
 
 .product-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
-  font-size: 12px;
+  gap: 6px;
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--ink);
+  text-decoration: none;
+  border: none;
+  border-top: none;
 }
 
 .product-link:hover {
@@ -4049,29 +4048,32 @@ html.lenis body {
 }
 
 .product-title-link:hover,
-.product-title-link:focus-visible {
+.product-title-link:focus,
+.product-title-link:focus-visible,
+.product-title-link:active {
   color: #0b0d10 !important;
-  text-decoration: underline !important;
+  text-decoration: none !important;
 }
 
 .product-actions {
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important; /* Centered in middle */
-  margin-top: auto !important; /* Locks all action rows & buttons into a perfectly aligned horizontal line */
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-top: auto !important; /* Locks all action rows into a perfectly aligned horizontal line */
   padding-top: 14px !important;
   width: 100% !important;
-  border-top: 1px solid #e2e8f0 !important;
-  text-align: center !important;
+  border-top: none !important; /* Strictly no dividing line above buttons/text */
+  text-align: left !important;
 }
 
-/* Minimal Buy Now Button: Centered in the middle, sleek dark pill */
+/* Minimal Buy Now Button: sleek dark pill aligned left */
 .btn-buy-now {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 8px 26px !important;
-  margin: 0 auto !important;
+  padding: 8px 22px !important;
+  margin: 0 !important;
   background: #0f172a !important;
   color: #ffffff !important;
   font-size: 12.5px !important;
@@ -4080,17 +4082,51 @@ html.lenis body {
   border-radius: 9999px !important;
   border: 1px solid #0f172a !important;
   text-decoration: none !important;
-  transition: transform 0.46s cubic-bezier(0.76, 0, 0.24, 1) !important;
+  transition: transform 0.25s ease, background-color 0.25s ease !important;
   box-shadow: none !important;
+  flex-shrink: 0 !important;
 }
 
 .btn-buy-now:hover,
 .btn-buy-now:focus-visible {
-  background: #0f172a !important;
-  border-color: #0f172a !important;
+  background: #1e293b !important;
+  border-color: #1e293b !important;
   color: #ffffff !important;
   transform: translateY(-1px) !important;
   box-shadow: none !important;
+}
+
+.product-card .product-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-top: none !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #0f172a !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+  white-space: nowrap !important;
+}
+
+.product-card .product-link span {
+  display: inline-block !important;
+  transition: transform 0.2s ease !important;
+  color: var(--primary, #FF5500) !important;
+}
+
+.product-card .product-link:hover,
+.product-card .product-link:focus-visible {
+  color: var(--primary, #FF5500) !important;
+  text-decoration: none !important;
+}
+
+.product-card .product-link:hover span,
+.product-card .product-link:focus-visible span {
+  transform: translateX(3px) !important;
 }
 
 .product-arrow-btn {
