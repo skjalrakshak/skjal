@@ -84,11 +84,10 @@
       let isFinished = false;
       let morphStarted = false;
       const startTime = Date.now();
-      const isReturnVisitor = !!localStorage.getItem('skjal_visited');
-      const minDisplayTime = isReturnVisitor ? 180 : 850;
-      const counterVal = { val: isReturnVisitor ? 75 : 0 };
-      let displayedVal = counterVal.val;
-      if (counterEl) counterEl.textContent = displayedVal;
+      const minDisplayTime = 900;
+      const counterVal = { val: 0 };
+      let displayedVal = 0;
+      if (counterEl) counterEl.textContent = '0';
       try { localStorage.setItem('skjal_visited', 'true'); } catch (e) {}
 
       const gatingImages = () =>
@@ -110,18 +109,22 @@
         });
 
         const elapsed = Date.now() - startTime;
-        let target = images.length > 0 ? Math.floor((loaded / images.length) * 100) : Math.floor((elapsed / minDisplayTime) * 100);
-        target = Math.min(100, Math.max(counterVal.val, target));
+        const timeRatio = Math.min(1, elapsed / minDisplayTime);
+        const imgRatio = images.length > 0 ? (loaded / images.length) : timeRatio;
+
+        // Progress reaches at most 95 during loading phase; finishPreloader drives cleanly 95 -> 100
+        const progressTarget = Math.min(95, Math.floor(Math.max(timeRatio * 92, imgRatio * 95)));
+        const target = Math.max(displayedVal, progressTarget);
 
         if (window.gsap) {
           gsap.to(counterVal, {
             val: target,
-            duration: 0.4,
+            duration: 0.35,
             ease: 'power2.out',
             overwrite: 'auto',
             onUpdate: () => {
               if (counterEl) {
-                const nextVal = Math.min(100, Math.floor(counterVal.val));
+                const nextVal = Math.min(95, Math.floor(counterVal.val));
                 if (nextVal > displayedVal) {
                   displayedVal = nextVal;
                   counterEl.textContent = displayedVal;
@@ -136,7 +139,7 @@
           }
         }
 
-        if ((loaded === images.length || elapsed >= minDisplayTime) && !isFinished) {
+        if (elapsed >= minDisplayTime && (loaded === images.length || document.readyState === 'complete') && !isFinished) {
           finishPreloader();
         }
       };
@@ -262,8 +265,8 @@
           gsap.killTweensOf(counterVal);
           gsap.to(counterVal, {
             val: 100,
-            duration: 0.35,
-            ease: 'power2.out',
+            duration: 0.4,
+            ease: 'power3.out',
             overwrite: true,
             onUpdate: () => {
               if (counterEl) {
@@ -281,7 +284,7 @@
               window.dispatchEvent(new Event('preloader:done'));
               gsap.to(preloader, {
                 yPercent: -100,
-                duration: 1.15,
+                duration: 1.05,
                 ease: 'power4.inOut',
                 onComplete: () => {
                   preloader.style.display = 'none';
@@ -293,13 +296,13 @@
                 }
               });
               if (counterEl) {
-                gsap.to(counterEl, { opacity: 0, y: 15, duration: 0.45, ease: 'power2.in' });
+                gsap.to(counterEl, { opacity: 0, y: 15, duration: 0.4, ease: 'power2.in' });
               }
             }
           });
         } else {
           displayedVal = 100;
-          counterEl.textContent = 100;
+          if (counterEl) counterEl.textContent = 100;
           preloader.style.display = 'none';
           const dl = document.querySelector('.site-brand .brand-logo') || document.querySelector('.brand-logo');
           const dt = document.querySelector('.site-brand .brand-wording strong') || document.querySelector('.brand-wording strong');
@@ -309,17 +312,18 @@
         }
       };
 
+      let isWindowLoaded = document.readyState === 'complete';
+      window.addEventListener('load', () => {
+        isWindowLoaded = true;
+      });
+
       const interval = setInterval(() => {
         updateProgress();
-        if (!isFinished && Date.now() - startTime >= minDisplayTime && document.readyState === 'complete') {
+        const elapsed = Date.now() - startTime;
+        if (!isFinished && elapsed >= minDisplayTime && (isWindowLoaded || document.readyState === 'complete')) {
           finishPreloader();
         }
-      }, 80);
-
-      window.addEventListener('load', () => {
-        clearInterval(interval);
-        finishPreloader();
-      });
+      }, 50);
 
       // Failsafe timeout
       setTimeout(() => {
@@ -329,7 +333,7 @@
         const dt = document.querySelector('.site-brand .brand-wording strong') || document.querySelector('.brand-wording strong');
         if (dl) dl.style.opacity = '1';
         if (dt) dt.style.opacity = '1';
-      }, 2200);
+      }, 2400);
 
       updateProgress();
     }
