@@ -3576,6 +3576,42 @@ a:hover .arrow-circle {
   transform-origin: top center;
 }
 
+.skjal-transition-text-wrap {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+
+.skjal-transition-text {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.skjal-transition-word {
+  display: flex;
+  overflow: hidden;
+}
+
+.skjal-transition-char {
+  display: inline-block;
+  will-change: transform, opacity;
+  opacity: 0;
+  transform: translateY(120%);
+}
+
 /* Lenis Smooth Scroll Engine */
 html.lenis,
 html.lenis body {

@@ -1,16 +1,19 @@
 /**
  * SKJAL - Signature Curved Curtain Page Transition Controller
- * Continuous, Zero-Blink Seamless Transition Engine
+ * Continuous, Zero-Blink Seamless Transition Engine with Centered Animated Brand Typography
  * 
  * Flow:
  *   1. Exit sweep: Curved curtain sweeps UP from bottom, covering viewport in rich #0A0A0A black.
- *   2. DOM swap: While screen is covered, new page content (main, nav, mobile drawer, footer) is swapped seamlessly.
- *   3. Entry reveal: Curved curtain sweeps UP out of viewport, cleanly revealing the newly loaded page with parallax and header slide-in.
- *   4. Zero document unload = ZERO WHITE BLINK.
+ *   2. Brand animation: Animated SKJAL typography rises gracefully into the center of the dark curtain.
+ *   3. DOM swap: While screen is covered, new page content (main, nav, mobile drawer, footer) is swapped seamlessly.
+ *   4. Entry reveal: Letters glide upward into the sweep, and the curved curtain sweeps UP out of viewport,
+ *      cleanly revealing the newly loaded page with parallax and header slide-in.
+ *   5. Zero document unload = ZERO WHITE BLINK.
  */
 
-// Global curtain builder (Pure Cinematic Curved Curtain Wipe)
+// Global curtain builder with Animated SKJAL Typography
 function buildCurtainHTML(panelTransform, curveBottomScale = '0', curveTopScale = '0') {
+    const charStyle = 'style="transform:translateY(120%); opacity:0;"';
     return `
         <div class="skjal-transition-panel" style="transform:${panelTransform}">
             <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none" style="transform:scaleY(${curveTopScale})">
@@ -19,6 +22,17 @@ function buildCurtainHTML(panelTransform, curveBottomScale = '0', curveTopScale 
             <svg class="skjal-curve-bottom" viewBox="0 0 100 100" preserveAspectRatio="none" style="transform:scaleY(${curveBottomScale})">
                 <path d="M0,0 C50,100 100,0 100,0 Z"></path>
             </svg>
+        </div>
+        <div class="skjal-transition-text-wrap" style="opacity:0;" aria-hidden="true">
+            <div class="skjal-transition-text">
+                <div class="skjal-transition-word">
+                    <span class="skjal-transition-char" ${charStyle}>S</span>
+                    <span class="skjal-transition-char" ${charStyle}>K</span>
+                    <span class="skjal-transition-char" ${charStyle}>J</span>
+                    <span class="skjal-transition-char" ${charStyle}>A</span>
+                    <span class="skjal-transition-char" ${charStyle}>L</span>
+                </div>
+            </div>
         </div>`;
 }
 
@@ -102,12 +116,16 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const panel = wrap.querySelector(".skjal-transition-panel");
             const panelBottom = wrap.querySelector(".skjal-curve-bottom");
+            const textWrap = wrap.querySelector(".skjal-transition-text-wrap");
+            const chars = wrap.querySelectorAll(".skjal-transition-char");
             const sweepOffset = window.innerHeight + (window.innerWidth * 0.15);
             const headerElements = document.querySelectorAll('.site-logo-wrap, .main-nav, .header-wrap');
 
             if (window.gsap) {
                 window.gsap.set(mainContainer, { opacity: 1 });
                 window.gsap.set(panelBottom, { scaleY: 1 });
+                if (textWrap) window.gsap.set(textWrap, { opacity: 1, y: 0 });
+                if (chars) window.gsap.set(chars, { opacity: 1, yPercent: 0 });
                 if (footer) {
                     footer.style.visibility = 'hidden';
                     footer.style.opacity = '0';
@@ -137,37 +155,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 tl.call(() => scrollToHashTarget(window.location.hash, true), [], 0);
 
+                // SKJAL name glides UP smoothly into the sweep
+                if (chars && chars.length) {
+                    tl.to(chars, {
+                        yPercent: -100,
+                        opacity: 0,
+                        duration: 0.45,
+                        ease: "power3.in",
+                        stagger: 0.02
+                    }, 0);
+                }
+
+                if (textWrap) {
+                    tl.to(textWrap, {
+                        y: -sweepOffset,
+                        opacity: 0,
+                        duration: 0.95,
+                        ease: "power3.inOut"
+                    }, 0.15);
+                }
+
                 // Pure Curtain panel sweeps UP to reveal page
                 tl.to(panel, {
                     y: -sweepOffset,
-                    duration: 0.75,
+                    duration: 0.95,
                     ease: "power4.inOut",
                     overwrite: "auto"
-                }, 0);
+                }, 0.15);
 
                 // Bottom curve flattens
                 tl.to(panelBottom, {
                     scaleY: 0,
-                    duration: 0.75,
+                    duration: 0.95,
                     ease: "power4.inOut"
-                }, 0);
+                }, 0.15);
 
                 // Parallax page content
                 if (mainContainer) {
-                    tl.fromTo(mainContainer, { y: "6dvh" }, { y: "0dvh", duration: 0.75, ease: "power4.inOut", clearProps: "y" }, 0);
+                    tl.fromTo(mainContainer, { y: "6dvh" }, { y: "0dvh", duration: 0.95, ease: "power4.inOut", clearProps: "y" }, 0.15);
                 }
 
                 // Slide header down into place
                 if (headerElements.length) {
                     tl.fromTo(headerElements, 
                         { yPercent: -100, opacity: 0 }, 
-                        { yPercent: 0, opacity: 1, duration: 0.65, ease: "power4.out", clearProps: "all" }, 
-                        0.15
+                        { yPercent: 0, opacity: 1, duration: 0.8, ease: "power4.out", clearProps: "all" }, 
+                        0.25
                     );
                 }
 
                 if (footer) {
-                    tl.to(footer, { visibility: 'visible', opacity: 1, duration: 0.3, ease: "power2.out" }, 0.5);
+                    tl.to(footer, { visibility: 'visible', opacity: 1, duration: 0.35, ease: "power2.out" }, 0.6);
                 }
             } else {
                 wrap.remove();
@@ -213,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // =============================================
-    // 2. CONTINUOUS BLINK-FREE TRANSITION (Fetch Swap)
+    // 2. CONTINUOUS BLINK-FREE TRANSITION (Fetch Swap with Brand Typography)
     // =============================================
     async function executeSeamlessTransition(href, targetHash, pushToHistory = true) {
         if (isTransitioning) return;
@@ -251,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
         }
 
-        // Inject Exit Curtain (Pure curved curtain panel, zero preloader elements)
+        // Inject Exit Curtain with text hidden by default
         const exitCurtain = document.createElement('div');
         exitCurtain.className = 'skjal-transition-wrap';
         exitCurtain.innerHTML = buildCurtainHTML('translateY(100%)', '0', '1');
@@ -261,23 +299,46 @@ document.addEventListener("DOMContentLoaded", () => {
         const panel = exitCurtain.querySelector(".skjal-transition-panel");
         const curveTop = exitCurtain.querySelector(".skjal-curve-top");
         const panelBottom = exitCurtain.querySelector(".skjal-curve-bottom");
+        const textWrap = exitCurtain.querySelector(".skjal-transition-text-wrap");
+        const chars = exitCurtain.querySelectorAll(".skjal-transition-char");
         const headerElements = document.querySelectorAll('.site-logo-wrap, .main-nav, .header-wrap');
         const currentMain = document.getElementById('main') || document.querySelector('main');
 
-        // Play Exit Timeline:
-        // 1. Header slides up out of view
-        // 2. Curtain sweeps UP from bottom covering the screen with curved leading edge
+        // Set initial positions cleanly via GSAP (avoids any split-second text flash)
+        window.gsap.set(chars, { yPercent: 120, opacity: 0 });
+        window.gsap.set(textWrap, { opacity: 0, y: 0 });
+
+        // Play Exit Timeline (Slowed down by ~30% for a smooth, cinematic tempo):
+        // 1. Header slides up softly (0.5s)
+        // 2. Curtain sweeps UP from bottom covering screen (0.9s)
+        // 3. SKJAL letters animate gracefully up into the exact center of the curtain (0.55s)
+        // 4. Elegant hold beat in the dark center (0.35s)
         const exitTl = window.gsap.timeline();
         if (headerElements.length) {
-            exitTl.to(headerElements, { yPercent: -100, opacity: 0, duration: 0.4, ease: "power3.inOut" }, 0);
+            exitTl.to(headerElements, { yPercent: -100, opacity: 0, duration: 0.5, ease: "power3.inOut" }, 0);
         }
         if (currentMain) {
-            exitTl.to(currentMain, { y: "-6dvh", duration: 0.7, ease: "power3.inOut" }, 0);
+            exitTl.to(currentMain, { y: "-6dvh", duration: 0.9, ease: "power3.inOut" }, 0);
         }
-        exitTl.to(panel, { y: "0%", duration: 0.7, ease: "power3.inOut" }, 0);
-        exitTl.to(curveTop, { scaleY: 1, duration: 0.7, ease: "power3.inOut" }, 0);
+        exitTl.to(panel, { y: "0%", duration: 0.9, ease: "power3.inOut" }, 0);
+        exitTl.to(curveTop, { scaleY: 1, duration: 0.9, ease: "power3.inOut" }, 0);
 
-        // Wait for both exit curtain sweep AND page fetch
+        // Make text wrapper active on dark curtain
+        exitTl.set(textWrap, { opacity: 1 }, 0.45);
+
+        // Letters rise up gracefully into view
+        exitTl.to(chars, {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.55,
+            ease: "power3.out",
+            stagger: 0.04
+        }, 0.48);
+
+        // Calm hold beat
+        exitTl.to({}, { duration: 0.35 });
+
+        // Wait for both exit animation AND page fetch
         await Promise.all([exitTl, fetchPromise]);
 
         // If fetch failed, fallback to hard navigation
@@ -378,31 +439,48 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // 1. Curtain panel sweeps UP out of screen cleanly revealing the new page
+        // 1. Letters glide UPWARD and fade out gracefully into the upward sweep
+        entryTl.to(chars, {
+            yPercent: -100,
+            opacity: 0,
+            duration: 0.45,
+            ease: "power3.in",
+            stagger: 0.02
+        }, 0);
+
+        // 2. Text wrapper sweeps up with the panel
+        entryTl.to(textWrap, {
+            y: -sweepOffset,
+            opacity: 0,
+            duration: 0.95,
+            ease: "power3.inOut"
+        }, 0.15);
+
+        // 3. Curtain panel sweeps UP to top, cleanly revealing the newly loaded page
         entryTl.to(panel, {
             y: -sweepOffset,
-            duration: 0.75,
+            duration: 0.95,
             ease: "power4.inOut"
-        }, 0);
+        }, 0.15);
 
-        // 2. Bottom curve flattens as it exits
+        // 4. Bottom curve flattens
         entryTl.to(panelBottom, {
             scaleY: 0,
-            duration: 0.75,
+            duration: 0.95,
             ease: "power4.inOut"
-        }, 0);
+        }, 0.15);
 
-        // 3. New page content glides in with subtle parallax
+        // 5. Parallax content up
         if (currentMain) {
-            entryTl.fromTo(currentMain, { y: "6dvh" }, { y: "0dvh", duration: 0.75, ease: "power4.inOut", clearProps: "y" }, 0);
+            entryTl.fromTo(currentMain, { y: "6dvh" }, { y: "0dvh", duration: 0.95, ease: "power4.inOut", clearProps: "y" }, 0.15);
         }
 
-        // 4. Header (stationary brand logo + name AND navbar) slide down into place in unison
+        // 6. Header (stationary brand logo + name AND navbar) slide down into place in unison
         if (headerElements.length) {
             entryTl.fromTo(headerElements, 
                 { yPercent: -100, opacity: 0 }, 
-                { yPercent: 0, opacity: 1, duration: 0.65, ease: "power4.out", clearProps: "all" }, 
-                0.15
+                { yPercent: 0, opacity: 1, duration: 0.8, ease: "power4.out", clearProps: "all" }, 
+                0.25
             );
         }
     }
