@@ -3655,8 +3655,8 @@ html.lenis body {
 }
 
 .contact-header {
-  max-width: 820px;
-  margin: 0 auto;
+  max-width: 860px;
+  margin: 0;
   text-align: left;
 }
 
@@ -3826,7 +3826,7 @@ html.lenis body {
     gap: 24px;
   }
   .contact-header {
-    margin: 0 auto;
+    margin: 0;
   }
   .contact-channels {
     gap: 10px;
