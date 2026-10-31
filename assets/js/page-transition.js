@@ -220,9 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         closeMenus();
 
-        // Start prefetching destination page HTML immediately
+        // Start prefetching destination page HTML immediately with fresh server revalidation
         let newDoc = null;
-        const fetchPromise = fetch(href, { credentials: 'same-origin' })
+        const fetchPromise = fetch(href, { credentials: 'same-origin', cache: 'no-cache' })
             .then(res => {
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 return res.text();

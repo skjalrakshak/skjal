@@ -1,16 +1,13 @@
 /**
  * SKJAL - High-Performance Service Worker & Offline Cache Controller
- * Precaches core critical assets for instantaneous reload and offline resiliency.
+ * Precaches core critical assets for offline resiliency.
+ * Employs strictly Network-First for HTML, CSS, and JS to prevent stale state or cache mismatches.
  */
 
-const CACHE_NAME = 'skjal-cache-v40';
+const CACHE_NAME = 'skjal-cache-v41-live';
 
 const PRECACHE_ASSETS = [
   '/',
-  '/water-monitoring',
-  '/shield',
-  '/energy-monitoring',
-  '/custom-engineering',
   '/index.html',
   '/water-monitoring.html',
   '/shield.html',
@@ -32,8 +29,7 @@ const PRECACHE_ASSETS = [
   '/assets/js/vendor/ScrollTrigger.min.js',
   '/assets/js/vendor/lenis.min.js',
   '/assets/img/heroes/skjal-iot-hero.webp',
-  '/assets/img/gallery/electronics-bench.webp',
-  '/sitemap.xml'
+  '/assets/img/gallery/electronics-bench.webp'
 ];
 
 self.addEventListener('install', (event) => {
@@ -52,6 +48,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('[SW] Purging outdated cache store:', key);
             return caches.delete(key);
           }
         })
@@ -60,29 +57,68 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
+  if (event.data && event.data.action === 'clearCache') {
+    caches.keys().then((keys) => {
+      keys.forEach((key) => caches.delete(key));
+    });
+  }
+});
+
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // Only handle GET requests for same origin or fonts
+  // 1. Immediately bypass service worker for localhost or 127.0.0.1 development
+  if (url.hostname === 'localhost' || url.hostname === '127.0.0.1' || url.hostname === '[::1]') {
+    return;
+  }
+
+  // 2. Only handle GET requests for same origin or Google Fonts
   if (req.method !== 'GET') return;
   if (url.origin !== self.location.origin && !url.hostname.includes('fonts.g')) return;
 
-  // CSS and JS: Network-First strategy (always fresh live updates)
-  if (url.pathname.endsWith('.css') || url.pathname.endsWith('.js')) {
+  // 3. HTML Navigation Pages: Strictly Network-First (always fresh live updates; fallback to cache only if offline)
+  if (req.mode === 'navigate' || req.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
-      fetch(req).then((networkResp) => {
-        if (networkResp && networkResp.status === 200) {
-          const respToCache = networkResp.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, respToCache));
-        }
-        return networkResp;
-      }).catch(() => caches.match(req))
+      fetch(req)
+        .then((networkResp) => {
+          if (networkResp && networkResp.status === 200) {
+            const respToCache = networkResp.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, respToCache));
+          }
+          return networkResp;
+        })
+        .catch(async () => {
+          const cachedHtml = await caches.match(req);
+          if (cachedHtml) return cachedHtml;
+          const offline = await caches.match('/404.html');
+          return offline || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } });
+        })
     );
     return;
   }
 
-  // Static Assets (Images, Fonts): Cache-First strategy with background update
+  // 4. CSS and JS: Network-First strategy (always fresh live updates)
+  if (url.pathname.endsWith('.css') || url.pathname.endsWith('.js')) {
+    event.respondWith(
+      fetch(req)
+        .then((networkResp) => {
+          if (networkResp && networkResp.status === 200) {
+            const respToCache = networkResp.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, respToCache));
+          }
+          return networkResp;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // 5. Static Assets (Images, Fonts): Cache-First strategy with background revalidation
   if (
     url.pathname.startsWith('/assets/') ||
     url.hostname.includes('fonts.gstatic.com') ||
@@ -110,24 +146,4 @@ self.addEventListener('fetch', (event) => {
     );
     return;
   }
-
-  // HTML Navigation Pages: Stale-While-Revalidate strategy for instantaneous rendering
-  if (req.mode === 'navigate' || req.headers.get('accept')?.includes('text/html')) {
-    event.respondWith(
-      caches.match(req).then((cachedHtml) => {
-        const fetchPromise = fetch(req).then((networkHtml) => {
-          if (networkHtml && networkHtml.status === 200) {
-            const respToCache = networkHtml.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(req, respToCache));
-          }
-          return networkHtml;
-        }).catch(() => {
-          return cachedHtml || caches.match('/404.html');
-        });
-
-        return cachedHtml || fetchPromise;
-      })
-    );
-  }
 });
-

@@ -92,7 +92,7 @@ const server = http.createServer((req, res) => {
         console.log(`[302 Redirect] ${urlPath} -> ${REDIRECTS[urlPath]}`);
         res.writeHead(302, {
             'Location': REDIRECTS[urlPath],
-            'Cache-Control': 'public, max-age=3600'
+            'Cache-Control': 'no-cache, no-store, must-revalidate'
         });
         res.end();
         return;
@@ -128,11 +128,8 @@ const server = http.createServer((req, res) => {
         const ext = String(path.extname(filePath)).toLowerCase();
         const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-        // Development Server: No-cache for active development files (instant live updates)
-        let cacheHeader = 'no-cache, no-store, must-revalidate';
-        if (['.webp', '.png', '.jpg', '.jpeg', '.svg', '.woff', '.woff2', '.ttf'].includes(ext)) {
-            cacheHeader = 'public, max-age=3600';
-        }
+        // Development Server: Strict No-Cache across all files (instant live updates, zero stale state)
+        const cacheHeader = 'no-cache, no-store, must-revalidate';
 
         const etag = `"${stats.size.toString(16)}-${stats.mtime.getTime().toString(16)}"`;
         if (req.headers['if-none-match'] === etag) {

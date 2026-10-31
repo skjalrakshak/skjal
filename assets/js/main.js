@@ -7,10 +7,35 @@
 (function () {
   'use strict';
 
-  // 0a. Register Service Worker for Instant Return Visits & Cache Acceleration
-  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+  // 0a. Service Worker Lifecycle Controller & Cache Sanitation
+  const isLocalhost = Boolean(
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '[::1]' ||
+    window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+  );
+
+  if (isLocalhost) {
+    // In local development: immediately unregister any service workers and clear cache storage
+    // to guarantee 100% fresh live edits with zero cache collisions or stale UI
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const registration of registrations) {
+          registration.unregister();
+        }
+      }).catch(() => {});
+    }
+    if ('caches' in window) {
+      caches.keys().then((keys) => {
+        keys.forEach((key) => caches.delete(key));
+      }).catch(() => {});
+    }
+  } else if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+      navigator.serviceWorker.register('/sw.js').then((registration) => {
+        if (registration) {
+          registration.update().catch(() => {});
+        }
+      }).catch(() => {});
     });
   }
 
@@ -582,6 +607,9 @@
     if (!faqItems.length) return;
 
     faqItems.forEach(item => {
+      if (item.dataset.faqBound === 'true') return;
+      item.dataset.faqBound = 'true';
+
       const summary = item.querySelector('.faq-summary');
       const collapse = item.querySelector('.faq-collapse');
       if (!summary || !collapse) return;
@@ -934,6 +962,7 @@
     if (!window.gsap) return;
 
     if (window.ScrollTrigger) {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       gsap.registerPlugin(ScrollTrigger);
     }
 
