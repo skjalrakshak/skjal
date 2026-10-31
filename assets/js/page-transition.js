@@ -10,14 +10,14 @@
  */
 
 // Global curtain builder (Pure Curved Curtain Wipe)
-function buildCurtainHTML(panelTransform, curveBottomScale, curveTopScale = '0') {
+function buildCurtainHTML(panelTransform, curveBottomScale = '0', curveTopScale = '0') {
     return `
         <div class="skjal-transition-panel" style="transform:${panelTransform}">
             <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none" style="transform:scaleY(${curveTopScale})">
-                <path d="M0,100 C50,0 100,100 100,100 Z"></path>
+                <path d="M0,100 C30,0 70,0 100,100 Z"></path>
             </svg>
             <svg class="skjal-curve-bottom" viewBox="0 0 100 100" preserveAspectRatio="none" style="transform:scaleY(${curveBottomScale})">
-                <path d="M0,0 C50,100 100,0 100,0 Z"></path>
+                <path d="M0,0 C30,100 70,100 100,0 Z"></path>
             </svg>
         </div>`;
 }
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const panel = wrap.querySelector(".skjal-transition-panel");
             const panelBottom = wrap.querySelector(".skjal-curve-bottom");
-            const sweepOffset = window.innerHeight + (window.innerWidth * 0.15);
+            const sweepOffset = window.innerHeight + 180;
             const headerElements = document.querySelectorAll('.site-logo-wrap, .main-nav, .header-wrap');
 
             if (window.gsap) {
@@ -129,37 +129,42 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                         document.documentElement.style.overflow = '';
                         scrollToHashTarget(window.location.hash, true);
+                        if (window.ScrollTrigger) {
+                            window.ScrollTrigger.refresh();
+                        }
                     }
                 });
 
                 tl.call(() => scrollToHashTarget(window.location.hash, true), [], 0);
 
-                // Pure Curtain panel sweeps UP to reveal page
+                // Pure Curtain panel sweeps UP to reveal page with smooth power3.out glide
                 tl.to(panel, {
                     y: -sweepOffset,
-                    duration: 0.7,
-                    ease: "power4.inOut",
+                    duration: 0.8,
+                    ease: "power3.out",
                     overwrite: "auto"
                 }, 0);
 
-                // Bottom curve flattens
-                tl.to(panelBottom, {
-                    scaleY: 0,
-                    duration: 0.7,
-                    ease: "power4.inOut"
+                // Bottom curve maintains arch and gently relaxes as it exits
+                tl.fromTo(panelBottom, {
+                    scaleY: 1
+                }, {
+                    scaleY: 0.15,
+                    duration: 0.8,
+                    ease: "power2.in"
                 }, 0);
 
-                // Parallax page content
+                // Subtle organic glide for new page content
                 if (mainContainer) {
-                    tl.fromTo(mainContainer, { y: "8dvh" }, { y: "0dvh", duration: 0.7, ease: "power4.inOut", clearProps: "y" }, 0);
+                    tl.fromTo(mainContainer, { y: 25, opacity: 0.92 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", clearProps: "y,opacity" }, 0);
                 }
 
-                // Slide header down into place
+                // Slide header down smoothly into place
                 if (headerElements.length) {
                     tl.fromTo(headerElements, 
-                        { yPercent: -100, opacity: 0 }, 
-                        { yPercent: 0, opacity: 1, duration: 0.6, ease: "power4.out", clearProps: "all" }, 
-                        0.15
+                        { y: -18, opacity: 0 }, 
+                        { y: 0, opacity: 1, duration: 0.55, ease: "power2.out", clearProps: "all" }, 
+                        0.2
                     );
                 }
 
@@ -186,6 +191,34 @@ document.addEventListener("DOMContentLoaded", () => {
         if (wrap) wrap.remove();
     }
 
+    // In-memory HTML cache for instantaneous 0ms transitions without network lag
+    const pageCache = new Map();
+
+    function prefetchPage(href) {
+        if (!href || isTransitioning) return;
+        try {
+            const url = new URL(href, window.location.origin);
+            if (url.origin !== window.location.origin) return;
+            const targetPath = normalizePathname(url.pathname);
+            const currentPath = normalizePathname(window.location.pathname);
+            if (targetPath === currentPath) return;
+            if (pageCache.has(targetPath)) return;
+
+            fetch(url.href, { credentials: 'same-origin' })
+                .then(res => {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.text();
+                })
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    pageCache.set(targetPath, doc);
+                    pageCache.set(url.href, doc);
+                })
+                .catch(() => {});
+        } catch (e) {}
+    }
+
     // =============================================
     // 2. CONTINUOUS BLINK-FREE TRANSITION (Fetch Swap)
     // =============================================
@@ -195,25 +228,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
         closeMenus();
 
-        // Start prefetching destination page HTML immediately with fresh server revalidation
-        let newDoc = null;
-        const fetchPromise = fetch(href, { credentials: 'same-origin', cache: 'no-cache' })
-            .then(res => {
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                return res.text();
-            })
-            .then(html => {
-                const parser = new DOMParser();
-                newDoc = parser.parseFromString(html, 'text/html');
-            })
-            .catch(err => {
-                console.warn('Transition fetch error:', err);
-            });
+        const url = new URL(href, window.location.origin);
+        const normPath = normalizePathname(url.pathname);
 
-        // Inject Exit Curtain (Pure curved curtain panel, zero preloader elements)
+        // Fetch or pull from in-memory cache instantly
+        let newDoc = pageCache.get(normPath) || pageCache.get(href);
+        let fetchPromise = null;
+        if (!newDoc) {
+            fetchPromise = fetch(href, { credentials: 'same-origin' })
+                .then(res => {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.text();
+                })
+                .then(html => {
+                    const parser = new DOMParser();
+                    newDoc = parser.parseFromString(html, 'text/html');
+                    pageCache.set(normPath, newDoc);
+                    pageCache.set(href, newDoc);
+                })
+                .catch(err => {
+                    console.warn('Transition fetch error:', err);
+                });
+        }
+
+        // Inject Exit Curtain (starts completely below viewport with zero peek)
         const exitCurtain = document.createElement('div');
         exitCurtain.className = 'skjal-transition-wrap';
-        exitCurtain.innerHTML = buildCurtainHTML('translateY(100%)', '0', '1');
+        exitCurtain.innerHTML = buildCurtainHTML('translateY(calc(100% + 150px))', '0', '0');
         exitCurtain.style.display = 'flex';
         document.body.appendChild(exitCurtain);
 
@@ -224,19 +265,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentMain = document.getElementById('main') || document.querySelector('main');
 
         // Play Exit Timeline:
-        // 1. Header slides up out of view
-        // 2. Curtain sweeps UP from bottom covering the screen with curved leading edge
-        const exitTl = window.gsap.timeline();
+        // 1. Header slides up softly
+        // 2. Curtain sweeps UP with curved leading edge covering the screen
+        const exitTl = window.gsap.timeline({
+            defaults: { ease: "power3.inOut" }
+        });
         if (headerElements.length) {
-            exitTl.to(headerElements, { yPercent: -100, opacity: 0, duration: 0.35, ease: "power3.inOut" }, 0);
+            exitTl.to(headerElements, { y: -20, opacity: 0, duration: 0.35, ease: "power2.in" }, 0);
         }
         if (currentMain) {
-            exitTl.to(currentMain, { y: "-6dvh", duration: 0.65, ease: "power3.inOut" }, 0);
+            exitTl.to(currentMain, { y: -25, opacity: 0.88, duration: 0.65, ease: "power3.inOut" }, 0);
         }
         exitTl.to(panel, { y: "0%", duration: 0.65, ease: "power3.inOut" }, 0);
-        exitTl.to(curveTop, { scaleY: 1, duration: 0.65, ease: "power3.inOut" }, 0);
+        exitTl.to(curveTop, { scaleY: 1, duration: 0.65, ease: "power2.out" }, 0);
 
-        // Wait for both exit curtain sweep AND page fetch
+        // Wait for exit curtain to fully cover the screen (and fetch if still resolving)
         await Promise.all([exitTl, fetchPromise]);
 
         // If fetch failed, fallback to hard navigation
@@ -289,14 +332,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (typeof window.initPageAnimations === 'function') {
             window.initPageAnimations();
         }
-        if (window.ScrollTrigger) {
-            window.ScrollTrigger.refresh();
-        }
+
+        // Double-rAF: Ensure layout reflow and initial GPU rasterization occur completely behind the black curtain
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
         // =============================================
         // ENTRY REVEAL (Curtain sweeps UP, revealing new page)
         // =============================================
-        const sweepOffset = window.innerHeight + (window.innerWidth * 0.15);
+        const sweepOffset = window.innerHeight + 180;
         window.gsap.set(panelBottom, { scaleY: 1 });
         window.gsap.set(curveTop, { scaleY: 0 });
 
@@ -319,34 +362,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (targetHash) {
                     scrollToHashTarget(targetHash, false);
                 }
+                if (window.ScrollTrigger) {
+                    window.ScrollTrigger.refresh();
+                }
             }
         });
 
-        // 1. Curtain panel sweeps UP out of screen
+        // 1. Curtain panel sweeps smoothly UP and off the top with silky power3.out glide
         entryTl.to(panel, {
             y: -sweepOffset,
-            duration: 0.7,
-            ease: "power4.inOut"
+            duration: 0.8,
+            ease: "power3.out"
         }, 0);
 
-        // 2. Bottom curve flattens as it exits
-        entryTl.to(panelBottom, {
-            scaleY: 0,
-            duration: 0.7,
-            ease: "power4.inOut"
-        }, 0);
+        // 2. Bottom curve holds its arch through the screen and gently relaxes as it exits
+        entryTl.fromTo(panelBottom, 
+            { scaleY: 1 }, 
+            { scaleY: 0.15, duration: 0.8, ease: "power2.in" }, 
+            0
+        );
 
-        // 3. New page content glides in with subtle parallax
+        // 3. New page content glides smoothly upward into place
         if (currentMain) {
-            entryTl.fromTo(currentMain, { y: "8dvh" }, { y: "0dvh", duration: 0.7, ease: "power4.inOut", clearProps: "y" }, 0);
+            entryTl.fromTo(currentMain, 
+                { y: 25, opacity: 0.92 }, 
+                { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", clearProps: "y,opacity" }, 
+                0
+            );
         }
 
-        // 4. Header (stationary brand logo + name AND navbar) slide down into place in unison
+        // 4. Header elements glide in smoothly in sync
         if (headerElements.length) {
             entryTl.fromTo(headerElements, 
-                { yPercent: -100, opacity: 0 }, 
-                { yPercent: 0, opacity: 1, duration: 0.6, ease: "power4.out", clearProps: "all" }, 
-                0.15
+                { y: -18, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.55, ease: "power2.out", clearProps: "all" }, 
+                0.2
             );
         }
     }
@@ -368,6 +418,15 @@ document.addEventListener("DOMContentLoaded", () => {
     function bindTransitionLinks() {
         document.querySelectorAll("a:not([data-transition-bound])").forEach(link => {
             link.dataset.transitionBound = 'true';
+
+            // Prefetch destination page on hover/touch for zero network lag
+            link.addEventListener("mouseenter", function() {
+                prefetchPage(this.href);
+            }, { passive: true });
+            link.addEventListener("touchstart", function() {
+                prefetchPage(this.href);
+            }, { passive: true });
+
             link.addEventListener("click", function(e) {
                 if (e.defaultPrevented) return;
                 if (isTransitioning) { e.preventDefault(); return; }

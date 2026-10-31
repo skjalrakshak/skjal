@@ -3548,6 +3548,8 @@ a:hover .arrow-circle {
   position: absolute;
   inset: 0;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .skjal-curve-top,
@@ -3555,20 +3557,22 @@ a:hover .arrow-circle {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 100px;
+  height: 140px;
   fill: #0A0A0A;
   display: block;
   will-change: transform;
   pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .skjal-curve-top {
-  top: -99px;
+  top: -139px;
   transform-origin: bottom center;
 }
 
 .skjal-curve-bottom {
-  bottom: -99px;
+  bottom: -139px;
   transform-origin: top center;
 }
 
