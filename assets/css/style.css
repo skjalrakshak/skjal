@@ -430,6 +430,7 @@ a:hover .arrow-circle {
 .header-wrap.header-hidden {
   transform: translateY(-100%) !important;
   opacity: 0 !important;
+  visibility: hidden !important;
   pointer-events: none !important;
 }
 
@@ -1332,8 +1333,10 @@ a:hover .arrow-circle {
 .hero-line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.05em;
-  margin-bottom: -0.05em;
+  padding-top: 0.22em;
+  margin-top: -0.22em;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
 }
 
 .hero-line-inner {
@@ -1810,10 +1813,13 @@ a:hover .arrow-circle {
   align-items: flex-end;
   gap: 32px;
   margin-bottom: 28px;
+  perspective: 1000px;
 }
 
 .section-top .section-heading {
   max-width: 640px;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .section-top .body-copy {
@@ -2064,6 +2070,7 @@ a:hover .arrow-circle {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   margin-top: 28px;
+  perspective: 1200px;
 }
 
 .industry-card {
@@ -2075,6 +2082,8 @@ a:hover .arrow-circle {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -2140,6 +2149,7 @@ a:hover .arrow-circle {
   align-items: start;
   padding-bottom: 42px;
   border-bottom: 1px solid var(--line);
+  perspective: 1000px;
 }
 
 .company-note {
@@ -2154,6 +2164,8 @@ a:hover .arrow-circle {
   overflow: hidden;
   position: relative;
   box-shadow: 0 12px 28px rgba(17, 20, 19, 0.1);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
 .company-note-brand {
@@ -2260,6 +2272,7 @@ a:hover .arrow-circle {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+  perspective: 1000px;
 }
 
 .person {
@@ -2271,6 +2284,8 @@ a:hover .arrow-circle {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
   transition: all 0.2s ease;
 }
 
@@ -3087,6 +3102,12 @@ a:hover .arrow-circle {
     box-shadow: none !important;
     outline: none !important;
   }
+  .header-wrap.header-hidden {
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
   .header {
     width: 100% !important;
     max-width: 100% !important;
@@ -3762,6 +3783,7 @@ html.lenis body {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   gap: 16px !important;
+  perspective: 1200px;
 }
 
 @media (max-width: 1080px) {
@@ -3787,7 +3809,10 @@ html.lenis body {
   border-radius: 12px !important;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .product-card:hover {
@@ -3971,6 +3996,7 @@ html.lenis body {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  perspective: 1000px;
 }
 
 .partner-card {
@@ -3985,6 +4011,8 @@ html.lenis body {
   text-align: center;
   gap: 10px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
 }
 

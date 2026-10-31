@@ -326,9 +326,13 @@
     const headerWrap = document.querySelector('.header-wrap');
     const isTransition = sessionStorage.getItem('isPageTransition') === 'true';
 
-    if (prefersReducedMotion) {
-      if (headerWrap) gsap.set(headerWrap, { opacity: 1, y: 0 });
-      return;
+    if (prefersReducedMotion || isTransition) {
+      if (headerWrap) gsap.set(headerWrap, { opacity: 1, y: 0, clearProps: 'transform,opacity' });
+      document.querySelectorAll('.hero-line').forEach(el => {
+        el.style.overflow = 'visible';
+      });
+      if (heroTitleLines.length) gsap.set(heroTitleLines, { clearProps: 'transform,willChange' });
+      if (prefersReducedMotion) return;
     }
 
     // Set initial hidden states before entrance
@@ -352,7 +356,17 @@
     }
 
     const startReveal = () => {
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      const tl = gsap.timeline({
+        defaults: { ease: 'power4.out' },
+        onComplete: () => {
+          document.querySelectorAll('.hero-line').forEach(el => {
+            el.style.overflow = 'visible';
+          });
+          if (heroTitleLines.length) {
+            gsap.set(heroTitleLines, { clearProps: 'transform,willChange' });
+          }
+        }
+      });
 
       // 1. Header slides smoothly into place (from portfolio Navbar drop)
       if (headerWrap && !isTransition) {
@@ -371,7 +385,13 @@
           yPercent: 0,
           duration: 1.3,
           stagger: 0.12,
-          ease: 'power4.out'
+          ease: 'power4.out',
+          onComplete: () => {
+            document.querySelectorAll('.hero-line').forEach(el => {
+              el.style.overflow = 'visible';
+            });
+            gsap.set(heroTitleLines, { clearProps: 'transform,willChange' });
+          }
         }, 0.15);
       }
 
@@ -382,7 +402,8 @@
           scale: 1,
           opacity: 1,
           duration: 1.45,
-          ease: 'power3.out'
+          ease: 'power3.out',
+          clearProps: 'transform'
         }, 0.25);
       }
 
@@ -392,7 +413,8 @@
           y: 0,
           opacity: 1,
           duration: 1.1,
-          ease: 'power3.out'
+          ease: 'power3.out',
+          clearProps: 'transform'
         }, 0.4);
       }
 
@@ -402,7 +424,8 @@
           y: 0,
           opacity: 1,
           duration: 1.0,
-          ease: 'power3.out'
+          ease: 'power3.out',
+          clearProps: 'transform'
         }, 0.52);
       }
 
@@ -413,7 +436,8 @@
           opacity: 1,
           duration: 0.9,
           stagger: 0.08,
-          ease: 'power3.out'
+          ease: 'power3.out',
+          clearProps: 'transform'
         }, 0.62);
       }
     };
@@ -587,15 +611,18 @@
     initStaggeredTextRoll();
   }
 
-  // 4. Global Smart Scroll Header (Direct from nrkportfolio.in: Instant response, zero latency, zero threshold buffering)
+  // 4. Global Smart Scroll Header (Direct from nrkportfolio.in: Instant response, zero latency, rock-solid mobile stability)
   const headerWrap = document.querySelector('.header-wrap');
   const mobileMenu = document.getElementById('mobile-menu');
 
   if (headerWrap) {
-    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    let lastScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
     let isTicking = false;
+    const SCROLL_DOWN_THRESHOLD = 15; // Past 15px, scrolling down hides the header
+    const SCROLL_UP_DELTA = 8;        // Require 8px upward movement to reveal (prevents iOS rubber-band jitter)
 
     function updateHeader() {
+      // Keep header visible if mobile drawer is open
       if (document.body.classList.contains('menu-open') || (mobileMenu && mobileMenu.classList.contains('open'))) {
         headerWrap.classList.remove('header-hidden');
         return;
@@ -608,12 +635,36 @@
         return;
       }
 
-      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-      if (currentScrollY > lastScrollY && currentScrollY > 20) {
+      const currentScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
+
+      // At the very top of the page: always visible in its fixed place
+      if (currentScrollY <= SCROLL_DOWN_THRESHOLD) {
+        headerWrap.classList.remove('header-hidden');
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      const diff = currentScrollY - lastScrollY;
+
+      // Scrolling DOWN -> hide header immediately so it does not follow along with the scroll
+      if (diff > 2) {
+        if (window.gsap && gsap.isTweening(headerWrap)) {
+          gsap.killTweensOf(headerWrap);
+          headerWrap.style.transform = '';
+          headerWrap.style.opacity = '';
+        }
         headerWrap.classList.add('header-hidden');
-      } else if (currentScrollY < lastScrollY) {
+      }
+      // Scrolling UP deliberately (not micro-jitter or rubber-band rebound) -> reveal header
+      else if (diff < -SCROLL_UP_DELTA) {
+        if (window.gsap && gsap.isTweening(headerWrap)) {
+          gsap.killTweensOf(headerWrap);
+          headerWrap.style.transform = '';
+          headerWrap.style.opacity = '';
+        }
         headerWrap.classList.remove('header-hidden');
       }
+
       lastScrollY = currentScrollY;
     }
 
@@ -627,16 +678,8 @@
       }
     }
 
+    // Native scroll event listener (matches nrkportfolio.in architecture)
     window.addEventListener('scroll', onScrollTick, { passive: true });
-
-    if (window.lenis && typeof window.lenis.on === 'function') {
-      window.lenis.on('scroll', onScrollTick);
-    }
-
-    window.addEventListener('resize', () => {
-      lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-      updateHeader();
-    }, { passive: true });
 
     // Initialize state
     updateHeader();
@@ -817,7 +860,7 @@
     });
   }
 
-  // 6. GSAP Animations Initialization - Fast, Non-blocking, Zero-Latency
+  // 6. GSAP ScrollTrigger Reveals - Award-Winning Luxury Standard (Awwwards / FWA Grade)
   function initGSAP() {
     if (!window.gsap) return;
 
@@ -826,338 +869,405 @@
     }
 
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion) {
+      // Ensure all elements are immediately visible for accessibility
+      document.querySelectorAll('.hero-line').forEach(el => {
+        el.style.overflow = 'visible';
+      });
+      return;
+    }
 
-    // A. Hero Entrance Animation
-    const heroTitle = document.querySelector('.hero h1');
-    const heroLede = document.querySelector('.hero-lede');
-    const heroActions = document.querySelector('.hero-actions');
-    const heroVisual = document.querySelector('.hero-visual');
+    if (!window.ScrollTrigger) return;
 
-    if (heroTitle) {
-      const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-      heroTl.fromTo(
-        heroTitle,
-        { y: 22, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.95 }
+    // A. Capabilities Band Staggered Lift (.domain-band)
+    const domainItems = document.querySelectorAll('.domain-band .domain-item');
+    if (domainItems.length > 0) {
+      gsap.fromTo(
+        domainItems,
+        { y: 32, autoAlpha: 0, scale: 0.96 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 1.05,
+          stagger: 0.08,
+          ease: 'power4.out',
+          clearProps: 'transform',
+          scrollTrigger: {
+            trigger: '.domain-band',
+            start: 'top 93%',
+            toggleActions: 'play none none none'
+          }
+        }
       );
+    }
 
-      if (heroLede) {
-        heroTl.fromTo(
-          heroLede,
-          { y: 14, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.82 },
-          '-=0.6'
-        );
+    // B. Enterprise Partners Ecosystem (.partner-strip)
+    const partnerTitle = document.querySelector('.partner-ecosystem-title');
+    const partnerCards = document.querySelectorAll('.partner-cards-grid .partner-card');
+    const partnerMarks = document.querySelectorAll('.partner-wordmark, .make-in-india-mark');
+
+    if (partnerTitle) {
+      gsap.fromTo(
+        partnerTitle,
+        { y: 24, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.85,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: '.partner-ecosystem-header',
+            start: 'top 92%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+
+    if (partnerCards.length > 0) {
+      gsap.fromTo(
+        partnerCards,
+        { y: 38, autoAlpha: 0, scale: 0.95 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 1.15,
+          stagger: 0.11,
+          ease: 'power4.out',
+          clearProps: 'transform',
+          scrollTrigger: {
+            trigger: '.partner-cards-grid',
+            start: 'top 92%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    } else if (partnerMarks.length > 0) {
+      gsap.fromTo(
+        partnerMarks,
+        { scale: 0.95, autoAlpha: 0, y: 20 },
+        {
+          scale: 1,
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.85,
+          stagger: 0.08,
+          ease: 'power4.out',
+          clearProps: 'transform',
+          scrollTrigger: {
+            trigger: '.partner-strip',
+            start: 'top 95%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+
+    // C. Masked Value Proposition Banner (.masked-banner)
+    const maskedBanner = document.querySelector('.masked-banner');
+    if (maskedBanner) {
+      const mbEyebrow = maskedBanner.querySelector('.section-eyebrow');
+      const mbTitle = maskedBanner.querySelector('.masked-banner-title');
+      const mbDesc = maskedBanner.querySelector('.masked-banner-desc');
+
+      const mbTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: maskedBanner,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      if (mbEyebrow) {
+        mbTl.fromTo(mbEyebrow, { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' });
       }
-
-      if (heroActions) {
-        heroTl.fromTo(
-          heroActions,
-          { y: 12, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.72 },
-          '-=0.55'
-        );
+      if (mbTitle) {
+        mbTl.fromTo(mbTitle, { y: 36, scale: 0.97, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 1.25, ease: 'power4.out' }, '-=0.45');
       }
-
-      if (heroVisual) {
-        heroTl.fromTo(
-          heroVisual,
-          { scale: 0.96, opacity: 0, y: 14 },
-          { scale: 1, opacity: 1, y: 0, duration: 1.05, ease: 'power3.out' },
-          '-=0.65'
-        );
+      if (mbDesc) {
+        mbTl.fromTo(mbDesc, { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, ease: 'power3.out' }, '-=0.6');
       }
     }
 
-    // B. Smooth, Rich ScrollTrigger Reveals
-    if (window.ScrollTrigger) {
-      // Capability Band Stagger
-      const domainItems = document.querySelectorAll('.domain-item');
-      if (domainItems.length > 0) {
-        gsap.fromTo(
-          domainItems,
-          { y: 16, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.75,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: '.domain-band',
-              start: 'top 94%',
-              toggleActions: 'play none none none'
-            }
-          }
-        );
-      }
+    // D. Universal Section Headings Reveal with Architectural Tilt (.section-top, .contact-header, .subhead-row)
+    const sectionTops = document.querySelectorAll('.section-top, .contact-header, .subhead-row');
+    sectionTops.forEach(st => {
+      const eyebrow = st.querySelector('.section-eyebrow');
+      const heading = st.querySelector('.section-heading, h2, h3');
+      const bodyCopy = st.querySelector('.body-copy, .contact-desc, p');
 
-      // Partner Marks
-      const partnerMarks = document.querySelectorAll('.partner-wordmark, .make-in-india-mark');
-      if (partnerMarks.length > 0) {
-        gsap.fromTo(
-          partnerMarks,
-          { scale: 0.96, opacity: 0 },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 0.68,
-            stagger: 0.08,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: '.partner-strip',
-              start: 'top 95%',
-              toggleActions: 'play none none none'
-            }
-          }
-        );
-      }
-
-      // Services Stagger
-      const serviceRows = document.querySelectorAll('.service-row');
-      if (serviceRows.length > 0) {
-        gsap.fromTo(
-          serviceRows,
-          { y: 18, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.78,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: '.service-list',
-              start: 'top 93%',
-              toggleActions: 'play none none none'
-            }
-          }
-        );
-      }
-
-      // Sticky Steps Interactive Showcase Controller (Abatable Signature Scroll Pattern)
-      const stepCards = document.querySelectorAll('.sticky-step-card');
-      const visualCards = document.querySelectorAll('.sticky-visual-card');
-
-      if (stepCards.length > 0 && visualCards.length > 0) {
-        stepCards.forEach((card, index) => {
-          ScrollTrigger.create({
-            trigger: card,
-            start: 'top 55%',
-            end: 'bottom 55%',
-            onEnter: () => activateStep(index),
-            onEnterBack: () => activateStep(index)
-          });
-        });
-
-        function activateStep(idx) {
-          visualCards.forEach((vc, i) => {
-            if (i === idx) {
-              vc.classList.add('active');
-            } else {
-              vc.classList.remove('active');
-            }
-          });
-        }
-      }
-
-      // Products Cards
-      const productCards = document.querySelectorAll('.product-card');
-      if (productCards.length > 0) {
-        gsap.fromTo(
-          productCards,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.82,
-            stagger: 0.12,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: '.product-grid',
-              start: 'top 92%',
-              toggleActions: 'play none none none'
-            }
-          }
-        );
-      }
-
-      // Industry Cards
-      const industryCards = document.querySelectorAll('.industry-card');
-      if (industryCards.length > 0) {
-        gsap.fromTo(
-          industryCards,
-          { y: 18, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.75,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: '.industry-grid',
-              start: 'top 93%',
-              toggleActions: 'play none none none'
-            }
-          }
-        );
-      }
-
-      // People / Team Grid
-      const people = document.querySelectorAll('.person');
-      if (people.length > 0) {
-        gsap.fromTo(
-          people,
-          { y: 16, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.75,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: '.people-grid',
-              start: 'top 94%',
-              toggleActions: 'play none none none'
-            }
-          }
-        );
-      }
-
-      // Generic Reveals for Inner Pages (specs, timeline, architecture)
-      const genericReveals = document.querySelectorAll('.spec-card, .timeline-card, .arch-step');
-      if (genericReveals.length > 0) {
-        genericReveals.forEach(el => {
-          gsap.fromTo(
-            el,
-            { y: 18, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.75,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: el,
-                start: 'top 94%',
-                toggleActions: 'play none none none'
-              }
-            }
-          );
-        });
-      }
-
-      // Subtle Hero Parallax
-      const heroDevice = document.querySelector('.hero-device');
-      if (heroDevice) {
-        gsap.to(heroDevice, {
-          y: -16,
-          ease: 'none',
+      if (heading) {
+        const stTl = gsap.timeline({
           scrollTrigger: {
-            trigger: '.hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1.2
-          }
-        });
-      }
-
-      // Masked Banner Reveal
-      const maskedBannerTitle = document.querySelector('.masked-banner-title');
-      const maskedBannerDesc = document.querySelector('.masked-banner-desc');
-      const maskedEyebrow = document.querySelector('.masked-banner .section-eyebrow');
-
-      if (maskedBannerTitle) {
-        const mbTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: '.masked-banner',
-            start: 'top 85%',
+            trigger: st,
+            start: 'top 87%',
             toggleActions: 'play none none none'
           }
         });
 
-        if (maskedEyebrow) {
-          mbTl.fromTo(maskedEyebrow, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.65, ease: 'power3.out' });
+        if (eyebrow) {
+          stTl.fromTo(eyebrow, { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out' });
         }
 
-        mbTl.fromTo(maskedBannerTitle,
-          { y: 24, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.85, ease: 'power3.out' },
-          '-=0.35'
+        stTl.fromTo(
+          heading,
+          { y: 35, autoAlpha: 0, rotateX: -6, transformOrigin: '0% 50% -20px' },
+          { y: 0, autoAlpha: 1, rotateX: 0, duration: 1.15, ease: 'power4.out', clearProps: 'transform' },
+          eyebrow ? '-=0.35' : 0
         );
 
-        if (maskedBannerDesc) {
-          mbTl.fromTo(maskedBannerDesc,
-            { y: 14, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.75, ease: 'power3.out' },
-            '-=0.5'
+        if (bodyCopy) {
+          stTl.fromTo(
+            bodyCopy,
+            { y: 18, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.85, ease: 'power3.out', clearProps: 'transform' },
+            '-=0.55'
           );
         }
       }
+    });
 
-      // Section Headings Scroll Reveal
-      const sectionTops = document.querySelectorAll('.section-top, .contact-header');
-      sectionTops.forEach(st => {
-        const heading = st.querySelector('.section-heading');
-        const eyebrow = st.querySelector('.section-eyebrow');
-        const bodyCopy = st.querySelector('.body-copy, .contact-desc');
-
-        if (heading) {
-          const stTl = gsap.timeline({
-            scrollTrigger: {
-              trigger: st,
-              start: 'top 88%',
-              toggleActions: 'play none none none'
-            }
-          });
-
-          if (eyebrow) {
-            stTl.fromTo(eyebrow, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out' });
+    // E. Services Rows Staggered Reveal with Internal Tag Cascade (.service-row)
+    const serviceRows = document.querySelectorAll('.service-row');
+    if (serviceRows.length > 0) {
+      serviceRows.forEach((row, idx) => {
+        const rowTags = row.querySelectorAll('.service-tags span');
+        const rTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: row,
+            start: 'top 92%',
+            toggleActions: 'play none none none'
           }
+        });
 
-          stTl.fromTo(heading,
-            { y: 20, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
-            eyebrow ? '-=0.25' : 0
+        rTl.fromTo(
+          row,
+          { y: 36, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 1.05, ease: 'power4.out', clearProps: 'transform' }
+        );
+
+        if (rowTags.length > 0) {
+          rTl.fromTo(
+            rowTags,
+            { y: 10, scale: 0.92, autoAlpha: 0 },
+            { y: 0, scale: 1, autoAlpha: 1, stagger: 0.035, duration: 0.6, ease: 'back.out(1.4)', clearProps: 'transform' },
+            '-=0.6'
           );
+        }
+      });
+    }
 
-          if (bodyCopy) {
-            stTl.fromTo(bodyCopy,
-              { y: 12, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.65, ease: 'power3.out' },
-              '-=0.45'
-            );
+    // F. Sticky Steps Interactive Showcase Controller (Abatable Pattern)
+    const stepCards = document.querySelectorAll('.sticky-step-card');
+    const visualCards = document.querySelectorAll('.sticky-visual-card');
+
+    if (stepCards.length > 0 && visualCards.length > 0) {
+      stepCards.forEach((card, index) => {
+        ScrollTrigger.create({
+          trigger: card,
+          start: 'top 55%',
+          end: 'bottom 55%',
+          onEnter: () => activateStep(index),
+          onEnterBack: () => activateStep(index)
+        });
+      });
+
+      function activateStep(idx) {
+        visualCards.forEach((vc, i) => {
+          if (i === idx) {
+            vc.classList.add('active');
+          } else {
+            vc.classList.remove('active');
           }
+        });
+      }
+    }
+
+    // G. Products Suite Grid - Cinematic Dual-Plane Camera Pullback (.product-card)
+    const productGrid = document.querySelector('.product-grid');
+    const productCards = document.querySelectorAll('.product-card');
+    const productPhotos = document.querySelectorAll('.product-photo');
+    const productNote = document.querySelector('.product-note');
+
+    if (productCards.length > 0) {
+      const pTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: productGrid || productCards[0],
+          start: 'top 87%',
+          toggleActions: 'play none none none'
         }
       });
 
-      // Company Section Note Card Reveal
-      const companyNote = document.querySelector('.company-note');
+      // Card physical lift & emergence
+      pTl.fromTo(
+        productCards,
+        { y: 52, autoAlpha: 0, scale: 0.95 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 1.25,
+          stagger: 0.14,
+          ease: 'power4.out',
+          clearProps: 'transform'
+        }
+      );
+
+      // Camera lens zoom settling inside card media
+      if (productPhotos.length > 0) {
+        pTl.fromTo(
+          productPhotos,
+          { scale: 1.12 },
+          { scale: 1.0, duration: 1.6, ease: 'power3.out', clearProps: 'transform' },
+          0.05
+        );
+      }
+
+      // Specs list internal cascade
+      productCards.forEach((card, cIdx) => {
+        const specItems = card.querySelectorAll('.spec-list li');
+        if (specItems.length > 0) {
+          pTl.fromTo(
+            specItems,
+            { y: 10, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, stagger: 0.035, duration: 0.7, ease: 'power3.out', clearProps: 'transform' },
+            0.4 + cIdx * 0.12
+          );
+        }
+      });
+
+      if (productNote) {
+        pTl.fromTo(
+          productNote,
+          { y: 18, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.85, ease: 'power3.out' },
+          '-=0.5'
+        );
+      }
+    }
+
+    // H. Industries Grid Staggered Reveal (.industry-card)
+    const industryGrid = document.querySelector('.industry-grid');
+    const industryCards = document.querySelectorAll('.industry-card');
+    if (industryCards.length > 0) {
+      gsap.fromTo(
+        industryCards,
+        { y: 44, autoAlpha: 0, scale: 0.95 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 1.15,
+          stagger: 0.11,
+          ease: 'power4.out',
+          clearProps: 'transform',
+          scrollTrigger: {
+            trigger: industryGrid || industryCards[0],
+            start: 'top 89%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+
+    // I. Company / About Main Section (.company-main)
+    const companyMain = document.querySelector('.company-main');
+    if (companyMain) {
+      const companyNote = companyMain.querySelector('.company-note');
+      const companyCopyParas = companyMain.querySelectorAll('.company-copy p');
+      const companyTags = companyMain.querySelectorAll('.company-tags span');
+
+      const cTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: companyMain,
+          start: 'top 87%',
+          toggleActions: 'play none none none'
+        }
+      });
+
       if (companyNote) {
-        gsap.fromTo(companyNote,
-          { y: 18, opacity: 0, scale: 0.98 },
-          {
-            y: 0, opacity: 1, scale: 1,
-            duration: 0.85, ease: 'power3.out',
-            scrollTrigger: {
-              trigger: companyNote,
-              start: 'top 92%',
-              toggleActions: 'play none none none'
-            }
-          }
+        cTl.fromTo(
+          companyNote,
+          { x: -36, y: 14, rotation: -1.5, autoAlpha: 0, scale: 0.96 },
+          { x: 0, y: 0, rotation: 0, autoAlpha: 1, scale: 1, duration: 1.25, ease: 'power4.out', clearProps: 'transform' }
         );
       }
 
-      // Footer CTA Reveal
-      const footerCta = document.querySelector('.footer-cta');
-      if (footerCta) {
-        gsap.fromTo(footerCta,
-          { y: 20, opacity: 0 },
+      if (companyCopyParas.length > 0) {
+        cTl.fromTo(
+          companyCopyParas,
+          { y: 24, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.1, ease: 'power4.out', clearProps: 'transform' },
+          companyNote ? '-=0.75' : 0
+        );
+      }
+
+      if (companyTags.length > 0) {
+        cTl.fromTo(
+          companyTags,
+          { scale: 0.82, y: 12, autoAlpha: 0 },
+          { scale: 1, y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.045, ease: 'back.out(1.7)', clearProps: 'transform' },
+          '-=0.5'
+        );
+      }
+    }
+
+    // J. Leadership & Advisory Profiles (.person)
+    const people = document.querySelectorAll('.person');
+    if (people.length > 0) {
+      const pTeamTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.people-grid',
+          start: 'top 90%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      pTeamTl.fromTo(
+        people,
+        { y: 38, autoAlpha: 0, scale: 0.96 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 1.1,
+          stagger: 0.13,
+          ease: 'power4.out',
+          clearProps: 'transform'
+        }
+      );
+
+      const personPhotos = document.querySelectorAll('.person-photo');
+      if (personPhotos.length > 0) {
+        pTeamTl.fromTo(
+          personPhotos,
+          { scale: 1.1 },
+          { scale: 1.0, duration: 1.2, ease: 'power3.out', clearProps: 'transform' },
+          0.1
+        );
+      }
+    }
+
+    // K. Direct Engineering Consultation Buttons (.contact-channels)
+    const contactChannels = document.querySelector('.contact-channels');
+    if (contactChannels) {
+      const channelBtns = contactChannels.querySelectorAll('.btn');
+      if (channelBtns.length > 0) {
+        gsap.fromTo(
+          channelBtns,
+          { y: 28, autoAlpha: 0, scale: 0.92 },
           {
-            y: 0, opacity: 1,
-            duration: 0.85, ease: 'power3.out',
+            y: 0,
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.09,
+            ease: 'back.out(1.4)',
+            clearProps: 'transform',
             scrollTrigger: {
-              trigger: footerCta,
+              trigger: contactChannels,
               start: 'top 92%',
               toggleActions: 'play none none none'
             }
@@ -1166,9 +1276,148 @@
       }
     }
 
-    if (window.ScrollTrigger) {
-      ScrollTrigger.refresh();
+    // L. Product Inner Pages Specs & Flow (.spec-card, .arch-step, .timeline-card)
+    const specCards = document.querySelectorAll('.spec-card');
+    if (specCards.length > 0) {
+      gsap.fromTo(
+        specCards,
+        { y: 42, autoAlpha: 0, scale: 0.95 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 1.15,
+          stagger: 0.1,
+          ease: 'power4.out',
+          clearProps: 'transform',
+          scrollTrigger: {
+            trigger: '.product-specs-grid',
+            start: 'top 89%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
     }
+
+    const archSteps = document.querySelectorAll('.arch-step');
+    if (archSteps.length > 0) {
+      gsap.fromTo(
+        archSteps,
+        { y: 36, autoAlpha: 0, scale: 0.96 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 1.05,
+          stagger: 0.11,
+          ease: 'power4.out',
+          clearProps: 'transform',
+          scrollTrigger: {
+            trigger: '.arch-flow',
+            start: 'top 89%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+
+    // M. Subpage Hero Section (.product-hero)
+    const productHero = document.querySelector('.product-hero');
+    if (productHero) {
+      const phVisual = productHero.querySelector('.hero-visual');
+      const phCopyElements = productHero.querySelectorAll('.hero-copy > *');
+
+      if (phCopyElements.length > 0) {
+        gsap.fromTo(
+          phCopyElements,
+          { y: 26, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 1.05, stagger: 0.08, ease: 'power4.out', clearProps: 'transform' }
+        );
+      }
+      if (phVisual) {
+        gsap.fromTo(
+          phVisual,
+          { y: 42, autoAlpha: 0, scale: 0.94 },
+          { y: 0, autoAlpha: 1, scale: 1, duration: 1.35, ease: 'power4.out', clearProps: 'transform' }
+        );
+      }
+    }
+
+    // N. Parallax Scrub on Hero Media
+    const heroDevice = document.querySelector('.hero-device');
+    if (heroDevice) {
+      gsap.to(heroDevice, {
+        y: -32,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.4
+        }
+      });
+    }
+
+    // O. Footer Staggered Reveal (.footer)
+    const footer = document.querySelector('.footer');
+    if (footer) {
+      const footerBrand = footer.querySelector('.footer-brand');
+      const footerCols = footer.querySelectorAll('.footer-col');
+      const footerBottom = footer.querySelector('.footer-bottom');
+
+      const fTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: footer,
+          start: 'top 90%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      if (footerBrand) {
+        fTl.fromTo(footerBrand, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85, ease: 'power4.out', clearProps: 'transform' });
+      }
+      if (footerCols.length > 0) {
+        fTl.fromTo(
+          footerCols,
+          { y: 32, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.95, stagger: 0.08, ease: 'power4.out', clearProps: 'transform' },
+          footerBrand ? '-=0.6' : 0
+        );
+      }
+      if (footerBottom) {
+        fTl.fromTo(
+          footerBottom,
+          { y: 16, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.75, ease: 'power3.out', clearProps: 'transform' },
+          '-=0.45'
+        );
+      }
+    }
+
+    // P. CTA Banners (.cta-banner, .footer-cta)
+    const ctaBanners = document.querySelectorAll('.cta-banner, .footer-cta');
+    ctaBanners.forEach(banner => {
+      gsap.fromTo(
+        banner,
+        { y: 32, autoAlpha: 0, scale: 0.97 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          scale: 1,
+          duration: 1.05,
+          ease: 'power4.out',
+          clearProps: 'transform',
+          scrollTrigger: {
+            trigger: banner,
+            start: 'top 92%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    });
+
+    // Refresh ScrollTrigger calculations
+    ScrollTrigger.refresh();
   }
 
   // Expose global animation re-init for blink-free transitions
