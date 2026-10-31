@@ -377,34 +377,32 @@
     const heroVisual = document.querySelector('.hero-visual');
     const domainItems = document.querySelectorAll('.domain-band .domain-item');
     const headerWrap = document.querySelector('.header-wrap');
-    const isTransition = sessionStorage.getItem('isPageTransition') === 'true';
-
-    if (prefersReducedMotion || isTransition) {
+    if (prefersReducedMotion) {
       if (headerWrap) gsap.set(headerWrap, { opacity: 1, y: 0, clearProps: 'transform,opacity' });
       document.querySelectorAll('.hero-line').forEach(el => {
         el.style.overflow = 'visible';
       });
       if (heroTitleLines.length) gsap.set(heroTitleLines, { clearProps: 'transform,willChange' });
-      if (prefersReducedMotion) return;
+      return;
     }
 
     // Set initial hidden states before entrance (low displacement for swift, crisp emergence)
-    if (headerWrap && !isTransition) {
+    if (headerWrap) {
       gsap.set(headerWrap, { y: -45, opacity: 0 });
     }
-    if (heroTitleLines.length && !isTransition) {
+    if (heroTitleLines.length) {
       gsap.set(heroTitleLines, { yPercent: 118 });
     }
-    if (heroLede && !isTransition) {
+    if (heroLede) {
       gsap.set(heroLede, { y: 22, opacity: 0 });
     }
-    if (heroActions && !isTransition) {
+    if (heroActions) {
       gsap.set(heroActions, { y: 18, opacity: 0 });
     }
-    if (heroVisual && !isTransition) {
+    if (heroVisual) {
       gsap.set(heroVisual, { y: 30, scale: 0.96, opacity: 0 });
     }
-    if (domainItems.length && !isTransition) {
+    if (domainItems.length) {
       gsap.set(domainItems, { y: 18, opacity: 0 });
     }
 
@@ -422,7 +420,7 @@
       });
 
       // 1. Header slides smoothly into place (from portfolio Navbar drop)
-      if (headerWrap && !isTransition) {
+      if (headerWrap) {
         tl.to(headerWrap, {
           y: 0,
           opacity: 1,
@@ -433,7 +431,7 @@
       }
 
       // 2. Headline typography lines reveal smoothly from overflow mask
-      if (heroTitleLines.length && !isTransition) {
+      if (heroTitleLines.length) {
         tl.to(heroTitleLines, {
           yPercent: 0,
           duration: 0.85,
@@ -449,7 +447,7 @@
       }
 
       // 3. Hero Visual expands with rich scale and glide
-      if (heroVisual && !isTransition) {
+      if (heroVisual) {
         tl.to(heroVisual, {
           y: 0,
           scale: 1,
@@ -461,7 +459,7 @@
       }
 
       // 4. Hero description paragraph fades and glides up
-      if (heroLede && !isTransition) {
+      if (heroLede) {
         tl.to(heroLede, {
           y: 0,
           opacity: 1,
@@ -472,7 +470,7 @@
       }
 
       // 5. Action CTA buttons slide in
-      if (heroActions && !isTransition) {
+      if (heroActions) {
         tl.to(heroActions, {
           y: 0,
           opacity: 1,
@@ -483,7 +481,7 @@
       }
 
       // 6. Domain capabilities band items stagger in
-      if (domainItems.length && !isTransition) {
+      if (domainItems.length) {
         tl.to(domainItems, {
           y: 0,
           opacity: 1,
@@ -496,7 +494,7 @@
     };
 
     const preloaderEl = document.getElementById('skjal-preloader');
-    if (preloaderEl && preloaderEl.style.display !== 'none' && !isTransition) {
+    if (preloaderEl && preloaderEl.style.display !== 'none') {
       window.addEventListener('preloader:done', startReveal, { once: true });
     } else {
       startReveal();
@@ -511,27 +509,25 @@
     yearEl.textContent = new Date().getFullYear();
   }
 
-  // 3. Mobile Menu Controller & Accordion
-  const body = document.body;
-  const toggle = document.getElementById('menu-toggle');
-  const menu = document.getElementById('mobile-menu');
-
-  if (toggle && menu) {
-    function openMenu() {
-      menu.classList.add('open');
+  // 3. Mobile Menu Controller & Accordion (Robust Document-Level Event Delegation)
+  function openMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const toggle = document.getElementById('menu-toggle');
+    if (!menu) return;
+    menu.classList.add('open');
+    if (toggle) {
       toggle.classList.add('is-active');
-      body.classList.add('menu-open');
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close navigation menu');
     }
+    document.body.classList.add('menu-open');
+  }
 
-    function closeMenu() {
+  function closeMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const toggle = document.getElementById('menu-toggle');
+    if (menu) {
       menu.classList.remove('open');
-      toggle.classList.remove('is-active');
-      body.classList.remove('menu-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open navigation menu');
-      // Smoothly reset accordion if open so next open is in clean state
       const accordion = menu.querySelector('.mobile-accordion');
       const accordionBtn = menu.querySelector('#mobile-products-toggle');
       const accordionContent = menu.querySelector('.mobile-accordion-content');
@@ -545,61 +541,77 @@
         }
       }
     }
+    if (toggle) {
+      toggle.classList.remove('is-active');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+    }
+    document.body.classList.remove('menu-open');
+  }
 
-    toggle.addEventListener('click', function (e) {
+  window.openMobileMenu = openMobileMenu;
+  window.closeMobileMenu = closeMobileMenu;
+
+  document.addEventListener('click', function (e) {
+    // 1. Mobile menu toggle button
+    const toggle = e.target.closest('#menu-toggle');
+    if (toggle) {
       e.preventDefault();
-      if (menu.classList.contains('open')) {
-        closeMenu();
+      e.stopPropagation();
+      const menu = document.getElementById('mobile-menu');
+      if (menu && menu.classList.contains('open')) {
+        closeMobileMenu();
       } else {
-        openMenu();
+        openMobileMenu();
       }
-    });
+      return;
+    }
 
-    // Event delegation on mobile menu: handle link clicks & accordion toggling
-    menu.addEventListener('click', function (e) {
-      // Check if accordion toggle button was clicked
-      const accordionBtn = e.target.closest('#mobile-products-toggle');
-      if (accordionBtn) {
-        e.preventDefault();
-        e.stopPropagation();
-        const accordionContainer = accordionBtn.closest('.mobile-accordion');
-        if (accordionContainer) {
-          const content = accordionContainer.querySelector('.mobile-accordion-content');
-          const isOpen = accordionContainer.classList.contains('open');
-          if (isOpen) {
-            accordionContainer.classList.remove('open');
-            accordionBtn.setAttribute('aria-expanded', 'false');
-            if (content) {
-              content.style.maxHeight = '0px';
-              content.style.opacity = '0';
-              content.style.transform = 'translateY(-6px)';
-            }
-          } else {
-            accordionContainer.classList.add('open');
-            accordionBtn.setAttribute('aria-expanded', 'true');
-            if (content) {
-              content.style.maxHeight = (content.scrollHeight + 16) + 'px';
-              content.style.opacity = '1';
-              content.style.transform = 'translateY(0)';
-            }
+    // 2. Mobile products accordion toggle
+    const accordionBtn = e.target.closest('#mobile-products-toggle');
+    if (accordionBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const accordionContainer = accordionBtn.closest('.mobile-accordion');
+      if (accordionContainer) {
+        const content = accordionContainer.querySelector('.mobile-accordion-content');
+        const isOpen = accordionContainer.classList.contains('open');
+        if (isOpen) {
+          accordionContainer.classList.remove('open');
+          accordionBtn.setAttribute('aria-expanded', 'false');
+          if (content) {
+            content.style.maxHeight = '0px';
+            content.style.opacity = '0';
+            content.style.transform = 'translateY(-6px)';
+          }
+        } else {
+          accordionContainer.classList.add('open');
+          accordionBtn.setAttribute('aria-expanded', 'true');
+          if (content) {
+            content.style.maxHeight = (content.scrollHeight + 16) + 'px';
+            content.style.opacity = '1';
+            content.style.transform = 'translateY(0)';
           }
         }
-        return;
       }
+      return;
+    }
 
-      // If any navigation link was tapped, close drawer
-      const link = e.target.closest('a');
-      if (link) {
-        closeMenu();
-      }
-    });
+    // 3. Close mobile menu when any navigation link inside it is tapped
+    const mobileLink = e.target.closest('#mobile-menu a');
+    if (mobileLink && !mobileLink.closest('#mobile-products-toggle')) {
+      closeMobileMenu();
+    }
+  });
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && menu.classList.contains('open')) {
-        closeMenu();
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      const menu = document.getElementById('mobile-menu');
+      if (menu && menu.classList.contains('open')) {
+        closeMobileMenu();
       }
-    });
-  }
+    }
+  });
 
   // 3c. Interactive FAQ Accordion Controller with Smooth Reveal Animations
   function initFAQAccordion() {
@@ -783,104 +795,105 @@
   }
 
   // Bracket Animation Helper (nrkportfolio.in style: guarantees [ text ] structure)
-  document.querySelectorAll('.nav a:not(.nav-cta), .nav-dropdown-trigger').forEach(link => {
-    if (!link.querySelector('.navbar__bracket')) {
-      const arrow = link.querySelector('svg');
-      let text = '';
-      link.childNodes.forEach(node => {
-        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-          text += node.textContent.trim();
-          node.remove();
-        }
-      });
-      if (text) {
-        const left = document.createElement('span');
-        left.className = 'navbar__bracket';
-        left.textContent = '[';
-        const textSpan = document.createElement('span');
-        textSpan.className = 'navbar__link-text';
-        textSpan.textContent = text;
-        const right = document.createElement('span');
-        right.className = 'navbar__bracket';
-        right.textContent = ']';
-        if (arrow) {
-          link.insertBefore(left, arrow);
-          link.insertBefore(textSpan, arrow);
-          link.insertBefore(right, arrow);
-        } else {
-          link.appendChild(left);
-          link.appendChild(textSpan);
-          link.appendChild(right);
+  function initNavBrackets() {
+    document.querySelectorAll('.nav a:not(.nav-cta), .nav-dropdown-trigger').forEach(link => {
+      if (!link.querySelector('.navbar__bracket')) {
+        const arrow = link.querySelector('svg');
+        let text = '';
+        link.childNodes.forEach(node => {
+          if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+            text += node.textContent.trim();
+            node.remove();
+          }
+        });
+        if (text) {
+          const left = document.createElement('span');
+          left.className = 'navbar__bracket';
+          left.textContent = '[';
+          const textSpan = document.createElement('span');
+          textSpan.className = 'navbar__link-text';
+          textSpan.textContent = text;
+          const right = document.createElement('span');
+          right.className = 'navbar__bracket';
+          right.textContent = ']';
+          if (arrow) {
+            link.insertBefore(left, arrow);
+            link.insertBefore(textSpan, arrow);
+            link.insertBefore(right, arrow);
+          } else {
+            link.appendChild(left);
+            link.appendChild(textSpan);
+            link.appendChild(right);
+          }
         }
       }
+    });
+  }
+  initNavBrackets();
+  window.initNavBrackets = initNavBrackets;
+
+  // 5. Robust Navbar Dropdown (Hover + Click/Touch Toggle + Keyboard + Click-Outside Delegation)
+  function closeAllDropdowns() {
+    document.querySelectorAll('.nav-dropdown').forEach(d => {
+      d.classList.remove('is-open');
+      const t = d.querySelector('.nav-dropdown-trigger');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    });
+  }
+  window.closeAllDropdowns = closeAllDropdowns;
+
+  document.addEventListener('click', function (e) {
+    const trigger = e.target.closest('.nav-dropdown-trigger');
+    if (trigger) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropdown = trigger.closest('.nav-dropdown');
+      if (dropdown) {
+        const isOpen = dropdown.classList.contains('is-open');
+        closeAllDropdowns();
+        if (!isOpen) {
+          dropdown.classList.add('is-open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      }
+      return;
+    }
+
+    const item = e.target.closest('.dropdown-menu a');
+    if (item) {
+      closeAllDropdowns();
+      return;
+    }
+
+    if (!e.target.closest('.nav-dropdown')) {
+      closeAllDropdowns();
     }
   });
 
-  // 5. Robust Navbar Dropdown (Hover + Click/Touch Toggle + Keyboard + Click-Outside)
-  const navDropdowns = document.querySelectorAll('.nav-dropdown');
-  navDropdowns.forEach(dropdown => {
-    const trigger = dropdown.querySelector('.nav-dropdown-trigger');
-    const dropMenu = dropdown.querySelector('.dropdown-menu');
-    if (!trigger || !dropMenu) return;
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      closeAllDropdowns();
+    }
+  });
 
-    function openDropdown() {
+  document.addEventListener('mouseover', function (e) {
+    if (window.innerWidth <= 860) return;
+    const dropdown = e.target.closest('.nav-dropdown');
+    if (dropdown) {
       dropdown.classList.add('is-open');
-      trigger.setAttribute('aria-expanded', 'true');
+      const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+      if (trigger) trigger.setAttribute('aria-expanded', 'true');
     }
+  });
 
-    function closeDropdown() {
+  document.addEventListener('mouseout', function (e) {
+    if (window.innerWidth <= 860) return;
+    const dropdown = e.target.closest('.nav-dropdown');
+    if (dropdown && !dropdown.contains(e.relatedTarget)) {
       dropdown.classList.remove('is-open');
-      trigger.setAttribute('aria-expanded', 'false');
+      const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
     }
-
-    function toggleDropdown(e) {
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      if (dropdown.classList.contains('is-open')) {
-        closeDropdown();
-      } else {
-        openDropdown();
-      }
-    }
-
-    // Click / touch toggle on trigger
-    trigger.addEventListener('click', toggleDropdown);
-
-    // Mouse hover support
-    dropdown.addEventListener('mouseenter', openDropdown);
-    dropdown.addEventListener('mouseleave', closeDropdown);
-
-    // Focus support
-    dropdown.addEventListener('focusin', openDropdown);
-    dropdown.addEventListener('focusout', (e) => {
-      if (!dropdown.contains(e.relatedTarget)) {
-        closeDropdown();
-      }
-    });
-
-    // Close when any item inside the dropdown is clicked
-    dropMenu.querySelectorAll('a').forEach(item => {
-      item.addEventListener('click', () => {
-        closeDropdown();
-      });
-    });
-
-    // Escape key closes
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && dropdown.classList.contains('is-open')) {
-        closeDropdown();
-        trigger.focus();
-      }
-    });
-
-    // Click outside closes
-    document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target)) {
-        closeDropdown();
-      }
-    });
   });
 
   // 5b. Smooth Scroll for Anchor Links & In-Page Section Redirections
@@ -1642,6 +1655,7 @@
 
   // Expose global animation re-init for blink-free transitions
   window.initPageAnimations = function() {
+    if (typeof initNavBrackets === 'function') initNavBrackets();
     initStaggeredTextRoll();
     initFAQAccordion();
     initGSAP();

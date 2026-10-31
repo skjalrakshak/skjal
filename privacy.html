@@ -59,7 +59,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet">
-  <link href="assets/css/style.css?v=20261031_v53_cinematic_transition" rel="stylesheet" />
+  <link href="assets/css/style.css?v=20261031_v54_global_transition_engine" rel="stylesheet" />
 
   <!-- Structured Data JSON-LD -->
   <script type="application/ld+json">
@@ -97,38 +97,9 @@
     ]
   }
   </script>
-  <script>
-    if (sessionStorage.getItem('isPageTransition') === 'true') {
-      document.write('<style>#skjal-entry-curtain { display: flex !important; } #skjal-preloader { display: none !important; }</style>');
-      document.documentElement.style.overflow = 'hidden';
-    }
-  </script>
 </head>
 
 <body id="top">
-    <!-- SKJAL Page Transition Curtain (Curved Curtain Sweep with Brand Typography) -->
-  <div class="skjal-transition-wrap" id="skjal-entry-curtain" style="display: none;">
-    <div class="skjal-transition-panel">
-      <svg class="skjal-curve-top" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path d="M0,100 C50,0 100,100 100,100 Z"></path>
-      </svg>
-      <svg class="skjal-curve-bottom" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path d="M0,0 C50,100 100,0 100,0 Z"></path>
-      </svg>
-    </div>
-    <div class="skjal-transition-text-wrap" style="opacity:0;" aria-hidden="true">
-      <div class="skjal-transition-text">
-        <div class="skjal-transition-word">
-          <span class="skjal-transition-char" style="transform:translateY(120%); opacity:0;">S</span>
-          <span class="skjal-transition-char" style="transform:translateY(120%); opacity:0;">K</span>
-          <span class="skjal-transition-char" style="transform:translateY(120%); opacity:0;">J</span>
-          <span class="skjal-transition-char" style="transform:translateY(120%); opacity:0;">A</span>
-          <span class="skjal-transition-char" style="transform:translateY(120%); opacity:0;">L</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Preloader -->
   <div id="skjal-preloader" class="preloader-container" role="status" aria-live="polite">
     <div class="preloader-brand-wrapper">
@@ -622,8 +593,8 @@
   <script defer src="assets/js/vendor/gsap.min.js"></script>
   <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/vendor/lenis.min.js"></script>
-  <script defer src="assets/js/main.js?v=20261031_v43_privacy"></script>
-  <script defer src="assets/js/page-transition.js?v=20261031_v53_cinematic_transition"></script>
+  <script defer src="assets/js/main.js?v=20261031_v54_global_transition_engine"></script>
+  <script defer src="assets/js/page-transition.js?v=20261031_v54_global_transition_engine"></script>
 </body>
 
 </html>
