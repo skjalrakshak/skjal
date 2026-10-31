@@ -34,6 +34,7 @@ const REDIRECTS = {
     '/about.html': '/#about',
     '/contact': '/#contact',
     '/contact.html': '/#contact',
+    '/index.html': '/',
     '/water-monitoring.html': '/water-monitoring',
     '/energy-monitoring.html': '/energy-monitoring',
     '/custom-engineering.html': '/custom-engineering',

@@ -241,8 +241,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Swap primary nav links & CTA
-        const currentNav = document.querySelector('.main-nav');
-        const incomingNav = newDoc.querySelector('.main-nav');
+        const currentNav = document.querySelector('nav.nav, .main-nav');
+        const incomingNav = newDoc.querySelector('nav.nav, .main-nav');
         if (currentNav && incomingNav) {
             currentNav.innerHTML = incomingNav.innerHTML;
         }
@@ -261,9 +261,19 @@ document.addEventListener("DOMContentLoaded", () => {
             currentFooter.innerHTML = incomingFooter.innerHTML;
         }
 
-        // Update Document Title
+        // Update Document Title, Canonical URL & Description
         if (newDoc.title) {
             document.title = newDoc.title;
+        }
+        const incomingCanonical = newDoc.querySelector('link[rel="canonical"]');
+        const currentCanonical = document.querySelector('link[rel="canonical"]');
+        if (incomingCanonical && currentCanonical) {
+            currentCanonical.setAttribute('href', incomingCanonical.getAttribute('href'));
+        }
+        const incomingDesc = newDoc.querySelector('meta[name="description"]');
+        const currentDesc = document.querySelector('meta[name="description"]');
+        if (incomingDesc && currentDesc) {
+            currentDesc.setAttribute('content', incomingDesc.getAttribute('content'));
         }
 
         // Update URL in browser history
