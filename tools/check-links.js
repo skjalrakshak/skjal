@@ -27,6 +27,10 @@ htmlFiles.forEach(file => {
       targetPath = targetPath.slice(1);
     }
 
+    if (targetPath && !path.extname(targetPath)) {
+      targetPath += '.html';
+    }
+
     // Resolve relative path
     const resolvedPath = path.resolve(targetPath);
     const exists = fs.existsSync(resolvedPath);

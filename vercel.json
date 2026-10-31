@@ -91,9 +91,15 @@
     { "source": "/about.html", "destination": "/#about", "statusCode": 301 },
     { "source": "/contact", "destination": "/#contact", "statusCode": 301 },
     { "source": "/contact.html", "destination": "/#contact", "statusCode": 301 },
-    { "source": "/products", "destination": "/jal-rakshak.html", "statusCode": 301 },
-    { "source": "/products.html", "destination": "/jal-rakshak.html", "statusCode": 301 },
-    { "source": "/resources", "destination": "/jal-rakshak.html", "statusCode": 301 },
-    { "source": "/resources.html", "destination": "/jal-rakshak.html", "statusCode": 301 }
+    { "source": "/jal-rakshak", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/jal-rakshak.html", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/water-monitoring-vizag", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/water-monitoring-vizag.html", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/energy-monitoring-vizag", "destination": "/energy-monitoring", "statusCode": 301 },
+    { "source": "/energy-monitoring-vizag.html", "destination": "/energy-monitoring", "statusCode": 301 },
+    { "source": "/products", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/products.html", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/resources", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/resources.html", "destination": "/water-monitoring", "statusCode": 301 }
   ]
 }

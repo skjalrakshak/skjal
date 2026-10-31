@@ -10,8 +10,6 @@ User-agent: *
 Allow: /
 Allow: /about
 Allow: /water-monitoring
-Allow: /water-monitoring.html
-Allow: /jal-rakshak
 Allow: /shield
 Allow: /energy-monitoring
 Allow: /custom-engineering

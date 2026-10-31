@@ -3,10 +3,14 @@
  * Precaches core critical assets for instantaneous reload and offline resiliency.
  */
 
-const CACHE_NAME = 'skjal-cache-v38';
+const CACHE_NAME = 'skjal-cache-v39';
 
 const PRECACHE_ASSETS = [
   '/',
+  '/water-monitoring',
+  '/shield',
+  '/energy-monitoring',
+  '/custom-engineering',
   '/index.html',
   '/water-monitoring.html',
   '/shield.html',

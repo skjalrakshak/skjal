@@ -34,16 +34,20 @@ const REDIRECTS = {
     '/about.html': '/#about',
     '/contact': '/#contact',
     '/contact.html': '/#contact',
-    '/jal-rakshak': '/water-monitoring.html',
-    '/jal-rakshak.html': '/water-monitoring.html',
-    '/water-monitoring-vizag': '/water-monitoring.html',
-    '/water-monitoring-vizag.html': '/water-monitoring.html',
-    '/energy-monitoring-vizag': '/energy-monitoring.html',
-    '/energy-monitoring-vizag.html': '/energy-monitoring.html',
-    '/products': '/water-monitoring.html',
-    '/products.html': '/water-monitoring.html',
-    '/resources': '/water-monitoring.html',
-    '/resources.html': '/water-monitoring.html'
+    '/water-monitoring.html': '/water-monitoring',
+    '/energy-monitoring.html': '/energy-monitoring',
+    '/custom-engineering.html': '/custom-engineering',
+    '/shield.html': '/shield',
+    '/jal-rakshak': '/water-monitoring',
+    '/jal-rakshak.html': '/water-monitoring',
+    '/water-monitoring-vizag': '/water-monitoring',
+    '/water-monitoring-vizag.html': '/water-monitoring',
+    '/energy-monitoring-vizag': '/energy-monitoring',
+    '/energy-monitoring-vizag.html': '/energy-monitoring',
+    '/products': '/water-monitoring',
+    '/products.html': '/water-monitoring',
+    '/resources': '/water-monitoring',
+    '/resources.html': '/water-monitoring'
 };
 
 const SECURITY_HEADERS = {
