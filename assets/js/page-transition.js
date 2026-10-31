@@ -184,13 +184,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const headerWrap = document.querySelector('.header-wrap');
         const currentMain = document.getElementById('main') || document.querySelector('main');
 
+        // Absolute failsafe timer: transition can NEVER remain stuck longer than 3.5s under any circumstance
+        const safetyTimer = setTimeout(() => {
+            if (isTransitioning) {
+                console.warn('Transition safety watchdog triggered');
+                curtain.remove();
+                isTransitioning = false;
+                if (headerWrap) {
+                    headerWrap.style.transform = '';
+                    headerWrap.style.opacity = '';
+                }
+            }
+        }, 3500);
+
         // Set initial positions cleanly via GSAP (avoids any split-second text flash)
         if (window.gsap) {
             window.gsap.set(chars, { yPercent: 120, opacity: 0 });
             window.gsap.set(textWrap, { opacity: 0, y: 0 });
         }
 
-        // Play Exit Timeline (Slowed down by ~30% for luxury cinematic tempo):
+        // Play Exit Timeline:
         // 1. Header slides up softly (0.45s)
         // 2. Curtain sweeps UP from bottom covering screen (0.85s)
         // 3. SKJAL letters animate gracefully up into the exact center of the curtain (0.5s)
@@ -228,6 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // If fetch failed, fallback to hard navigation
         if (!newDoc) {
+            clearTimeout(safetyTimer);
+            curtain.remove();
+            isTransitioning = false;
             window.location.href = href;
             return;
         }
@@ -235,72 +251,73 @@ document.addEventListener("DOMContentLoaded", () => {
         // =============================================
         // DOM SWAP (Happens behind the black curtain — ZERO BLINK!)
         // =============================================
-        const incomingMain = newDoc.getElementById('main') || newDoc.querySelector('main');
-        if (currentMain && incomingMain) {
-            currentMain.innerHTML = incomingMain.innerHTML;
-            currentMain.className = incomingMain.className;
-        }
+        try {
+            const incomingMain = newDoc.getElementById('main') || newDoc.querySelector('main');
+            if (currentMain && incomingMain) {
+                currentMain.innerHTML = incomingMain.innerHTML;
+                currentMain.className = incomingMain.className;
+            }
 
-        // Swap primary nav links & CTA
-        const currentNav = document.querySelector('nav.nav, .main-nav');
-        const incomingNav = newDoc.querySelector('nav.nav, .main-nav');
-        if (currentNav && incomingNav) {
-            currentNav.innerHTML = incomingNav.innerHTML;
-        }
+            // Swap primary nav links & CTA
+            const currentNav = document.querySelector('nav.nav, .main-nav');
+            const incomingNav = newDoc.querySelector('nav.nav, .main-nav');
+            if (currentNav && incomingNav) {
+                currentNav.innerHTML = incomingNav.innerHTML;
+            }
 
-        // Swap mobile menu drawer links
-        const currentMobileMenu = document.getElementById('mobile-menu');
-        const incomingMobileMenu = newDoc.getElementById('mobile-menu');
-        if (currentMobileMenu && incomingMobileMenu) {
-            currentMobileMenu.innerHTML = incomingMobileMenu.innerHTML;
-        }
+            // Swap mobile menu drawer links
+            const currentMobileMenu = document.getElementById('mobile-menu');
+            const incomingMobileMenu = newDoc.getElementById('mobile-menu');
+            if (currentMobileMenu && incomingMobileMenu) {
+                currentMobileMenu.innerHTML = incomingMobileMenu.innerHTML;
+            }
 
-        // Swap footer
-        const currentFooter = document.getElementById('footer') || document.querySelector('footer') || document.querySelector('.footer');
-        const incomingFooter = newDoc.getElementById('footer') || newDoc.querySelector('footer') || newDoc.querySelector('.footer');
-        if (currentFooter && incomingFooter) {
-            currentFooter.innerHTML = incomingFooter.innerHTML;
-        }
+            // Swap footer
+            const currentFooter = document.getElementById('footer') || document.querySelector('footer') || document.querySelector('.footer');
+            const incomingFooter = newDoc.getElementById('footer') || newDoc.querySelector('footer') || newDoc.querySelector('.footer');
+            if (currentFooter && incomingFooter) {
+                currentFooter.innerHTML = incomingFooter.innerHTML;
+            }
 
-        // Update Document Title, Canonical URL & Description
-        if (newDoc.title) {
-            document.title = newDoc.title;
-        }
-        const incomingCanonical = newDoc.querySelector('link[rel="canonical"]');
-        const currentCanonical = document.querySelector('link[rel="canonical"]');
-        if (incomingCanonical && currentCanonical) {
-            currentCanonical.setAttribute('href', incomingCanonical.getAttribute('href'));
-        }
-        const incomingDesc = newDoc.querySelector('meta[name="description"]');
-        const currentDesc = document.querySelector('meta[name="description"]');
-        if (incomingDesc && currentDesc) {
-            currentDesc.setAttribute('content', incomingDesc.getAttribute('content'));
-        }
+            // Update Document Title, Canonical URL & Description
+            if (newDoc.title) {
+                document.title = newDoc.title;
+            }
+            const incomingCanonical = newDoc.querySelector('link[rel="canonical"]');
+            const currentCanonical = document.querySelector('link[rel="canonical"]');
+            if (incomingCanonical && currentCanonical) {
+                currentCanonical.setAttribute('href', incomingCanonical.getAttribute('href'));
+            }
+            const incomingDesc = newDoc.querySelector('meta[name="description"]');
+            const currentDesc = document.querySelector('meta[name="description"]');
+            if (incomingDesc && currentDesc) {
+                currentDesc.setAttribute('content', incomingDesc.getAttribute('content'));
+            }
 
-        // Update URL in browser history
-        if (pushToHistory) {
-            history.pushState(null, '', href);
-        }
+            // Update URL in browser history
+            if (pushToHistory) {
+                history.pushState(null, '', href);
+            }
 
-        // Update active nav links
-        updateActiveNavLinks();
+            // Update active nav links
+            updateActiveNavLinks();
 
-        // Reset scroll position immediately
-        if (window.lenis) {
-            window.lenis.scrollTo(0, { immediate: true, force: true });
-            if (typeof window.lenis.resize === 'function') window.lenis.resize();
-        }
-        window.scrollTo(0, 0);
+            // Reset scroll position immediately
+            if (window.lenis) {
+                window.lenis.scrollTo(0, { immediate: true, force: true });
+                if (typeof window.lenis.resize === 'function') window.lenis.resize();
+            }
+            window.scrollTo(0, 0);
 
-        // Re-bind transition links on the newly swapped DOM
-        bindTransitionLinks();
-
-        // Re-initialize page animations (ScrollTrigger, letter rolls, FAQ accordions)
-        if (typeof window.initPageAnimations === 'function') {
-            window.initPageAnimations();
-        }
-        if (window.ScrollTrigger) {
-            window.ScrollTrigger.refresh();
+            // Re-initialize page animations (ScrollTrigger, letter rolls, FAQ accordions)
+            if (typeof window.initPageAnimations === 'function') {
+                window.initPageAnimations();
+            }
+            if (window.ScrollTrigger) {
+                window.ScrollTrigger.refresh();
+            }
+        } catch (domErr) {
+            console.error('DOM swap error:', domErr);
         }
 
         // =============================================
@@ -311,24 +328,27 @@ document.addEventListener("DOMContentLoaded", () => {
             window.gsap.set(panelBottom, { scaleY: 1 });
             window.gsap.set(curveTop, { scaleY: 0 });
 
-            const entryTl = window.gsap.timeline({
-                onComplete: () => {
-                    curtain.remove();
-                    isTransitioning = false;
-                    if (headerWrap) {
-                        headerWrap.style.transform = '';
-                        headerWrap.style.opacity = '';
-                    }
-                    if (targetHash) {
-                        scrollToHashTarget(targetHash, false);
-                    }
-                    if (window.ScrollTrigger) {
-                        window.ScrollTrigger.refresh();
-                    }
-                    if (window.lenis && typeof window.lenis.resize === 'function') {
-                        window.lenis.resize();
-                    }
+            const finishTransition = () => {
+                clearTimeout(safetyTimer);
+                curtain.remove();
+                isTransitioning = false;
+                if (headerWrap) {
+                    headerWrap.style.transform = '';
+                    headerWrap.style.opacity = '';
                 }
+                if (targetHash) {
+                    scrollToHashTarget(targetHash, false);
+                }
+                if (window.ScrollTrigger) {
+                    window.ScrollTrigger.refresh();
+                }
+                if (window.lenis && typeof window.lenis.resize === 'function') {
+                    window.lenis.resize();
+                }
+            };
+
+            const entryTl = window.gsap.timeline({
+                onComplete: finishTransition
             });
 
             // 1. Letters glide UPWARD and fade out gracefully into the upward sweep
@@ -376,6 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
         } else {
+            clearTimeout(safetyTimer);
             curtain.remove();
             isTransitioning = false;
         }
