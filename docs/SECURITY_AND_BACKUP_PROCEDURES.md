@@ -160,3 +160,67 @@ To comply with the Advertising Standards Council of India (ASCI) and technical p
 9. **Driver Fatigue**: Replaced PERCLOS eye-closure claims with actual telemetry: continuous driving duration monitoring and in-cabin audio rest break prompts.
 10. **Partner Logos**: Changed "Trusted by enterprises" to "Research & Ecosystem Collaborators" (KLTIF, Satya Sri Electricals, Make in India).
 
+---
+
+## 7. Automated Vulnerability Scan Remediation & Host-Level TLS Hardening
+
+Following an automated DAST / vulnerability scan of the production infrastructure, five specific categories were identified and remediated:
+
+| Scan Finding Category | Count | Codebase / Server Action Taken | Resolution Status |
+| :--- | :---: | :--- | :--- |
+| **Content Security Policy Configuration** | 1 | Removed deprecated `block-all-mixed-content`. Removed unused third-party CDNs (`unpkg.com`, `cdnjs.cloudflare.com`, `cdn.jsdelivr.net`) and image origins (`randomuser.me`, `unsplash.com`, `cloudinary.com`) to eliminate CDN bypass vectors. Restriced to `'self'`, Google Fonts, and local assets. | **RESOLVED in `_headers`, `vercel.json`, `.htaccess`** |
+| **Clickjacking Protection** | 1 | Dual protection implemented: `X-Frame-Options: DENY` (sent via `Header always set` and `Header set`) and CSP `frame-ancestors 'none'`. | **RESOLVED in `_headers`, `vercel.json`, `.htaccess`** |
+| **MIME Type Confusion** | 1 | Enforced `X-Content-Type-Options: nosniff` across all responses (including 200, 301 redirects, and 404 error pages). | **RESOLVED in `_headers`, `vercel.json`, `.htaccess`** |
+| **Inconsistent Redirection** | 1 | Added canonical single-hop 301 redirection from non-www (`https://skjal.in` and `http://skjal.in`) directly to `https://www.skjal.in/` to eliminate split routing. | **RESOLVED in `vercel.json` & `.htaccess`** |
+| **TLS/SSL Misconfigurations** | 4 / 8 | Server/edge certificate parameters. Requires host-level configuration in Cloudflare, Vercel, or Web Server (see Section 7.1). | **DOCUMENTED in Section 7.1 below** |
+
+### 7.1 Server-Side TLS/SSL Hardening Guide (For Hosting / CDN Administrator)
+
+To resolve the remaining 4 server-level TLS findings, apply the following configurations in your hosting environment (Cloudflare, cPanel, Apache, or Nginx):
+
+#### A. In Cloudflare / CDN Edge:
+1. **Minimum TLS Version:** Navigate to **SSL/TLS > Edge Certificates** and set **Minimum TLS Version** to **TLS 1.2** (or TLS 1.3).
+2. **Disable Weak Ciphers:** Disable TLS 1.0 and TLS 1.1 completely.
+3. **Always Use HTTPS:** Ensure **Always Use HTTPS** toggle is enabled.
+4. **HSTS Preload:** Ensure HSTS is enabled with `max-age: 63072000`, `Include subdomains`, and `Preload` checked.
+5. **Opportunistic Encryption & TLS 1.3:** Enable **TLS 1.3** and **Automatic HTTPS Rewrites**.
+
+#### B. In Apache / LiteSpeed (`ssl.conf` / VirtualHost):
+```apache
+# 1. Enforce TLS 1.2 and 1.3 Only (Disable SSLv2, SSLv3, TLS 1.0, TLS 1.1)
+SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1
+
+# 2. Modern Cipher Suite (Forward Secrecy & AEAD Only)
+SSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+SSLHonorCipherOrder on
+
+# 3. Enable OCSP Stapling (RFC 6066)
+SSLUseStapling on
+SSLStaplingCache "shmcb:logs/ssl_stapling(32768)"
+```
+
+#### C. In Nginx (`/etc/nginx/conf.d/skjal.conf`):
+```nginx
+# 1. Modern Protocols Only
+ssl_protocols TLSv1.2 TLSv1.3;
+
+# 2. Strong Ciphers with Forward Secrecy
+ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384';
+ssl_prefer_server_ciphers on;
+
+# 3. OCSP Stapling
+ssl_stapling on;
+ssl_stapling_verify on;
+resolver 1.1.1.1 8.8.8.8 valid=300s;
+resolver_timeout 5s;
+```
+
+#### D. In DNS Records (DNS Zone for `skjal.in`):
+Add a **CAA (Certificate Authority Authorization)** record to restrict which CAs may issue certificates for your domain:
+```dns
+skjal.in.  IN  CAA  0 issue "letsencrypt.org"
+skjal.in.  IN  CAA  0 issue "digicert.com"
+skjal.in.  IN  CAA  0 issuewild ";"
+skjal.in.  IN  CAA  0 iodef "mailto:security@skjal.in"
+```
+

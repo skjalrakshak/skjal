@@ -7,9 +7,13 @@
   RewriteEngine On
   RewriteBase /
 
-  # Force HTTPS
+  # Redirect non-www (skjal.in) to www.skjal.in (HTTPS) in a single 301 hop
+  RewriteCond %{HTTP_HOST} ^skjal\.in$ [NC]
+  RewriteRule ^(.*)$ https://www.skjal.in/$1 [L,R=301]
+
+  # Force HTTPS for all requests
   RewriteCond %{HTTPS} !=on
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  RewriteRule ^(.*)$ https://www.skjal.in/$1 [L,R=301]
 
   # Clean URLs: map extensionless requests to .html files
   RewriteCond %{REQUEST_FILENAME} !-d
@@ -21,15 +25,19 @@
 <IfModule mod_headers.c>
   # HTTP Strict Transport Security (HSTS)
   Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+  Header set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
 
-  # Prevent MIME sniffing
+  # Prevent MIME sniffing (MIME Type Confusion protection)
   Header always set X-Content-Type-Options "nosniff"
+  Header set X-Content-Type-Options "nosniff"
 
-  # Prevent clickjacking / iframe embedding
+  # Prevent clickjacking / iframe embedding (Clickjacking Protection)
   Header always set X-Frame-Options "DENY"
+  Header set X-Frame-Options "DENY"
 
   # Referrer policy
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
 
   # Cross-Origin Isolation
   Header always set Cross-Origin-Opener-Policy "same-origin"
@@ -38,11 +46,13 @@
   # Permissions policy
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), web-share=(), xr-spatial-tracking=(), interest-cohort=()"
 
-  # Content Security Policy (CSP)
-  Header always set Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://randomuser.me https://images.unsplash.com https://res.cloudinary.com https://i.pravatar.cc; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-src 'none'; frame-ancestors 'none'; form-action 'self' mailto: https://wa.me; upgrade-insecure-requests; block-all-mixed-content"
+  # Content Security Policy (CSP Level 3 Compliant, No Deprecated Directives, No Open CDN bypasses)
+  Header always set Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.skjal.in; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' mailto: https://wa.me; upgrade-insecure-requests"
+  Header set Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.skjal.in; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' mailto: https://wa.me; upgrade-insecure-requests"
 
   # Disable Adobe / Flash cross-domain policies
   Header always set X-Permitted-Cross-Domain-Policies "none"
+  Header set X-Permitted-Cross-Domain-Policies "none"
 </IfModule>
 
 # 3. Disable Directory Browsing
