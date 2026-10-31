@@ -118,10 +118,10 @@ const server = http.createServer((req, res) => {
         const ext = String(path.extname(filePath)).toLowerCase();
         const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-        // High-Performance Browser Caching Headers
-        let cacheHeader = 'public, max-age=3600, stale-while-revalidate=86400';
-        if (['.css', '.js', '.webp', '.png', '.jpg', '.jpeg', '.svg', '.woff', '.woff2', '.ttf'].includes(ext)) {
-            cacheHeader = 'public, max-age=31536000, immutable';
+        // Development Server: No-cache for active development files (instant live updates)
+        let cacheHeader = 'no-cache, no-store, must-revalidate';
+        if (['.webp', '.png', '.jpg', '.jpeg', '.svg', '.woff', '.woff2', '.ttf'].includes(ext)) {
+            cacheHeader = 'public, max-age=3600';
         }
 
         const etag = `"${stats.size.toString(16)}-${stats.mtime.getTime().toString(16)}"`;

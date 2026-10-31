@@ -18,15 +18,15 @@
   let lenisInstance = null;
   if (typeof window.Lenis !== 'undefined') {
     lenisInstance = new window.Lenis({
-      duration: 1.25,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      syncTouch: true,
-      syncTouchLerp: 0.08,
-      touchMultiplier: 1.15,
-      touchInertiaMultiplier: 42,
+      syncTouch: false,
+
+
+
     });
     window.lenis = lenisInstance;
 
@@ -339,6 +339,19 @@
       body.classList.remove('menu-open');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open navigation menu');
+      // Smoothly reset accordion if open so next open is in clean state
+      const accordion = menu.querySelector('.mobile-accordion');
+      const accordionBtn = menu.querySelector('#mobile-products-toggle');
+      const accordionContent = menu.querySelector('.mobile-accordion-content');
+      if (accordion && accordion.classList.contains('open')) {
+        accordion.classList.remove('open');
+        if (accordionBtn) accordionBtn.setAttribute('aria-expanded', 'false');
+        if (accordionContent) {
+          accordionContent.style.maxHeight = '0px';
+          accordionContent.style.opacity = '0';
+          accordionContent.style.transform = 'translateY(-6px)';
+        }
+      }
     }
 
     toggle.addEventListener('click', function (e) {
@@ -359,13 +372,24 @@
         e.stopPropagation();
         const accordionContainer = accordionBtn.closest('.mobile-accordion');
         if (accordionContainer) {
+          const content = accordionContainer.querySelector('.mobile-accordion-content');
           const isOpen = accordionContainer.classList.contains('open');
           if (isOpen) {
             accordionContainer.classList.remove('open');
             accordionBtn.setAttribute('aria-expanded', 'false');
+            if (content) {
+              content.style.maxHeight = '0px';
+              content.style.opacity = '0';
+              content.style.transform = 'translateY(-6px)';
+            }
           } else {
             accordionContainer.classList.add('open');
             accordionBtn.setAttribute('aria-expanded', 'true');
+            if (content) {
+              content.style.maxHeight = (content.scrollHeight + 16) + 'px';
+              content.style.opacity = '1';
+              content.style.transform = 'translateY(0)';
+            }
           }
         }
         return;
@@ -448,55 +472,40 @@
     initStaggeredTextRoll();
   }
 
-  // 4. Mobile Smart Scroll Header (Hides on scroll down, reveals on scroll up; stationary on desktop)
+  // 4. Global Smart Scroll Header (Direct from nrkportfolio.in: Instant response, zero latency, zero threshold buffering)
   const headerWrap = document.querySelector('.header-wrap');
   const mobileMenu = document.getElementById('mobile-menu');
 
   if (headerWrap) {
-    headerWrap.style.position = '';
-    headerWrap.style.top = '';
-    headerWrap.style.transform = '';
-
     let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
     let isTicking = false;
-    const scrollDeltaThreshold = 8;
 
-    function handleHeaderScroll(currentY) {
-      const isMobile = window.innerWidth <= 860;
-      if (!isMobile) {
-        headerWrap.classList.remove('header-hidden');
-        headerWrap.classList.remove('header-scrolled');
-        return;
-      }
-
+    function updateHeader() {
       if (document.body.classList.contains('menu-open') || (mobileMenu && mobileMenu.classList.contains('open'))) {
         headerWrap.classList.remove('header-hidden');
         return;
       }
 
-      const deltaY = currentY - lastScrollY;
-
-      if (currentY <= 15) {
+      // If user has a dropdown open, keep header visible
+      const hasOpenDropdown = document.querySelector('.nav-dropdown.is-open');
+      if (hasOpenDropdown) {
         headerWrap.classList.remove('header-hidden');
-        headerWrap.classList.remove('header-scrolled');
-      } else {
-        headerWrap.classList.add('header-scrolled');
-
-        if (deltaY > scrollDeltaThreshold && currentY > 60) {
-          headerWrap.classList.add('header-hidden');
-        } else if (deltaY < -scrollDeltaThreshold) {
-          headerWrap.classList.remove('header-hidden');
-        }
+        return;
       }
 
-      lastScrollY = Math.max(0, currentY);
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (currentScrollY > lastScrollY && currentScrollY > 20) {
+        headerWrap.classList.add('header-hidden');
+      } else if (currentScrollY < lastScrollY) {
+        headerWrap.classList.remove('header-hidden');
+      }
+      lastScrollY = currentScrollY;
     }
 
     function onScrollTick() {
-      const currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
       if (!isTicking) {
         window.requestAnimationFrame(() => {
-          handleHeaderScroll(currentY);
+          updateHeader();
           isTicking = false;
         });
         isTicking = true;
@@ -506,23 +515,51 @@
     window.addEventListener('scroll', onScrollTick, { passive: true });
 
     if (window.lenis && typeof window.lenis.on === 'function') {
-      window.lenis.on('scroll', (e) => {
-        const scrollY = typeof e.scroll === 'number' ? e.scroll : (window.pageYOffset || 0);
-        handleHeaderScroll(scrollY);
-      });
+      window.lenis.on('scroll', onScrollTick);
     }
 
     window.addEventListener('resize', () => {
-      const isMobile = window.innerWidth <= 860;
-      if (!isMobile) {
-        headerWrap.classList.remove('header-hidden');
-        headerWrap.classList.remove('header-scrolled');
-      }
+      lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      updateHeader();
     }, { passive: true });
 
     // Initialize state
-    handleHeaderScroll(window.pageYOffset || document.documentElement.scrollTop || 0);
+    updateHeader();
   }
+
+  // Bracket Animation Helper (nrkportfolio.in style: guarantees [ text ] structure)
+  document.querySelectorAll('.nav a:not(.nav-cta), .nav-dropdown-trigger').forEach(link => {
+    if (!link.querySelector('.navbar__bracket')) {
+      const arrow = link.querySelector('svg');
+      let text = '';
+      link.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+          text += node.textContent.trim();
+          node.remove();
+        }
+      });
+      if (text) {
+        const left = document.createElement('span');
+        left.className = 'navbar__bracket';
+        left.textContent = '[';
+        const textSpan = document.createElement('span');
+        textSpan.className = 'navbar__link-text';
+        textSpan.textContent = text;
+        const right = document.createElement('span');
+        right.className = 'navbar__bracket';
+        right.textContent = ']';
+        if (arrow) {
+          link.insertBefore(left, arrow);
+          link.insertBefore(textSpan, arrow);
+          link.insertBefore(right, arrow);
+        } else {
+          link.appendChild(left);
+          link.appendChild(textSpan);
+          link.appendChild(right);
+        }
+      }
+    }
+  });
 
   // 5. Robust Navbar Dropdown (Hover + Click/Touch Toggle + Keyboard + Click-Outside)
   const navDropdowns = document.querySelectorAll('.nav-dropdown');

@@ -22,19 +22,31 @@
   <meta content="SKJAL — Electronics, Embedded Systems &amp; Industrial IoT" property="og:title"/>
   <meta content="Custom electronics, embedded systems, Industrial IoT and automation engineering from Visakhapatnam, India." property="og:description"/>
   <meta content="https://www.skjal.in/" property="og:url"/>
-  <meta content="https://www.skjal.in/assets/img/heroes/skjal-iot-hero.webp" property="og:image"/>
+  <meta content="https://www.skjal.in/assets/img/brand/og-logo.png" property="og:image"/>
+  <meta content="https://www.skjal.in/assets/img/brand/og-logo.png" property="og:image:secure_url"/>
+  <meta content="image/png" property="og:image:type"/>
+  <meta content="1200" property="og:image:width"/>
+  <meta content="630" property="og:image:height"/>
+  <meta content="SKJAL Official Brand Logo" property="og:image:alt"/>
 
   <!-- Twitter -->
   <meta content="summary_large_image" name="twitter:card"/>
   <meta content="SKJAL — Electronics, Embedded Systems &amp; Industrial IoT" name="twitter:title"/>
   <meta content="Connected monitoring for water quality, driver safety and energy use." name="twitter:description"/>
-  <meta content="https://www.skjal.in/assets/img/heroes/skjal-iot-hero.webp" name="twitter:image"/>
+  <meta content="https://www.skjal.in/assets/img/brand/og-logo.png" name="twitter:image"/>
+  <meta content="SKJAL Official Brand Logo" name="twitter:image:alt"/>
 
+  <!-- Favicon & Search Engine Site Identity -->
+  <link href="/favicon.ico" rel="icon" sizes="48x48"/>
+  <link href="/assets/img/brand/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+  <link href="/assets/img/brand/favicon-192x192.png" rel="icon" sizes="192x192" type="image/png"/>
+  <link href="/assets/img/brand/apple-touch-icon.png" rel="apple-touch-icon"/>
+  <link href="/favicon.ico" rel="shortcut icon"/>
   <link href="assets/img/brand/logo.webp" rel="icon" type="image/webp"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Pixelify+Sans:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="assets/css/style.css?v=20261030_v16" rel="stylesheet"/>
+  <link href="assets/css/style.css?v=20261031_v25_nobox" rel="stylesheet"/>
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -47,7 +59,13 @@
         "name": "SK Jalrakshak Innovations Private Limited",
         "alternateName": "SKJAL",
         "url": "https://www.skjal.in/",
-        "logo": "https://www.skjal.in/assets/img/brand/logo.webp",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.skjal.in/assets/img/brand/logo.png",
+          "width": 512,
+          "height": 512
+        },
+        "image": "https://www.skjal.in/assets/img/brand/logo.png",
         "email": "sales@skjal.in",
         "telephone": "+91 89788 59246",
         "address": {
@@ -65,6 +83,7 @@
         "@id": "https://www.skjal.in/#website",
         "url": "https://www.skjal.in/",
         "name": "SKJAL",
+        "image": "https://www.skjal.in/assets/img/brand/logo.png",
         "publisher": {
           "@id": "https://www.skjal.in/#organization"
         },
@@ -170,12 +189,18 @@
       </a>
 
       <nav aria-label="Main navigation" class="nav">
-        <a class="nav-link nav-link-home" href="/">Home</a>
+        <a class="nav-link nav-link-home" href="/">
+          <span class="navbar__bracket">[</span>
+          <span class="navbar__link-text">Home</span>
+          <span class="navbar__bracket">]</span>
+        </a>
 
         <!-- Products Dropdown (3 Purpose-Built Platforms, No Emojis) -->
         <div class="nav-dropdown">
           <button class="nav-dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
-            Products
+            <span class="navbar__bracket">[</span>
+            <span class="navbar__link-text">Products</span>
+            <span class="navbar__bracket">]</span>
             <svg class="dropdown-arrow" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
           <div class="dropdown-menu" role="menu">
@@ -206,10 +231,26 @@
           </div>
         </div>
 
-        <a class="nav-link" href="#services">Services</a>
-        <a class="nav-link" href="#industries">Industries</a>
-        <a class="nav-link" href="#about">About</a>
-        <a class="nav-link" href="#contact">Contact</a>
+        <a class="nav-link" href="#services">
+          <span class="navbar__bracket">[</span>
+          <span class="navbar__link-text">Services</span>
+          <span class="navbar__bracket">]</span>
+        </a>
+        <a class="nav-link" href="#industries">
+          <span class="navbar__bracket">[</span>
+          <span class="navbar__link-text">Industries</span>
+          <span class="navbar__bracket">]</span>
+        </a>
+        <a class="nav-link" href="#about">
+          <span class="navbar__bracket">[</span>
+          <span class="navbar__link-text">About</span>
+          <span class="navbar__bracket">]</span>
+        </a>
+        <a class="nav-link" href="#contact">
+          <span class="navbar__bracket">[</span>
+          <span class="navbar__link-text">Contact</span>
+          <span class="navbar__bracket">]</span>
+        </a>
         <a class="nav-cta" href="#contact">
           Discuss your project
           <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
@@ -455,7 +496,7 @@
                 <li><span>Ingress</span><strong>IP68 Probe / IP67 Body</strong></li>
               </ul>
               <div class="product-actions">
-                <a class="btn-buy-now" href="https://wa.me/918978859246?text=hey%2C%20i%20would%20like%20to%20enquire%20about%20Jal%20Rakshak%20could%20we%20plese%20discuss%20about%20it%3F" target="_blank" rel="noopener noreferrer" aria-label="Buy now or enquire about Jal Rakshak via WhatsApp">
+                <a class="btn-buy-now" href="https://wa.me/918978859246?text=Hello%20SKJAL%20Team%2C%20I%20would%20like%20to%20purchase%20Jal%20Rakshak.%20Please%20share%20pricing%20and%20order%20details." target="_blank" rel="noopener noreferrer" aria-label="Buy now: order Jal Rakshak via WhatsApp">
                   Buy now
                 </a>
               </div>
@@ -477,7 +518,7 @@
                 <li><span>Tracking</span><strong>Multi-GNSS / Real-Time GPS</strong></li>
               </ul>
               <div class="product-actions">
-                <a class="btn-buy-now" href="https://wa.me/918978859246?text=hey%2C%20i%20would%20like%20to%20enquire%20about%20S.H.I.E.L.D.%20could%20we%20plese%20discuss%20about%20it%3F" target="_blank" rel="noopener noreferrer" aria-label="Buy now or enquire about S.H.I.E.L.D. via WhatsApp">
+                <a class="btn-buy-now" href="https://wa.me/918978859246?text=Hello%20SKJAL%20Team%2C%20I%20would%20like%20to%20purchase%20S.H.I.E.L.D.%20Please%20share%20pricing%20and%20order%20details." target="_blank" rel="noopener noreferrer" aria-label="Buy now: order S.H.I.E.L.D. via WhatsApp">
                   Buy now
                 </a>
               </div>
@@ -499,7 +540,7 @@
                 <li><span>Protection</span><strong>Peak Surge Alarms</strong></li>
               </ul>
               <div class="product-actions">
-                <a class="btn-buy-now" href="https://wa.me/918978859246?text=hey%2C%20i%20would%20like%20to%20enquire%20about%20Energy%20Monitoring%20could%20we%20plese%20discuss%20about%20it%3F" target="_blank" rel="noopener noreferrer" aria-label="Buy now or enquire about Energy Monitoring via WhatsApp">
+                <a class="btn-buy-now" href="https://wa.me/918978859246?text=Hello%20SKJAL%20Team%2C%20I%20would%20like%20to%20purchase%20Energy%20Monitoring.%20Please%20share%20pricing%20and%20order%20details." target="_blank" rel="noopener noreferrer" aria-label="Buy now: order Energy Monitoring via WhatsApp">
                   Buy now
                 </a>
               </div>
@@ -514,15 +555,15 @@
             <div class="product-copy">
               <p class="product-meta">TAILORED HARDWARE &bull; FIRMWARE</p>
               <h3><a href="#contact" class="product-title-link">Custom Engineering</a></h3>
-              <p>Tailored embedded electronics, multi-layer PCB design, low-power MCU firmware, and turnkey IIoT gateways engineered for your exact operational requirements.</p>
+              <p>Tailored embedded electronics, multi-layer PCB design, low-power MCU firmware, and turnkey IIoT gateways engineered for your operational needs.</p>
               <ul class="spec-list">
                 <li><span>Hardware</span><strong>Multi-Layer PCB &amp; Casing</strong></li>
                 <li><span>Firmware</span><strong>STM32 / ESP32 / RTOS</strong></li>
                 <li><span>Protocols</span><strong>RS485 Modbus / CAN / 4G</strong></li>
               </ul>
               <div class="product-actions">
-                <a class="btn-buy-now" href="https://wa.me/918978859246?text=hey%2C%20i%20would%20like%20to%20enquire%20about%20Custom%20Engineering%20could%20we%20plese%20discuss%20about%20it%3F" target="_blank" rel="noopener noreferrer" aria-label="Buy now or enquire about Custom Engineering via WhatsApp">
-                  Buy now
+                <a class="btn-buy-now" href="https://wa.me/918978859246?text=Hello%20SKJAL%20Team%2C%20I%20would%20like%20to%20discuss%20a%20Custom%20Engineering%20build.%20Please%20share%20details." target="_blank" rel="noopener noreferrer" aria-label="Discuss build: inquire about Custom Engineering via WhatsApp">
+                  Discuss build
                 </a>
               </div>
             </div>
@@ -676,67 +717,6 @@
             </a>
           </div>
         </div>
-
-        <div class="contact-layout">
-          <!-- Inquiry Form -->
-          <div class="contact-form-card">
-            <h3 style="font-size: 22px; font-weight: 700; color: var(--ink); margin: 0 0 8px;">Project Inquiry Form</h3>
-            <p style="font-size: 14px; color: var(--muted); margin: 0 0 28px;">Fill in your details and our technical lead will respond within 24 hours.</p>
-
-            <form id="contact-form" onsubmit="event.preventDefault(); document.getElementById('form-feedback').classList.add('success'); this.reset();">
-              <div class="form-grid">
-                <div class="form-group">
-                  <label class="form-label" for="contact-name">Full Name *</label>
-                  <input class="form-input" id="contact-name" name="name" required placeholder="Your full name" type="text" />
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="contact-email">Email Address *</label>
-                  <input class="form-input" id="contact-email" name="email" required placeholder="name@company.com" type="email" />
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="contact-phone">Phone / WhatsApp</label>
-                  <input class="form-input" id="contact-phone" name="phone" placeholder="+91 89788 59246" type="tel" />
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="contact-domain">Project Focus Area *</label>
-                  <select class="form-select" id="contact-domain" name="domain" required>
-                    <option value="">Select an engineering area</option>
-                    <option value="water">Jal Rakshak — Water Quality Telemetry</option>
-                    <option value="fleet">S.H.I.E.L.D. — Fleet Safety &amp; Vibration</option>
-                    <option value="energy">Energy Monitoring &amp; Power Analytics</option>
-                    <option value="pcb">Custom Electronics &amp; Multi-Layer PCB</option>
-                    <option value="firmware">Embedded RTOS &amp; Gateway Firmware</option>
-                    <option value="other">Other Turnkey Hardware Engineering</option>
-                  </select>
-                </div>
-
-                <div class="form-group full-width">
-                  <label class="form-label" for="contact-message">Technical Requirement Summary *</label>
-                  <textarea class="form-textarea" id="contact-message" name="message" required placeholder="Describe your operating environment, sensor interfaces, wireless connectivity needs, and target deployment schedule..."></textarea>
-                </div>
-              </div>
-
-              <div style="margin-top: 24px;">
-                <button class="btn btn-primary" type="submit" style="width: 100%;">
-                  Submit Technical Inquiry
-                  <svg aria-hidden="true" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </button>
-              </div>
-
-              <div class="form-feedback" id="form-feedback">
-                ✓ Thank you! Your technical inquiry has been submitted. Our engineering team in Visakhapatnam will review your specifications and contact you shortly.
-              </div>
-            </form>
-          </div>
-
-          
-        </div>
       </div>
     </section>
   </main>
@@ -814,7 +794,7 @@
   <script defer src="assets/js/vendor/gsap.min.js"></script>
   <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/vendor/lenis.min.js"></script>
-  <script defer src="assets/js/main.js?v=20261030_v14"></script>
+  <script defer src="assets/js/main.js?v=20261031_v25_nobox"></script>
   <script defer src="assets/js/page-transition.js?v=20261030_v14"></script>
 </body>
 </html>

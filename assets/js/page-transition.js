@@ -76,20 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const targetUrl = new URL(targetHref, window.location.origin);
             const targetPath = normalizePathname(targetUrl.pathname);
 
-            // Update top-level desktop nav links only
-            document.querySelectorAll('.nav-link, .nav a:not(.nav-cta)').forEach(link => {
-                const linkUrl = new URL(link.href, window.location.origin);
-                // Hash/anchor jumps to on-page sections should never have .active
-                if (linkUrl.hash && (linkUrl.pathname === '/' || linkUrl.pathname === window.location.pathname)) {
-                    link.classList.remove('active');
-                    return;
-                }
-                const linkPath = normalizePathname(linkUrl.pathname);
-                if (linkPath === targetPath) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
+            // Desktop nav links never carry .active (links stay unified neutral color, no brackets on idle)
+            document.querySelectorAll('.nav-link, .nav a, .nav-dropdown-trigger').forEach(link => {
+                link.classList.remove('active');
             });
 
             // Prevent any mobile menu drawer links from holding rogue .active classes
