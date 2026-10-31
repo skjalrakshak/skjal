@@ -7,15 +7,32 @@
   RewriteEngine On
   RewriteBase /
 
-  # Redirect non-www (skjal.in) to www.skjal.in (HTTPS) in a single 301 hop
+  # Single-hop Canonical 301: non-www (skjal.in) to www.skjal.in
   RewriteCond %{HTTP_HOST} ^skjal\.in$ [NC]
   RewriteRule ^(.*)$ https://www.skjal.in/$1 [L,R=301]
 
-  # Force HTTPS for all requests
+  # Single-hop Canonical 301: Force HTTPS for direct and reverse-proxy requests
   RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
   RewriteRule ^(.*)$ https://www.skjal.in/$1 [L,R=301]
 
-  # Clean URLs: map extensionless requests to .html files
+  # Permanent 301 Aliases and Shortcuts
+  RewriteRule ^services(\.html)?$ /#services [L,R=301,NE]
+  RewriteRule ^industries(\.html)?$ /#industries [L,R=301,NE]
+  RewriteRule ^about(\.html)?$ /#about [L,R=301,NE]
+  RewriteRule ^contact(\.html)?$ /#contact [L,R=301,NE]
+  RewriteRule ^jal-rakshak(\.html)?$ /water-monitoring [L,R=301]
+  RewriteRule ^water-monitoring-vizag(\.html)?$ /water-monitoring [L,R=301]
+  RewriteRule ^energy-monitoring-vizag(\.html)?$ /energy-monitoring [L,R=301]
+  RewriteRule ^products(\.html)?$ /water-monitoring [L,R=301]
+  RewriteRule ^resources(\.html)?$ /water-monitoring [L,R=301]
+
+  # Clean URLs: Redirect direct requests for .html files to extensionless canonical URLs (excluding 404.html)
+  RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+  RewriteCond %{REQUEST_URI} !^/404\.html$ [NC]
+  RewriteRule ^ /%1 [L,R=301]
+
+  # Clean URLs: map extensionless requests internally to .html files
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}\.html -f
   RewriteRule ^(.*)$ $1.html [L]
@@ -53,6 +70,10 @@
   # Disable Adobe / Flash cross-domain policies
   Header always set X-Permitted-Cross-Domain-Policies "none"
   Header set X-Permitted-Cross-Domain-Policies "none"
+
+  # DNS Prefetch Control
+  Header always set X-DNS-Prefetch-Control "on"
+  Header set X-DNS-Prefetch-Control "on"
 </IfModule>
 
 # 3. Disable Directory Browsing

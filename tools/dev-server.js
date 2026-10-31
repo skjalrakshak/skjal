@@ -47,14 +47,21 @@ const REDIRECTS = {
     '/products': '/water-monitoring',
     '/products.html': '/water-monitoring',
     '/resources': '/water-monitoring',
-    '/resources.html': '/water-monitoring'
+    '/resources.html': '/water-monitoring',
+    '/privacy.html': '/privacy'
 };
 
 const SECURITY_HEADERS = {
+    'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': 'DENY',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
-    'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+    'Cross-Origin-Opener-Policy': 'same-origin',
+    'Cross-Origin-Resource-Policy': 'same-site',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), web-share=(), xr-spatial-tracking=(), interest-cohort=()',
+    'Content-Security-Policy': "default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.skjal.in; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' mailto: https://wa.me; upgrade-insecure-requests",
+    'X-DNS-Prefetch-Control': 'on',
+    'X-Permitted-Cross-Domain-Policies': 'none',
     'Vary': 'Accept-Encoding'
 };
 
@@ -79,7 +86,7 @@ function resolveSafePath(urlPath) {
 const server = http.createServer((req, res) => {
     // Only allow GET and HEAD methods
     if (req.method !== 'GET' && req.method !== 'HEAD') {
-        res.writeHead(405, SECURITY_HEADERS);
+        res.writeHead(405, { ...SECURITY_HEADERS, 'Allow': 'GET, HEAD' });
         res.end();
         return;
     }
@@ -87,12 +94,25 @@ const server = http.createServer((req, res) => {
     // Normalize URL — strip query string and hash
     let urlPath = req.url.split('?')[0].split('#')[0];
 
-    // Check automatic section & page redirections
+    // Remove trailing slash for consistency (except root /)
+    if (urlPath.length > 1 && urlPath.endsWith('/')) {
+        const canonical = urlPath.slice(0, -1);
+        res.writeHead(301, {
+            ...SECURITY_HEADERS,
+            'Location': canonical,
+            'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800'
+        });
+        res.end();
+        return;
+    }
+
+    // Check automatic section & page redirections (Single-hop 301 Canonical)
     if (REDIRECTS[urlPath]) {
-        console.log(`[302 Redirect] ${urlPath} -> ${REDIRECTS[urlPath]}`);
-        res.writeHead(302, {
+        console.log(`[301 Redirect] ${urlPath} -> ${REDIRECTS[urlPath]}`);
+        res.writeHead(301, {
+            ...SECURITY_HEADERS,
             'Location': REDIRECTS[urlPath],
-            'Cache-Control': 'no-cache, no-store, must-revalidate'
+            'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800'
         });
         res.end();
         return;
@@ -134,6 +154,7 @@ const server = http.createServer((req, res) => {
         const etag = `"${stats.size.toString(16)}-${stats.mtime.getTime().toString(16)}"`;
         if (req.headers['if-none-match'] === etag) {
             res.writeHead(304, {
+                ...SECURITY_HEADERS,
                 'ETag': etag,
                 'Cache-Control': cacheHeader
             });

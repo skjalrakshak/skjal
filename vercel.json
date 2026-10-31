@@ -107,6 +107,7 @@
     { "source": "/products", "destination": "/water-monitoring", "statusCode": 301 },
     { "source": "/products.html", "destination": "/water-monitoring", "statusCode": 301 },
     { "source": "/resources", "destination": "/water-monitoring", "statusCode": 301 },
-    { "source": "/resources.html", "destination": "/water-monitoring", "statusCode": 301 }
+    { "source": "/resources.html", "destination": "/water-monitoring", "statusCode": 301 },
+    { "source": "/privacy.html", "destination": "/privacy", "statusCode": 301 }
   ]
 }

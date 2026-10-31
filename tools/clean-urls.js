@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
-const files = ['index.html', 'water-monitoring.html', 'energy-monitoring.html', 'custom-engineering.html', 'shield.html', '404.html'];
+const files = ['index.html', 'water-monitoring.html', 'energy-monitoring.html', 'custom-engineering.html', 'shield.html', 'privacy.html', '404.html'];
 
 const replacements = [
   // Canonical and Full URLs
@@ -10,11 +10,13 @@ const replacements = [
   { from: /https:\/\/www\.skjal\.in\/energy-monitoring\.html/g, to: 'https://www.skjal.in/energy-monitoring' },
   { from: /https:\/\/www\.skjal\.in\/custom-engineering\.html/g, to: 'https://www.skjal.in/custom-engineering' },
   { from: /https:\/\/www\.skjal\.in\/shield\.html/g, to: 'https://www.skjal.in/shield' },
+  { from: /https:\/\/www\.skjal\.in\/privacy\.html/g, to: 'https://www.skjal.in/privacy' },
 
   { from: /https:\/\/skjal\.in\/water-monitoring\.html/g, to: 'https://skjal.in/water-monitoring' },
   { from: /https:\/\/skjal\.in\/energy-monitoring\.html/g, to: 'https://skjal.in/energy-monitoring' },
   { from: /https:\/\/skjal\.in\/custom-engineering\.html/g, to: 'https://skjal.in/custom-engineering' },
   { from: /https:\/\/skjal\.in\/shield\.html/g, to: 'https://skjal.in/shield' },
+  { from: /https:\/\/skjal\.in\/privacy\.html/g, to: 'https://skjal.in/privacy' },
 
   // Internal Links (with or without leading slash, with or without hash)
   { from: /href="\/water-monitoring\.html([#"'])/g, to: 'href="/water-monitoring$1' },
@@ -27,7 +29,10 @@ const replacements = [
   { from: /href="custom-engineering\.html([#"'])/g, to: 'href="/custom-engineering$1' },
 
   { from: /href="\/shield\.html([#"'])/g, to: 'href="/shield$1' },
-  { from: /href="shield\.html([#"'])/g, to: 'href="/shield$1' }
+  { from: /href="shield\.html([#"'])/g, to: 'href="/shield$1' },
+
+  { from: /href="\/privacy\.html([#"'])/g, to: 'href="/privacy$1' },
+  { from: /href="privacy\.html([#"'])/g, to: 'href="/privacy$1' }
 ];
 
 files.forEach(file => {
