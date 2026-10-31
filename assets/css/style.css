@@ -4356,3 +4356,186 @@ article[id],
   font-style: italic !important;
   letter-spacing: -0.01em !important;
 }
+
+/* ==========================================================================
+   Frequently Asked Questions - Swiss Editorial 2-Column Split
+   Zero Glow, Clean Hairline Borders, Buttery Smooth Reveal
+   ========================================================================== */
+.faq-section {
+  padding: clamp(56px, 7vw, 96px) 0;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  position: relative;
+}
+
+.faq-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (min-width: 992px) {
+  .faq-layout {
+    grid-template-columns: 360px 1fr;
+    gap: clamp(40px, 5.5vw, 84px);
+    align-items: start;
+  }
+
+  .faq-left {
+    position: sticky;
+    top: calc(var(--header-h, 70px) + 32px);
+  }
+}
+
+.faq-heading {
+  margin: 0 0 14px;
+  font-size: clamp(30px, 3.4vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.faq-heading em {
+  font-style: normal;
+  color: var(--blue);
+}
+
+.faq-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 0;
+  max-width: 340px;
+}
+
+/* Accordion Group & Items - Strictly Zero Glow */
+.faq-accordion-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r, 6px);
+  overflow: hidden;
+  transition: border-color 0.22s ease, background-color 0.22s ease;
+  box-shadow: none !important;
+  filter: none !important;
+  outline: none !important;
+}
+
+.faq-item:hover {
+  border-color: var(--line-2);
+}
+
+.faq-item.is-open,
+.faq-item[open] {
+  border-color: #CBD0C7;
+  background: #FFFFFF;
+  box-shadow: none !important;
+}
+
+/* Summary Trigger */
+.faq-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  outline: none !important;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question-text {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.42;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  transition: color 0.18s ease;
+}
+
+.faq-item.is-open .faq-question-text,
+.faq-item[open] .faq-question-text {
+  color: var(--ink);
+}
+
+/* Minimalist Plus (+) Icon */
+.faq-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: var(--surface-soft);
+  color: var(--ink);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease;
+}
+
+.faq-icon svg {
+  width: 11px;
+  height: 11px;
+  display: block;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item.is-open .faq-icon,
+.faq-item[open] .faq-icon {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.faq-item.is-open .faq-icon svg,
+.faq-item[open] .faq-icon svg {
+  transform: rotate(45deg);
+}
+
+/* Smooth Accordion Expansion via CSS Grid */
+.faq-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item.is-open .faq-collapse,
+.faq-item[open] .faq-collapse {
+  grid-template-rows: 1fr;
+}
+
+.faq-body {
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item.is-open .faq-body,
+.faq-item[open] .faq-body {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.faq-body p {
+  padding: 0 18px 16px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.62;
+  color: var(--muted);
+}
+
+.faq-body p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+

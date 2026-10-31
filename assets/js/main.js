@@ -576,6 +576,45 @@
     });
   }
 
+  // 3c. Interactive FAQ Accordion Controller with Smooth Reveal Animations
+  function initFAQAccordion() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (!faqItems.length) return;
+
+    faqItems.forEach(item => {
+      const summary = item.querySelector('.faq-summary');
+      const collapse = item.querySelector('.faq-collapse');
+      if (!summary || !collapse) return;
+
+      // Ensure any initially open items have the is-open class
+      if (item.hasAttribute('open')) {
+        item.classList.add('is-open');
+      }
+
+      summary.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isOpen = item.classList.contains('is-open') || item.hasAttribute('open');
+
+        if (isOpen) {
+          // Smooth collapse: animate out first, then remove open attribute
+          item.classList.remove('is-open');
+          setTimeout(() => {
+            if (!item.classList.contains('is-open')) {
+              item.removeAttribute('open');
+            }
+          }, 320);
+        } else {
+          // Smooth expand: open element, then trigger CSS grid transition
+          item.setAttribute('open', '');
+          // Force layout reflow before adding transition class
+          void collapse.offsetHeight;
+          item.classList.add('is-open');
+        }
+      });
+    });
+  }
+  initFAQAccordion();
+
   // 3b. Staggered Character Spin/Roll Animation Initializer
   // Letters spin one-by-one with cascading delays on hover. Button background stays solid.
   function initStaggeredTextRoll() {
@@ -1453,6 +1492,7 @@
   // Expose global animation re-init for blink-free transitions
   window.initPageAnimations = function() {
     initStaggeredTextRoll();
+    initFAQAccordion();
     initGSAP();
   };
 
