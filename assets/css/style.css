@@ -3557,7 +3557,7 @@ a:hover .arrow-circle {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 140px;
+  height: 100px;
   fill: #0A0A0A;
   display: block;
   will-change: transform;
@@ -3567,12 +3567,12 @@ a:hover .arrow-circle {
 }
 
 .skjal-curve-top {
-  top: -139px;
+  top: -99px;
   transform-origin: bottom center;
 }
 
 .skjal-curve-bottom {
-  bottom: -139px;
+  bottom: -99px;
   transform-origin: top center;
 }
 
